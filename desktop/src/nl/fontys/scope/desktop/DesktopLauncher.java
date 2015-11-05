@@ -7,6 +7,8 @@ import nl.fontys.scope.ScopeGame;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+		config.width = 1280;
+		config.height = 1080;
 		new LwjglApplication(new ScopeGame(), config);
 	}
 }
