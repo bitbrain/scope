@@ -55,7 +55,7 @@ public class ModelLoadingScreen implements Screen {
         assets = new AssetManager();
         assets.load(path, Model.class);
         loading = true;
-        cubemap = new EnvironmentCubemap(new Pixmap(Gdx.files.internal("cubemaps/space1.png")));
+        cubemap = new EnvironmentCubemap(new Pixmap(Gdx.files.internal("cubemaps/space1.jpg")));
     }
 
     @Override
