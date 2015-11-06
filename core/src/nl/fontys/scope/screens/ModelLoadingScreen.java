@@ -46,7 +46,7 @@ public class ModelLoadingScreen implements Screen {
         environment.add(new DirectionalLight().set(0.0f, 0.4f, 1.0f, -1f, -0.2f, -0.5f));
         cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         cam.position.set(1f, 1f, 1f);
-        cam.lookAt(0, 0, 0);
+
         cam.near = 0.2f;
         cam.far = 3000f;
         cam.update();
@@ -62,31 +62,37 @@ public class ModelLoadingScreen implements Screen {
                 return false;
             }
         };
-        Gdx.input.setInputProcessor(camController);
 
         assets = new AssetManager();
         assets.load(path, Model.class);
         loading = true;
-        cubemap = new EnvironmentCubemap(new Pixmap(Gdx.files.internal("cubemaps/space1.jpg")));
+        cubemap = new EnvironmentCubemap(new Pixmap(Gdx.files.internal("cubemaps/space1.png")));
     }
 
     @Override
     public void render(float delta) {
         if (loading && assets.update())
             doneLoading();
-        camController.update();
 
         if (shipInstance != null) {
             if (Gdx.input.isKeyPressed(Input.Keys.W)) {
                 shipInstance.transform.translate(0f, 0f, 1f);
-            } else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+            }
+            if (Gdx.input.isKeyPressed(Input.Keys.A)) {
                 shipInstance.transform.translate(1f, 0f, 0f);
-            } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+            }
+            if (Gdx.input.isKeyPressed(Input.Keys.S)) {
                 shipInstance.transform.translate(0f, 0f, -1f);
-            } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+            }
+            if (Gdx.input.isKeyPressed(Input.Keys.D)) {
                 shipInstance.transform.translate(-1f, 0f, 0f);
             }
+            Vector3 pos = shipInstance.transform.getTranslation(new Vector3());
+            cam.position.set(pos.x, pos.y + 3, pos.z - 10f);
+            cam.lookAt(pos.x, pos.y, pos.z);
         }
+
+        cam.update();
 
         Gdx.gl.glClearColor(0.02f, 0f, 0.05f, 1f);
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
