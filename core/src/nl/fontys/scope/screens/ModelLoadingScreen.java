@@ -62,7 +62,7 @@ public class ModelLoadingScreen implements Screen {
                 return false;
             }
         };
-
+        Gdx.input.setInputProcessor(camController);
         assets = new AssetManager();
         assets.load(path, Model.class);
         loading = true;
@@ -73,7 +73,7 @@ public class ModelLoadingScreen implements Screen {
     public void render(float delta) {
         if (loading && assets.update())
             doneLoading();
-
+        camController.update();
         if (shipInstance != null) {
             if (Gdx.input.isKeyPressed(Input.Keys.W)) {
                 shipInstance.transform.translate(0f, 0f, 1f);
