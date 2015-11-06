@@ -1,12 +1,14 @@
 # Blender MTL File: 'cruiser.blend'
 # Material Count: 1
 
-newmtl Material
-Ns 54.901961
+newmtl Material.002
+Ns 113.725490
 Ka 1.000000 1.000000 1.000000
-Kd 1.000000 1.000000 1.000000
-Ks 0.784211 0.784211 0.784211
+Kd 0.640000 0.492120 0.326986
+Ks 0.500000 0.230580 0.126204
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
+map_Bump rust.jpg
+map_Kd rust.jpg
