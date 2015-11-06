@@ -46,7 +46,7 @@ public class ModelLoadingScreen implements Screen {
         cam.position.set(1f, 1f, 1f);
         cam.lookAt(0, 0, 0);
         cam.near = 0.2f;
-        cam.far = 300f;
+        cam.far = 3000f;
         cam.update();
 
         camController = new CameraInputController(cam);

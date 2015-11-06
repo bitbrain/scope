@@ -12,6 +12,6 @@ import nl.fontys.scope.screens.ModelLoadingScreen;
 public class ScopeGame extends Game {
 	@Override
 	public void create() {
-		setScreen(new ModelLoadingScreen("models/ship/ship.obj"));
+		setScreen(new ModelLoadingScreen("models/cruiser/cruiser.obj"));
 	}
 }
