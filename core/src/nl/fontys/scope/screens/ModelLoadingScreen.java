@@ -1,9 +1,9 @@
 package nl.fontys.scope.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Cubemap;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
 import nl.fontys.scope.graphics.EnvironmentCubemap;
@@ -30,6 +31,7 @@ public class ModelLoadingScreen implements Screen {
     public Environment environment;
     public boolean loading;
     public EnvironmentCubemap cubemap;
+    private ModelInstance shipInstance;
 
     public ModelLoadingScreen(String path) {
         this.path = path;
@@ -49,7 +51,17 @@ public class ModelLoadingScreen implements Screen {
         cam.far = 3000f;
         cam.update();
 
-        camController = new CameraInputController(cam);
+        camController = new CameraInputController(cam) {
+            @Override
+            public boolean keyDown(int keycode) {
+                return false;
+            }
+
+            @Override
+            public boolean keyUp(int keycode) {
+                return false;
+            }
+        };
         Gdx.input.setInputProcessor(camController);
 
         assets = new AssetManager();
@@ -63,6 +75,19 @@ public class ModelLoadingScreen implements Screen {
         if (loading && assets.update())
             doneLoading();
         camController.update();
+
+        if (shipInstance != null) {
+            if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+                shipInstance.transform.translate(0f, 0f, 1f);
+            } else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+                shipInstance.transform.translate(1f, 0f, 0f);
+            } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+                shipInstance.transform.translate(0f, 0f, -1f);
+            } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+                shipInstance.transform.translate(-1f, 0f, 0f);
+            }
+        }
+
         Gdx.gl.glClearColor(0.02f, 0f, 0.05f, 1f);
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT | (Gdx.graphics.getBufferFormat().coverageSampling ? GL20.GL_COVERAGE_BUFFER_BIT_NV : 0));
@@ -103,7 +128,7 @@ public class ModelLoadingScreen implements Screen {
 
     private void doneLoading() {
         Model ship = assets.get(path, Model.class);
-        ModelInstance shipInstance = new ModelInstance(ship);
+        shipInstance = new ModelInstance(ship);
         instances.add(shipInstance);
         loading = false;
     }
