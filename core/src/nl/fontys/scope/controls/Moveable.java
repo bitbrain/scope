@@ -7,4 +7,6 @@ public interface Moveable {
     void moveRight();
 
     void moveForward();
+
+    void moveUp();
 }

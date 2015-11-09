@@ -85,6 +85,9 @@ public class World {
             if (c != null) {
                 c.update(object, delta);
             }
+            object.getPosition().x += object.getVelocity().x;
+            object.getPosition().y += object.getVelocity().y;
+            object.getPosition().z += object.getVelocity().z;
             renderManager.render(object, camera);
         }
     }
