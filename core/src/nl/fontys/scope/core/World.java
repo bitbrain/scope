@@ -11,6 +11,7 @@ import java.util.Map;
 
 import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.assets.Assets;
+import nl.fontys.scope.core.controller.GameObjectController;
 import nl.fontys.scope.event.EventType;
 import nl.fontys.scope.event.Events;
 import nl.fontys.scope.graphics.RenderManager;
@@ -25,8 +26,6 @@ public class World {
 
     private RenderManager renderManager;
 
-    private CameraInputController camController;
-
     Pool<GameObject> gameObjectPool = new Pool(256) {
         @Override
         protected GameObject newObject() {
@@ -38,6 +37,8 @@ public class World {
 
     Events events = Events.getInstance();
 
+    private Map<String, GameObjectController> controllers = new HashMap<String, GameObjectController>();
+
     public World() {
         camera = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.position.set(1f, 1f, 1f);
@@ -46,23 +47,16 @@ public class World {
         camera.update();
         renderManager = new RenderManager();
         renderManager.register(GameObjectType.SHIP, new ModelRenderer(AssetManager.getModel(Assets.Models.CRUISER)));
+    }
 
-        camController = new CameraInputController(camera) {
-            @Override
-            public boolean keyDown(int keycode) {
-                return false;
-            }
-
-            @Override
-            public boolean keyUp(int keycode) {
-                return false;
-            }
-        };
-        Gdx.input.setInputProcessor(camController);
+    public void setController(GameObject gameObject, GameObjectController controller) {
+        if (objects.containsKey(gameObject.getId())) {
+            controllers.put(gameObject.getId(), controller);
+        }
     }
 
     public void dispose() {
-        // noOp
+        controllers.clear();
     }
 
     public void resize(int width, int height) {
@@ -78,15 +72,19 @@ public class World {
 
     public void remove(GameObject gameObject) {
         if (objects.remove(gameObject) != null) {
+            controllers.remove(gameObject.getId());
             events.fire(EventType.OBJECT_REMOVED, gameObject);
         }
     }
 
     public void updateAndRender(float delta) {
-        camController.update();
         camera.update();
         renderManager.background(camera);
         for (GameObject object : objects.values()) {
+            GameObjectController c = controllers.get(object);
+            if (c != null) {
+                c.update(object, delta);
+            }
             renderManager.render(object, camera);
         }
     }

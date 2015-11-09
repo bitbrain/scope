@@ -18,20 +18,27 @@ import com.badlogic.gdx.utils.Array;
 
 import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.assets.Assets;
+import nl.fontys.scope.controls.KeyboardControls;
 import nl.fontys.scope.core.GameObject;
 import nl.fontys.scope.core.GameObjectType;
 import nl.fontys.scope.core.World;
+import nl.fontys.scope.core.controller.ShipController;
 import nl.fontys.scope.graphics.EnvironmentCubemap;
 
 public class IngameScreen implements Screen {
 
     private World world;
 
+    private KeyboardControls keyboardControls;
+
     @Override
     public void show() {
         world = new World();
         GameObject ship = world.createGameObject();
         ship.setType(GameObjectType.SHIP);
+        ShipController controller = new ShipController();
+        world.setController(ship, controller);
+        keyboardControls = new KeyboardControls(controller);
     }
 
     @Override

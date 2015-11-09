@@ -42,6 +42,10 @@ public final class Events {
             this.secondaries = secondaryParameters;
         }
 
+        public void setType(String type) {
+            this.type = type;
+        }
+
         public boolean isTypeOf(String type) {
             return this.type.equals(type);
         }
