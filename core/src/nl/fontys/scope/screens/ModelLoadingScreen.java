@@ -21,20 +21,19 @@ import nl.fontys.scope.graphics.EnvironmentCubemap;
 
 public class ModelLoadingScreen implements Screen {
 
-    private String path;
+    private Model model;
 
     public PerspectiveCamera cam;
     public CameraInputController camController;
     public ModelBatch modelBatch;
-    public AssetManager assets;
     public Array<ModelInstance> instances = new Array<ModelInstance>();
     public Environment environment;
     public boolean loading;
     public EnvironmentCubemap cubemap;
     private ModelInstance shipInstance;
 
-    public ModelLoadingScreen(String path) {
-        this.path = path;
+    public ModelLoadingScreen(Model model) {
+        this.model = model;
     }
 
     @Override
@@ -63,19 +62,15 @@ public class ModelLoadingScreen implements Screen {
             }
         };
         Gdx.input.setInputProcessor(camController);
-        assets = new AssetManager();
-        assets.load(path, Model.class);
-        assets.load("models/planet/planet.obj", Model.class);
         loading = true;
         cubemap = new EnvironmentCubemap(new Pixmap(Gdx.files.internal("cubemaps/space1.png")));
-        assets.finishLoading();
         doneLoading();
     }
 
     @Override
     public void render(float delta) {
         camController.update();
-        final float speed = 10f;
+        final float speed = 1f;
         if (shipInstance != null) {
             if (Gdx.input.isKeyPressed(Input.Keys.W)) {
                 shipInstance.transform.translate(0f, 0f, speed);
@@ -90,8 +85,6 @@ public class ModelLoadingScreen implements Screen {
                 shipInstance.transform.translate(-speed, 0f, 0f);
             }
             Vector3 pos = shipInstance.transform.getTranslation(new Vector3());
-            cam.position.set(pos.x, pos.y -3 , pos.z - 10);
-            cam.lookAt(pos.x, pos.y, pos.z);
         }
 
         cam.update();
@@ -131,17 +124,10 @@ public class ModelLoadingScreen implements Screen {
     public void dispose() {
         modelBatch.dispose();
         instances.clear();
-        assets.dispose();
     }
 
     private void doneLoading() {
-        Model ship = assets.get(path, Model.class);
-        shipInstance = new ModelInstance(ship);
+        shipInstance = new ModelInstance(model);
         instances.add(shipInstance);
-        Model planet = assets.get("models/planet/planet.obj", Model.class);
-        ModelInstance planetInstance = new ModelInstance(planet);
-        planetInstance.transform.translate(0, 0, 6000);
-        planetInstance.transform.scale(5000f, 5000f, 5000f);
-        instances.add(planetInstance);
     }
 }
