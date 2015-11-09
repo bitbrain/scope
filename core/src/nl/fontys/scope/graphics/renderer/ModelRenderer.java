@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 
 import nl.fontys.scope.core.GameObject;
-import nl.fontys.scope.graphics.GameObjectRenderer;
+import nl.fontys.scope.graphics.LightingManager;
 
 public class ModelRenderer implements GameObjectRenderer {
 
@@ -17,7 +17,7 @@ public class ModelRenderer implements GameObjectRenderer {
     }
 
     @Override
-    public ModelInstance getCurrentInstance(GameObject object) {
+    public ModelInstance getCurrentInstance(GameObject object, LightingManager lightingManager) {
         Vector3 pos = object.getPosition();
         Quaternion ori = object.getOrientation();
         float scale = object.getScale();

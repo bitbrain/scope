@@ -2,7 +2,6 @@ package nl.fontys.scope.graphics;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.TextureData;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
@@ -21,15 +20,17 @@ import nl.fontys.scope.core.GameObjectType;
  */
 public class RenderManager {
 
-    private Environment environment = new Environment();
+    private LightingManager lightingManager;
 
     private ModelBatch modelBatch = new ModelBatch();
 
     private EnvironmentCubemap cubemap;
 
-    private Map<GameObjectType, GameObjectRenderer> renderer = new HashMap<GameObjectType, GameObjectRenderer>();
+    private Map<GameObjectType, nl.fontys.scope.graphics.renderer.GameObjectRenderer> renderer = new HashMap<GameObjectType, nl.fontys.scope.graphics.renderer.GameObjectRenderer>();
 
     public RenderManager() {
+        lightingManager = new LightingManager();
+        Environment environment = lightingManager.getEnvironment();
         environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.1f, 0.2f, 0.6f, 1f));
         environment.add(new DirectionalLight().set(0.8f, 0.5f, 0.1f, -1f, -0.8f, -0.2f));
         environment.add(new DirectionalLight().set(0.0f, 0.4f, 1.0f, -1f, -0.2f, -0.5f));
@@ -38,7 +39,7 @@ public class RenderManager {
         cubemap = new EnvironmentCubemap(data.consumePixmap());
     }
 
-    public void register(GameObjectType type, GameObjectRenderer renderer) {
+    public void register(GameObjectType type, nl.fontys.scope.graphics.renderer.GameObjectRenderer renderer) {
         this.renderer.put(type, renderer);
     }
 
@@ -49,7 +50,7 @@ public class RenderManager {
     public void render(GameObject object, Camera camera) {
         modelBatch.begin(camera);
         if (renderer.containsKey(object.getType())) {
-            modelBatch.render(renderer.get(object.getType()).getCurrentInstance(object), environment);
+            modelBatch.render(renderer.get(object.getType()).getCurrentInstance(object, lightingManager), lightingManager.getEnvironment());
         }
         modelBatch.end();
     }
