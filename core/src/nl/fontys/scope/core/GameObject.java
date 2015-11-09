@@ -1,5 +1,6 @@
 package nl.fontys.scope.core;
 
+import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Pool;
 
@@ -12,7 +13,7 @@ public class GameObject implements Pool.Poolable {
 
     private Vector3 position = new Vector3();
 
-    private Vector3 orientation = new Vector3();
+    private Quaternion orientation = new Quaternion();
 
     private Vector3 velocity = new Vector3();
 
@@ -34,7 +35,7 @@ public class GameObject implements Pool.Poolable {
         return id;
     }
 
-    public Vector3 getOrientation() {
+    public Quaternion getOrientation() {
         return orientation;
     }
 
@@ -42,12 +43,8 @@ public class GameObject implements Pool.Poolable {
         return position;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public void setOrientation(float x, float y, float z) {
-        this.orientation.set(x, y, z);
+    public void setOrientation(float x, float y, float z, float w) {
+        this.orientation.set(x, y, z, w);
     }
 
     public void setPosition(float x, float y, float z) {
@@ -74,7 +71,7 @@ public class GameObject implements Pool.Poolable {
     public void reset() {
         position.set(0f, 0f, 0f);
         scale = 1f;
-        orientation.set(0f, 0f, 0f);
+        orientation.set(0f, 0f, 0f, 0f);
         velocity.set(0f, 0f, 0f);
         type = GameObjectType.NONE;
     }
