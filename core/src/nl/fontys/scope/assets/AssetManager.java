@@ -3,6 +3,9 @@ package nl.fontys.scope.assets;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g3d.Model;
 
+/**
+ * Manages different kind of assets
+ */
 public class AssetManager {
 
     private static final AssetManager INSTANCE = new AssetManager();
@@ -29,5 +32,9 @@ public class AssetManager {
             assetManager.load(model.getPath(), Model.class);
         }
         assetManager.finishLoading();
+    }
+
+    public static void dispose() {
+        assetManager.dispose();
     }
 }

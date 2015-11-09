@@ -2,8 +2,14 @@ package nl.fontys.scope.assets;
 
 import com.badlogic.gdx.graphics.Texture;
 
+/**
+ * Contains asset definitions
+ */
 public final class Assets {
 
+    /**
+     * Contains texture definitions
+     */
     public enum Textures {
 
         CUBEMAP_SPACE_1("cubemaps/space1.png");
@@ -19,6 +25,9 @@ public final class Assets {
         }
     }
 
+    /**
+     * Contains model definitions
+     */
     public enum Models {
 
         CRUISER("models/cruiser/cruiser.obj");

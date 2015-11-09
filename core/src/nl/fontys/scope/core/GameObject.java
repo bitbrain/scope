@@ -1,0 +1,81 @@
+package nl.fontys.scope.core;
+
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Pool;
+
+import java.util.UUID;
+
+/**
+ * Basic game object
+ */
+public class GameObject implements Pool.Poolable {
+
+    private Vector3 position = new Vector3();
+
+    private Vector3 orientation = new Vector3();
+
+    private Vector3 velocity = new Vector3();
+
+    private float scale = 1f;
+
+    private String id = UUID.randomUUID().toString();
+
+    private GameObjectType type = GameObjectType.NONE;
+
+    public float getScale() {
+        return scale;
+    }
+
+    public GameObjectType getType() {
+        return type;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public Vector3 getOrientation() {
+        return orientation;
+    }
+
+    public Vector3 getPosition() {
+        return position;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setOrientation(float x, float y, float z) {
+        this.orientation.set(x, y, z);
+    }
+
+    public void setPosition(float x, float y, float z) {
+        this.position.set(x, y, z);
+    }
+
+    public void setScale(float scale) {
+        this.scale = scale;
+    }
+
+    public void setType(GameObjectType type) {
+        this.type = type;
+    }
+
+    public Vector3 getVelocity() {
+        return velocity;
+    }
+
+    public void setVelocity(Vector3 velocity) {
+        this.velocity = velocity;
+    }
+
+    @Override
+    public void reset() {
+        position.set(0f, 0f, 0f);
+        scale = 1f;
+        orientation.set(0f, 0f, 0f);
+        velocity.set(0f, 0f, 0f);
+        type = GameObjectType.NONE;
+    }
+}
