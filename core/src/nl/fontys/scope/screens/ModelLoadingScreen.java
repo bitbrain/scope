@@ -3,10 +3,9 @@ package nl.fontys.scope.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
-import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
@@ -17,6 +16,8 @@ import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
+import nl.fontys.scope.assets.AssetManager;
+import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.graphics.EnvironmentCubemap;
 
 public class ModelLoadingScreen implements Screen {
@@ -63,7 +64,9 @@ public class ModelLoadingScreen implements Screen {
         };
         Gdx.input.setInputProcessor(camController);
         loading = true;
-        cubemap = new EnvironmentCubemap(new Pixmap(Gdx.files.internal("cubemaps/space1.png")));
+        TextureData data = AssetManager.getTexture(Assets.Textures.CUBEMAP_SPACE_1).getTextureData();
+        data.prepare();
+        cubemap = new EnvironmentCubemap(data.consumePixmap());
         doneLoading();
     }
 
