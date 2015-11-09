@@ -11,6 +11,8 @@ import java.util.Map;
 
 import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.assets.Assets;
+import nl.fontys.scope.event.EventType;
+import nl.fontys.scope.event.Events;
 import nl.fontys.scope.graphics.RenderManager;
 import nl.fontys.scope.graphics.renderer.ModelRenderer;
 
@@ -33,6 +35,8 @@ public class World {
     };
 
     private Map<String, GameObject> objects = new HashMap<String, GameObject>();
+
+    Events events = Events.getInstance();
 
     public World() {
         camera = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -73,7 +77,9 @@ public class World {
     }
 
     public void remove(GameObject gameObject) {
-        objects.remove(gameObject);
+        if (objects.remove(gameObject) != null) {
+            events.fire(EventType.OBJECT_REMOVED, gameObject);
+        }
     }
 
     public void updateAndRender(float delta) {

@@ -1,5 +1,6 @@
 buildscript {
     repositories {
+        mavenLocal();
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
@@ -24,6 +25,7 @@ allprojects {
     }
 
     repositories {
+        mavenLocal()
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
@@ -51,6 +53,7 @@ project(":android") {
     configurations { natives }
 
     dependencies {
+        compile "net.engio:mbassador:1.2.4"
         compile project(":core")
         compile "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi"
@@ -71,6 +74,7 @@ project(":ios") {
 
 
     dependencies {
+        compile "net.engio:mbassador:1.2.4"
         compile project(":core")
         compile "org.robovm:robovm-rt:$roboVMVersion"
         compile "org.robovm:robovm-cocoatouch:$roboVMVersion"
@@ -85,6 +89,7 @@ project(":core") {
 
 
     dependencies {
+        compile "net.engio:mbassador:1.2.4"
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-bullet:$gdxVersion"
