@@ -1,6 +1,7 @@
 package nl.fontys.scope.core;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
@@ -26,6 +27,8 @@ public class World {
 
     private RenderManager renderManager;
 
+    private Physics physics;
+
     Pool<GameObject> gameObjectPool = new Pool(256) {
         @Override
         protected GameObject newObject() {
@@ -40,6 +43,7 @@ public class World {
     private Map<String, GameObjectController> controllers = new HashMap<String, GameObjectController>();
 
     public World() {
+        physics = new Physics();
         camera = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.position.set(1f, 1f, 1f);
         camera.near = 0.2f;
@@ -77,17 +81,19 @@ public class World {
         }
     }
 
+    public Camera getCamera() {
+        return camera;
+    }
+
     public void updateAndRender(float delta) {
         camera.update();
         renderManager.background(camera);
         for (GameObject object : objects.values()) {
-            GameObjectController c = controllers.get(object);
+            GameObjectController c = controllers.get(object.getId());
             if (c != null) {
                 c.update(object, delta);
             }
-            object.getPosition().x += object.getVelocity().x;
-            object.getPosition().y += object.getVelocity().y;
-            object.getPosition().z += object.getVelocity().z;
+            physics.apply(object, delta);
             renderManager.render(object, camera);
         }
     }

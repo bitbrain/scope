@@ -8,5 +8,9 @@ public interface Moveable {
 
     void moveForward();
 
+    void moveBack();
+
     void moveUp();
+
+    void moveDown();
 }

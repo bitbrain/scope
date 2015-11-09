@@ -13,30 +13,40 @@ public class ShipController implements GameObjectController, Moveable {
 
     @Override
     public void update(GameObject object, float delta) {
+
         object.getVelocity().x += accel.x;
         object.getVelocity().y += accel.y;
         object.getVelocity().z += accel.z;
+        accel.scl(0.7f);
     }
 
     @Override
     public void moveLeft() {
-        accel.y = -SPEED;
+        accel.z = -SPEED / 2f;
     }
 
     @Override
     public void moveRight() {
-        accel.y = SPEED;
+        accel.z = SPEED / 2f;
     }
-
-
 
     @Override
     public void moveForward() {
+        accel.x = SPEED;
+    }
+
+    @Override
+    public void moveBack() {
         accel.x = -SPEED;
     }
 
     @Override
     public void moveUp() {
-        accel.z = SPEED / 2f;
+        accel.y = SPEED;
+    }
+
+    @Override
+    public void moveDown() {
+        accel.y = -SPEED;
     }
 }

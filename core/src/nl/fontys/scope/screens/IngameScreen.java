@@ -2,6 +2,7 @@ package nl.fontys.scope.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
@@ -31,9 +32,27 @@ public class IngameScreen implements Screen {
 
     private KeyboardControls keyboardControls;
 
+    private InputMultiplexer multiplexer;
+
+    private CameraInputController camController;
+
     @Override
     public void show() {
         world = new World();
+        camController = new CameraInputController(world.getCamera()) {
+            @Override
+            public boolean keyDown(int keycode) {
+                return false;
+            }
+
+            @Override
+            public boolean keyTyped(char character) {
+                return false;
+            }
+        };
+        multiplexer = new InputMultiplexer();
+        multiplexer.addProcessor(camController);
+        Gdx.input.setInputProcessor(multiplexer);
         GameObject ship = world.createGameObject();
         ship.setType(GameObjectType.SHIP);
         ShipController controller = new ShipController();
@@ -43,6 +62,8 @@ public class IngameScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        keyboardControls.update(delta);
+        camController.update();
         Gdx.gl.glClearColor(0.02f, 0f, 0.05f, 1f);
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT | (Gdx.graphics.getBufferFormat().coverageSampling ? GL20.GL_COVERAGE_BUFFER_BIT_NV : 0));
