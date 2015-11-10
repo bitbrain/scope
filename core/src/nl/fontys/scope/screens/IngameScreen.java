@@ -23,6 +23,7 @@ import nl.fontys.scope.controls.KeyboardControls;
 import nl.fontys.scope.core.GameObject;
 import nl.fontys.scope.core.GameObjectType;
 import nl.fontys.scope.core.World;
+import nl.fontys.scope.core.controller.RingController;
 import nl.fontys.scope.core.controller.ShipController;
 import nl.fontys.scope.graphics.EnvironmentCubemap;
 
@@ -58,6 +59,14 @@ public class IngameScreen implements Screen {
         ShipController controller = new ShipController();
         world.setController(ship, controller);
         keyboardControls = new KeyboardControls(controller);
+
+        final int rings = 6;
+        for (int i = 0; i < rings; ++i) {
+            GameObject ring = world.createGameObject();
+            ring.setScale(100f * (i * i + 1));
+            ring.setType(GameObjectType.RING);
+            world.setController(ring, new RingController());
+        }
     }
 
     @Override

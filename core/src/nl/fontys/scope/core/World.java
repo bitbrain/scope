@@ -51,6 +51,7 @@ public class World {
         camera.update();
         renderManager = new RenderManager();
         renderManager.register(GameObjectType.SHIP, new ModelRenderer(AssetManager.getModel(Assets.Models.CRUISER)));
+        renderManager.register(GameObjectType.RING, new ModelRenderer(AssetManager.getModel(Assets.Models.RING)));
     }
 
     public void setController(GameObject gameObject, GameObjectController controller) {

@@ -6,5 +6,6 @@ package nl.fontys.scope.core;
 public enum GameObjectType {
 
     SHIP,
+    RING,
     NONE;
 }

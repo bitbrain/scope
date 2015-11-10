@@ -30,7 +30,8 @@ public final class Assets {
      */
     public enum Models {
 
-        CRUISER("models/cruiser/cruiser.obj");
+        CRUISER("models/cruiser/cruiser.obj"),
+        RING("models/ring/ring.obj");
 
         private String path;
 
