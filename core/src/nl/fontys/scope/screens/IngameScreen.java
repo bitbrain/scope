@@ -45,7 +45,6 @@ public class IngameScreen implements Screen {
         Gdx.input.setInputProcessor(multiplexer);
         GameObject ship = world.createGameObject();
         ship.setType(GameObjectType.SHIP);
-        ship.getOrientation().setEulerAngles(70f, 0f, 0f);
         ShipController controller = new ShipController();
         world.setController(ship, controller);
         keyboardControls = new KeyboardControls(controller);

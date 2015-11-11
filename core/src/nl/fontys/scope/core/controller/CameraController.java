@@ -18,10 +18,9 @@ public class CameraController {
 
     public void update(float delta) {
         Vector3 pos = target.getPosition();
-        cam.lookAt(pos.x, pos.y, pos.z);
-        float camX = (float)(pos.x + Math.cos(target.getOrientation().getAngleAroundRad(Vector3.Y)) * (30f));
-        float camY = (float)(pos.y + Math.cos(target.getOrientation().getAngleAroundRad(Vector3.Y)) * (30f));
-        float camZ = (float)(pos.z + Math.sin(target.getOrientation().getAngleAroundRad(Vector3.Y)) * (30f));
-        cam.position.set(camX, camY, camZ);
+        float camX = (float)(pos.x + Math.cos(-target.getOrientation().getAngleAroundRad(Vector3.Y)) * (-15f));
+        float camZ = (float)(pos.z + Math.sin(-target.getOrientation().getAngleAroundRad(Vector3.Y)) * (-15f));
+        cam.position.set(camX, pos.y + 8, camZ);
+        cam.lookAt(pos.x, pos.y + 4, pos.z);
     }
 }
