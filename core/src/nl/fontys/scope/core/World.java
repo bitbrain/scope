@@ -82,7 +82,7 @@ public class World {
         }
     }
 
-    public Camera getCamera() {
+    public PerspectiveCamera getCamera() {
         return camera;
     }
 

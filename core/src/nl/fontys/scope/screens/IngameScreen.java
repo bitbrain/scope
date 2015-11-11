@@ -23,6 +23,7 @@ import nl.fontys.scope.controls.KeyboardControls;
 import nl.fontys.scope.core.GameObject;
 import nl.fontys.scope.core.GameObjectType;
 import nl.fontys.scope.core.World;
+import nl.fontys.scope.core.controller.CameraController;
 import nl.fontys.scope.core.controller.RingController;
 import nl.fontys.scope.core.controller.ShipController;
 import nl.fontys.scope.graphics.EnvironmentCubemap;
@@ -35,24 +36,12 @@ public class IngameScreen implements Screen {
 
     private InputMultiplexer multiplexer;
 
-    private CameraInputController camController;
+    private CameraController camController;
 
     @Override
     public void show() {
         world = new World();
-        camController = new CameraInputController(world.getCamera()) {
-            @Override
-            public boolean keyDown(int keycode) {
-                return false;
-            }
-
-            @Override
-            public boolean keyTyped(char character) {
-                return false;
-            }
-        };
         multiplexer = new InputMultiplexer();
-        multiplexer.addProcessor(camController);
         Gdx.input.setInputProcessor(multiplexer);
         GameObject ship = world.createGameObject();
         ship.setType(GameObjectType.SHIP);
@@ -60,20 +49,13 @@ public class IngameScreen implements Screen {
         ShipController controller = new ShipController();
         world.setController(ship, controller);
         keyboardControls = new KeyboardControls(controller);
-
-        final int rings = 6;
-        for (int i = 0; i < rings; ++i) {
-            GameObject ring = world.createGameObject();
-            ring.setScale(100f * (i * i + 1));
-            ring.setType(GameObjectType.RING);
-            world.setController(ring, new RingController());
-        }
+        camController = new CameraController(ship, world.getCamera());
     }
 
     @Override
     public void render(float delta) {
         keyboardControls.update(delta);
-        camController.update();
+        camController.update(delta);
         Gdx.gl.glClearColor(0.02f, 0f, 0.05f, 1f);
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT | (Gdx.graphics.getBufferFormat().coverageSampling ? GL20.GL_COVERAGE_BUFFER_BIT_NV : 0));
