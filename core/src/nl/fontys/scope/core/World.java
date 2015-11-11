@@ -7,7 +7,9 @@ import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.utils.Pool;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import nl.fontys.scope.assets.AssetManager;
@@ -40,7 +42,7 @@ public class World {
 
     Events events = Events.getInstance();
 
-    private Map<String, GameObjectController> controllers = new HashMap<String, GameObjectController>();
+    private Map<String, List<GameObjectController>> controllers = new HashMap<String, List<GameObjectController> >();
 
     public World() {
         physics = new Physics();
@@ -54,9 +56,12 @@ public class World {
         renderManager.register(GameObjectType.RING, new ModelRenderer(AssetManager.getModel(Assets.Models.RING)));
     }
 
-    public void setController(GameObject gameObject, GameObjectController controller) {
+    public void addController(GameObject gameObject, GameObjectController controller) {
         if (objects.containsKey(gameObject.getId())) {
-            controllers.put(gameObject.getId(), controller);
+            if (!controllers.containsKey(gameObject.getId())) {
+                controllers.put(gameObject.getId(), new ArrayList<GameObjectController>());
+            }
+            controllers.get(gameObject.getId()).add(controller);
         }
     }
 
@@ -90,9 +95,11 @@ public class World {
         camera.update();
         renderManager.background(camera);
         for (GameObject object : objects.values()) {
-            GameObjectController c = controllers.get(object.getId());
+            List<GameObjectController> c = controllers.get(object.getId());
             if (c != null) {
-                c.update(object, delta);
+                for (GameObjectController cObject : c) {
+                    cObject.update(object, delta);
+                }
             }
             physics.apply(object, delta);
             renderManager.render(object, camera);

@@ -43,18 +43,18 @@ public class IngameScreen implements Screen {
         world = new World();
         multiplexer = new InputMultiplexer();
         Gdx.input.setInputProcessor(multiplexer);
+        camController = new CameraController(world.getCamera());
         GameObject ship = world.createGameObject();
         ship.setType(GameObjectType.SHIP);
         ShipController controller = new ShipController();
-        world.setController(ship, controller);
+        world.addController(ship, controller);
+        world.addController(ship, camController);
         keyboardControls = new KeyboardControls(controller);
-        camController = new CameraController(ship, world.getCamera());
     }
 
     @Override
     public void render(float delta) {
         keyboardControls.update(delta);
-        camController.update(delta);
         Gdx.gl.glClearColor(0.02f, 0f, 0.05f, 1f);
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT | (Gdx.graphics.getBufferFormat().coverageSampling ? GL20.GL_COVERAGE_BUFFER_BIT_NV : 0));
