@@ -5,6 +5,9 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 
+import java.security.SecureRandom;
+import java.util.UUID;
+
 import nl.fontys.scope.controls.KeyboardControls;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.object.GameObjectFactory;
@@ -43,7 +46,10 @@ public class IngameScreen implements Screen {
         planet.setPosition(1500f, 0f, 0f);
         planet.setScale(200f);
         factory.createArena(0f, 0f, 0f, 2, 50, 200);
-        factory.createEnergy(10,0, 10);
+        SecureRandom random = new SecureRandom(UUID.randomUUID().toString().getBytes());
+        for (int i = 0; i < 4; ++i) {
+            factory.createEnergy(random.nextFloat() * 300f - 100f, random.nextFloat() * 300f - 100f, random.nextFloat() * 300f - 100f);
+        }
 
     }
 

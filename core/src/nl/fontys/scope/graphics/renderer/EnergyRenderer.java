@@ -6,6 +6,9 @@ import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.FloatAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.graphics.LightingManager;
@@ -17,6 +20,13 @@ public class EnergyRenderer extends ModelRenderer {
 
     private long tick = 1;
 
+    private Map<String, EnergyData> map = new HashMap<String, EnergyData>();
+
+    private class EnergyData {
+        float scale = 1f;
+        long tick = 1;
+    }
+
     public EnergyRenderer() {
         super(AssetManager.getModel(Assets.Models.ENERGY));
     }
@@ -24,15 +34,17 @@ public class EnergyRenderer extends ModelRenderer {
     @Override
     public ModelInstance getCurrentInstance(GameObject object, LightingManager lightingManager) {
         PointLight light = lightingManager.getPointLightById(object.getId());
+        EnergyData data = map.get(object.getId());
         if (light == null) {
             light = new PointLight();
             lightingManager.addPointLight(object.getId(), light);
+            data = new EnergyData();
+            map.put(object.getId(), data);
         }
-        light.set(Color.valueOf("00ff00"), object.getPosition().x, object.getPosition().y, object.getPosition().z, 150f * scale);
-        instance.materials.get(0).set(new FloatAttribute(FloatAttribute.AlphaTest, 0.4f));
-        scale = 2.5f + (float)Math.sin(tick / 30f) * 0.5f;
-        object.setScale(scale);
-        tick++;
+        light.set(Color.valueOf("00ff00"), object.getPosition().x, object.getPosition().y, object.getPosition().z, 50f * data.scale);
+        data.scale = 8.5f + (float)Math.sin(data.tick / 30f) * 0.5f;
+        object.setScale(data.scale);
+        data.tick++;
         return super.getCurrentInstance(object, lightingManager);
     }
 
