@@ -31,7 +31,7 @@ public class RenderManager {
     public RenderManager() {
         lightingManager = new LightingManager();
         Environment environment = lightingManager.getEnvironment();
-        environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.1f, 0.2f, 0.6f, 1f));
+        environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.05f, 0.1f, 0.3f, 1f));
         environment.add(new DirectionalLight().set(0.8f, 0.5f, 0.1f, -1f, -0.8f, -0.2f));
         environment.add(new DirectionalLight().set(0.0f, 0.4f, 1.0f, -1f, -0.2f, -0.5f));
         TextureData data = AssetManager.getTexture(Assets.Textures.CUBEMAP_SPACE_1).getTextureData();

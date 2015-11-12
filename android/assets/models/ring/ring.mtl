@@ -1,12 +1,12 @@
 # Blender MTL File: 'ring.blend'
 # Material Count: 1
 
-newmtl Material.001
-Ns 9.803922
+newmtl Material
+Ns 209.803922
 Ka 1.000000 1.000000 1.000000
-Kd 0.076072 0.006570 1.000000
+Kd 0.000000 0.008309 0.220257
 Ks 1.000000 1.000000 1.000000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
-d 0.210526
+d 1.000000
 illum 2
