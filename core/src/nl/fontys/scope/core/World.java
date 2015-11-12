@@ -16,6 +16,7 @@ import nl.fontys.scope.event.EventType;
 import nl.fontys.scope.event.Events;
 import nl.fontys.scope.graphics.LightingManager;
 import nl.fontys.scope.graphics.RenderManager;
+import nl.fontys.scope.graphics.renderer.EnergyRenderer;
 import nl.fontys.scope.graphics.renderer.ModelRenderer;
 import nl.fontys.scope.object.GameObject;
 
@@ -57,6 +58,7 @@ public class World {
         renderManager.register(nl.fontys.scope.object.GameObjectType.SHIP, new ModelRenderer(AssetManager.getModel(Assets.Models.CRUISER)));
         renderManager.register(nl.fontys.scope.object.GameObjectType.RING, new ModelRenderer(AssetManager.getModel(Assets.Models.RING)));
         renderManager.register(nl.fontys.scope.object.GameObjectType.PLANET, new ModelRenderer(AssetManager.getModel(Assets.Models.PLANET)));
+        renderManager.register(nl.fontys.scope.object.GameObjectType.ENERGY, new EnergyRenderer());
     }
 
     public void addController(nl.fontys.scope.object.GameObject gameObject, GameObjectController controller) {

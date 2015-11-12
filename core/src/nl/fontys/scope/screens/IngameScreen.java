@@ -40,10 +40,11 @@ public class IngameScreen implements Screen {
 
         GameObject planet = world.createGameObject();
         planet.setType(GameObjectType.PLANET);
-        planet.setPosition(1000f, 0f, 0f);
-        planet.setScale(100f);
+        planet.setPosition(1500f, 0f, 0f);
+        planet.setScale(200f);
+        factory.createArena(0f, 0f, 0f, 2, 50, 200);
+        factory.createEnergy(10,0, 10);
 
-        factory.createArena(0f, 0f, 0f, 2, 500, 1500);
     }
 
     @Override

@@ -14,6 +14,7 @@ import java.util.Map;
 
 import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.assets.Assets;
+import nl.fontys.scope.graphics.renderer.GameObjectRenderer;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.object.GameObjectType;
 
@@ -34,7 +35,7 @@ public class RenderManager {
         this.lightingManager = lightingManager;
         lightingManager.setAmbientLight(0.05f, 0.1f, 0.3f, 1f);
         lightingManager.addDirectionalLight("9812098109830983", new DirectionalLight().set(0.0f, 0.4f, 1.0f, -1f, -0.2f, -0.5f));
-        lightingManager.addPointLight("01928012982019820928", new PointLight().set(Color.RED, 1000f, 0f, 0f, 1000000f));
+        lightingManager.addDirectionalLight("9wfewefwefwfeww3", new DirectionalLight().set(0.3f, 0.2f, 0.1f, 1f, 0.2f, 0.5f));
         TextureData data = AssetManager.getTexture(Assets.Textures.CUBEMAP_SPACE_1).getTextureData();
         data.prepare();
         cubemap = new EnvironmentCubemap(data.consumePixmap());
@@ -51,7 +52,8 @@ public class RenderManager {
     public void render(GameObject object, Camera camera) {
         modelBatch.begin(camera);
         if (renderer.containsKey(object.getType())) {
-            modelBatch.render(renderer.get(object.getType()).getCurrentInstance(object, lightingManager), lightingManager.getEnvironment());
+            GameObjectRenderer r = renderer.get(object.getType());
+            modelBatch.render(r.getCurrentInstance(object, lightingManager), r.hasLighting() ? lightingManager.getEnvironment() : null);
         }
         modelBatch.end();
     }

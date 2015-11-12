@@ -10,7 +10,7 @@ import nl.fontys.scope.graphics.LightingManager;
 
 public class ModelRenderer implements GameObjectRenderer {
 
-    private ModelInstance instance;
+    protected ModelInstance instance;
 
     public ModelRenderer(Model model) {
         this.instance = new ModelInstance(model);
@@ -25,4 +25,11 @@ public class ModelRenderer implements GameObjectRenderer {
         instance.transform.scale(scale, scale, scale);
         return instance;
     }
+
+    @Override
+    public boolean hasLighting() {
+        return true;
+    }
+
+
 }

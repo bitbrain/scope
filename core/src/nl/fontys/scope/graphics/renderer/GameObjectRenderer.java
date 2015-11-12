@@ -11,4 +11,6 @@ import nl.fontys.scope.graphics.LightingManager;
 public interface GameObjectRenderer {
 
     ModelInstance getCurrentInstance(GameObject object, LightingManager lightingManager);
+
+    boolean hasLighting();
 }

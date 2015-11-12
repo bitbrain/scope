@@ -8,5 +8,6 @@ public enum GameObjectType {
     SHIP,
     RING,
     PLANET,
+    ENERGY,
     NONE;
 }

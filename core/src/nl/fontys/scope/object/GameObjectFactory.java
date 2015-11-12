@@ -17,6 +17,7 @@ public class GameObjectFactory {
     public GameObject createShip(float x, float y, float z) {
         GameObject object = world.createGameObject();
         object.setType(GameObjectType.SHIP);
+        object.setScale(0.5f);
         return object;
     }
 
@@ -31,5 +32,13 @@ public class GameObjectFactory {
             rings[i].setScale(minScale + scaleStep * i);
         }
         return rings;
+    }
+
+    public GameObject createEnergy(float x, float y, float z) {
+        GameObject object = world.createGameObject();
+        object.setType(GameObjectType.ENERGY);
+        object.setPosition(x, y, z);
+        object.setScale(4.5f);
+        return object;
     }
 }
