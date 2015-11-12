@@ -1,6 +1,6 @@
 package nl.fontys.scope.core.controller;
 
-import nl.fontys.scope.core.GameObject;
+import nl.fontys.scope.object.GameObject;
 
 public interface GameObjectController {
 
