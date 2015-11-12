@@ -14,6 +14,7 @@ import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.core.controller.GameObjectController;
 import nl.fontys.scope.event.EventType;
 import nl.fontys.scope.event.Events;
+import nl.fontys.scope.graphics.LightingManager;
 import nl.fontys.scope.graphics.RenderManager;
 import nl.fontys.scope.graphics.renderer.ModelRenderer;
 import nl.fontys.scope.object.GameObject;
@@ -28,6 +29,8 @@ public class World {
     private RenderManager renderManager;
 
     private Physics physics;
+
+    private LightingManager lightingManager;
 
     Pool<nl.fontys.scope.object.GameObject> gameObjectPool = new Pool(256) {
         @Override
@@ -44,12 +47,13 @@ public class World {
 
     public World() {
         physics = new Physics();
+        lightingManager = new LightingManager();
         camera = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.position.set(1f, 1f, 1f);
         camera.near = 0.2f;
         camera.far = 30000f;
         camera.update();
-        renderManager = new RenderManager();
+        renderManager = new RenderManager(lightingManager);
         renderManager.register(nl.fontys.scope.object.GameObjectType.SHIP, new ModelRenderer(AssetManager.getModel(Assets.Models.CRUISER)));
         renderManager.register(nl.fontys.scope.object.GameObjectType.RING, new ModelRenderer(AssetManager.getModel(Assets.Models.RING)));
         renderManager.register(nl.fontys.scope.object.GameObjectType.PLANET, new ModelRenderer(AssetManager.getModel(Assets.Models.PLANET)));
