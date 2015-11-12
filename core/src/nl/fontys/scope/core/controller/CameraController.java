@@ -18,7 +18,7 @@ public class CameraController implements GameObjectController {
         Vector3 pos = object.getPosition();
         float camX = (float)(pos.x + Math.cos(-object.getOrientation().getAngleAroundRad(Vector3.Y)) * (-15f));
         float camZ = (float)(pos.z + Math.sin(-object.getOrientation().getAngleAroundRad(Vector3.Y)) * (-15f));
-        cam.position.set(camX, pos.y + 8, camZ);
-        cam.lookAt(pos.x, pos.y + 4, pos.z);
+        cam.position.set(camX, pos.y + 2, camZ);
+        cam.lookAt(pos.x, pos.y + 2, pos.z);
     }
 }
