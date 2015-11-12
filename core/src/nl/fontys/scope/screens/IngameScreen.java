@@ -1,32 +1,17 @@
 package nl.fontys.scope.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.PerspectiveCamera;
-import com.badlogic.gdx.graphics.TextureData;
-import com.badlogic.gdx.graphics.g3d.Environment;
-import com.badlogic.gdx.graphics.g3d.Model;
-import com.badlogic.gdx.graphics.g3d.ModelBatch;
-import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
-import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
-import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.Array;
 
-import nl.fontys.scope.assets.AssetManager;
-import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.controls.KeyboardControls;
-import nl.fontys.scope.core.GameObject;
-import nl.fontys.scope.core.GameObjectType;
+import nl.fontys.scope.object.GameObject;
+import nl.fontys.scope.object.GameObjectFactory;
+import nl.fontys.scope.object.GameObjectType;
 import nl.fontys.scope.core.World;
 import nl.fontys.scope.core.controller.CameraController;
-import nl.fontys.scope.core.controller.RingController;
 import nl.fontys.scope.core.controller.ShipController;
-import nl.fontys.scope.graphics.EnvironmentCubemap;
 
 public class IngameScreen implements Screen {
 
@@ -38,18 +23,25 @@ public class IngameScreen implements Screen {
 
     private CameraController camController;
 
+    private GameObjectFactory factory;
+
     @Override
     public void show() {
         world = new World();
+        factory = new GameObjectFactory(world);
         multiplexer = new InputMultiplexer();
         Gdx.input.setInputProcessor(multiplexer);
         camController = new CameraController(world.getCamera());
-        GameObject ship = world.createGameObject();
-        ship.setType(GameObjectType.SHIP);
+        GameObject ship = factory.createShip(0f, 0f, 0f);
         ShipController controller = new ShipController();
         world.addController(ship, controller);
         world.addController(ship, camController);
         keyboardControls = new KeyboardControls(controller);
+
+        GameObject planet = world.createGameObject();
+        planet.setType(GameObjectType.PLANET);
+        planet.setPosition(1000f, 0f, 0f);
+        planet.setScale(100f);
     }
 
     @Override

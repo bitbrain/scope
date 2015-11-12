@@ -1,4 +1,4 @@
-package nl.fontys.scope.core;
+package nl.fontys.scope.object;
 
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;

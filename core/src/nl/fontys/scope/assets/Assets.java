@@ -31,6 +31,7 @@ public final class Assets {
     public enum Models {
 
         CRUISER("models/cruiser/cruiser.obj"),
+        PLANET("models/planet_01/planet.obj"),
         RING("models/ring/ring.obj");
 
         private String path;

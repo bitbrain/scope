@@ -2,7 +2,7 @@ package nl.fontys.scope.core;
 
 public class Physics {
 
-    public void apply(GameObject object, float delta) {
+    public void apply(nl.fontys.scope.object.GameObject object, float delta) {
 
         object.getPosition().x += object.getVelocity().x * delta;
         object.getPosition().y += object.getVelocity().y * delta;

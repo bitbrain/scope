@@ -1,10 +1,7 @@
 package nl.fontys.scope.core;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
-import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.utils.Pool;
 
 import java.util.ArrayList;
@@ -19,6 +16,7 @@ import nl.fontys.scope.event.EventType;
 import nl.fontys.scope.event.Events;
 import nl.fontys.scope.graphics.RenderManager;
 import nl.fontys.scope.graphics.renderer.ModelRenderer;
+import nl.fontys.scope.object.GameObject;
 
 /**
  * World which provides game object management
@@ -31,14 +29,14 @@ public class World {
 
     private Physics physics;
 
-    Pool<GameObject> gameObjectPool = new Pool(256) {
+    Pool<nl.fontys.scope.object.GameObject> gameObjectPool = new Pool(256) {
         @Override
-        protected GameObject newObject() {
-            return new GameObject();
+        protected nl.fontys.scope.object.GameObject newObject() {
+            return new nl.fontys.scope.object.GameObject();
         }
     };
 
-    private Map<String, GameObject> objects = new HashMap<String, GameObject>();
+    private Map<String, nl.fontys.scope.object.GameObject> objects = new HashMap<String, nl.fontys.scope.object.GameObject>();
 
     Events events = Events.getInstance();
 
@@ -52,11 +50,12 @@ public class World {
         camera.far = 30000f;
         camera.update();
         renderManager = new RenderManager();
-        renderManager.register(GameObjectType.SHIP, new ModelRenderer(AssetManager.getModel(Assets.Models.CRUISER)));
-        renderManager.register(GameObjectType.RING, new ModelRenderer(AssetManager.getModel(Assets.Models.RING)));
+        renderManager.register(nl.fontys.scope.object.GameObjectType.SHIP, new ModelRenderer(AssetManager.getModel(Assets.Models.CRUISER)));
+        renderManager.register(nl.fontys.scope.object.GameObjectType.RING, new ModelRenderer(AssetManager.getModel(Assets.Models.RING)));
+        renderManager.register(nl.fontys.scope.object.GameObjectType.PLANET, new ModelRenderer(AssetManager.getModel(Assets.Models.PLANET)));
     }
 
-    public void addController(GameObject gameObject, GameObjectController controller) {
+    public void addController(nl.fontys.scope.object.GameObject gameObject, GameObjectController controller) {
         if (objects.containsKey(gameObject.getId())) {
             if (!controllers.containsKey(gameObject.getId())) {
                 controllers.put(gameObject.getId(), new ArrayList<GameObjectController>());
@@ -74,13 +73,13 @@ public class World {
         camera.viewportHeight = height;
     }
 
-    public GameObject createGameObject() {
-        GameObject object = gameObjectPool.obtain();
+    public nl.fontys.scope.object.GameObject createGameObject() {
+        nl.fontys.scope.object.GameObject object = gameObjectPool.obtain();
         objects.put(object.getId(), object);
         return object;
     }
 
-    public void remove(GameObject gameObject) {
+    public void remove(nl.fontys.scope.object.GameObject gameObject) {
         if (objects.remove(gameObject) != null) {
             controllers.remove(gameObject.getId());
             events.fire(EventType.OBJECT_REMOVED, gameObject);

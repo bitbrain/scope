@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 
-import nl.fontys.scope.core.GameObject;
+import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.graphics.LightingManager;
 
 public class ModelRenderer implements GameObjectRenderer {

@@ -12,8 +12,8 @@ import java.util.Map;
 
 import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.assets.Assets;
-import nl.fontys.scope.core.GameObject;
-import nl.fontys.scope.core.GameObjectType;
+import nl.fontys.scope.object.GameObject;
+import nl.fontys.scope.object.GameObjectType;
 
 /**
  * Manages rendering of the game
