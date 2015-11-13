@@ -1,11 +1,11 @@
-# Blender MTL File: 'cruiser.blend'
+# Blender MTL File: 'interceptor.blend'
 # Material Count: 1
 
-newmtl Material
-Ns 11.764706
+newmtl body
+Ns 19.607843
 Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
-Ks 1.000000 1.000000 1.000000
+Kd 0.243981 0.243981 0.243981
+Ks 0.342105 0.342105 0.342105
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
