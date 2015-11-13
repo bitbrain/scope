@@ -33,9 +33,8 @@ public class RenderManager {
 
     public RenderManager(LightingManager lightingManager) {
         this.lightingManager = lightingManager;
-        lightingManager.setAmbientLight(0.05f, 0.1f, 0.3f, 1f);
-        lightingManager.addDirectionalLight("9812098109830983", new DirectionalLight().set(0.0f, 0.4f, 1.0f, -1f, -0.2f, -0.5f));
-        lightingManager.addDirectionalLight("9wfewefwefwfeww3", new DirectionalLight().set(0.3f, 0.2f, 0.1f, 1f, 0.2f, 0.5f));
+        lightingManager.setAmbientLight(0.2f, 0.00f, 0.3f, 1f);
+        lightingManager.addDirectionalLight("9812098109830983", new DirectionalLight().set(0.0f, 0.3f, 1.0f, -1f, -0.2f, -0.5f));
         TextureData data = AssetManager.getTexture(Assets.Textures.CUBEMAP_SPACE_1).getTextureData();
         data.prepare();
         cubemap = new EnvironmentCubemap(data.consumePixmap());
