@@ -9,6 +9,8 @@ public class CameraController implements GameObjectController {
 
     private PerspectiveCamera cam;
 
+    private Vector3 velocity = new Vector3();
+
     public CameraController(PerspectiveCamera cam) {
         this.cam = cam;
     }
@@ -18,7 +20,13 @@ public class CameraController implements GameObjectController {
         Vector3 pos = object.getPosition();
         float camX = (float)(pos.x + Math.cos(-object.getOrientation().getAngleAroundRad(Vector3.Y)) * (-15f));
         float camZ = (float)(pos.z + Math.sin(-object.getOrientation().getAngleAroundRad(Vector3.Y)) * (-15f));
-        cam.position.set(camX, pos.y + 2, camZ);
-        cam.lookAt(pos.x, pos.y + 2, pos.z);
+        velocity.x = camX - cam.position.x;
+        velocity.y = pos.y - cam.position.y;
+        velocity.z = camZ - cam.position.z;
+        float distance = velocity.len();
+        velocity.nor();
+        double speed = distance * 5.2f;
+        cam.position.set(cam.position.x + (float)(velocity.x * speed * delta), cam.position.y + (float)(velocity.y * speed * delta), cam.position.z + (float)(velocity.z * speed * delta));
+        cam.lookAt(pos.x, pos.y, pos.z);
     }
 }
