@@ -8,7 +8,7 @@ import nl.fontys.scope.object.GameObject;
 
 public class ShipController implements GameObjectController, Moveable {
 
-    public static final float SPEED = 0.4f;
+    public static final float SPEED = 3.4f;
 
     private Vector3 accel = new Vector3();
 

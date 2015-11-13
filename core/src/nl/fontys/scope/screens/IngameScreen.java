@@ -9,6 +9,7 @@ import java.security.SecureRandom;
 import java.util.UUID;
 
 import nl.fontys.scope.controls.KeyboardControls;
+import nl.fontys.scope.core.controller.PlanetController;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.object.GameObjectFactory;
 import nl.fontys.scope.object.GameObjectType;
@@ -43,9 +44,8 @@ public class IngameScreen implements Screen {
 
         GameObject planet = world.createGameObject();
         planet.setType(GameObjectType.PLANET);
-        planet.setPosition(1500f, 0f, 0f);
         planet.setScale(200f);
-        factory.createArena(0f, 0f, 0f, 2, 50, 200);
+        world.addController(planet, new PlanetController(1000f));
         SecureRandom random = new SecureRandom(UUID.randomUUID().toString().getBytes());
         for (int i = 0; i < 4; ++i) {
             factory.createEnergy(random.nextFloat() * 300f - 100f, random.nextFloat() * 300f - 100f, random.nextFloat() * 300f - 100f);
