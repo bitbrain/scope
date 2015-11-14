@@ -25,8 +25,8 @@ public class CameraController implements GameObjectController {
         velocity.z = camZ - cam.position.z;
         float distance = velocity.len();
         velocity.nor();
-        double speed = distance * 5.2f;
-        cam.position.set(cam.position.x + (float)(velocity.x * speed * delta), cam.position.y + (float)(velocity.y * speed * delta), cam.position.z + (float)(velocity.z * speed * delta));
-        cam.lookAt(pos.x, pos.y, pos.z);
+        double speed = distance * 10.2f;
+        cam.position.set(cam.position.x + (float)(velocity.x * speed * delta), pos.y + 2, cam.position.z + (float)(velocity.z * speed * delta));
+        cam.lookAt(pos.x, pos.y + 2, pos.z);
     }
 }
