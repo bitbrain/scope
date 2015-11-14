@@ -3,11 +3,14 @@ package nl.fontys.scope.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 
 import java.security.SecureRandom;
 import java.util.UUID;
 
+import nl.fontys.scope.assets.AssetManager;
+import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.controls.KeyboardControls;
 import nl.fontys.scope.core.controller.PlanetController;
 import nl.fontys.scope.object.GameObject;
@@ -31,6 +34,9 @@ public class IngameScreen implements Screen {
 
     @Override
     public void show() {
+        Music music = AssetManager.getMusic(Assets.Musics.STARSURFER);
+        music.setLooping(true);
+        music.play();
         world = new World();
         factory = new GameObjectFactory(world);
         multiplexer = new InputMultiplexer();

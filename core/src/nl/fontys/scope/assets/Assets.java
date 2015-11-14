@@ -45,4 +45,22 @@ public final class Assets {
             return path;
         }
     }
+
+    /**
+     * Contains music definitions
+     */
+    public enum Musics {
+
+        STARSURFER("music/starsurfer.ogg");
+
+        private String path;
+
+        Musics(String path) {
+            this.path = path;
+        }
+
+        public String getPath() {
+            return path;
+        }
+    }
 }
