@@ -50,8 +50,8 @@ public class IngameScreen implements Screen {
 
         GameObject planet = world.createGameObject();
         planet.setType(GameObjectType.PLANET);
-        planet.setScale(20f);
-        world.addController(planet, new PlanetController(100f));
+        planet.setScale(50f);
+        world.addController(planet, new PlanetController(500f));
         SecureRandom random = new SecureRandom(UUID.randomUUID().toString().getBytes());
         factory.createEnergy(random.nextFloat() * 50f - 50f, random.nextFloat() * 50f - 50f, random.nextFloat() * 50f - 50f);
 

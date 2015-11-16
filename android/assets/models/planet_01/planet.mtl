@@ -1,13 +1,19 @@
 # Blender MTL File: 'None'
 # Material Count: 1
 
-newmtl Material.002
-Ns 96.078431
+newmtl Material.001
+Ns 37.254902
 Ka 1.000000 1.000000 1.000000
-Kd 0.640000 0.640000 0.640000
-Ks 0.500000 0.500000 0.500000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
-illum 2
+illum 1
+map_Bump texture.png
+map_Ka texture.png
 map_Kd texture.png
+map_Ke texture.png
+map_Ks texture.png
+map_Ns texture.png
+map_d texture.png

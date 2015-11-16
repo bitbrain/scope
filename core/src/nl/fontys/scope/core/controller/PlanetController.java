@@ -20,6 +20,6 @@ public class PlanetController implements GameObjectController {
         Vector3 pos = object.getPosition();
         pos.x = (float)Math.cos(Math.toRadians(angle)) * radius;
         pos.z = (float)Math.sin(Math.toRadians(angle)) * radius;
-        angle += 3.4f * delta;
+        angle += 1.4f * delta;
     }
 }

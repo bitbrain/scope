@@ -18,6 +18,7 @@ import nl.fontys.scope.graphics.LightingManager;
 import nl.fontys.scope.graphics.RenderManager;
 import nl.fontys.scope.graphics.renderer.EnergyRenderer;
 import nl.fontys.scope.graphics.renderer.ModelRenderer;
+import nl.fontys.scope.graphics.renderer.ShipRenderer;
 import nl.fontys.scope.object.GameObject;
 
 /**
@@ -55,7 +56,7 @@ public class World {
         camera.far = 30000f;
         camera.update();
         renderManager = new RenderManager(lightingManager);
-        renderManager.register(nl.fontys.scope.object.GameObjectType.SHIP, new ModelRenderer(AssetManager.getModel(Assets.Models.CRUISER)));
+        renderManager.register(nl.fontys.scope.object.GameObjectType.SHIP, new ShipRenderer());
         renderManager.register(nl.fontys.scope.object.GameObjectType.RING, new ModelRenderer(AssetManager.getModel(Assets.Models.RING)));
         renderManager.register(nl.fontys.scope.object.GameObjectType.PLANET, new ModelRenderer(AssetManager.getModel(Assets.Models.PLANET)));
         renderManager.register(nl.fontys.scope.object.GameObjectType.ENERGY, new EnergyRenderer());
