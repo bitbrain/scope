@@ -1,6 +1,7 @@
 package nl.fontys.scope.object;
 
 import nl.fontys.scope.core.World;
+import nl.fontys.scope.core.controller.PlanetController;
 import nl.fontys.scope.core.controller.RingController;
 
 /**
@@ -32,6 +33,14 @@ public class GameObjectFactory {
             rings[i].setScale(minScale + scaleStep * i);
         }
         return rings;
+    }
+
+    public GameObject createPlanet(float radius, float scale, float angle, float speed) {
+        GameObject object = world.createGameObject();
+        object.setType(GameObjectType.PLANET);
+        object.setScale(scale);
+        world.addController(object, new PlanetController(radius, angle, speed));
+        return object;
     }
 
     public GameObject createEnergy(float x, float y, float z) {

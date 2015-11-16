@@ -11,8 +11,12 @@ public class PlanetController implements GameObjectController {
 
     private float radius;
 
-    public PlanetController(float radius) {
+    private float speed;
+
+    public PlanetController(float radius, float angle, float speed) {
         this.radius = radius;
+        this.angle = angle;
+        this.speed = speed;
     }
 
     @Override
@@ -20,6 +24,6 @@ public class PlanetController implements GameObjectController {
         Vector3 pos = object.getPosition();
         pos.x = (float)Math.cos(Math.toRadians(angle)) * radius;
         pos.z = (float)Math.sin(Math.toRadians(angle)) * radius;
-        angle += 1.4f * delta;
+        angle += speed * delta;
     }
 }

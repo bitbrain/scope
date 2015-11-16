@@ -47,13 +47,12 @@ public class IngameScreen implements Screen {
         world.addController(ship, controller);
         world.addController(ship, camController);
         keyboardControls = new KeyboardControls(controller);
-
-        GameObject planet = world.createGameObject();
-        planet.setType(GameObjectType.PLANET);
-        planet.setScale(50f);
-        world.addController(planet, new PlanetController(500f));
         SecureRandom random = new SecureRandom(UUID.randomUUID().toString().getBytes());
         factory.createEnergy(random.nextFloat() * 50f - 50f, random.nextFloat() * 50f - 50f, random.nextFloat() * 50f - 50f);
+        factory.createPlanet(500f, 50f, 34f, 1.6f);
+        factory.createPlanet(1000f, 80f, 234f, 1.2f);
+        factory.createPlanet(1500f, 20f, 44f, 2.7f);
+        factory.createPlanet(700f, 10f, 44f, 4.7f);
 
     }
 
