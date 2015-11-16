@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.assets.Assets;
@@ -33,9 +34,6 @@ public class RenderManager {
 
     public RenderManager(LightingManager lightingManager) {
         this.lightingManager = lightingManager;
-        lightingManager.setAmbientLight(0.2f, 0.00f, 0.4f, 1f);
-        lightingManager.addDirectionalLight("9812098109830983", new DirectionalLight().set(0.0f, 0.3f, 1.0f, 0f, -0.2f, -1f));
-        lightingManager.addDirectionalLight("7810982298091282", new DirectionalLight().set(0.2f, 0.0f, 0.5f, 0f, -0.2f, 1.0f));
         TextureData data = AssetManager.getTexture(Assets.Textures.CUBEMAP_SPACE_1).getTextureData();
         data.prepare();
         cubemap = new EnvironmentCubemap(data.consumePixmap());

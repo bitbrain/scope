@@ -2,12 +2,14 @@ package nl.fontys.scope.core;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
+import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.utils.Pool;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.assets.Assets;
@@ -60,6 +62,10 @@ public class World {
         renderManager.register(nl.fontys.scope.object.GameObjectType.RING, new ModelRenderer(AssetManager.getModel(Assets.Models.RING)));
         renderManager.register(nl.fontys.scope.object.GameObjectType.PLANET, new ModelRenderer(AssetManager.getModel(Assets.Models.PLANET)));
         renderManager.register(nl.fontys.scope.object.GameObjectType.ENERGY, new EnergyRenderer());
+
+        lightingManager.setAmbientLight(0.2f, 0.00f, 0.4f, 1f);
+        lightingManager.addDirectionalLight(UUID.randomUUID().toString(), new DirectionalLight().set(0.0f, 0.3f, 1.0f, 0f, -0.2f, -1f));
+        lightingManager.addDirectionalLight(UUID.randomUUID().toString(), new DirectionalLight().set(0.2f, 0.0f, 0.5f, 0f, -0.2f, 1.0f));
     }
 
     public void addController(nl.fontys.scope.object.GameObject gameObject, GameObjectController controller) {
