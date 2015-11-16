@@ -1,6 +1,7 @@
 package nl.fontys.scope.assets;
 
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g3d.Model;
 
@@ -29,6 +30,10 @@ public class AssetManager {
         return assetManager.get(musics.getPath(), Music.class);
     }
 
+    public static Sound getSound(Assets.Sounds sounds) {
+        return assetManager.get(sounds.getPath(), Sound.class);
+    }
+
     public static void init() {
         for (Assets.Textures texture : Assets.Textures.values()) {
             assetManager.load(texture.getPath(), Texture.class);
@@ -38,6 +43,10 @@ public class AssetManager {
         }
         for (Assets.Musics music : Assets.Musics.values()) {
             assetManager.load(music.getPath(), Music.class);
+        }
+        for (Assets.Sounds sound : Assets.Sounds.values()) {
+            // TODO: implement sounds first
+            //assetManager.load(sound.getPath(), Sound.class);
         }
         assetManager.finishLoading();
     }

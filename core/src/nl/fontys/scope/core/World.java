@@ -49,6 +49,8 @@ public class World {
 
     private Map<String, List<GameObjectController>> controllers = new HashMap<String, List<GameObjectController> >();
 
+    private List<GameObjectController> globalControllers = new ArrayList<GameObjectController>();
+
     public World() {
         physics = new Physics();
         lightingManager = new LightingManager();
@@ -75,6 +77,10 @@ public class World {
             }
             controllers.get(gameObject.getId()).add(controller);
         }
+    }
+
+    public void addController(GameObjectController controller) {
+        globalControllers.add(controller);
     }
 
     public void dispose() {
@@ -107,11 +113,16 @@ public class World {
         camera.update();
         renderManager.background(camera);
         for (GameObject object : objects.values()) {
+            // Local controllers
             List<GameObjectController> c = controllers.get(object.getId());
             if (c != null) {
                 for (GameObjectController cObject : c) {
                     cObject.update(object, delta);
                 }
+            }
+            // Global controllers
+            for (GameObjectController globalController : globalControllers) {
+                globalController.update(object, delta);
             }
             physics.apply(object, delta);
             renderManager.render(object, camera);

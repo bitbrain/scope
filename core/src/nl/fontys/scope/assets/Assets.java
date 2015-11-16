@@ -63,4 +63,21 @@ public final class Assets {
             return path;
         }
     }
+
+    /**
+     * Contains sound definitions
+     */
+    public enum Sounds {
+        TEST("");
+
+        private String path;
+
+        Sounds(String path) {
+            this.path = path;
+        }
+
+        public String getPath() {
+            return path;
+        }
+    }
 }

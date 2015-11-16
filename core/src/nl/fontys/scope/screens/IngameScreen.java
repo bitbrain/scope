@@ -11,6 +11,7 @@ import java.util.UUID;
 
 import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.assets.Assets;
+import nl.fontys.scope.audio.SoundManager;
 import nl.fontys.scope.controls.KeyboardControls;
 import nl.fontys.scope.core.controller.PlanetController;
 import nl.fontys.scope.object.GameObject;
@@ -32,11 +33,11 @@ public class IngameScreen implements Screen {
 
     private GameObjectFactory factory;
 
+    private SoundManager soundManager = SoundManager.getInstance();
+
     @Override
     public void show() {
-        Music music = AssetManager.getMusic(Assets.Musics.STARSURFER);
-        music.setLooping(true);
-        music.play();
+        soundManager.play(Assets.Musics.STARSURFER, true);
         world = new World();
         factory = new GameObjectFactory(world);
         multiplexer = new InputMultiplexer();
@@ -48,6 +49,7 @@ public class IngameScreen implements Screen {
         world.addController(ship, camController);
         keyboardControls = new KeyboardControls(controller);
         SecureRandom random = new SecureRandom(UUID.randomUUID().toString().getBytes());
+        world.addController(soundManager);
         factory.createEnergy(random.nextFloat() * 50f - 50f, random.nextFloat() * 50f - 50f, random.nextFloat() * 50f - 50f);
         factory.createPlanet(500f, 50f, 34f, 1.6f);
         factory.createPlanet(1000f, 80f, 234f, 1.2f);
