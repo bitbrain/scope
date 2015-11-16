@@ -13,6 +13,7 @@ public class CameraController implements GameObjectController {
 
     public CameraController(PerspectiveCamera cam) {
         this.cam = cam;
+        this.cam.position.x = -8000f;
     }
 
     @Override
