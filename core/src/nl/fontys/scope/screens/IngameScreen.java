@@ -29,6 +29,7 @@ import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.audio.SoundManager;
 import nl.fontys.scope.controls.KeyboardControls;
 import nl.fontys.scope.core.controller.PlanetController;
+import nl.fontys.scope.graphics.ShaderManager;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.object.GameObjectFactory;
 import nl.fontys.scope.object.GameObjectType;
@@ -37,8 +38,6 @@ import nl.fontys.scope.core.controller.CameraController;
 import nl.fontys.scope.core.controller.ShipController;
 
 public class IngameScreen implements Screen {
-
-    private static final boolean isDesktop = (Gdx.app.getType() == Application.ApplicationType.Desktop);
 
     private World world;
 
@@ -52,25 +51,11 @@ public class IngameScreen implements Screen {
 
     private SoundManager soundManager = SoundManager.getInstance();
 
-    private PostProcessor postProcessor;
+    private ShaderManager shaderManager;
 
     @Override
     public void show() {
-        ShaderLoader.BasePath = "postprocessing/shaders/";
-        postProcessor = new PostProcessor( true, true, isDesktop );
-
-        Zoomer zoomer = new Zoomer(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), RadialBlur.Quality.High);
-        zoomer.setBlurStrength(0.1f);
-        zoomer.setZoom(1.1f);
-        zoomer.setEnabled(true);
-        postProcessor.addEffect(zoomer);
-        Vignette vignette = new Vignette(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
-        vignette.setIntensity(1.0f);
-        postProcessor.addEffect(vignette);
-        Bloom bloom = new Bloom( (int)(Gdx.graphics.getWidth() * 0.1f), (int)(Gdx.graphics.getHeight() * 0.1f) );
-        postProcessor.addEffect(bloom);
-        Fxaa fxaa = new Fxaa(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        postProcessor.addEffect(fxaa);
+        shaderManager = ShaderManager.getInstance();
         soundManager.play(Assets.Musics.STARSURFER, true);
         world = new World();
         factory = new GameObjectFactory(world);
@@ -98,9 +83,9 @@ public class IngameScreen implements Screen {
         Gdx.gl.glClearColor(0.02f, 0f, 0.05f, 1f);
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT | (Gdx.graphics.getBufferFormat().coverageSampling ? GL20.GL_COVERAGE_BUFFER_BIT_NV : 0));
-        postProcessor.capture();
+        shaderManager.begin();
         world.updateAndRender(delta);
-        postProcessor.render();
+        shaderManager.end();
     }
 
     @Override
@@ -115,7 +100,7 @@ public class IngameScreen implements Screen {
 
     @Override
     public void resume() {
-        postProcessor.rebind();
+        shaderManager.resume();
     }
 
     @Override
@@ -126,6 +111,6 @@ public class IngameScreen implements Screen {
     @Override
     public void dispose() {
         world.dispose();
-        postProcessor.dispose();
+        shaderManager.dispose();
     }
 }
