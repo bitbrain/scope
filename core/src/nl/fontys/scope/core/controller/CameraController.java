@@ -1,8 +1,10 @@
 package nl.fontys.scope.core.controller;
 
 import com.badlogic.gdx.graphics.PerspectiveCamera;
+import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.math.Vector3;
 
+import nl.fontys.scope.graphics.ShaderManager;
 import nl.fontys.scope.object.GameObject;
 
 public class CameraController implements GameObjectController {
@@ -19,14 +21,17 @@ public class CameraController implements GameObjectController {
     @Override
     public void update(GameObject object, float delta) {
         Vector3 pos = object.getPosition();
-        float camX = (float)(pos.x + Math.cos(-object.getOrientation().getAngleAroundRad(Vector3.Y)) * (-15f));
-        float camZ = (float)(pos.z + Math.sin(-object.getOrientation().getAngleAroundRad(Vector3.Y)) * (-15f));
-        velocity.x = camX - cam.position.x;
+        double camX = pos.x + Math.cos(-object.getOrientation().getAngleAroundRad(Vector3.Y)) * (-15f);
+        double camZ = pos.z + Math.sin(-object.getOrientation().getAngleAroundRad(Vector3.Y)) * (-15f);
+        velocity.x = (float)camX - cam.position.x;
         velocity.y = pos.y - cam.position.y;
-        velocity.z = camZ - cam.position.z;
-        float distance = velocity.len();
+        velocity.z = (float)camZ - cam.position.z;
+        double distance = velocity.len();
         velocity.nor();
         double speed = distance * 10.2f;
+        ShaderManager shaderManager = ShaderManager.getInstance();
+        shaderManager.setBlurStrength((float)(speed*speed) * 0.000002f);
+        shaderManager.setZoom(1f + (float)(speed*speed) * 0.000001f);
         cam.position.set(cam.position.x + (float)(velocity.x * speed * delta), pos.y + 2, cam.position.z + (float)(velocity.z * speed * delta));
         cam.lookAt(pos.x, pos.y + 2, pos.z);
     }
