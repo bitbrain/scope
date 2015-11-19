@@ -41,7 +41,7 @@ public class EnergyRenderer extends ModelRenderer {
             data = new EnergyData();
             map.put(object.getId(), data);
         }
-        light.set(Color.valueOf("00ff00"), object.getPosition().x, object.getPosition().y, object.getPosition().z, 50f * data.scale);
+        light.set(Color.valueOf("00ff33"), object.getPosition().x, object.getPosition().y, object.getPosition().z, 50f * data.scale);
         data.scale = 8.5f + (float)Math.sin(data.tick / 30f) * 0.5f;
         object.setScale(data.scale);
         data.tick++;
