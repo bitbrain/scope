@@ -6,8 +6,19 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.bitfire.postprocessing.PostProcessor;
+import com.bitfire.postprocessing.effects.Antialiasing;
 import com.bitfire.postprocessing.effects.Bloom;
+import com.bitfire.postprocessing.effects.CameraMotion;
+import com.bitfire.postprocessing.effects.Fxaa;
+import com.bitfire.postprocessing.effects.LensFlare2;
+import com.bitfire.postprocessing.effects.MotionBlur;
+import com.bitfire.postprocessing.effects.Vignette;
+import com.bitfire.postprocessing.effects.Zoomer;
+import com.bitfire.postprocessing.filters.RadialBlur;
 import com.bitfire.utils.ShaderLoader;
 
 import java.security.SecureRandom;
@@ -46,9 +57,20 @@ public class IngameScreen implements Screen {
     @Override
     public void show() {
         ShaderLoader.BasePath = "postprocessing/shaders/";
-        postProcessor = new PostProcessor( false, false, isDesktop );
-        Bloom bloom = new Bloom( (int)(Gdx.graphics.getWidth() * 0.25f), (int)(Gdx.graphics.getHeight() * 0.25f) );
-        postProcessor.addEffect( bloom );
+        postProcessor = new PostProcessor( true, true, isDesktop );
+
+        Zoomer zoomer = new Zoomer(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), RadialBlur.Quality.High);
+        zoomer.setBlurStrength(0.1f);
+        zoomer.setZoom(1.1f);
+        zoomer.setEnabled(true);
+        postProcessor.addEffect(zoomer);
+        Vignette vignette = new Vignette(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
+        vignette.setIntensity(1.0f);
+        postProcessor.addEffect(vignette);
+        Bloom bloom = new Bloom( (int)(Gdx.graphics.getWidth() * 0.1f), (int)(Gdx.graphics.getHeight() * 0.1f) );
+        postProcessor.addEffect(bloom);
+        Fxaa fxaa = new Fxaa(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        postProcessor.addEffect(fxaa);
         soundManager.play(Assets.Musics.STARSURFER, true);
         world = new World();
         factory = new GameObjectFactory(world);
