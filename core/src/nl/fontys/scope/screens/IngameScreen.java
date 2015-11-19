@@ -1,10 +1,14 @@
 package nl.fontys.scope.screens;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
+import com.bitfire.postprocessing.PostProcessor;
+import com.bitfire.postprocessing.effects.Bloom;
+import com.bitfire.utils.ShaderLoader;
 
 import java.security.SecureRandom;
 import java.util.UUID;
@@ -23,6 +27,8 @@ import nl.fontys.scope.core.controller.ShipController;
 
 public class IngameScreen implements Screen {
 
+    private static final boolean isDesktop = (Gdx.app.getType() == Application.ApplicationType.Desktop);
+
     private World world;
 
     private KeyboardControls keyboardControls;
@@ -35,8 +41,14 @@ public class IngameScreen implements Screen {
 
     private SoundManager soundManager = SoundManager.getInstance();
 
+    private PostProcessor postProcessor;
+
     @Override
     public void show() {
+        ShaderLoader.BasePath = "postprocessing/shaders/";
+        postProcessor = new PostProcessor( false, false, isDesktop );
+        Bloom bloom = new Bloom( (int)(Gdx.graphics.getWidth() * 0.25f), (int)(Gdx.graphics.getHeight() * 0.25f) );
+        postProcessor.addEffect( bloom );
         soundManager.play(Assets.Musics.STARSURFER, true);
         world = new World();
         factory = new GameObjectFactory(world);
@@ -64,7 +76,9 @@ public class IngameScreen implements Screen {
         Gdx.gl.glClearColor(0.02f, 0f, 0.05f, 1f);
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT | (Gdx.graphics.getBufferFormat().coverageSampling ? GL20.GL_COVERAGE_BUFFER_BIT_NV : 0));
+        postProcessor.capture();
         world.updateAndRender(delta);
+        postProcessor.render();
     }
 
     @Override
@@ -79,7 +93,7 @@ public class IngameScreen implements Screen {
 
     @Override
     public void resume() {
-
+        postProcessor.rebind();
     }
 
     @Override
@@ -90,5 +104,6 @@ public class IngameScreen implements Screen {
     @Override
     public void dispose() {
         world.dispose();
+        postProcessor.dispose();
     }
 }
