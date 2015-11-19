@@ -28,7 +28,7 @@ public class CameraController implements GameObjectController {
         velocity.z = (float)camZ - cam.position.z;
         double distance = velocity.len();
         velocity.nor();
-        double speed = distance * 10.2f;
+        double speed = distance * 20.2f;
         ShaderManager shaderManager = ShaderManager.getInstance();
         shaderManager.setBlurStrength((float)(speed*speed) * 0.000002f);
         shaderManager.setZoom(1f + (float)(speed*speed) * 0.000001f);

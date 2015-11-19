@@ -47,8 +47,16 @@ public final class ShaderManager {
         lf.setGhosts(2);
         lf.setFlareIntesity(0.12f);
         processor.addEffect(lf);
-        bloom = new Bloom( (int)(Gdx.graphics.getWidth() * 0.1f), (int)(Gdx.graphics.getHeight() * 0.1f) );
+        bloom = new Bloom(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        bloom.setBlurAmount(20f);
+        bloom.setBlurPasses(5);
         processor.addEffect(bloom);
+        bloom = new Bloom(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        bloom.setBlurAmount(50f);
+        bloom.setBlurPasses(3);
+        processor.addEffect(bloom);
+        fxaa = new Fxaa(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        processor.addEffect(fxaa);
         fxaa = new Fxaa(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         processor.addEffect(fxaa);
     }

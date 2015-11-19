@@ -3,9 +3,8 @@ package nl.fontys.scope;
 import com.badlogic.gdx.Game;
 
 import nl.fontys.scope.assets.AssetManager;
-import nl.fontys.scope.assets.Assets;
+import nl.fontys.scope.screens.AbstractScreen;
 import nl.fontys.scope.screens.IngameScreen;
-import nl.fontys.scope.screens.ModelLoadingScreen;
 
 public class ScopeGame extends Game {
 	@Override
