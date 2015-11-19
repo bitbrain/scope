@@ -2,9 +2,11 @@ package nl.fontys.scope.graphics;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.bitfire.postprocessing.PostProcessor;
 import com.bitfire.postprocessing.effects.Bloom;
 import com.bitfire.postprocessing.effects.Fxaa;
+import com.bitfire.postprocessing.effects.LensFlare2;
 import com.bitfire.postprocessing.effects.Vignette;
 import com.bitfire.postprocessing.effects.Zoomer;
 import com.bitfire.postprocessing.filters.Blur;
@@ -38,6 +40,13 @@ public final class ShaderManager {
         vignette = new Vignette(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
         vignette.setIntensity(1.0f);
         processor.addEffect(vignette);
+        LensFlare2 lf = new LensFlare2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        lf.setLensColorTexture(new Texture(Gdx.files.internal("postprocessing/lenscolor.png")));
+        lf.setBlurAmount(10f);
+        lf.setBlurPasses(5);
+        lf.setGhosts(2);
+        lf.setFlareIntesity(0.12f);
+        processor.addEffect(lf);
         bloom = new Bloom( (int)(Gdx.graphics.getWidth() * 0.1f), (int)(Gdx.graphics.getHeight() * 0.1f) );
         processor.addEffect(bloom);
         fxaa = new Fxaa(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
