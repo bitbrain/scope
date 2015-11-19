@@ -1,8 +1,13 @@
 package nl.fontys.scope.screens;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+
 import java.security.SecureRandom;
 import java.util.UUID;
 
+import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.controls.KeyboardControls;
 import nl.fontys.scope.core.controller.CameraController;
@@ -38,5 +43,9 @@ public class IngameScreen extends AbstractScreen {
     @Override
     protected void onUpdate(float delta) {
         keyboardControls.update(delta);
+    }
+
+    @Override
+    protected void onCreateStage(Stage stage) {
     }
 }

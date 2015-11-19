@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.bitfire.postprocessing.PostProcessor;
 import com.bitfire.postprocessing.effects.Antialiasing;
 import com.bitfire.postprocessing.effects.Bloom;
@@ -50,6 +51,8 @@ public abstract class AbstractScreen implements Screen {
 
     protected ShaderManager shaderManager;
 
+    private Stage stage;
+
     @Override
     public final void show() {
         shaderManager = ShaderManager.getInstance();
@@ -70,6 +73,8 @@ public abstract class AbstractScreen implements Screen {
         shaderManager.begin();
         world.updateAndRender(delta);
         shaderManager.end();
+        stage.act(delta);
+        stage.draw();
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
         }
@@ -77,6 +82,11 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public final void resize(int width, int height) {
+        if (stage == null) {
+            stage = new Stage();
+            multiplexer.addProcessor(stage);
+            onCreateStage(stage);
+        }
         world.resize(width, height);
     }
 
@@ -103,4 +113,5 @@ public abstract class AbstractScreen implements Screen {
 
     protected abstract void onShow();
     protected abstract void onUpdate(float delta);
+    protected abstract void onCreateStage(Stage stage);
 }
