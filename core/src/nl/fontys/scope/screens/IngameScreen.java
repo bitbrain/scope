@@ -1,14 +1,20 @@
 package nl.fontys.scope.screens;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.controllers.Controller;
+import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.assets.Assets;
+import nl.fontys.scope.controls.ControllerControls;
 import nl.fontys.scope.controls.KeyboardControls;
 import nl.fontys.scope.core.controller.CameraController;
 import nl.fontys.scope.core.controller.ShipController;
@@ -19,6 +25,8 @@ public class IngameScreen extends AbstractScreen {
     private KeyboardControls keyboardControls;
 
     private CameraController camController;
+
+    private List<ControllerControls> controls = new ArrayList<ControllerControls>();
 
     @Override
     protected void onShow() {
@@ -38,11 +46,19 @@ public class IngameScreen extends AbstractScreen {
         factory.createPlanet(1000f, 80f, 234f, 1.2f);
         factory.createPlanet(1500f, 20f, 44f, 2.7f);
         factory.createPlanet(700f, 10f, 44f, 4.7f);
+        for (Controller c : Controllers.getControllers()) {
+            ControllerControls cc = new ControllerControls(controller);
+            controls.add(cc);
+            c.addListener(cc);
+        }
     }
 
     @Override
     protected void onUpdate(float delta) {
         keyboardControls.update(delta);
+        for (ControllerControls c : controls) {
+            c.update(delta);
+        }
     }
 
     @Override

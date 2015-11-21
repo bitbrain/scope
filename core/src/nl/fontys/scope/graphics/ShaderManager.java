@@ -43,20 +43,14 @@ public final class ShaderManager {
         LensFlare2 lf = new LensFlare2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         lf.setLensColorTexture(new Texture(Gdx.files.internal("postprocessing/lenscolor.png")));
         lf.setBlurAmount(10f);
-        lf.setBlurPasses(5);
-        lf.setGhosts(2);
+        lf.setBlurPasses(3);
+        lf.setGhosts(3);
         lf.setFlareIntesity(0.12f);
         processor.addEffect(lf);
         bloom = new Bloom(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         bloom.setBlurAmount(20f);
-        bloom.setBlurPasses(5);
-        processor.addEffect(bloom);
-        bloom = new Bloom(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        bloom.setBlurAmount(50f);
         bloom.setBlurPasses(3);
         processor.addEffect(bloom);
-        fxaa = new Fxaa(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        processor.addEffect(fxaa);
         fxaa = new Fxaa(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         processor.addEffect(fxaa);
     }

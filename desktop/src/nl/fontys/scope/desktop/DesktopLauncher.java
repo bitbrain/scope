@@ -7,11 +7,10 @@ import nl.fontys.scope.ScopeGame;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.width = 1920;
-		config.height = 1080;
+		config.width = 800;
+		config.height = 480;
 		config.vSyncEnabled = true;
 		config.useHDPI = true;
-		config.fullscreen = true;
 		new LwjglApplication(new ScopeGame(), config);
 	}
 }
