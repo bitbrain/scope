@@ -11,8 +11,12 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+import aurelienribon.tweenengine.TweenEquation;
+import aurelienribon.tweenengine.TweenEquations;
+import aurelienribon.tweenengine.TweenManager;
 import nl.fontys.scope.ScopeGame;
 import nl.fontys.scope.assets.AssetManager;
+import nl.fontys.scope.graphics.FX;
 import nl.fontys.scope.util.Colors;
 
 public class LoadingScreen implements Screen {
@@ -27,6 +31,10 @@ public class LoadingScreen implements Screen {
 
     private ShapeRenderer renderer;
 
+    private FX fx = FX.getInstance();
+
+    private TweenManager tweenManager;
+
     public LoadingScreen(ScopeGame game) {
         this.game = game;
     }
@@ -37,16 +45,20 @@ public class LoadingScreen implements Screen {
 
     @Override
     public void show() {
+        tweenManager = new TweenManager();
         AssetManager.init();
         this.batch = new SpriteBatch();
         cam = new OrthographicCamera();
         renderer = new ShapeRenderer();
+        fx.init(tweenManager, cam);
+        fx.fadeIn(0.5f, TweenEquations.easeInOutCubic);
     }
 
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(Colors.SECONDARY.r, Colors.SECONDARY.g, Colors.SECONDARY.b, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        tweenManager.update(delta);
         AssetManager.update();
         cam.update();
         if (AssetManager.isLoaded()) {
@@ -66,6 +78,9 @@ public class LoadingScreen implements Screen {
         renderer.setColor(Colors.PRIMARY);
         renderer.rect(Gdx.graphics.getWidth() / 2f - width / 2f, Gdx.graphics.getHeight() / 2f - height / 2f, width * AssetManager.getProgress(), height);
         renderer.end();
+        batch.begin();
+        fx.render(batch, delta);
+        batch.end();
     }
 
     @Override

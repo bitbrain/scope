@@ -9,6 +9,7 @@ import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenEquation;
 import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
+import nl.fontys.scope.tweens.ColorTween;
 import nl.fontys.scope.tweens.SpriteTween;
 
 public final class FX {
@@ -23,8 +24,13 @@ public final class FX {
 
     private Color flashColor;
 
+    static {
+        Tween.registerAccessor(Sprite.class, new SpriteTween());
+        Tween.registerAccessor(Color.class, new ColorTween());
+    }
+
     private FX() {
-        flash = new Sprite(GraphicsFactory.createTexture(2, 2, Color.WHITE));
+        flash = new Sprite(GraphicsFactory.createTexture(2, 2, Color.BLACK));
         flash.setAlpha(0f);
         flashColor = Color.WHITE.cpy();
     }
