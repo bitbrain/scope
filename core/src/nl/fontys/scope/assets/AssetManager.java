@@ -38,6 +38,14 @@ public class AssetManager {
         assetManager.update();
     }
 
+    public static int getRemainingAssets() {
+        return assetManager.getQueuedAssets();
+    }
+
+    public static int getAllAssets() {
+        return assetManager.getQueuedAssets() + assetManager.getLoadedAssets();
+    }
+
     public static void init() {
         for (Assets.Textures texture : Assets.Textures.values()) {
             assetManager.load(texture.getPath(), Texture.class);
