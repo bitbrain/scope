@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import nl.fontys.scope.ScopeGame;
 import nl.fontys.scope.assets.AssetManager;
+import nl.fontys.scope.util.Colors;
 
 public class LoadingScreen implements Screen {
 
@@ -44,7 +45,7 @@ public class LoadingScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
+        Gdx.gl.glClearColor(Colors.SECONDARY.r, Colors.SECONDARY.g, Colors.SECONDARY.b, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         AssetManager.update();
         cam.update();
@@ -57,12 +58,12 @@ public class LoadingScreen implements Screen {
 
         // Draw the loading bar
         float width = Gdx.graphics.getWidth() * 0.8f;
-        float height = 5f;
+        float height = 2f;
         renderer.setProjectionMatrix(cam.combined);
         renderer.begin(ShapeRenderer.ShapeType.Filled);
-        renderer.setColor(Color.GRAY);
+        renderer.setColor(Colors.lighten(Colors.SECONDARY, 3f));
         renderer.rect(Gdx.graphics.getWidth() / 2f - width / 2f, Gdx.graphics.getHeight() / 2f - height / 2f, width, height);
-        renderer.setColor(Color.RED);
+        renderer.setColor(Colors.PRIMARY);
         renderer.rect(Gdx.graphics.getWidth() / 2f - width / 2f, Gdx.graphics.getHeight() / 2f - height / 2f, width * AssetManager.getProgress(), height);
         renderer.end();
     }
