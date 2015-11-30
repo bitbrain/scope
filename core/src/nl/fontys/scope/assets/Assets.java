@@ -7,6 +7,21 @@ import com.badlogic.gdx.graphics.Texture;
  */
 public final class Assets {
 
+    public enum Fonts {
+
+        OPENSANS_MEDIUM_32("fonts/opensans-medium-32.fnt");
+
+        private String path;
+
+        Fonts(String path) {
+            this.path = path;
+        }
+
+        public String getPath() {
+            return path;
+        }
+    }
+
     /**
      * Contains texture definitions
      */

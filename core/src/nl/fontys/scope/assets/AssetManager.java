@@ -3,6 +3,7 @@ package nl.fontys.scope.assets;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g3d.Model;
 
 /**
@@ -33,6 +34,14 @@ public class AssetManager {
     public static Sound getSound(Assets.Sounds sounds) {
         return assetManager.get(sounds.getPath(), Sound.class);
     }
+    public static BitmapFont getFont(Assets.Fonts fonts) {
+        return assetManager.get(fonts.getPath(), BitmapFont.class);
+    }
+
+    public static boolean isLoaded(String path) {
+        return assetManager.isLoaded(path);
+    }
+
 
     public static void update() {
         assetManager.update();
@@ -47,6 +56,9 @@ public class AssetManager {
     }
 
     public static void init() {
+        for (Assets.Fonts font : Assets.Fonts.values()) {
+            assetManager.load(font.getPath(), BitmapFont.class);
+        }
         for (Assets.Textures texture : Assets.Textures.values()) {
             assetManager.load(texture.getPath(), Texture.class);
         }
