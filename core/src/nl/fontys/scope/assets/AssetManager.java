@@ -34,6 +34,10 @@ public class AssetManager {
         return assetManager.get(sounds.getPath(), Sound.class);
     }
 
+    public static void update() {
+        assetManager.update();
+    }
+
     public static void init() {
         for (Assets.Textures texture : Assets.Textures.values()) {
             assetManager.load(texture.getPath(), Texture.class);
@@ -48,7 +52,14 @@ public class AssetManager {
             // TODO: implement sounds first
             //assetManager.load(sound.getPath(), Sound.class);
         }
-        assetManager.finishLoading();
+    }
+
+    public static float getProgress() {
+        return assetManager.getProgress();
+    }
+
+    public static boolean isLoaded() {
+        return assetManager.getQueuedAssets() == 0;
     }
 
     public static void dispose() {
