@@ -21,6 +21,7 @@ import nl.fontys.scope.core.Player;
 import nl.fontys.scope.core.controller.CameraController;
 import nl.fontys.scope.core.controller.ShipController;
 import nl.fontys.scope.object.GameObject;
+import nl.fontys.scope.ui.DebugWidget;
 
 public class IngameScreen extends AbstractScreen {
 
@@ -70,5 +71,6 @@ public class IngameScreen extends AbstractScreen {
 
     @Override
     protected void onCreateStage(Stage stage) {
+        stage.addActor(new DebugWidget());
     }
 }
