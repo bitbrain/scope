@@ -12,6 +12,6 @@ public class DesktopLauncher {
 		config.useHDPI = true;
 		config.width = 800;
 		config.height = 400;
-		new LwjglApplication(new ScopeGame(), config);
+		new LwjglApplication(new ScopeGame(arg), config);
 	}
 }
