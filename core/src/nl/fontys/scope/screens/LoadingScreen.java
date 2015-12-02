@@ -16,6 +16,7 @@ import nl.fontys.scope.ScopeGame;
 import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.graphics.FX;
+import nl.fontys.scope.ui.Styles;
 import nl.fontys.scope.util.Colors;
 
 public class LoadingScreen implements Screen {
@@ -67,6 +68,7 @@ public class LoadingScreen implements Screen {
         AssetManager.update();
         cam.update();
         if (AssetManager.isLoaded()) {
+            Styles.init();
             game.setScreen(contextProvider.getScreen());
             return;
         }

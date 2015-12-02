@@ -17,6 +17,7 @@ import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.controls.ControllerControls;
 import nl.fontys.scope.controls.KeyboardControls;
+import nl.fontys.scope.core.Player;
 import nl.fontys.scope.core.controller.CameraController;
 import nl.fontys.scope.core.controller.ShipController;
 import nl.fontys.scope.object.GameObject;
@@ -42,6 +43,7 @@ public class IngameScreen extends AbstractScreen {
         world.addController(ship, controller);
         camController = new CameraController(world.getCamera());
         world.addController(ship, camController);
+        Player.setCurrent(ship);
 
         keyboardControls = new KeyboardControls(controller);
 
