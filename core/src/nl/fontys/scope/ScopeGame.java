@@ -14,10 +14,10 @@ public class ScopeGame extends Game {
     public ScopeGame(String[] args) {
         this.args = args;
     }
-    
+
 	@Override
 	public void create() {
-        setScreen(new LoadingScreen(this));
+        setScreen(new LoadingScreen(this, this.args));
 	}
 
     @Override
