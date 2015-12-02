@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import nl.fontys.scope.ScopeGame;
 import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.controls.ControllerControls;
@@ -27,6 +28,10 @@ public class IngameScreen extends AbstractScreen {
     private CameraController camController;
 
     private List<ControllerControls> controls = new ArrayList<ControllerControls>();
+
+    public IngameScreen(ScopeGame game) {
+        super(game);
+    }
 
     @Override
     protected void onShow() {

@@ -26,6 +26,7 @@ import com.bitfire.utils.ShaderLoader;
 import java.security.SecureRandom;
 import java.util.UUID;
 
+import nl.fontys.scope.ScopeGame;
 import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.audio.SoundManager;
@@ -52,6 +53,12 @@ public abstract class AbstractScreen implements Screen {
     protected ShaderManager shaderManager;
 
     private Stage stage;
+
+    protected ScopeGame game;
+
+    public AbstractScreen(ScopeGame game) {
+        this.game = game;
+    }
 
     @Override
     public final void show() {

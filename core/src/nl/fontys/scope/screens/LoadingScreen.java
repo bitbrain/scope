@@ -142,12 +142,23 @@ public class LoadingScreen implements Screen {
 
     private class ContextProvider {
 
-        public ContextProvider(String[] args) {
+        private boolean debug;
 
+        public ContextProvider(String[] args) {
+            for (String arg : args) {
+                if ("-debug".equals(arg)) {
+                    debug = true;
+                    break;
+                }
+            }
         }
 
         public Screen getScreen() {
-            return new IngameScreen();
+            if (debug) {
+                return new IngameScreen(game);
+            } else {
+                return new MenuScreen(game);
+            }
         }
 
     }
