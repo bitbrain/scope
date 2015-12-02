@@ -31,8 +31,13 @@ public class IngameScreen extends AbstractScreen {
 
     private List<ControllerControls> controls = new ArrayList<ControllerControls>();
 
-    public IngameScreen(ScopeGame game) {
+    private boolean debug;
+
+    private DebugWidget debugWidget;
+
+    public IngameScreen(ScopeGame game, boolean debug) {
         super(game);
+        this.debug = debug;
     }
 
     @Override
@@ -71,6 +76,8 @@ public class IngameScreen extends AbstractScreen {
 
     @Override
     protected void onCreateStage(Stage stage) {
-        stage.addActor(new DebugWidget());
+        debugWidget = new DebugWidget();
+        stage.addActor(debugWidget);
+        debugWidget.setVisible(debug);
     }
 }

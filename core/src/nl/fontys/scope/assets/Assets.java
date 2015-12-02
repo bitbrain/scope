@@ -9,7 +9,7 @@ public final class Assets {
 
     public enum Fonts {
 
-        DEBUG_20("fonts/debug-20.fnt"),
+        DEBUG_20("fonts/debug-14.fnt"),
         OPENSANS_MEDIUM_32("fonts/opensans-medium-32.fnt");
 
         private String path;

@@ -157,7 +157,7 @@ public class LoadingScreen implements Screen {
 
         public Screen getScreen() {
             if (debug) {
-                return new IngameScreen(game);
+                return new IngameScreen(game, true);
             } else {
                 return new MenuScreen(game);
             }
