@@ -66,8 +66,8 @@ public class World {
         renderManager.register(nl.fontys.scope.object.GameObjectType.ENERGY, new EnergyRenderer());
 
         lightingManager.setAmbientLight(0.4f, 0.3f, 0.8f, 1f);
-        lightingManager.addDirectionalLight(UUID.randomUUID().toString(), new DirectionalLight().set(0.5f, 0.8f, 1.0f, 0f, -0.2f, -1f));
-        lightingManager.addDirectionalLight(UUID.randomUUID().toString(), new DirectionalLight().set(0.6f, 0.3f, 1.0f, 0f, -0.2f, 1.0f));
+        lightingManager.addDirectionalLight(UUID.randomUUID().toString(), new DirectionalLight().set(0.4f, 0.2f, 4.0f, 0f, -0.2f, -1f));
+        lightingManager.addDirectionalLight(UUID.randomUUID().toString(), new DirectionalLight().set(0.6f, 0.2f, 0.8f, 0f, -0.2f, 1.0f));
     }
 
     public void addController(nl.fontys.scope.object.GameObject gameObject, GameObjectController controller) {

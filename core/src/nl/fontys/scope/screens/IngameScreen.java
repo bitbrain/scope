@@ -1,10 +1,7 @@
 package nl.fontys.scope.screens;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.Controllers;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import java.security.SecureRandom;
@@ -13,12 +10,11 @@ import java.util.List;
 import java.util.UUID;
 
 import nl.fontys.scope.ScopeGame;
-import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.controls.ControllerControls;
 import nl.fontys.scope.controls.KeyboardControls;
 import nl.fontys.scope.core.Player;
-import nl.fontys.scope.core.controller.CameraController;
+import nl.fontys.scope.core.controller.CameraTrackingController;
 import nl.fontys.scope.core.controller.ShipController;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.ui.DebugWidget;
@@ -27,7 +23,7 @@ public class IngameScreen extends AbstractScreen {
 
     private KeyboardControls keyboardControls;
 
-    private CameraController camController;
+    private CameraTrackingController camController;
 
     private List<ControllerControls> controls = new ArrayList<ControllerControls>();
 
@@ -47,7 +43,7 @@ public class IngameScreen extends AbstractScreen {
         GameObject ship = factory.createShip(0f, 0f, 0f);
         ShipController controller = new ShipController();
         world.addController(ship, controller);
-        camController = new CameraController(world.getCamera());
+        camController = new CameraTrackingController(world.getCamera());
         world.addController(ship, camController);
         Player.setCurrent(ship);
 

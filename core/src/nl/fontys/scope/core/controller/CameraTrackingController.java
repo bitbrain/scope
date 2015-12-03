@@ -7,13 +7,13 @@ import com.badlogic.gdx.math.Vector3;
 import nl.fontys.scope.graphics.ShaderManager;
 import nl.fontys.scope.object.GameObject;
 
-public class CameraController implements GameObjectController {
+public class CameraTrackingController implements GameObjectController {
 
     private PerspectiveCamera cam;
 
     private Vector3 velocity = new Vector3();
 
-    public CameraController(PerspectiveCamera cam) {
+    public CameraTrackingController(PerspectiveCamera cam) {
         this.cam = cam;
         this.cam.position.x = -8000f;
     }

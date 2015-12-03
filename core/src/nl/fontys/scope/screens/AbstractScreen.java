@@ -1,44 +1,17 @@
 package nl.fontys.scope.screens;
 
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.bitfire.postprocessing.PostProcessor;
-import com.bitfire.postprocessing.effects.Antialiasing;
-import com.bitfire.postprocessing.effects.Bloom;
-import com.bitfire.postprocessing.effects.CameraMotion;
-import com.bitfire.postprocessing.effects.Fxaa;
-import com.bitfire.postprocessing.effects.LensFlare2;
-import com.bitfire.postprocessing.effects.MotionBlur;
-import com.bitfire.postprocessing.effects.Vignette;
-import com.bitfire.postprocessing.effects.Zoomer;
-import com.bitfire.postprocessing.filters.RadialBlur;
-import com.bitfire.utils.ShaderLoader;
-
-import java.security.SecureRandom;
-import java.util.UUID;
 
 import nl.fontys.scope.ScopeGame;
-import nl.fontys.scope.assets.AssetManager;
-import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.audio.SoundManager;
-import nl.fontys.scope.controls.KeyboardControls;
-import nl.fontys.scope.core.controller.PlanetController;
 import nl.fontys.scope.graphics.ShaderManager;
-import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.object.GameObjectFactory;
-import nl.fontys.scope.object.GameObjectType;
 import nl.fontys.scope.core.World;
-import nl.fontys.scope.core.controller.CameraController;
-import nl.fontys.scope.core.controller.ShipController;
 
 public abstract class AbstractScreen implements Screen {
 
