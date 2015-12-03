@@ -21,13 +21,13 @@ public final class ShaderManager {
 
     private PostProcessor processor;
 
-    private Bloom bloom;
+    public Bloom bloom;
 
-    private Zoomer zoomer;
+    public Zoomer zoomer;
 
-    private Fxaa fxaa;
+    public Fxaa fxaa;
 
-    private Vignette vignette;
+    public Vignette vignette;
 
     private ShaderManager() {
         ShaderLoader.BasePath = "postprocessing/shaders/";
@@ -54,14 +54,6 @@ public final class ShaderManager {
         processor.addEffect(bloom);
         fxaa = new Fxaa(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         processor.addEffect(fxaa);
-    }
-
-    public void setZoom(float zoom) {
-        this.zoomer.setZoom(zoom);
-    }
-
-    public void setBlurStrength(float strength) {
-        this.zoomer.setBlurStrength(strength);
     }
 
     public static ShaderManager getInstance() {

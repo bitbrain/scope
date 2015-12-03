@@ -30,8 +30,8 @@ public class CameraTrackingController implements GameObjectController {
         velocity.nor();
         double speed = distance * 20.2f;
         ShaderManager shaderManager = ShaderManager.getInstance();
-        shaderManager.setBlurStrength((float)(speed*speed) * 0.000002f);
-        shaderManager.setZoom(1f + (float)(speed*speed) * 0.000001f);
+        shaderManager.zoomer.setBlurStrength((float)(speed*speed) * 0.000002f);
+        shaderManager.zoomer.setZoom(1f + (float)(speed*speed) * 0.000001f);
         cam.position.set(cam.position.x + (float)(velocity.x * speed * delta), pos.y + 2, cam.position.z + (float)(velocity.z * speed * delta));
         cam.lookAt(pos.x, pos.y + 2, pos.z);
     }
