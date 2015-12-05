@@ -10,16 +10,23 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
+import aurelienribon.tweenengine.BaseTween;
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
 import nl.fontys.scope.ScopeGame;
 import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.graphics.FX;
+import nl.fontys.scope.tweens.ValueTween;
 import nl.fontys.scope.ui.Styles;
 import nl.fontys.scope.util.Colors;
+import nl.fontys.scope.util.ValueProvider;
 
 public class LoadingScreen implements Screen {
+
+    private final float FADE_TIME = 0.4f;
 
     private ScopeGame game;
 
@@ -39,6 +46,12 @@ public class LoadingScreen implements Screen {
 
     private ContextProvider contextProvider;
 
+    private ValueProvider value = new ValueProvider();
+
+    private float target = 0;
+
+    private boolean loaded = false;
+
     public LoadingScreen(ScopeGame game, String[] args) {
         this(args);
         this.game = game;
@@ -56,7 +69,7 @@ public class LoadingScreen implements Screen {
         cam = new OrthographicCamera();
         renderer = new ShapeRenderer();
         fx.init(tweenManager, cam);
-        fx.fadeIn(0.5f, TweenEquations.easeInOutCubic);
+        fx.fadeIn(FADE_TIME, TweenEquations.easeInCubic);
     }
 
     @Override
@@ -64,13 +77,26 @@ public class LoadingScreen implements Screen {
         if (AssetManager.isLoaded(Assets.Fonts.OPENSANS_MEDIUM_32.getPath())) {
             font = AssetManager.getFont(Assets.Fonts.OPENSANS_MEDIUM_32);
         }
+        if (target < AssetManager.getProgress()) {
+            target = AssetManager.getProgress();
+            Tween.to(value, ValueTween.VALUE, FADE_TIME).target(target).ease(TweenEquations.easeOutCubic).start(tweenManager);
+        }
         tweenManager.update(delta);
-        AssetManager.update();
         cam.update();
-        if (AssetManager.isLoaded()) {
-            Styles.init();
-            game.setScreen(contextProvider.getScreen());
-            return;
+        if (AssetManager.isLoaded() && !loaded) {
+            loaded = true;
+            Tween.to(value, ValueTween.VALUE, FADE_TIME).target(1f).ease(TweenEquations.easeOutCubic).
+                   setCallbackTriggers(TweenCallback.COMPLETE)
+                    .setCallback(new TweenCallback() {
+                        @Override
+                        public void onEvent(int type, BaseTween<?> source) {
+                            Styles.init();
+                            game.setScreen(contextProvider.getScreen());
+                        }
+                    }).start(tweenManager);
+            fx.fadeOut(FADE_TIME, TweenEquations.easeOutCubic);
+        } else {
+            AssetManager.update();
         }
         Gdx.gl.glClearColor(Colors.SECONDARY.r, Colors.SECONDARY.g, Colors.SECONDARY.b, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -112,7 +138,7 @@ public class LoadingScreen implements Screen {
         renderer.setColor(Colors.lighten(Colors.SECONDARY, 3f));
         renderer.rect(Gdx.graphics.getWidth() / 2f - width / 2f, Gdx.graphics.getHeight() / 2f - height / 2f, width, height);
         renderer.setColor(Colors.PRIMARY);
-        renderer.rect(Gdx.graphics.getWidth() / 2f - width / 2f, Gdx.graphics.getHeight() / 2f - height / 2f, width * AssetManager.getProgress(), height);
+        renderer.rect(Gdx.graphics.getWidth() / 2f - width / 2f, Gdx.graphics.getHeight() / 2f - height / 2f, width * value.getValue(), height);
         renderer.end();
     }
 
@@ -133,7 +159,7 @@ public class LoadingScreen implements Screen {
         if (label != null) {
             label.setPosition(Gdx.graphics.getWidth() / 2f - label.getPrefWidth() / 2f, Gdx.graphics.getHeight() / 2f - label.getPrefHeight() / 2f + label.getPrefHeight());
             label.draw(batch, 1f);
-            progress.setText(Math.round(AssetManager.getProgress() * 100f) + "%");
+            progress.setText(Math.round(value.getValue() * 100f) + "%");
             progress.setPosition(Gdx.graphics.getWidth() / 2f - progress.getPrefWidth() / 2f, Gdx.graphics.getHeight() / 2f - progress.getPrefHeight() / 2f - progress.getPrefHeight() / 1.5f);
             progress.draw(batch, 1f);
 
