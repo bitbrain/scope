@@ -33,9 +33,6 @@ public class MenuScreen extends AbstractScreen {
     protected void onShow() {
         GameObject planet = factory.createPlanet(0f, 50f, 0f, 0f);
         world.addController(new CameraRotatingController(500f, world.getCamera(), planet));
-        shaderManager.bloom.setBaseSaturation(3f);
-        shaderManager.bloom.setBaseIntesity(0.4f);
-        shaderManager.bloom.setBloomIntesity(4f);
     }
 
     @Override

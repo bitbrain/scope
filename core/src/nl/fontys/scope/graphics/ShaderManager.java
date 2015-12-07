@@ -19,8 +19,6 @@ public final class ShaderManager {
 
     private static ShaderManager INSTANCE;
 
-    private static ShaderManager UI_INSTANCE;
-
     private PostProcessor processor;
 
     public Bloom bloom;
@@ -43,7 +41,10 @@ public final class ShaderManager {
         lenseflare = new LensFlare2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         lenseflare.setLensColorTexture(new Texture(Gdx.files.internal("postprocessing/lenscolor.png")));
         processor.addEffect(lenseflare);
-        bloom = new Bloom(Math.round(Gdx.graphics.getWidth() * 0.25f), Math.round(Gdx.graphics.getHeight() * 0.25f));
+        bloom = new Bloom(Math.round(Gdx.graphics.getWidth() * 0.6f), Math.round(Gdx.graphics.getHeight() * 0.6f));
+        bloom.setBlurAmount(2f);
+        bloom.setBloomIntesity(2f);
+        bloom.setBlurPasses(3);
         processor.addEffect(bloom);
         fxaa = new Fxaa(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         processor.addEffect(fxaa);
@@ -57,19 +58,12 @@ public final class ShaderManager {
         return INSTANCE;
     }
 
-    public static ShaderManager getUIInstance() {
-        if (UI_INSTANCE == null) {
-            UI_INSTANCE = new ShaderManager();
-            configureUI();
-        }
-        return UI_INSTANCE;
-    }
-
     public void begin() {
         processor.capture();
     }
 
     public void end() {
+        processor.captureEnd();
         processor.render();
     }
 
@@ -84,22 +78,10 @@ public final class ShaderManager {
     private static void configureBase() {
         INSTANCE.zoomer.setBlurStrength(0f);
         INSTANCE.zoomer.setZoom(1f);
-        INSTANCE.zoomer.setEnabled(true);
         INSTANCE.vignette.setIntensity(1.0f);
         INSTANCE.lenseflare.setBlurAmount(20f);
         INSTANCE.lenseflare.setBlurPasses(3);
         INSTANCE.lenseflare.setGhosts(10);
         INSTANCE.lenseflare.setFlareIntesity(0.12f);
-        INSTANCE.bloom.setBlurAmount(25f);
-        INSTANCE.bloom.setBloomIntesity(2f);
-        INSTANCE. bloom.setBlurPasses(5);
-    }
-
-    private static void configureUI() {
-        UI_INSTANCE.vignette.setEnabled(false);
-        UI_INSTANCE.bloom.setEnabled(false);
-        UI_INSTANCE.zoomer.setEnabled(false);
-        UI_INSTANCE.fxaa.setEnabled(false);
-        UI_INSTANCE.lenseflare.setEnabled(false);
     }
 }

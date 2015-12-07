@@ -27,7 +27,7 @@ public abstract class AbstractScreen implements Screen {
 
     protected SoundManager soundManager = SoundManager.getInstance();
 
-    protected ShaderManager baseShaderManager, uiShaderManager;
+    protected ShaderManager baseShaderManager;
 
     private Stage stage;
 
@@ -47,7 +47,6 @@ public abstract class AbstractScreen implements Screen {
     public final void show() {
         tweenManager = new TweenManager();
         baseShaderManager = ShaderManager.getBaseInstance();
-        uiShaderManager = ShaderManager.getUIInstance();
         world = new World();
         factory = new GameObjectFactory(world);
         multiplexer = new InputMultiplexer();
@@ -68,11 +67,9 @@ public abstract class AbstractScreen implements Screen {
         baseShaderManager.begin();
         world.updateAndRender(delta);
         baseShaderManager.end();
-        uiShaderManager.begin();
         stage.getBatch().setProjectionMatrix(cam2D.combined);
         stage.act(delta);
         stage.draw();
-        uiShaderManager.end();
         stage.getBatch().begin();
         fx.render(stage.getBatch(), delta);
         stage.getBatch().end();
@@ -102,7 +99,6 @@ public abstract class AbstractScreen implements Screen {
     @Override
     public final void resume() {
         baseShaderManager.resume();
-        uiShaderManager.resume();
     }
 
     @Override

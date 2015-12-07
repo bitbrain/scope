@@ -38,7 +38,7 @@ public final class Styles {
         BUTTON_MENU.fontColor = Colors.PRIMARY.cpy();
         BUTTON_MENU.overFontColor = Color.ORANGE;
         BUTTON_MENU.up = new NinePatchDrawable(GraphicsFactory.createNinePatch(Assets.Textures.BUTTON, 40));
-        BUTTON_MENU.down = new NinePatchDrawable(GraphicsFactory.createNinePatch(Assets.Textures.BUTTON, 40));
+        BUTTON_MENU.down = new NinePatchDrawable(GraphicsFactory.createNinePatch(Assets.Textures.BUTTON_ACTIVE, 40));
         BUTTON_MENU.over = new NinePatchDrawable(GraphicsFactory.createNinePatch(Assets.Textures.BUTTON_ACTIVE, 40));
     }
 }
