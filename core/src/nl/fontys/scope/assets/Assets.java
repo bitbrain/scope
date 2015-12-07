@@ -31,6 +31,7 @@ public final class Assets {
 
         CUBEMAP_SPACE_1("cubemaps/space1.png"),
         BUTTON("images/button.9.png"),
+        BUTTON_ACTIVE("images/button-active.9.png"),
         LOGO("images/logo.png");
 
         private String path;
