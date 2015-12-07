@@ -11,7 +11,7 @@ public class DesktopLauncher {
 		config.vSyncEnabled = true;
 		config.useHDPI = true;
 		config.width = 800;
-		config.height = 400;
+		config.height = 600;
 		new LwjglApplication(new ScopeGame(arg), config);
 	}
 }

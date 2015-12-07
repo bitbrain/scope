@@ -28,7 +28,8 @@ public final class Assets {
      */
     public enum Textures {
 
-        CUBEMAP_SPACE_1("cubemaps/space1.png");
+        CUBEMAP_SPACE_1("cubemaps/space1.png"),
+        LOGO("images/logo.png");
 
         private String path;
 

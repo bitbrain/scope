@@ -1,8 +1,13 @@
 package nl.fontys.scope.screens;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 import nl.fontys.scope.ScopeGame;
+import nl.fontys.scope.assets.AssetManager;
+import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.core.controller.CameraRotatingController;
 import nl.fontys.scope.graphics.ShaderManager;
 import nl.fontys.scope.object.GameObject;
@@ -31,6 +36,10 @@ public class MenuScreen extends AbstractScreen {
 
     @Override
     protected void onCreateStage(Stage stage) {
-
+        Table layout = new Table();
+        layout.setFillParent(true);
+        Image logo = new Image(new Sprite(AssetManager.getTexture(Assets.Textures.LOGO)));
+        layout.center().add(logo);
+        stage.addActor(layout);
     }
 }
