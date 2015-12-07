@@ -3,6 +3,7 @@ package nl.fontys.scope.screens;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 import nl.fontys.scope.ScopeGame;
@@ -10,7 +11,10 @@ import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.core.controller.CameraRotatingController;
 import nl.fontys.scope.graphics.ShaderManager;
+import nl.fontys.scope.i18n.Bundle;
+import nl.fontys.scope.i18n.Messages;
 import nl.fontys.scope.object.GameObject;
+import nl.fontys.scope.ui.Styles;
 
 public class MenuScreen extends AbstractScreen {
 
@@ -40,6 +44,9 @@ public class MenuScreen extends AbstractScreen {
         layout.setFillParent(true);
         Image logo = new Image(new Sprite(AssetManager.getTexture(Assets.Textures.LOGO)));
         layout.center().add(logo);
+        Label credits = new Label(Bundle.general.get(Messages.CREDITS), Styles.LABEL_CREDITS);
+        layout.row();
+        layout.add(credits);
         stage.addActor(layout);
     }
 }
