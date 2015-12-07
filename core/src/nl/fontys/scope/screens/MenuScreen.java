@@ -1,12 +1,14 @@
 package nl.fontys.scope.screens;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import nl.fontys.scope.Config;
 import nl.fontys.scope.ScopeGame;
@@ -48,10 +50,17 @@ public class MenuScreen extends AbstractScreen {
         Image logo = new Image(new Sprite(AssetManager.getTexture(Assets.Textures.LOGO)));
         layout.center().add(logo).padBottom(20f);
         layout.row();
-        TextButton newGame = new TextButton("New game", Styles.BUTTON_MENU);
+        TextButton newGame = new TextButton(Bundle.general.get(Messages.MENU_NEW_GAME), Styles.BUTTON_MENU);
+        newGame.addCaptureListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                game.setScreen(new IngameScreen(game, false));
+            }
+        });
         layout.center().add(newGame).width(300f).padBottom(10f);
         layout.row();
-        TextButton joinGame = new TextButton("Join game", Styles.BUTTON_MENU);
+        TextButton joinGame = new TextButton(Bundle.general.get(Messages.MENU_JOIN_GAME), Styles.BUTTON_MENU);
         layout.center().add(joinGame).width(300f).padBottom(20f);
 
         Label version = new Label("version " + Config.APP_VERSION, Styles.LABEL_VERSION);

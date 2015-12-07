@@ -155,7 +155,7 @@ public class LoadingScreen implements Screen {
             style.fontColor = Colors.PRIMARY;
             style.font = font;
             Label.LabelStyle progressStyle = new Label.LabelStyle();
-            progressStyle.fontColor = Colors.lighten(Colors.SECONDARY, 3f);
+            progressStyle.fontColor = Colors.lighten(Colors.SECONDARY, 8f);
             progressStyle.font = font;
             label = new Label(Bundle.general.get(Messages.LOADING_INFO), style);
             progress = new Label("0%", progressStyle);
