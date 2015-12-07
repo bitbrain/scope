@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
+import nl.fontys.scope.Config;
 import nl.fontys.scope.ScopeGame;
 import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.assets.Assets;
@@ -44,6 +45,9 @@ public class MenuScreen extends AbstractScreen {
         layout.setFillParent(true);
         Image logo = new Image(new Sprite(AssetManager.getTexture(Assets.Textures.LOGO)));
         layout.center().add(logo);
+        Label version = new Label("version " + Config.APP_VERSION, Styles.LABEL_VERSION);
+        layout.row();
+        layout.add(version);
         Label credits = new Label(Bundle.general.get(Messages.CREDITS), Styles.LABEL_CREDITS);
         layout.row();
         layout.add(credits);
