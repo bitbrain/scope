@@ -6,9 +6,7 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
@@ -48,7 +46,7 @@ public abstract class AbstractScreen implements Screen {
     @Override
     public final void show() {
         tweenManager = new TweenManager();
-        shaderManager = ShaderManager.getInstance();
+        shaderManager = ShaderManager.getBaseInstance();
         world = new World();
         factory = new GameObjectFactory(world);
         multiplexer = new InputMultiplexer();

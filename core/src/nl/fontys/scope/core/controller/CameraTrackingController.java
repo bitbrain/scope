@@ -1,7 +1,6 @@
 package nl.fontys.scope.core.controller;
 
 import com.badlogic.gdx.graphics.PerspectiveCamera;
-import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.math.Vector3;
 
 import nl.fontys.scope.graphics.ShaderManager;
@@ -29,7 +28,7 @@ public class CameraTrackingController implements GameObjectController {
         double distance = velocity.len();
         velocity.nor();
         double speed = distance * 20.2f;
-        ShaderManager shaderManager = ShaderManager.getInstance();
+        ShaderManager shaderManager = ShaderManager.getBaseInstance();
         shaderManager.zoomer.setBlurStrength((float)(speed*speed) * 0.000002f);
         shaderManager.zoomer.setZoom(1f + (float)(speed*speed) * 0.000001f);
         cam.position.set(cam.position.x + (float)(velocity.x * speed * delta), pos.y + 2, cam.position.z + (float)(velocity.z * speed * delta));

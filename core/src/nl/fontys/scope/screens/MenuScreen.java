@@ -1,7 +1,6 @@
 package nl.fontys.scope.screens;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.bitfire.postprocessing.filters.Blur;
 
 import nl.fontys.scope.ScopeGame;
 import nl.fontys.scope.core.controller.CameraRotatingController;
@@ -10,7 +9,7 @@ import nl.fontys.scope.object.GameObject;
 
 public class MenuScreen extends AbstractScreen {
 
-    private ShaderManager shaderManager = ShaderManager.getInstance();
+    private ShaderManager shaderManager = ShaderManager.getBaseInstance();
 
     public MenuScreen(ScopeGame game) {
         super(game);

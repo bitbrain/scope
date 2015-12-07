@@ -19,6 +19,8 @@ public final class ShaderManager {
 
     private static ShaderManager INSTANCE;
 
+    private static ShaderManager UI_INSTANCE;
+
     private PostProcessor processor;
 
     public Bloom bloom;
@@ -29,38 +31,38 @@ public final class ShaderManager {
 
     public Vignette vignette;
 
+    public LensFlare2 lenseflare;
+
     private ShaderManager() {
         ShaderLoader.BasePath = "postprocessing/shaders/";
         processor = new PostProcessor( true, true, isDesktop );
         zoomer = new Zoomer(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), RadialBlur.Quality.High);
-        zoomer.setBlurStrength(0f);
-        zoomer.setZoom(1f);
-        zoomer.setEnabled(true);
         processor.addEffect(zoomer);
         vignette = new Vignette(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
-        vignette.setIntensity(1.0f);
         processor.addEffect(vignette);
-        LensFlare2 lf = new LensFlare2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        lf.setLensColorTexture(new Texture(Gdx.files.internal("postprocessing/lenscolor.png")));
-        lf.setBlurAmount(20f);
-        lf.setBlurPasses(3);
-        lf.setGhosts(10);
-        lf.setFlareIntesity(0.12f);
-        processor.addEffect(lf);
+        lenseflare = new LensFlare2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        lenseflare.setLensColorTexture(new Texture(Gdx.files.internal("postprocessing/lenscolor.png")));
+        processor.addEffect(lenseflare);
         bloom = new Bloom(Math.round(Gdx.graphics.getWidth() * 0.25f), Math.round(Gdx.graphics.getHeight() * 0.25f));
-        bloom.setBlurAmount(25f);
-        bloom.setBloomIntesity(2f);
-        bloom.setBlurPasses(5);
         processor.addEffect(bloom);
         fxaa = new Fxaa(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         processor.addEffect(fxaa);
     }
 
-    public static ShaderManager getInstance() {
+    public static ShaderManager getBaseInstance() {
         if (INSTANCE == null) {
             INSTANCE = new ShaderManager();
+            configureBase();
         }
         return INSTANCE;
+    }
+
+    public static ShaderManager getUIInstance() {
+        if (UI_INSTANCE == null) {
+            configureUI();
+            UI_INSTANCE = new ShaderManager();
+        }
+        return UI_INSTANCE;
     }
 
     public void begin() {
@@ -77,5 +79,23 @@ public final class ShaderManager {
 
     public void resume() {
         processor.rebind();
+    }
+
+    private static void configureBase() {
+        INSTANCE.zoomer.setBlurStrength(0f);
+        INSTANCE.zoomer.setZoom(1f);
+        INSTANCE.zoomer.setEnabled(true);
+        INSTANCE.vignette.setIntensity(1.0f);
+        INSTANCE.lenseflare.setBlurAmount(20f);
+        INSTANCE.lenseflare.setBlurPasses(3);
+        INSTANCE.lenseflare.setGhosts(10);
+        INSTANCE.lenseflare.setFlareIntesity(0.12f);
+        INSTANCE.bloom.setBlurAmount(25f);
+        INSTANCE.bloom.setBloomIntesity(2f);
+        INSTANCE. bloom.setBlurPasses(5);
+    }
+
+    private static void configureUI() {
+        // todo
     }
 }
