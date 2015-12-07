@@ -6,7 +6,7 @@ public final class Colors {
 
     public static final Color PRIMARY = Color.valueOf("00ff5a");
     public static final Color PRIMARY_ADDITION = Color.valueOf("28ffb1");
-    public static final Color SECONDARY = Color.valueOf("110417");
+    public static final Color SECONDARY = Color.valueOf("08010b");
 
     public static Color lighten(Color color, float factor) {
         Color result = color.cpy();
