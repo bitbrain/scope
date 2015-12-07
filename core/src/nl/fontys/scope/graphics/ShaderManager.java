@@ -59,8 +59,8 @@ public final class ShaderManager {
 
     public static ShaderManager getUIInstance() {
         if (UI_INSTANCE == null) {
-            configureUI();
             UI_INSTANCE = new ShaderManager();
+            configureUI();
         }
         return UI_INSTANCE;
     }
@@ -96,6 +96,10 @@ public final class ShaderManager {
     }
 
     private static void configureUI() {
-        // todo
+        UI_INSTANCE.vignette.setEnabled(false);
+        UI_INSTANCE.bloom.setEnabled(false);
+        UI_INSTANCE.zoomer.setEnabled(false);
+        UI_INSTANCE.fxaa.setEnabled(false);
+        UI_INSTANCE.lenseflare.setEnabled(false);
     }
 }

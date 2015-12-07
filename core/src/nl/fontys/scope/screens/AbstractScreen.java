@@ -27,7 +27,7 @@ public abstract class AbstractScreen implements Screen {
 
     protected SoundManager soundManager = SoundManager.getInstance();
 
-    protected ShaderManager shaderManager;
+    protected ShaderManager baseShaderManager, uiShaderManager;
 
     private Stage stage;
 
@@ -46,7 +46,8 @@ public abstract class AbstractScreen implements Screen {
     @Override
     public final void show() {
         tweenManager = new TweenManager();
-        shaderManager = ShaderManager.getBaseInstance();
+        baseShaderManager = ShaderManager.getBaseInstance();
+        uiShaderManager = ShaderManager.getUIInstance();
         world = new World();
         factory = new GameObjectFactory(world);
         multiplexer = new InputMultiplexer();
@@ -64,12 +65,14 @@ public abstract class AbstractScreen implements Screen {
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT | (Gdx.graphics.getBufferFormat().coverageSampling ? GL20.GL_COVERAGE_BUFFER_BIT_NV : 0));
         cam2D.update();
-        shaderManager.begin();
+        baseShaderManager.begin();
         world.updateAndRender(delta);
-        shaderManager.end();
+        baseShaderManager.end();
+        uiShaderManager.begin();
         stage.getBatch().setProjectionMatrix(cam2D.combined);
         stage.act(delta);
         stage.draw();
+        uiShaderManager.end();
         stage.getBatch().begin();
         fx.render(stage.getBatch(), delta);
         stage.getBatch().end();
@@ -98,7 +101,8 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public final void resume() {
-        shaderManager.resume();
+        baseShaderManager.resume();
+        uiShaderManager.resume();
     }
 
     @Override
@@ -109,7 +113,7 @@ public abstract class AbstractScreen implements Screen {
     @Override
     public final void dispose() {
         world.dispose();
-        shaderManager.dispose();
+        baseShaderManager.dispose();
     }
 
     protected abstract void onShow();
