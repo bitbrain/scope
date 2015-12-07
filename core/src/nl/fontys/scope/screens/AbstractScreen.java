@@ -66,10 +66,11 @@ public abstract class AbstractScreen implements Screen {
         cam2D.update();
         baseShaderManager.begin();
         world.updateAndRender(delta);
-        baseShaderManager.end();
         stage.getBatch().setProjectionMatrix(cam2D.combined);
         stage.act(delta);
         stage.draw();
+
+        baseShaderManager.end();
         stage.getBatch().begin();
         fx.render(stage.getBatch(), delta);
         stage.getBatch().end();

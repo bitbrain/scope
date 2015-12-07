@@ -42,8 +42,8 @@ public final class ShaderManager {
         lenseflare.setLensColorTexture(new Texture(Gdx.files.internal("postprocessing/lenscolor.png")));
         processor.addEffect(lenseflare);
         bloom = new Bloom(Math.round(Gdx.graphics.getWidth() * 0.6f), Math.round(Gdx.graphics.getHeight() * 0.6f));
-        bloom.setBlurAmount(2f);
-        bloom.setBloomIntesity(2f);
+        bloom.setBlurAmount(3f);
+        bloom.setBloomIntesity(1.5f);
         bloom.setBlurPasses(3);
         processor.addEffect(bloom);
         fxaa = new Fxaa(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
