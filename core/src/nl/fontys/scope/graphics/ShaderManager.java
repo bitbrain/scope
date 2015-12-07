@@ -3,6 +3,7 @@ package nl.fontys.scope.graphics;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.bitfire.postprocessing.PostProcessor;
 import com.bitfire.postprocessing.effects.Bloom;
 import com.bitfire.postprocessing.effects.Fxaa;
@@ -41,10 +42,10 @@ public final class ShaderManager {
         lenseflare = new LensFlare2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         lenseflare.setLensColorTexture(new Texture(Gdx.files.internal("postprocessing/lenscolor.png")));
         processor.addEffect(lenseflare);
-        bloom = new Bloom(Math.round(Gdx.graphics.getWidth() * 0.6f), Math.round(Gdx.graphics.getHeight() * 0.6f));
-        bloom.setBlurAmount(3f);
+        bloom = new Bloom(Math.round(Gdx.graphics.getWidth() * 0.2f), Math.round(Gdx.graphics.getHeight() * 0.2f));
+        bloom.setBlurAmount(10f);
         bloom.setBloomIntesity(1.5f);
-        bloom.setBlurPasses(3);
+        bloom.setBlurPasses(2);
         processor.addEffect(bloom);
         fxaa = new Fxaa(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         processor.addEffect(fxaa);
@@ -62,9 +63,8 @@ public final class ShaderManager {
         processor.capture();
     }
 
-    public void end() {
-        processor.captureEnd();
-        processor.render();
+    public void end(FrameBuffer buffer) {
+        processor.render(buffer);
     }
 
     public void dispose() {
@@ -75,7 +75,12 @@ public final class ShaderManager {
         processor.rebind();
     }
 
-    private static void configureBase() {
+    public static void configureBase() {
+        INSTANCE.vignette.setEnabled(true);
+        INSTANCE.zoomer.setEnabled(true);
+        INSTANCE.fxaa.setEnabled(true);
+        INSTANCE.bloom.setEnabled(true);
+        INSTANCE.lenseflare.setEnabled(true);
         INSTANCE.zoomer.setBlurStrength(0f);
         INSTANCE.zoomer.setZoom(1f);
         INSTANCE.vignette.setIntensity(1.0f);
@@ -83,5 +88,13 @@ public final class ShaderManager {
         INSTANCE.lenseflare.setBlurPasses(3);
         INSTANCE.lenseflare.setGhosts(10);
         INSTANCE.lenseflare.setFlareIntesity(0.12f);
+    }
+
+    public static void configureUI() {
+        INSTANCE.vignette.setEnabled(false);
+        INSTANCE.zoomer.setEnabled(false);
+        INSTANCE.fxaa.setEnabled(false);
+        INSTANCE.bloom.setEnabled(true);
+        INSTANCE.lenseflare.setEnabled(false);
     }
 }

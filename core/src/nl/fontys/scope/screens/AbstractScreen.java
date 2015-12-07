@@ -6,6 +6,8 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import aurelienribon.tweenengine.TweenEquations;
@@ -43,6 +45,8 @@ public abstract class AbstractScreen implements Screen {
 
     protected OrthographicCamera cam2D;
 
+    private FrameBuffer uiBuffer;
+
     @Override
     public final void show() {
         tweenManager = new TweenManager();
@@ -64,16 +68,32 @@ public abstract class AbstractScreen implements Screen {
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT | (Gdx.graphics.getBufferFormat().coverageSampling ? GL20.GL_COVERAGE_BUFFER_BIT_NV : 0));
         cam2D.update();
+        // Draw world (background)
+        ShaderManager.configureBase();
         baseShaderManager.begin();
-        world.updateAndRender(delta);
+            world.updateAndRender(delta);
+        baseShaderManager.end(uiBuffer);
+        // Draw UI (foreground)
+        ShaderManager.configureUI();
+        cam2D.setToOrtho(true);
+        cam2D.update();
         stage.getBatch().setProjectionMatrix(cam2D.combined);
-        stage.act(delta);
-        stage.draw();
-
-        baseShaderManager.end();
+        baseShaderManager.begin();
+            stage.getBatch().begin();
+                stage.getBatch().draw(uiBuffer.getColorBufferTexture(), 0f, 0f);
+            stage.getBatch().end();
+            cam2D.setToOrtho(false);
+            cam2D.update();
+            stage.getBatch().setProjectionMatrix(cam2D.combined);
+            stage.act(delta);
+            stage.draw();
+        baseShaderManager.end(null);
+        // Draw special effects (fading etc.)
         stage.getBatch().begin();
-        fx.render(stage.getBatch(), delta);
+            fx.render(stage.getBatch(), delta);
         stage.getBatch().end();
+
+        // Input handling (WIP)
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
         }
@@ -88,6 +108,10 @@ public abstract class AbstractScreen implements Screen {
             onCreateStage(stage);
             fx.fadeIn(4f, TweenEquations.easeInCubic);
         }
+        if (uiBuffer != null) {
+            uiBuffer.dispose();
+        }
+        uiBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
         cam2D.setToOrtho(false, width, height);
         world.resize(width, height);
     }
@@ -111,6 +135,7 @@ public abstract class AbstractScreen implements Screen {
     public final void dispose() {
         world.dispose();
         baseShaderManager.dispose();
+        uiBuffer.dispose();
     }
 
     protected abstract void onShow();
