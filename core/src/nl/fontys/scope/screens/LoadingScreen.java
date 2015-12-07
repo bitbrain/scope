@@ -15,6 +15,7 @@ import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
+import nl.fontys.scope.Config;
 import nl.fontys.scope.ScopeGame;
 import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.assets.Assets;
@@ -177,7 +178,7 @@ public class LoadingScreen implements Screen {
 
         public ContextProvider(String[] args) {
             for (String arg : args) {
-                if ("-debug".equals(arg)) {
+                if (Config.FLAG_DEBUG.equals(arg)) {
                     debug = true;
                     break;
                 }
