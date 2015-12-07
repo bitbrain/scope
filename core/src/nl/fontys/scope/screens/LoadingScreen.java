@@ -19,6 +19,8 @@ import nl.fontys.scope.ScopeGame;
 import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.graphics.FX;
+import nl.fontys.scope.i18n.Bundle;
+import nl.fontys.scope.i18n.Messages;
 import nl.fontys.scope.tweens.ValueTween;
 import nl.fontys.scope.ui.Styles;
 import nl.fontys.scope.util.Colors;
@@ -70,6 +72,7 @@ public class LoadingScreen implements Screen {
         renderer = new ShapeRenderer();
         fx.init(tweenManager, cam);
         fx.fadeIn(FADE_TIME, TweenEquations.easeInCubic);
+        Bundle.load();
     }
 
     @Override
@@ -153,7 +156,7 @@ public class LoadingScreen implements Screen {
             Label.LabelStyle progressStyle = new Label.LabelStyle();
             progressStyle.fontColor = Colors.lighten(Colors.SECONDARY, 3f);
             progressStyle.font = font;
-            label = new Label("Loading assets...", style);
+            label = new Label(Bundle.general.get(Messages.LOADING_INFO), style);
             progress = new Label("0%", progressStyle);
         }
         if (label != null) {
