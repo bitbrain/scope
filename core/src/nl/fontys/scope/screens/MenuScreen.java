@@ -19,6 +19,7 @@ import nl.fontys.scope.graphics.ShaderManager;
 import nl.fontys.scope.i18n.Bundle;
 import nl.fontys.scope.i18n.Messages;
 import nl.fontys.scope.object.GameObject;
+import nl.fontys.scope.ui.ButtonMenu;
 import nl.fontys.scope.ui.Styles;
 
 public class MenuScreen extends AbstractScreen {
@@ -47,19 +48,21 @@ public class MenuScreen extends AbstractScreen {
         Image logo = new Image(new Sprite(AssetManager.getTexture(Assets.Textures.LOGO)));
         layout.center().add(logo).padBottom(20f);
         layout.row();
-        TextButton newGame = new TextButton(Bundle.general.get(Messages.MENU_NEW_GAME), Styles.BUTTON_MENU);
-        newGame.addCaptureListener(new ClickListener() {
+        ButtonMenu menu = new ButtonMenu(tweenManager);
+        menu.add(Bundle.general.get(Messages.MENU_NEW_GAME), new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 game.setScreen(new IngameScreen(game, false));
             }
         });
-        layout.center().add(newGame).width(300f).padBottom(10f);
-        layout.row();
-        TextButton joinGame = new TextButton(Bundle.general.get(Messages.MENU_JOIN_GAME), Styles.BUTTON_MENU);
-        layout.center().add(joinGame).width(300f).padBottom(20f);
-
+        menu.add(Bundle.general.get(Messages.MENU_JOIN_GAME), new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                // TODO
+            }
+        });
+        layout.add(menu).row();
         Label version = new Label("version " + Config.APP_VERSION, Styles.LABEL_VERSION);
         layout.row();
         layout.add(version);

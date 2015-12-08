@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -80,6 +81,7 @@ public abstract class AbstractScreen implements Screen {
         stage.getBatch().setProjectionMatrix(cam2D.combined);
         baseShaderManager.begin();
             stage.getBatch().begin();
+                stage.getBatch().setColor(Color.WHITE);
                 stage.getBatch().draw(uiBuffer.getColorBufferTexture(), 0f, 0f);
             stage.getBatch().end();
             cam2D.setToOrtho(false);
