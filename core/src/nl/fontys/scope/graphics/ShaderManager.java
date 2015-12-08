@@ -88,6 +88,8 @@ public final class ShaderManager {
         INSTANCE.lenseflare.setBlurPasses(3);
         INSTANCE.lenseflare.setGhosts(10);
         INSTANCE.lenseflare.setFlareIntesity(0.12f);
+        INSTANCE.bloom.setBaseSaturation(0.9f);
+        INSTANCE.bloom.setBaseIntesity(0.7f);
     }
 
     public static void configureUI() {
@@ -96,5 +98,7 @@ public final class ShaderManager {
         INSTANCE.fxaa.setEnabled(false);
         INSTANCE.bloom.setEnabled(true);
         INSTANCE.lenseflare.setEnabled(false);
+        INSTANCE.bloom.setBaseSaturation(1.1f);
+        INSTANCE.bloom.setBaseIntesity(1.3f);
     }
 }
