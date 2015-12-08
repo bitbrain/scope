@@ -44,9 +44,10 @@ public class ButtonMenu extends Table {
             @Override
             public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
                 super.exit(event, x, y, pointer, toActor);
-                if (event.getRelatedActor() == null) {
+                if (event.getRelatedActor() == null || (!event.getRelatedActor().equals(button) &&
+                event.getRelatedActor() instanceof TextButton)) {
                     tweenManager.killTarget(button);
-                    Tween.to(button.getColor(), ColorTween.A, 2.5f).target(ALPHA).ease(TweenEquations.easeOutCubic).start(tweenManager);
+                    Tween.to(button.getColor(), ColorTween.A, 1.0f).target(ALPHA).ease(TweenEquations.easeOutCubic).start(tweenManager);
                 }
             }
         });
