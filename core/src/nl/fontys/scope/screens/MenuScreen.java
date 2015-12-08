@@ -62,7 +62,7 @@ public class MenuScreen extends AbstractScreen {
                 // TODO
             }
         });
-        layout.add(menu).row();
+        layout.add(menu).padBottom(30f).row();
         Label version = new Label("version " + Config.APP_VERSION, Styles.LABEL_VERSION);
         layout.row();
         layout.add(version);
