@@ -139,9 +139,9 @@ public class LoadingScreen implements Screen {
         float height = 2f;
         renderer.setProjectionMatrix(cam.combined);
         renderer.begin(ShapeRenderer.ShapeType.Filled);
-        renderer.setColor(Colors.lighten(Colors.SECONDARY, 3f));
+        renderer.setColor(Colors.lighten(Colors.PRIMARY, 0.3f));
         renderer.rect(Gdx.graphics.getWidth() / 2f - width / 2f, Gdx.graphics.getHeight() / 2f - height / 2f, width, height);
-        renderer.setColor(Colors.PRIMARY);
+        renderer.setColor(Colors.PRIMARY_ADDITION);
         renderer.rect(Gdx.graphics.getWidth() / 2f - width / 2f, Gdx.graphics.getHeight() / 2f - height / 2f, width * value.getValue(), height);
         renderer.end();
     }
@@ -155,7 +155,7 @@ public class LoadingScreen implements Screen {
             style.fontColor = Colors.PRIMARY;
             style.font = font;
             Label.LabelStyle progressStyle = new Label.LabelStyle();
-            progressStyle.fontColor = Colors.lighten(Colors.SECONDARY, 8f);
+            progressStyle.fontColor = Colors.PRIMARY_ADDITION;
             progressStyle.font = font;
             label = new Label(Bundle.general.get(Messages.LOADING_INFO), style);
             progress = new Label("0%", progressStyle);
