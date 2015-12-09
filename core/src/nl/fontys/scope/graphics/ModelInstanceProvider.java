@@ -1,4 +1,4 @@
-package nl.fontys.scope.graphics.renderer;
+package nl.fontys.scope.graphics;
 
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
@@ -6,24 +6,22 @@ import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 
 import nl.fontys.scope.object.GameObject;
-import nl.fontys.scope.graphics.LightingManager;
 
-public class DefaultModelInstanceProvider implements ModelInstanceProvider {
+public class ModelInstanceProvider {
 
     protected ModelInstance instance;
 
     private boolean lighting;
 
-    public DefaultModelInstanceProvider(Model model) {
+    public ModelInstanceProvider(Model model) {
         this(model, true);
     }
 
-    public DefaultModelInstanceProvider(Model model, boolean lighting) {
+    public ModelInstanceProvider(Model model, boolean lighting) {
         this.instance = new ModelInstance(model);
         this.lighting = lighting;
     }
 
-    @Override
     public ModelInstance get(GameObject object) {
         Vector3 pos = object.getPosition();
         Quaternion ori = object.getOrientation();
@@ -33,7 +31,6 @@ public class DefaultModelInstanceProvider implements ModelInstanceProvider {
         return instance;
     }
 
-    @Override
     public boolean hasLighting() {
         return lighting;
     }

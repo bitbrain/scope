@@ -3,15 +3,11 @@ package nl.fontys.scope.graphics;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.badlogic.gdx.graphics.g3d.ModelInstance;
 
 import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.assets.Assets;
-import nl.fontys.scope.graphics.renderer.ModelInstanceProvider;
 import nl.fontys.scope.object.GameObject;
-import nl.fontys.scope.object.GameObjectType;
 
 /**
  * Manages rendering of the game
@@ -24,17 +20,14 @@ public class RenderManager {
 
     private EnvironmentCubemap cubemap;
 
-    private Map<GameObjectType, ModelInstanceProvider> providers = new HashMap<GameObjectType, ModelInstanceProvider>();
+    private ModelInstanceService modelInstanceService;
 
-    public RenderManager(LightingManager lightingManager) {
+    public RenderManager(LightingManager lightingManager, ModelInstanceService modelInstanceService) {
         this.lightingManager = lightingManager;
+        this.modelInstanceService = modelInstanceService;
         TextureData data = AssetManager.getTexture(Assets.Textures.CUBEMAP_SPACE_1).getTextureData();
         data.prepare();
         cubemap = new EnvironmentCubemap(data.consumePixmap());
-    }
-
-    public void register(GameObjectType type, ModelInstanceProvider provider) {
-        this.providers.put(type, provider);
     }
 
     public void background(Camera camera) {
@@ -43,9 +36,9 @@ public class RenderManager {
 
     public void render(GameObject object, Camera camera) {
         modelBatch.begin(camera);
-        if (providers.containsKey(object.getType())) {
-            ModelInstanceProvider provider = providers.get(object.getType());
-            modelBatch.render(provider.get(object), provider.hasLighting() ? lightingManager.getEnvironment() : null);
+        if (modelInstanceService.hasModelFor(object)) {
+            ModelInstance instance = modelInstanceService.getCurrentInstance(object);
+            modelBatch.render(instance, modelInstanceService.isLightingEnabledFor(object) ? lightingManager.getEnvironment() : null);
         }
         modelBatch.end();
     }

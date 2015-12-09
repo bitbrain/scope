@@ -11,14 +11,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import nl.fontys.scope.assets.AssetManager;
-import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.core.controller.GameObjectController;
 import nl.fontys.scope.event.EventType;
 import nl.fontys.scope.event.Events;
 import nl.fontys.scope.graphics.LightingManager;
+import nl.fontys.scope.graphics.ModelInstanceService;
 import nl.fontys.scope.graphics.RenderManager;
-import nl.fontys.scope.graphics.renderer.DefaultModelInstanceProvider;
 import nl.fontys.scope.object.GameObject;
 
 /**
@@ -49,19 +47,18 @@ public class World {
 
     private List<GameObjectController> globalControllers = new ArrayList<GameObjectController>();
 
+    private ModelInstanceService modelInstanceService;
+
     public World() {
         physics = new Physics();
         lightingManager = new LightingManager();
+        modelInstanceService = new ModelInstanceService();
         camera = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.position.set(1f, 1f, 1f);
         camera.near = 0.2f;
         camera.far = 30000f;
         camera.update();
-        renderManager = new RenderManager(lightingManager);
-        renderManager.register(nl.fontys.scope.object.GameObjectType.SHIP, new DefaultModelInstanceProvider(AssetManager.getModel(Assets.Models.CRUISER)));
-        renderManager.register(nl.fontys.scope.object.GameObjectType.RING, new DefaultModelInstanceProvider(AssetManager.getModel(Assets.Models.RING)));
-        renderManager.register(nl.fontys.scope.object.GameObjectType.PLANET, new DefaultModelInstanceProvider(AssetManager.getModel(Assets.Models.PLANET)));
-        renderManager.register(nl.fontys.scope.object.GameObjectType.ENERGY, new DefaultModelInstanceProvider(AssetManager.getModel(Assets.Models.ENERGY), false));
+        renderManager = new RenderManager(lightingManager, modelInstanceService);
 
         lightingManager.setAmbientLight(0.4f, 0.3f, 0.8f, 1f);
         lightingManager.addDirectionalLight(UUID.randomUUID().toString(), new DirectionalLight().set(0.4f, 0.2f, 4.0f, 0f, -0.2f, -1f));
