@@ -7,6 +7,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import nl.fontys.scope.event.EventType;
+import nl.fontys.scope.event.Events;
 import nl.fontys.scope.graphics.ModelInstanceService;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.object.GameObjectType;
@@ -18,6 +20,8 @@ public class CollisionDetector {
     private Map<String, BoundingBox> boxes = new HashMap<String, BoundingBox>();
     private Map<String, BoundingBox> originals = new HashMap<String, BoundingBox>();
 
+    private Events events = Events.getInstance();
+
     public CollisionDetector(ModelInstanceService service) {
         this.service = service;
     }
@@ -28,7 +32,7 @@ public class CollisionDetector {
                 BoundingBox boxA = getBoundingBox(target);
                 BoundingBox boxB = getBoundingBox(object);
                 if (boxA.intersects(boxB)) {
-                    // TODO handle detection
+                    events.fire(EventType.COLLISION, target, object);
                 }
             }
         }
