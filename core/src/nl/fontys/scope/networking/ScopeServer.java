@@ -6,6 +6,7 @@ import com.esotericsoftware.kryonet.*;
 import java.io.IOException;
 import java.util.HashMap;
 
+
 import nl.fontys.scope.networking.broadCasts.GameObjectBroadCast;
 import nl.fontys.scope.networking.broadCasts.MovementBroadCast;
 import nl.fontys.scope.networking.broadCasts.PlayerBroadCast;
@@ -15,6 +16,7 @@ import nl.fontys.scope.networking.requests.JoinRequest;
 import nl.fontys.scope.networking.responses.GameStartedResponse;
 import nl.fontys.scope.networking.responses.GetGamesResponse;
 import nl.fontys.scope.networking.responses.JoinedResponse;
+
 import nl.fontys.scope.networking.serverobjects.ServerGame;
 
 public class ScopeServer  extends  Listener implements Disposable {
@@ -42,6 +44,7 @@ public class ScopeServer  extends  Listener implements Disposable {
             e.printStackTrace();
         }
     }
+
 
     @Override
     public void received(Connection connection, Object object) {
@@ -147,5 +150,4 @@ public class ScopeServer  extends  Listener implements Disposable {
         game.setStarted(true);
         sendToAllPlayersOfGameTCP(game.getID(), new GameStartedResponse());
     }
-
 }

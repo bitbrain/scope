@@ -20,4 +20,5 @@ public abstract class  BroadcastRequest {
     public long getGameID() {
         return gameID;
     }
+
 }

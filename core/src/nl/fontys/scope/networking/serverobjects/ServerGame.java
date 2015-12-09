@@ -5,12 +5,12 @@ import com.esotericsoftware.kryonet.Connection;
 import java.util.HashSet;
 import java.util.UUID;
 
-
 public class ServerGame {
 
     private long ID;
     private HashSet<Connection> players;
     private int PlayerCount;
+
     private boolean started;
 
     public boolean isStarted() {
@@ -20,6 +20,7 @@ public class ServerGame {
     public void setStarted(boolean started) {
         this.started = started;
     }
+
 
     public int getPlayerCount() {
         return PlayerCount;
