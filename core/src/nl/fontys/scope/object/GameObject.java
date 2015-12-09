@@ -25,6 +25,16 @@ public class GameObject implements Pool.Poolable {
 
     private GameObjectType type = GameObjectType.NONE;
 
+    public void set(GameObject object) {
+        this.position = object.position;
+        this.lastPosition = object.lastPosition;
+        this.orientation = object.orientation;
+        this.velocity = object.velocity;
+        this.scale = object.scale;
+        this.id = object.id;
+        this.type = object.type;
+    }
+
     public float getScale() {
         return scale;
     }
