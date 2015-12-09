@@ -13,6 +13,8 @@ public class GameObject implements Pool.Poolable {
 
     private Vector3 position = new Vector3();
 
+    private Vector3 lastPosition = new Vector3();
+
     private Quaternion orientation = new Quaternion();
 
     private Vector3 velocity = new Vector3();
@@ -48,7 +50,12 @@ public class GameObject implements Pool.Poolable {
     }
 
     public void setPosition(float x, float y, float z) {
+        lastPosition.set(this.position.x, this.position.y, this.position.z);
         this.position.set(x, y, z);
+    }
+
+    public boolean hasMoved() {
+        return !lastPosition.equals(position);
     }
 
     public void setScale(float scale) {
@@ -69,6 +76,7 @@ public class GameObject implements Pool.Poolable {
 
     @Override
     public void reset() {
+        lastPosition.set(0f, 0f, 0f);
         position.set(0f, 0f, 0f);
         scale = 1f;
         orientation.set(0f, 0f, 0f, 0f);
