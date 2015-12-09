@@ -77,6 +77,10 @@ public class World {
         }
     }
 
+    public GameObject getObjectById(String id) {
+        return objects.get(id);
+    }
+
     public void addController(GameObjectController controller) {
         globalControllers.add(controller);
     }
