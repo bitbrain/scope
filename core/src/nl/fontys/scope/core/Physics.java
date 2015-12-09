@@ -8,6 +8,6 @@ public class Physics {
         object.getPosition().y += object.getVelocity().y * delta;
         object.getPosition().z += object.getVelocity().z * delta;
 
-        object.getVelocity().scl(0.995f);
+        object.getVelocity().scl(0.94f);
     }
 }

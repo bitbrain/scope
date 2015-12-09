@@ -8,7 +8,7 @@ import nl.fontys.scope.object.GameObject;
 
 public class ShipController implements GameObjectController, Moveable {
 
-    public static final float SPEED = 1.4f;
+    public static final float SPEED = 2.4f;
 
     private Vector3 accel = new Vector3();
 
@@ -25,18 +25,18 @@ public class ShipController implements GameObjectController, Moveable {
         object.getVelocity().y += accel.y;
         object.getVelocity().z += accel.z;
         q.set(Vector3.Y, q.getAngleAround(Vector3.Y)  + angle);
-        accel.scl(0.7f);
-        angle *= 0.98f;
+        accel.scl(0.9f);
+        angle *= 0.95f;
     }
 
     @Override
     public void moveLeft() {
-        angle += 0.1f;
+        angle += 0.2f;
     }
 
     @Override
     public void moveRight() {
-        angle += -0.1f;
+        angle += -0.2f;
     }
 
     @Override
