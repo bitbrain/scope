@@ -33,8 +33,8 @@ public class RenderManager {
         cubemap = new EnvironmentCubemap(data.consumePixmap());
     }
 
-    public void register(GameObjectType type, ModelInstanceProvider renderer) {
-        this.providers.put(type, renderer);
+    public void register(GameObjectType type, ModelInstanceProvider provider) {
+        this.providers.put(type, provider);
     }
 
     public void background(Camera camera) {
