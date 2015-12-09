@@ -51,6 +51,8 @@ public abstract class AbstractScreen implements Screen {
 
     private FrameBuffer uiBuffer;
 
+    private boolean closing;
+
     @Override
     public final void show() {
         tweenManager = new TweenManager();
@@ -66,16 +68,17 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public final void render(float delta) {
-        tweenManager.update(delta);
         onUpdate(delta);
+        tweenManager.update(delta);
         Gdx.gl.glClearColor(0.02f, 0f, 0.05f, 1f);
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT | (Gdx.graphics.getBufferFormat().coverageSampling ? GL20.GL_COVERAGE_BUFFER_BIT_NV : 0));
+
         cam2D.update();
         // Draw world (background)
         ShaderManager.configureBase();
         baseShaderManager.begin();
-            world.updateAndRender(delta);
+            world.updateAndRender(closing ? 0f : delta);
         baseShaderManager.end(uiBuffer);
         // Draw UI (foreground)
         ShaderManager.configureUI();
@@ -129,6 +132,7 @@ public abstract class AbstractScreen implements Screen {
     @Override
     public final void resume() {
         baseShaderManager.resume();
+        closing = false;
     }
 
     @Override
@@ -144,6 +148,8 @@ public abstract class AbstractScreen implements Screen {
     }
 
     public void setScreen(final Screen screen) {
+        closing = true;
+        Gdx.input.setInputProcessor(null);
         FX.getInstance().fadeOut(1f, TweenEquations.easeOutCubic, new TweenCallback() {
             @Override
             public void onEvent(int type, BaseTween<?> source) {
