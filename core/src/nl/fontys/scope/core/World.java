@@ -49,10 +49,13 @@ public class World {
 
     private ModelInstanceService modelInstanceService;
 
+    private CollisionDetector collisionDetector;
+
     public World() {
         physics = new Physics();
         lightingManager = new LightingManager();
         modelInstanceService = new ModelInstanceService();
+        collisionDetector = new CollisionDetector(modelInstanceService);
         camera = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.position.set(1f, 1f, 1f);
         camera.near = 0.2f;
@@ -120,6 +123,7 @@ public class World {
                 globalController.update(object, delta);
             }
             physics.apply(object, delta);
+            collisionDetector.detect(object, objects.values());
             renderManager.render(object, camera);
         }
     }
