@@ -1,5 +1,6 @@
 package nl.fontys.scope.object;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Pool;
@@ -25,6 +26,8 @@ public class GameObject implements Pool.Poolable {
 
     private GameObjectType type = GameObjectType.NONE;
 
+    private Color color = Color.WHITE.cpy();
+
     public void set(GameObject object) {
         this.position = object.position;
         this.lastPosition = object.lastPosition;
@@ -33,11 +36,14 @@ public class GameObject implements Pool.Poolable {
         this.scale = object.scale;
         this.id = object.id;
         this.type = object.type;
+        this.color = object.color;
     }
 
     public float getScale() {
         return scale;
     }
+
+    public Color getColor() { return color; }
 
     public GameObjectType getType() {
         return type;
@@ -92,5 +98,6 @@ public class GameObject implements Pool.Poolable {
         orientation.set(0f, 0f, 0f, 0f);
         velocity.set(0f, 0f, 0f);
         type = GameObjectType.NONE;
+        color = Color.WHITE.cpy();
     }
 }
