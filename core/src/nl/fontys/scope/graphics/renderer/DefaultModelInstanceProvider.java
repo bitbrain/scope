@@ -8,16 +8,23 @@ import com.badlogic.gdx.math.Vector3;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.graphics.LightingManager;
 
-public class ModelRenderer implements GameObjectRenderer {
+public class DefaultModelInstanceProvider implements ModelInstanceProvider {
 
     protected ModelInstance instance;
 
-    public ModelRenderer(Model model) {
+    private boolean lighting;
+
+    public DefaultModelInstanceProvider(Model model) {
+        this(model, true);
+    }
+
+    public DefaultModelInstanceProvider(Model model, boolean lighting) {
         this.instance = new ModelInstance(model);
+        this.lighting = lighting;
     }
 
     @Override
-    public ModelInstance getCurrentInstance(GameObject object, LightingManager lightingManager) {
+    public ModelInstance get(GameObject object) {
         Vector3 pos = object.getPosition();
         Quaternion ori = object.getOrientation();
         float scale = object.getScale();
@@ -28,7 +35,7 @@ public class ModelRenderer implements GameObjectRenderer {
 
     @Override
     public boolean hasLighting() {
-        return true;
+        return lighting;
     }
 
 

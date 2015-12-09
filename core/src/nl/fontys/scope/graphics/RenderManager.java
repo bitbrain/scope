@@ -1,21 +1,15 @@
 package nl.fontys.scope.graphics;
 
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.TextureData;
-import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
-import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
-import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
-import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.assets.Assets;
-import nl.fontys.scope.graphics.renderer.GameObjectRenderer;
+import nl.fontys.scope.graphics.renderer.ModelInstanceProvider;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.object.GameObjectType;
 
@@ -30,7 +24,7 @@ public class RenderManager {
 
     private EnvironmentCubemap cubemap;
 
-    private Map<GameObjectType, nl.fontys.scope.graphics.renderer.GameObjectRenderer> renderer = new HashMap<GameObjectType, nl.fontys.scope.graphics.renderer.GameObjectRenderer>();
+    private Map<GameObjectType, ModelInstanceProvider> providers = new HashMap<GameObjectType, ModelInstanceProvider>();
 
     public RenderManager(LightingManager lightingManager) {
         this.lightingManager = lightingManager;
@@ -39,8 +33,8 @@ public class RenderManager {
         cubemap = new EnvironmentCubemap(data.consumePixmap());
     }
 
-    public void register(GameObjectType type, nl.fontys.scope.graphics.renderer.GameObjectRenderer renderer) {
-        this.renderer.put(type, renderer);
+    public void register(GameObjectType type, ModelInstanceProvider renderer) {
+        this.providers.put(type, renderer);
     }
 
     public void background(Camera camera) {
@@ -49,9 +43,9 @@ public class RenderManager {
 
     public void render(GameObject object, Camera camera) {
         modelBatch.begin(camera);
-        if (renderer.containsKey(object.getType())) {
-            GameObjectRenderer r = renderer.get(object.getType());
-            modelBatch.render(r.getCurrentInstance(object, lightingManager), r.hasLighting() ? lightingManager.getEnvironment() : null);
+        if (providers.containsKey(object.getType())) {
+            ModelInstanceProvider provider = providers.get(object.getType());
+            modelBatch.render(provider.get(object), provider.hasLighting() ? lightingManager.getEnvironment() : null);
         }
         modelBatch.end();
     }

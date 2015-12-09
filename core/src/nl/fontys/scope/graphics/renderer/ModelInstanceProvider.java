@@ -8,9 +8,9 @@ import nl.fontys.scope.graphics.LightingManager;
 /**
  * Specifies how to render a certain object
  */
-public interface GameObjectRenderer {
+public interface ModelInstanceProvider {
 
-    ModelInstance getCurrentInstance(GameObject object, LightingManager lightingManager);
+    ModelInstance get(GameObject object);
 
     boolean hasLighting();
 }
