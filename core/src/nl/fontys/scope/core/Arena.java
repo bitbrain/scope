@@ -21,15 +21,16 @@ public class Arena {
     }
 
     public void setup() {
-        GameObject sphere = factory.createSphere(5f);
+        GameObject sphere = factory.createSphere(60f);
         sphere.getColor().set(Colors.PRIMARY);
-        sphere.getColor().a = 0.8f;
+        sphere.getColor().a = 0.7f;
         for (int i = 0; i < DEFAULT_ENERGY_COUNT; ++i) {
             float angle = 360f * random.nextFloat();
             float radius = 40f + 100f * random.nextFloat();
             float x = (float)(Math.cos(Math.toRadians(angle)) * radius);
+            float y = (float)(Math.tan(Math.toRadians(angle)) * radius);
             float z = (float)(Math.sin(Math.toRadians(angle)) * radius);
-            factory.createEnergy(x, 0f, z).getColor().set(Colors.PRIMARY);
+            factory.createEnergy(x, y, z).getColor().set(Colors.PRIMARY);
         }
     }
 }

@@ -3,6 +3,7 @@ package nl.fontys.scope.core;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
+import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.utils.Pool;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import nl.fontys.scope.graphics.LightingManager;
 import nl.fontys.scope.graphics.ModelInstanceService;
 import nl.fontys.scope.graphics.RenderManager;
 import nl.fontys.scope.object.GameObject;
+import nl.fontys.scope.util.Colors;
 
 /**
  * World which provides game object management
@@ -66,6 +68,7 @@ public class World {
         lightingManager.setAmbientLight(0.4f, 0.3f, 0.8f, 1f);
         lightingManager.addDirectionalLight(UUID.randomUUID().toString(), new DirectionalLight().set(0.4f, 0.2f, 4.0f, 0f, -0.2f, -1f));
         lightingManager.addDirectionalLight(UUID.randomUUID().toString(), new DirectionalLight().set(0.6f, 0.2f, 0.8f, 0f, -0.2f, 1.0f));
+        lightingManager.addPointLight(UUID.randomUUID().toString(), new PointLight().set(Colors.PRIMARY, 0f, 0f, 0f, 2000f));
     }
 
     public void addController(nl.fontys.scope.object.GameObject gameObject, GameObjectController controller) {
