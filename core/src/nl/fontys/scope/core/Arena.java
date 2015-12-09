@@ -13,6 +13,6 @@ public class Arena {
 
     public void setup() {
         GameObject sphere = factory.createPlanet(0f, 20f, 0f, 0f);
-        sphere.getColor().a = 0.6f;
+        sphere.getColor().a = 0.5f;
     }
 }

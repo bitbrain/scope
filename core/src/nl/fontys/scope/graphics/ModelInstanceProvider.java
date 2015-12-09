@@ -1,11 +1,13 @@
 package nl.fontys.scope.graphics;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.BlendingAttribute;
+import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 
@@ -28,6 +30,7 @@ class ModelInstanceProvider {
             BlendingAttribute blendingAttribute = new BlendingAttribute(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
             material.set(blendingAttribute);
         }
+        material.set(ColorAttribute.createDiffuse(Color.WHITE));
         this.lighting = lighting;
     }
 
@@ -35,10 +38,12 @@ class ModelInstanceProvider {
         Vector3 pos = object.getPosition();
         Quaternion ori = object.getOrientation();
         float scale = object.getScale();
-        BlendingAttribute attribute = (BlendingAttribute) instance.materials.get(0).get(BlendingAttribute.Type);
+        BlendingAttribute blending = (BlendingAttribute) instance.materials.get(0).get(BlendingAttribute.Type);
+        ColorAttribute color = (ColorAttribute) instance.materials.get(0).get(ColorAttribute.Diffuse);
         instance.transform.set(pos.x, pos.y, pos.z, ori.x, ori.y, ori.z, ori.w);
         instance.transform.scale(scale, scale, scale);
-        attribute.opacity = object.getColor().a;
+        color.color.set(object.getColor());
+        blending.opacity = object.getColor().a;
         return instance;
     }
 
