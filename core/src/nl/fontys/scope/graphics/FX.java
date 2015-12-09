@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenEquation;
 import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
@@ -70,9 +71,17 @@ public final class FX {
     }
 
     public void fadeOut(float duration, TweenEquation equation) {
+        fadeOut(duration, equation, null);
+    }
+
+    public void fadeOut(float duration, TweenEquation equation, TweenCallback callback) {
         flash.setAlpha(0f);
         tweenManager.killTarget(flash);
-        Tween.to(flash, SpriteTween.ALPHA, duration).target(1f).ease(equation).start(tweenManager);
+        Tween tween = Tween.to(flash, SpriteTween.ALPHA, duration).target(1f).ease(equation);
+        if (callback != null) {
+            tween.setCallbackTriggers(TweenCallback.COMPLETE).setCallback(callback);
+        }
+        tween.start(tweenManager);
     }
 
     public void fadeIn(float duration) {
