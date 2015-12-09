@@ -3,6 +3,7 @@ buildscript {
         mavenLocal();
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven {url "http://clojars.org/repo/"}
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:1.5.0'
@@ -82,6 +83,7 @@ project(":core") {
 
     dependencies {
         compile "aurelienribon:tweenengine:6.3.3"
+        compile "com.esotericsoftware:kryonet:2.22.0-RC1"
         compile "net.engio:mbassador:1.2.4"
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
