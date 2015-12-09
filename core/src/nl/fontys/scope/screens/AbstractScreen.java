@@ -11,6 +11,9 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
+import aurelienribon.tweenengine.BaseTween;
+import aurelienribon.tweenengine.TweenCallback;
+import aurelienribon.tweenengine.TweenEquation;
 import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
 import nl.fontys.scope.ScopeGame;
@@ -138,6 +141,15 @@ public abstract class AbstractScreen implements Screen {
         world.dispose();
         baseShaderManager.dispose();
         uiBuffer.dispose();
+    }
+
+    public void setScreen(final Screen screen) {
+        FX.getInstance().fadeOut(1f, TweenEquations.easeOutCubic, new TweenCallback() {
+            @Override
+            public void onEvent(int type, BaseTween<?> source) {
+                game.setScreen(screen);
+            }
+        });
     }
 
     protected abstract void onShow();
