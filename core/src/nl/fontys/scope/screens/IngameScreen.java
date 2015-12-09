@@ -44,6 +44,7 @@ public class IngameScreen extends AbstractScreen {
         soundManager.play(Assets.Musics.STARSURFER, true);
 
         GameObject ship = factory.createShip(0f, 0f, 0f);
+        ship.getColor().set(0.65f, 0.65f, 0.65f, 1f);
         ShipController controller = new ShipController();
         world.addController(ship, controller);
         camController = new CameraTrackingController(world.getCamera());

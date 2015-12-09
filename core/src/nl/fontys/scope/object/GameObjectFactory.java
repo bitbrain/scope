@@ -43,6 +43,12 @@ public class GameObjectFactory {
         return object;
     }
 
+    public GameObject createSphere(float scale) {
+        GameObject sphere = createPlanet(0f, scale, 0f, 0f);
+        sphere.setType(GameObjectType.SPHERE);
+        return sphere;
+    }
+
     public GameObject createEnergy(float x, float y, float z) {
         GameObject object = world.createGameObject();
         object.setType(GameObjectType.ENERGY);
