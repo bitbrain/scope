@@ -13,6 +13,7 @@ import nl.fontys.scope.ScopeGame;
 import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.controls.ControllerControls;
 import nl.fontys.scope.controls.KeyboardControls;
+import nl.fontys.scope.core.Arena;
 import nl.fontys.scope.core.Player;
 import nl.fontys.scope.core.controller.CameraTrackingController;
 import nl.fontys.scope.core.controller.ShipController;
@@ -31,6 +32,8 @@ public class IngameScreen extends AbstractScreen {
 
     private DebugWidget debugWidget;
 
+    private Arena arena;
+
     public IngameScreen(ScopeGame game, boolean debug) {
         super(game);
         this.debug = debug;
@@ -45,16 +48,11 @@ public class IngameScreen extends AbstractScreen {
         world.addController(ship, controller);
         camController = new CameraTrackingController(world.getCamera());
         world.addController(ship, camController);
+        arena = new Arena(factory);
+        arena.setup();
         Player.setCurrent(ship);
 
         keyboardControls = new KeyboardControls(controller);
-
-        SecureRandom random = new SecureRandom(UUID.randomUUID().toString().getBytes());
-        factory.createEnergy(random.nextFloat() * 50f - 50f, random.nextFloat() * 50f - 50f, random.nextFloat() * 50f - 50f);
-        factory.createPlanet(500f, 50f, 34f, 1.6f);
-        factory.createPlanet(1000f, 80f, 234f, 1.2f);
-        factory.createPlanet(1500f, 20f, 44f, 2.7f);
-        factory.createPlanet(700f, 10f, 44f, 4.7f);
         for (Controller c : Controllers.getControllers()) {
             ControllerControls cc = new ControllerControls(controller);
             controls.add(cc);
