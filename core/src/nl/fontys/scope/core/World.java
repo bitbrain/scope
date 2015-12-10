@@ -65,9 +65,8 @@ public class World {
         camera.update();
         renderManager = new RenderManager(lightingManager, modelInstanceService);
 
-        lightingManager.setAmbientLight(0.4f, 0.3f, 0.8f, 1f);
-        lightingManager.addDirectionalLight(UUID.randomUUID().toString(), new DirectionalLight().set(0.4f, 0.2f, 4.0f, 0f, -0.2f, -1f));
-        lightingManager.addDirectionalLight(UUID.randomUUID().toString(), new DirectionalLight().set(0.6f, 0.2f, 0.8f, 0f, -0.2f, 1.0f));
+        lightingManager.setAmbientLight(0.2f, 0.1f, 0.4f, 1f);
+        lightingManager.addDirectionalLight(UUID.randomUUID().toString(), new DirectionalLight().set(0.7f, 0.5f, 4.0f, 0f, 0f, -1f));
         lightingManager.addPointLight(UUID.randomUUID().toString(), new PointLight().set(Colors.PRIMARY, 0f, 0f, 0f, 2000f));
     }
 

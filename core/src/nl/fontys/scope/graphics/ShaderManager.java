@@ -46,8 +46,8 @@ public final class ShaderManager {
         processor.addEffect(lenseflare);
         lenseflare.setEnabled(false);
         uiBloom = new Bloom(Math.round(Gdx.graphics.getWidth() * 0.25f), Math.round(Gdx.graphics.getHeight() * 0.25f));
-        uiBloom.setBlurAmount(40f);
-        uiBloom.setBloomIntesity(2.8f);
+        uiBloom.setBlurAmount(30f);
+        uiBloom.setBloomIntesity(2.0f);
         uiBloom.setBlurPasses(4);
         processor.addEffect(uiBloom);
         uiBloom.setEnabled(false);
