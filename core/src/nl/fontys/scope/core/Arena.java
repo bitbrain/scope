@@ -11,9 +11,13 @@ import nl.fontys.scope.util.Colors;
 
 public class Arena {
 
+    public static interface ArenaBoundRestrictor {
+        void restrict(GameObject object);
+    }
+
     private static final int DEFAULT_ENERGY_COUNT =100;
-    private static final int RADIUS = 140;
-    private static final int OUTER_RADIUS = 100;
+    public static final float RADIUS = 140;
+    private static final float OUTER_RADIUS = 100;
 
     private GameObjectFactory factory;
 
@@ -25,6 +29,10 @@ public class Arena {
         this.factory = factory;
         this.spawnManager = new SpawnManager(playerCount, RADIUS);
         random = new SecureRandom(UUID.randomUUID().toString().getBytes());
+    }
+
+    public ArenaBoundRestrictor getRestrictor() {
+        return restrictor;
     }
 
     public void setup() {
@@ -52,11 +60,13 @@ public class Arena {
 
     private class SpawnManager {
 
-        private final int playerCount, arenaRadius;
+        private final int playerCount;
+
+        private final float arenaRadius;
 
         private int lastUsed = -1;
 
-        public SpawnManager(int playerCount, int arenaRadius) {
+        public SpawnManager(int playerCount, float arenaRadius) {
             this.playerCount = playerCount;
             this.arenaRadius = arenaRadius;
         }
@@ -73,4 +83,14 @@ public class Arena {
             return point;
         }
     }
+
+    private ArenaBoundRestrictor restrictor = new ArenaBoundRestrictor() {
+        @Override
+        public void restrict(GameObject object) {
+            Vector3 pos = object.getPosition();
+            if (pos.len() > RADIUS) {
+                pos.setLength(RADIUS);
+            }
+        }
+    };
 }

@@ -53,6 +53,8 @@ public class World {
 
     private CollisionDetector collisionDetector;
 
+    private Arena.ArenaBoundRestrictor restrictor;
+
     public World() {
         physics = new Physics();
         lightingManager = new LightingManager();
@@ -68,6 +70,10 @@ public class World {
         lightingManager.setAmbientLight(0.2f, 0.1f, 0.4f, 1f);
         lightingManager.addDirectionalLight(UUID.randomUUID().toString(), new DirectionalLight().set(0.7f, 0.5f, 4.0f, 0f, 0f, -1f));
         lightingManager.addPointLight(UUID.randomUUID().toString(), new PointLight().set(Colors.PRIMARY, 0f, 0f, 0f, 2000f));
+    }
+
+    public void setRestrictor(Arena.ArenaBoundRestrictor restrictor) {
+        this.restrictor = restrictor;
     }
 
     public void addController(nl.fontys.scope.object.GameObject gameObject, GameObjectController controller) {
@@ -130,6 +136,9 @@ public class World {
             }
             physics.apply(object, delta);
             collisionDetector.detect(object, objects.values());
+            if (restrictor != null) {
+                restrictor.restrict(object);
+            }
             renderManager.render(object, camera);
         }
     }
