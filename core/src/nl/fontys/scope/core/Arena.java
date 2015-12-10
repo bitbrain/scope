@@ -23,7 +23,7 @@ public class Arena {
     public void setup() {
         GameObject sphere = factory.createSphere(60f);
         sphere.getColor().set(Colors.PRIMARY);
-        sphere.getColor().a = 0.7f;
+        sphere.getColor().a = 0.75f;
         for (int i = 0; i < DEFAULT_ENERGY_COUNT; ++i) {
             float angle = 360f * random.nextFloat();
             float radius = 40f + 100f * random.nextFloat();
