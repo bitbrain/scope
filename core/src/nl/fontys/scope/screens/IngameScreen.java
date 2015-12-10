@@ -42,16 +42,15 @@ public class IngameScreen extends AbstractScreen {
     @Override
     protected void onShow() {
         soundManager.play(Assets.Musics.STARSURFER, true);
-
         GameObject ship = factory.createShip(0f, 0f, 0f);
+        Player.setCurrent(ship);
         ship.getColor().set(0.65f, 0.65f, 0.65f, 1f);
         ShipController controller = new ShipController();
         world.addController(ship, controller);
         camController = new CameraTrackingController(world.getCamera());
         world.addController(ship, camController);
-        arena = new Arena(factory);
+        arena = new Arena(factory, 2);
         arena.setup();
-        Player.setCurrent(ship);
 
         keyboardControls = new KeyboardControls(controller);
         for (Controller c : Controllers.getControllers()) {
