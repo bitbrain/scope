@@ -3,6 +3,8 @@ package nl.fontys.scope.core;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.math.collision.BoundingBox;
 
+import net.engio.mbassy.listener.Handler;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +26,20 @@ public class CollisionDetector {
 
     public CollisionDetector(ModelInstanceService service) {
         this.service = service;
+        this.events.register(this);
+    }
+
+    public void dispose() {
+        this.events.unregister(this);
+    }
+
+    @Handler
+    public void onObjectRemove(Events.GdxEvent event) {
+        if (event.isTypeOf(EventType.OBJECT_REMOVED)) {
+            GameObject object = (GameObject) event.getPrimaryParam();
+            boxes.remove(object.getId());
+            originals.remove(object.getId());
+        }
     }
 
     public void detect(GameObject target, Collection<GameObject> others) {

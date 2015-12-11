@@ -95,6 +95,7 @@ public class World {
 
     public void dispose() {
         controllers.clear();
+        collisionDetector.dispose();
     }
 
     public void resize(int width, int height) {
