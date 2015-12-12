@@ -12,6 +12,8 @@ import nl.fontys.scope.object.GameObjectType;
 
 public class GameLogicHandler implements Disposable {
 
+    private static final int POINTS_PER_ENERGY = 150;
+
     private Events events = Events.getInstance();
 
     private World world;
@@ -37,9 +39,13 @@ public class GameLogicHandler implements Disposable {
     }
 
     private void handleCollision(GameObject objectA, GameObject objectB) {
-        boolean isCurrentShip = objectA.equals(Player.getCurrent().getShip());
+        Player currentPlayer = Player.getCurrent();
+        boolean isCurrentShip = objectA.equals(currentPlayer.getShip());
         if (isCurrentShip && GameObjectType.ENERGY.equals(objectB.getType())) {
+            currentPlayer.addEnergy();
             world.remove(objectB);
+        } else if (isCurrentShip && GameObjectType.SPHERE.equals(objectB.getType())) {
+            currentPlayer.addPoints(currentPlayer.dropEnergy() * POINTS_PER_ENERGY);
         }
     }
 }
