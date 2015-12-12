@@ -78,7 +78,7 @@ public class Arena {
             }
             float angle = 360f / (float)(playerCount * spawnPos);
             Vector3 point = new Vector3(arenaRadius / 2f, 0f, 0f);
-            point.rotate(angle, 0f, 0f, 1f);
+            point.rotate(angle, 0f, 1f, 0f);
             lastUsed = spawnPos;
             return point;
         }
