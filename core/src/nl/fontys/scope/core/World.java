@@ -43,6 +43,8 @@ public class World {
 
     private Map<String, nl.fontys.scope.object.GameObject> objects = new HashMap<String, nl.fontys.scope.object.GameObject>();
 
+    private List<GameObject> removals = new ArrayList<GameObject>();
+
     Events events = Events.getInstance();
 
     private Map<String, List<GameObjectController>> controllers = new HashMap<String, List<GameObjectController> >();
@@ -110,10 +112,7 @@ public class World {
     }
 
     public void remove(nl.fontys.scope.object.GameObject gameObject) {
-        if (objects.remove(gameObject) != null) {
-            controllers.remove(gameObject.getId());
-            events.fire(EventType.OBJECT_REMOVED, gameObject);
-        }
+        removals.add(gameObject);
     }
 
     public PerspectiveCamera getCamera() {
@@ -142,5 +141,12 @@ public class World {
             }
             renderManager.render(object, camera);
         }
+        for (GameObject removal : removals) {
+            if (objects.remove(removal.getId()) != null) {
+                controllers.remove(removal.getId());
+                events.fire(EventType.OBJECT_REMOVED, removal);
+            }
+        }
+        removals.clear();
     }
 }

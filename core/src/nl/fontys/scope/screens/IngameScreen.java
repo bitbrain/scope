@@ -14,6 +14,7 @@ import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.controls.ControllerControls;
 import nl.fontys.scope.controls.KeyboardControls;
 import nl.fontys.scope.core.Arena;
+import nl.fontys.scope.core.GameLogicHandler;
 import nl.fontys.scope.core.Player;
 import nl.fontys.scope.core.controller.CameraTrackingController;
 import nl.fontys.scope.core.controller.ShipController;
@@ -34,6 +35,8 @@ public class IngameScreen extends AbstractScreen {
 
     private Arena arena;
 
+    private GameLogicHandler logicHandler;
+
     public IngameScreen(ScopeGame game, boolean debug) {
         super(game);
         this.debug = debug;
@@ -47,6 +50,7 @@ public class IngameScreen extends AbstractScreen {
         ship.getColor().set(0.65f, 0.65f, 0.65f, 1f);
         ShipController controller = new ShipController();
         world.addController(ship, controller);
+        logicHandler = new GameLogicHandler(world, factory);
         camController = new CameraTrackingController(world.getCamera());
         world.addController(ship, camController);
         arena = new Arena(factory, 2);
