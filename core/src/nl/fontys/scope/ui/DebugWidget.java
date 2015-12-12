@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.utils.TimeUtils;
 
 import nl.fontys.scope.core.Player;
+import nl.fontys.scope.core.PlayerManager;
 import nl.fontys.scope.object.GameObject;
 
 public class DebugWidget extends Table {
@@ -19,7 +20,7 @@ public class DebugWidget extends Table {
     private GameObject ship;
 
     public DebugWidget() {
-        ship = Player.getCurrent().getShip();
+        ship = PlayerManager.getCurrent().getShip();
         setFillParent(true);
         VerticalGroup shipStats = new VerticalGroup();
         shipStats.setFillParent(true);

@@ -16,6 +16,7 @@ import nl.fontys.scope.controls.KeyboardControls;
 import nl.fontys.scope.core.Arena;
 import nl.fontys.scope.core.GameLogicHandler;
 import nl.fontys.scope.core.Player;
+import nl.fontys.scope.core.PlayerManager;
 import nl.fontys.scope.core.controller.CameraTrackingController;
 import nl.fontys.scope.core.controller.ShipController;
 import nl.fontys.scope.object.GameObject;
@@ -37,6 +38,8 @@ public class IngameScreen extends AbstractScreen {
 
     private GameLogicHandler logicHandler;
 
+    private PlayerManager playerManager;
+
     public IngameScreen(ScopeGame game, boolean debug) {
         super(game);
         this.debug = debug;
@@ -45,13 +48,11 @@ public class IngameScreen extends AbstractScreen {
     @Override
     protected void onShow() {
         soundManager.play(Assets.Musics.STARSURFER, true);
-        GameObject ship = factory.createShip(0f, 0f, 0f);
-        Player.setCurrent(ship);
-        ship.getColor().set(0.65f, 0.65f, 0.65f, 1f);
+        playerManager = new PlayerManager(factory);
         ShipController controller = new ShipController();
-        world.addController(ship, controller);
+        world.addController(PlayerManager.getCurrent().getShip(), controller);
         camController = new CameraTrackingController(world.getCamera());
-        world.addController(ship, camController);
+        world.addController(PlayerManager.getCurrent().getShip(), camController);
         arena = new Arena(factory, 2);
         arena.setup();
         world.setRestrictor(arena.getRestrictor());

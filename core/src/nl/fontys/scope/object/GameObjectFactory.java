@@ -19,6 +19,7 @@ public class GameObjectFactory {
         GameObject object = world.createGameObject();
         object.setType(GameObjectType.SHIP);
         object.setScale(0.5f);
+        object.getColor().set(0.65f, 0.65f, 0.65f, 1f);
         return object;
     }
 

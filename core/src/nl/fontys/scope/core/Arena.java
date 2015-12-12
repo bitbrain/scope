@@ -49,7 +49,7 @@ public class Arena {
             v.rotate((float)(angle), 0f, 0f, 1f);
             factory.createEnergy(v.x, v.y, v.z).getColor().set(Colors.PRIMARY);
         }
-        spawnPlayer(Player.getCurrent());
+        spawnPlayer(PlayerManager.getCurrent());
     }
 
     private void spawnPlayer(Player player) {
