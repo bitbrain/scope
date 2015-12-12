@@ -56,7 +56,7 @@ public class IngameScreen extends AbstractScreen {
         arena = new Arena(factory, 2);
         arena.setup();
         world.setRestrictor(arena.getRestrictor());
-        logicHandler = new GameLogicHandler(world, factory, arena);
+        logicHandler = new GameLogicHandler(world, factory, arena, playerManager);
 
         keyboardControls = new KeyboardControls(controller);
         for (Controller c : Controllers.getControllers()) {

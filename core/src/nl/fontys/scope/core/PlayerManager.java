@@ -31,6 +31,7 @@ public class PlayerManager {
     public Player addPlayer() {
         Player player = new Player(factory);
         players.put(player.getId(), player);
+        shipToPlayers.put(player.getShip(), player);
         return player;
     }
 }

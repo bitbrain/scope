@@ -23,8 +23,11 @@ public class GameLogicHandler implements Disposable {
 
     private Arena arena;
 
-    public GameLogicHandler(World world, GameObjectFactory factory, Arena arena) {
+    private final PlayerManager playerManager;
+
+    public GameLogicHandler(World world, GameObjectFactory factory, Arena arena, PlayerManager playerManager) {
         events.register(this);
+        this.playerManager = playerManager;
         this.world = world;
         this.factory = factory;
         this.arena = arena;
@@ -51,12 +54,13 @@ public class GameLogicHandler implements Disposable {
         } else if (isCurrentShip && GameObjectType.SPHERE.equals(objectB.getType())) {
             currentPlayer.addPoints(currentPlayer.dropEnergy() * POINTS_PER_ENERGY);
         } else if (isCurrentShip && GameObjectType.SHIP.equals(objectB.getType())) {
-            destroyShip(objectA, currentPlayer);
-            destroyShip(objectB, null);
+            destroyShip(objectA);
+            destroyShip(objectB);
         }
     }
 
-    private void destroyShip(GameObject object, Player player) {
+    private void destroyShip(GameObject object) {
+        Player player = playerManager.getPlayerByShip(object);
         if (player != null) {
             Vector3 currentPos = object.getPosition();
             Vector3 pos = arena.spawnManager.fetchAvailableSpawnPoint();
