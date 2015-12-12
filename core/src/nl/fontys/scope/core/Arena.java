@@ -23,7 +23,7 @@ public class Arena {
 
     private SecureRandom random;
 
-    private SpawnManager spawnManager;
+    public final SpawnManager spawnManager;
 
     public Arena(GameObjectFactory factory, int playerCount) {
         this.factory = factory;
@@ -58,7 +58,7 @@ public class Arena {
         ship.setPosition(point.x, point.y, point.z);
     }
 
-    private class SpawnManager {
+    public class SpawnManager {
 
         private final int playerCount;
 

@@ -50,12 +50,12 @@ public class IngameScreen extends AbstractScreen {
         ship.getColor().set(0.65f, 0.65f, 0.65f, 1f);
         ShipController controller = new ShipController();
         world.addController(ship, controller);
-        logicHandler = new GameLogicHandler(world, factory);
         camController = new CameraTrackingController(world.getCamera());
         world.addController(ship, camController);
         arena = new Arena(factory, 2);
         arena.setup();
         world.setRestrictor(arena.getRestrictor());
+        logicHandler = new GameLogicHandler(world, factory, arena);
 
         keyboardControls = new KeyboardControls(controller);
         for (Controller c : Controllers.getControllers()) {

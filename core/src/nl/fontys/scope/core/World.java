@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 import nl.fontys.scope.core.controller.GameObjectController;
 import nl.fontys.scope.event.EventType;
@@ -41,9 +42,7 @@ public class World {
         }
     };
 
-    private Map<String, nl.fontys.scope.object.GameObject> objects = new HashMap<String, nl.fontys.scope.object.GameObject>();
-
-    private List<GameObject> removals = new ArrayList<GameObject>();
+    private Map<String, nl.fontys.scope.object.GameObject> objects = new ConcurrentHashMap<String, GameObject>();
 
     Events events = Events.getInstance();
 
@@ -112,7 +111,10 @@ public class World {
     }
 
     public void remove(nl.fontys.scope.object.GameObject gameObject) {
-        removals.add(gameObject);
+        if (objects.remove(gameObject.getId()) != null) {
+            controllers.remove(gameObject.getId());
+            events.fire(EventType.OBJECT_REMOVED, gameObject);
+        }
     }
 
     public PerspectiveCamera getCamera() {
@@ -141,12 +143,5 @@ public class World {
             }
             renderManager.render(object, camera);
         }
-        for (GameObject removal : removals) {
-            if (objects.remove(removal.getId()) != null) {
-                controllers.remove(removal.getId());
-                events.fire(EventType.OBJECT_REMOVED, removal);
-            }
-        }
-        removals.clear();
     }
 }

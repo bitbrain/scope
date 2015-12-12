@@ -1,5 +1,6 @@
 package nl.fontys.scope.core;
 
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Disposable;
 
 import net.engio.mbassy.listener.Handler;
@@ -20,10 +21,13 @@ public class GameLogicHandler implements Disposable {
 
     private GameObjectFactory factory;
 
-    public GameLogicHandler(World world, GameObjectFactory factory) {
+    private Arena arena;
+
+    public GameLogicHandler(World world, GameObjectFactory factory, Arena arena) {
         events.register(this);
         this.world = world;
         this.factory = factory;
+        this.arena = arena;
     }
 
     @Handler
@@ -46,6 +50,21 @@ public class GameLogicHandler implements Disposable {
             world.remove(objectB);
         } else if (isCurrentShip && GameObjectType.SPHERE.equals(objectB.getType())) {
             currentPlayer.addPoints(currentPlayer.dropEnergy() * POINTS_PER_ENERGY);
+        } else if (isCurrentShip && GameObjectType.SHIP.equals(objectB.getType())) {
+            destroyShip(objectA, currentPlayer);
+            destroyShip(objectB, null);
+        }
+    }
+
+    private void destroyShip(GameObject object, Player player) {
+        if (player != null) {
+            Vector3 currentPos = object.getPosition();
+            Vector3 pos = arena.spawnManager.fetchAvailableSpawnPoint();
+            int energyCount = player.dropEnergy();
+            for (int i = 0; i < energyCount; ++i) {
+                factory.createEnergy(currentPos.x, currentPos.y, currentPos.z);
+            }
+            object.setPosition(pos.x, pos.y, pos.z);
         }
     }
 }
