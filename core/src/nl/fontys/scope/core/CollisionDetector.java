@@ -49,6 +49,8 @@ public class CollisionDetector {
                 BoundingBox boxB = getBoundingBox(object);
                 if (boxA.intersects(boxB)) {
                     events.fire(EventType.COLLISION, target, object);
+                } else if (boxA.contains(boxB)) {
+                    events.fire(EventType.COLLISION_FULL, target, object);
                 }
             }
         }

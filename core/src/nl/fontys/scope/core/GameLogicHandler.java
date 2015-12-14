@@ -36,7 +36,9 @@ public class GameLogicHandler implements Disposable {
     @Handler
     public void handle(Events.GdxEvent event) {
         if (event.isTypeOf(EventType.COLLISION)) {
-            handleCollision((GameObject)event.getPrimaryParam(), (GameObject)event.getSecondaryParam(0));
+            handleCollision((GameObject)event.getPrimaryParam(), (GameObject)event.getSecondaryParam(0), false);
+        } else if (event.isTypeOf(EventType.COLLISION_FULL)) {
+            handleCollision((GameObject)event.getPrimaryParam(), (GameObject)event.getSecondaryParam(0), true);
         }
     }
 
@@ -45,13 +47,13 @@ public class GameLogicHandler implements Disposable {
         events.unregister(this);
     }
 
-    private void handleCollision(GameObject objectA, GameObject objectB) {
+    private void handleCollision(GameObject objectA, GameObject objectB, boolean full) {
         Player currentPlayer = PlayerManager.getCurrent();
         boolean isCurrentShip = objectA.equals(currentPlayer.getShip());
         if (isCurrentShip && GameObjectType.ENERGY.equals(objectB.getType())) {
             currentPlayer.addEnergy();
             world.remove(objectB);
-        } else if (isCurrentShip && GameObjectType.SPHERE.equals(objectB.getType())) {
+        } else if (full && isCurrentShip && GameObjectType.SPHERE.equals(objectB.getType())) {
             currentPlayer.addPoints(currentPlayer.dropEnergy() * POINTS_PER_ENERGY);
         } else if (isCurrentShip && GameObjectType.SHIP.equals(objectB.getType())) {
             destroyShip(objectA);

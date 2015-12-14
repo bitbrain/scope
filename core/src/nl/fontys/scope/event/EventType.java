@@ -10,4 +10,7 @@ public class EventType {
 
     // Is called on an object collision (param: GameObject, GameObject)
     public static final String COLLISION = "collision";
+
+    // Is called on an full object collision (containment) (param: GameObject, GameObject)
+    public static final String COLLISION_FULL = "collision_full";
 }
