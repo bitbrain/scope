@@ -7,16 +7,16 @@ import nl.fontys.scope.object.GameObjectFactory;
 
 public class PlayerManager {
 
-    private final GameObjectFactory factory;
-
     private static Player current;
 
     private HashMap<String, Player> players = new HashMap<String, Player>();
 
     private HashMap<GameObject, Player> shipToPlayers = new HashMap<GameObject, Player>();
+
+    private World world;
     
-    public PlayerManager(GameObjectFactory factory) {
-        this.factory = factory;
+    public PlayerManager(World world) {
+        this.world = world;
         this.current = addPlayer();
     }
 
@@ -29,7 +29,7 @@ public class PlayerManager {
     }
 
     public Player addPlayer() {
-        Player player = new Player(factory);
+        Player player = new Player(world);
         players.put(player.getId(), player);
         shipToPlayers.put(player.getShip(), player);
         return player;

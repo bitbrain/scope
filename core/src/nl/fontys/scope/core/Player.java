@@ -19,13 +19,21 @@ public class Player {
 
     private Events events = Events.getInstance();
 
-    Player(GameObjectFactory factory) {
+    private Weapon weapon;
+
+    Player(World world) {
         this.id = UUID.randomUUID().toString();
+        GameObjectFactory factory = new GameObjectFactory(world);
         this.ship = factory.createShip(0f, 0f, 0f);
+        this.weapon = new Weapon(this.ship, world);
     }
 
     public String getId() {
         return id;
+    }
+
+    public Weapon getWeapon() {
+        return weapon;
     }
 
     public int getEnergyCount() {
