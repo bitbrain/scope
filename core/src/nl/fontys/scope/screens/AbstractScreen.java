@@ -100,11 +100,6 @@ public abstract class AbstractScreen implements Screen {
         stage.getBatch().begin();
             fx.render(stage.getBatch(), delta);
         stage.getBatch().end();
-
-        // Input handling (WIP)
-        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-            Gdx.app.exit();
-        }
     }
 
     @Override
@@ -114,7 +109,7 @@ public abstract class AbstractScreen implements Screen {
             multiplexer.addProcessor(stage);
             fx.init(tweenManager, cam2D);
             onCreateStage(stage);
-            fx.fadeIn(4f, TweenEquations.easeInCubic);
+            fx.fadeIn(3f, TweenEquations.easeInCubic);
         }
         if (uiBuffer != null) {
             uiBuffer.dispose();
@@ -150,7 +145,7 @@ public abstract class AbstractScreen implements Screen {
     public void setScreen(final Screen screen) {
         closing = true;
         Gdx.input.setInputProcessor(null);
-        FX.getInstance().fadeOut(1f, TweenEquations.easeOutCubic, new TweenCallback() {
+        FX.getInstance().fadeOut(0.5f, TweenEquations.easeOutCubic, new TweenCallback() {
             @Override
             public void onEvent(int type, BaseTween<?> source) {
                 game.setScreen(screen);

@@ -1,5 +1,7 @@
 package nl.fontys.scope.screens;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -71,6 +73,11 @@ public class IngameScreen extends AbstractScreen {
         keyboardControls.update(delta);
         for (ControllerControls c : controls) {
             c.update(delta);
+        }
+
+        // Input handling
+        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+            setScreen(new MenuScreen(game));
         }
     }
 

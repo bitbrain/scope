@@ -52,14 +52,13 @@ public class MenuScreen extends AbstractScreen {
         menu.add(Bundle.general.get(Messages.MENU_NEW_GAME), new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-                setScreen(new IngameScreen(game, false));
+                setScreen(new CreateGameScreen(game));
             }
         });
         menu.add(Bundle.general.get(Messages.MENU_JOIN_GAME), new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                // TODO
+                setScreen(new JoinGameScreen(game));
             }
         });
         layout.add(menu).padBottom(30f).row();
