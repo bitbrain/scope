@@ -4,6 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 
+import nl.fontys.scope.core.Player;
+import nl.fontys.scope.core.PlayerManager;
+
 public class KeyboardControls {
 
     private Moveable moveable;
@@ -13,6 +16,7 @@ public class KeyboardControls {
     }
 
     public void update(float delta) {
+        Player current = PlayerManager.getCurrent();
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             moveable.moveForward();
         } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
@@ -28,6 +32,9 @@ public class KeyboardControls {
         }
         if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
             moveable.moveDown();
+        }
+        if (Gdx.input.isTouched()) {
+            current.getWeapon().shoot();
         }
     }
 }

@@ -5,6 +5,9 @@ import com.badlogic.gdx.controllers.ControllerListener;
 import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.math.Vector3;
 
+import nl.fontys.scope.core.Player;
+import nl.fontys.scope.core.PlayerManager;
+
 /**
  * Created by Miguel on 11/21/2015.
  */
