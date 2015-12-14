@@ -109,7 +109,7 @@ public abstract class AbstractScreen implements Screen {
             multiplexer.addProcessor(stage);
             fx.init(tweenManager, cam2D);
             onCreateStage(stage);
-            fx.fadeIn(3f, TweenEquations.easeInCubic);
+            fx.fadeIn(5f, TweenEquations.easeInCubic);
         }
         if (uiBuffer != null) {
             uiBuffer.dispose();
