@@ -13,4 +13,10 @@ public class EventType {
 
     // Is called on an full object collision (containment) (param: GameObject, GameObject)
     public static final String COLLISION_FULL = "collision_full";
+
+    // Is called whenever a player gets points (param: Player, int)
+    public static final String POINTS_GAINED = "points_gained";
+
+    // Is called whenever a player drops energy (param: Player, int)
+    public static final String ENERGY_DROPPED = "energy_dropped";
 }

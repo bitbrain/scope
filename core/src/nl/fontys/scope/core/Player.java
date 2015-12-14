@@ -2,6 +2,8 @@ package nl.fontys.scope.core;
 
 import java.util.UUID;
 
+import nl.fontys.scope.event.EventType;
+import nl.fontys.scope.event.Events;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.object.GameObjectFactory;
 
@@ -14,6 +16,8 @@ public class Player {
     private int energyCount;
 
     private int points;
+
+    private Events events = Events.getInstance();
 
     Player(GameObjectFactory factory) {
         this.id = UUID.randomUUID().toString();
@@ -35,6 +39,7 @@ public class Player {
     public int dropEnergy() {
         int count = energyCount;
         energyCount = 0;
+        events.fire(EventType.ENERGY_DROPPED, this, count);
         return count;
     }
 
@@ -43,7 +48,11 @@ public class Player {
     }
 
     public void addPoints(int points) {
-        this.points = points;
+        if (points > 0) {
+            this.points += points;
+            events.fire(EventType.POINTS_GAINED, this, points);
+        }
+
     }
 
     public GameObject getShip() {
