@@ -135,7 +135,7 @@ public class LoadingScreen implements Screen {
 
     private void drawLoadingBar() {
         float width = Gdx.graphics.getWidth() * 0.8f;
-        float height = 2f;
+        float height = 4f;
         renderer.setProjectionMatrix(cam.combined);
         renderer.begin(ShapeRenderer.ShapeType.Filled);
         renderer.setColor(Colors.lighten(Colors.PRIMARY, 0.3f));
