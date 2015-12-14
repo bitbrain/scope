@@ -53,7 +53,7 @@ public final class Styles {
         TEXTFIELD_FORM.font = AssetManager.getFont(Assets.Fonts.OPENSANS_MEDIUM_32);
         TEXTFIELD_FORM.messageFont = AssetManager.getFont(Assets.Fonts.OPENSANS_MEDIUM_32);
         TEXTFIELD_FORM.fontColor = Colors.PRIMARY;
-        TEXTFIELD_FORM.focusedFontColor = Color.ORANGE;
+        TEXTFIELD_FORM.focusedFontColor = Colors.ACTIVE.cpy();
         TEXTFIELD_FORM.messageFontColor = Colors.SECONDARY;
     }
 }
