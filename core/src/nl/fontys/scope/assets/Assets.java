@@ -11,7 +11,8 @@ public final class Assets {
 
         DEBUG_20("fonts/debug-14.fnt"),
         OPENSANS_SMALL_16("fonts/opensans-small-16.fnt"),
-        OPENSANS_MEDIUM_32("fonts/opensans-medium-32.fnt");
+        OPENSANS_MEDIUM_32("fonts/opensans-medium-32.fnt"),
+        OPENSANS_LARGE_64("fonts/opensans-large-64.fnt");
 
         private String path;
 

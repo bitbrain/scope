@@ -17,6 +17,7 @@ public final class Styles {
     public static final Label.LabelStyle LABEL_DEBUG = new Label.LabelStyle();
     public static final Label.LabelStyle LABEL_CREDITS = new Label.LabelStyle();
     public static final Label.LabelStyle LABEL_VERSION = new Label.LabelStyle();
+    public static final Label.LabelStyle LABEL_CAPTION = new Label.LabelStyle();
 
     public static final TextButton.TextButtonStyle BUTTON_MENU = new TextButton.TextButtonStyle();
 
@@ -33,6 +34,9 @@ public final class Styles {
         color = Colors.PRIMARY_ADDITION.cpy();
         color.a = 0.8f;
         LABEL_VERSION.fontColor = color;
+
+        LABEL_CAPTION.font = AssetManager.getFont(Assets.Fonts.OPENSANS_LARGE_64);
+        LABEL_CAPTION.fontColor = Colors.PRIMARY.cpy();
 
         BUTTON_MENU.font = AssetManager.getFont(Assets.Fonts.OPENSANS_MEDIUM_32);
         BUTTON_MENU.fontColor = Colors.PRIMARY.cpy();
