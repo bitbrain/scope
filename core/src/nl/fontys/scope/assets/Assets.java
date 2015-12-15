@@ -89,7 +89,9 @@ public final class Assets {
      * Contains sound definitions
      */
     public enum Sounds {
-        TEST("");
+
+        MENU_SELECT("sounds/select-01.mp3"),
+        MENU_HOVER("sounds/rollover-00.mp3");
 
         private String path;
 
