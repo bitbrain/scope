@@ -49,7 +49,6 @@ public class IngameScreen extends AbstractScreen {
 
     @Override
     protected void onShow() {
-        soundManager.play(Assets.Musics.STARSURFER, true);
         playerManager = new PlayerManager(world);
         ShipController controller = new ShipController();
         world.addController(PlayerManager.getCurrent().getShip(), controller);

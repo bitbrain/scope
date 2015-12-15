@@ -19,7 +19,7 @@ public class ControllerControls implements ControllerListener {
 
     private Moveable moveable;
 
-    private boolean[] pressed = new boolean[8];
+    private boolean[] pressed = new boolean[12];
 
     public ControllerControls(Moveable moveable) {
         this.moveable = moveable;
