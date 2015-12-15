@@ -1,6 +1,7 @@
 package nl.fontys.scope.core;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector3;
 
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.object.GameObjectFactory;
@@ -9,7 +10,7 @@ public class Weapon {
 
     private long timestamp;
 
-    private long interval = 1000;
+    private long interval = 200;
 
     private World world;
 
@@ -30,7 +31,7 @@ public class Weapon {
 
     public void shoot() {
         if (checkShooting()) {
-            // TODO shoot
+            GameObject shot = factory.createShot(ship);
         }
     }
 

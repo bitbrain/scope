@@ -7,12 +7,13 @@ import java.util.UUID;
 
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.object.GameObjectFactory;
+import nl.fontys.scope.object.GameObjectType;
 import nl.fontys.scope.util.Colors;
 
 public class Arena {
 
     public static interface ArenaBoundRestrictor {
-        void restrict(GameObject object);
+        void restrict(World world, GameObject object);
     }
 
     private static final int DEFAULT_ENERGY_COUNT =100;
@@ -86,10 +87,14 @@ public class Arena {
 
     private ArenaBoundRestrictor restrictor = new ArenaBoundRestrictor() {
         @Override
-        public void restrict(GameObject object) {
+        public void restrict(World world, GameObject object) {
             Vector3 pos = object.getPosition();
             if (pos.len() > RADIUS) {
-                pos.setLength(RADIUS);
+                if (object.getType().equals(GameObjectType.SHOT)) {
+                    world.remove(object);
+                } else {
+                    pos.setLength(RADIUS);
+                }
             }
         }
     };

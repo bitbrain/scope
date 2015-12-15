@@ -28,6 +28,8 @@ public class GameObject implements Pool.Poolable {
 
     private Color color = Color.WHITE.cpy();
 
+    private boolean physics = true;
+
     public void set(GameObject object) {
         this.position = object.position;
         this.lastPosition = object.lastPosition;
@@ -37,6 +39,7 @@ public class GameObject implements Pool.Poolable {
         this.id = object.id;
         this.type = object.type;
         this.color = object.color;
+        this.physics = object.physics;
     }
 
     public float getScale() {
@@ -90,8 +93,17 @@ public class GameObject implements Pool.Poolable {
         this.velocity = velocity;
     }
 
+    public boolean hasPhysics() {
+        return physics;
+    }
+
+    public void setPhysics(boolean physics) {
+        this.physics = physics;
+    }
+
     @Override
     public void reset() {
+        physics = true;
         lastPosition.set(0f, 0f, 0f);
         position.set(0f, 0f, 0f);
         scale = 1f;

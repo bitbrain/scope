@@ -139,7 +139,7 @@ public class World {
             physics.apply(object, delta);
             collisionDetector.detect(object, objects.values());
             if (restrictor != null) {
-                restrictor.restrict(object);
+                restrictor.restrict(this, object);
             }
             renderManager.render(object, camera);
         }

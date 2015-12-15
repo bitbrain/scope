@@ -1,8 +1,12 @@
 package nl.fontys.scope.object;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Vector3;
+
 import nl.fontys.scope.core.World;
 import nl.fontys.scope.core.controller.PlanetController;
 import nl.fontys.scope.core.controller.RingController;
+import nl.fontys.scope.util.Colors;
 
 /**
  * Creates game objects
@@ -20,6 +24,19 @@ public class GameObjectFactory {
         object.setType(GameObjectType.SHIP);
         object.setScale(0.5f);
         object.getColor().set(0.65f, 0.65f, 0.65f, 1f);
+        return object;
+    }
+
+    public GameObject createShot(GameObject ship) {
+        GameObject object = world.createGameObject();
+        Vector3 pos = new Vector3(ship.getPosition()).add(new Vector3(20f, 0f, 0f).mul(ship.getOrientation()));
+        object.setPosition(pos.x, pos.y, pos.z);
+        object.setVelocity(new Vector3(250f, 0f, 0f).mul(ship.getOrientation()));
+        object.setOrientation(ship.getOrientation().x, ship.getOrientation().y, ship.getOrientation().z, ship.getOrientation().w);
+        object.setScale(12f);
+        object.setType(GameObjectType.SHOT);
+        object.getColor().set(Colors.SECONDARY);
+        object.setPhysics(false);
         return object;
     }
 
