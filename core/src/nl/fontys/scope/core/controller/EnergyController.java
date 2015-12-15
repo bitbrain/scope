@@ -6,12 +6,15 @@ import java.security.SecureRandom;
 import java.util.UUID;
 
 import nl.fontys.scope.object.GameObject;
+import nl.fontys.scope.object.GameObjectType;
 
 public class EnergyController implements GameObjectController {
 
     private static final float MAX_SPEED = 8f;
 
     private Vector3 velocity = new Vector3();
+
+    private Vector3 distance = new Vector3();
 
     private SecureRandom random = new SecureRandom(UUID.randomUUID().toString().getBytes());
 
@@ -42,6 +45,14 @@ public class EnergyController implements GameObjectController {
 
     @Override
     public void update(GameObject object, GameObject other, float delta) {
-        // noOp
+        if (GameObjectType.SHIP.equals(other.getType())) {
+            distance.x = other.getPosition().x - object.getPosition().x;
+            distance.y = other.getPosition().y - object.getPosition().y;
+            distance.z = other.getPosition().z - object.getPosition().z;
+            if (distance.len() < 30f) {
+                distance.setLength(2f / distance.len());
+                object.getVelocity().add(distance);
+            }
+        }
     }
 }
