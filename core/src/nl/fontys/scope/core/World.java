@@ -137,7 +137,11 @@ public class World {
                 globalController.update(object, delta);
             }
             physics.apply(object, delta);
-            collisionDetector.detect(object, objects.values());
+            for (GameObject other : objects.values()) {
+                if (!object.getId().equals(other.getId())) {
+                    collisionDetector.detect(object, other);
+                }
+            }
             if (restrictor != null) {
                 restrictor.restrict(this, object);
             }

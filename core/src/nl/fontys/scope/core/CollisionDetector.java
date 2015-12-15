@@ -42,18 +42,14 @@ public class CollisionDetector {
         }
     }
 
-    public void detect(GameObject target, Collection<GameObject> others) {
-        for (GameObject object : others) {
-            if (!target.getId().equals(object.getId())) {
-                BoundingBox boxA = getBoundingBox(target);
-                BoundingBox boxB = getBoundingBox(object);
-                if (boxA.intersects(boxB)) {
-                    events.fire(EventType.COLLISION, target, object);
-                } else if (boxA.contains(boxB)) {
-                    events.fire(EventType.COLLISION_FULL, target, object);
-                }
+    public void detect(GameObject objectA, GameObject objectB) {
+            BoundingBox boxA = getBoundingBox(objectA);
+            BoundingBox boxB = getBoundingBox(objectB);
+            if (boxA.intersects(boxB)) {
+                events.fire(EventType.COLLISION, objectA, objectB);
+            } else if (boxA.contains(boxB)) {
+                events.fire(EventType.COLLISION_FULL, objectA, objectB);
             }
-        }
     }
 
     private BoundingBox getBoundingBox(GameObject object) {
