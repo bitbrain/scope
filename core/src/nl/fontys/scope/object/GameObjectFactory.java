@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 
 import nl.fontys.scope.core.World;
+import nl.fontys.scope.core.controller.EnergyController;
 import nl.fontys.scope.core.controller.PlanetController;
 import nl.fontys.scope.core.controller.RingController;
 import nl.fontys.scope.util.Colors;
@@ -59,6 +60,8 @@ public class GameObjectFactory {
         object.setType(GameObjectType.ENERGY);
         object.setPosition(x, y, z);
         object.setScale(4.5f);
+        object.setPhysics(false);
+        world.addController(object, new EnergyController());
         return object;
     }
 }
