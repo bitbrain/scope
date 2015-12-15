@@ -30,6 +30,11 @@ public class ShipController implements GameObjectController, Moveable {
     }
 
     @Override
+    public void update(GameObject object, GameObject other, float delta) {
+        // noOp
+    }
+
+    @Override
     public void moveLeft() {
         angle += 0.2f;
     }

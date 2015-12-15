@@ -34,4 +34,9 @@ public class CameraTrackingController implements GameObjectController {
         cam.position.set(cam.position.x + (float)(velocity.x * speed * delta), pos.y + 2, cam.position.z + (float)(velocity.z * speed * delta));
         cam.lookAt(pos.x, pos.y + 2, pos.z);
     }
+
+    @Override
+    public void update(GameObject object, GameObject other, float delta) {
+        // noOp
+    }
 }

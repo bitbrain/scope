@@ -139,6 +139,11 @@ public class World {
             physics.apply(object, delta);
             for (GameObject other : objects.values()) {
                 if (!object.getId().equals(other.getId())) {
+                    if (c != null) {
+                        for (GameObjectController cObject : c) {
+                            cObject.update(object, other, delta);
+                        }
+                    }
                     collisionDetector.detect(object, other);
                 }
             }

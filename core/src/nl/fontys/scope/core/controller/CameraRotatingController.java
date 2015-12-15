@@ -32,4 +32,9 @@ public class CameraRotatingController implements GameObjectController {
         this.cam.lookAt(object.getPosition().x, object.getPosition().y, object.getPosition().z);
         angle += 2f * delta;
     }
+
+    @Override
+    public void update(GameObject object, GameObject other, float delta) {
+        // noOp
+    }
 }

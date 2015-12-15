@@ -30,4 +30,9 @@ public class RingController implements GameObjectController {
         pitch += veloP * delta;
         roll += veloR * delta;
     }
+
+    @Override
+    public void update(GameObject object, GameObject other, float delta) {
+        // noOp
+    }
 }

@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Vector3;
 import java.security.SecureRandom;
 import java.util.UUID;
 
-import nl.fontys.scope.core.Arena;
 import nl.fontys.scope.object.GameObject;
 
 public class EnergyController implements GameObjectController {
@@ -39,5 +38,10 @@ public class EnergyController implements GameObjectController {
             velocity.setLength(MAX_SPEED);
         }
         object.setVelocity(velocity);
+    }
+
+    @Override
+    public void update(GameObject object, GameObject other, float delta) {
+        // noOp
     }
 }

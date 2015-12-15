@@ -36,4 +36,9 @@ public final class SoundManager implements GameObjectController {
     public void update(GameObject object, float delta) {
 
     }
+
+    @Override
+    public void update(GameObject object, GameObject other, float delta) {
+
+    }
 }

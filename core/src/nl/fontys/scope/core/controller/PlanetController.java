@@ -26,4 +26,9 @@ public class PlanetController implements GameObjectController {
         pos.z = (float)Math.sin(Math.toRadians(angle)) * radius;
         angle += speed * delta;
     }
+
+    @Override
+    public void update(GameObject object, GameObject other, float delta) {
+        // noOp
+    }
 }
