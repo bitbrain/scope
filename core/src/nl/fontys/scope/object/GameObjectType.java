@@ -6,7 +6,7 @@ package nl.fontys.scope.object;
 public enum GameObjectType {
 
     SHIP,
-    RING,
+    SHOT,
     PLANET,
     ENERGY,
     SPHERE,

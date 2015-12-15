@@ -54,7 +54,7 @@ public final class Assets {
         CRUISER("models/cruiser/cruiser.obj"),
         PLANET("models/planet_01/planet.obj"),
         ENERGY("models/energy/energy.obj"),
-        RING("models/ring/ring.obj");
+        SHOT("models/shot/shot.obj");
 
         private String path;
 

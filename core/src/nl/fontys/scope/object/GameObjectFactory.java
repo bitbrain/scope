@@ -23,19 +23,6 @@ public class GameObjectFactory {
         return object;
     }
 
-    public GameObject[] createArena(float x, float y, float z, int elements, float minScale, float maxScale) {
-        GameObject[] rings = new GameObject[elements];
-        float scaleStep = (maxScale - minScale) / elements;
-        for (int i = 0; i < elements; ++i) {
-            rings[i] = world.createGameObject();
-            rings[i].setType(GameObjectType.RING);
-            rings[i].setPosition(x, y, z);
-            world.addController(rings[i], new RingController());
-            rings[i].setScale(minScale + scaleStep * i);
-        }
-        return rings;
-    }
-
     public GameObject createPlanet(float radius, float scale, float angle, float speed) {
         GameObject object = world.createGameObject();
         object.setType(GameObjectType.PLANET);

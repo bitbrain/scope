@@ -16,7 +16,6 @@ public class ModelInstanceService {
 
     public ModelInstanceService() {
         providers.put(nl.fontys.scope.object.GameObjectType.SHIP, new ModelInstanceProvider(AssetManager.getModel(Assets.Models.CRUISER)));
-        providers.put(nl.fontys.scope.object.GameObjectType.RING, new ModelInstanceProvider(AssetManager.getModel(Assets.Models.RING)));
         providers.put(nl.fontys.scope.object.GameObjectType.PLANET, new ModelInstanceProvider(AssetManager.getModel(Assets.Models.PLANET)));
         providers.put(nl.fontys.scope.object.GameObjectType.SPHERE, new ModelInstanceProvider(AssetManager.getModel(Assets.Models.ENERGY), false));
         providers.put(nl.fontys.scope.object.GameObjectType.ENERGY, new ModelInstanceProvider(AssetManager.getModel(Assets.Models.ENERGY), false));
