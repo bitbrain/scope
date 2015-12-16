@@ -10,6 +10,15 @@ public class ServerGame {
     private long ID;
     private HashSet<Connection> players;
     private int PlayerCount;
+    private boolean started;
+
+    public boolean isStarted() {
+        return started;
+    }
+
+    public void setStarted(boolean started) {
+        this.started = started;
+    }
 
     private boolean started;
 

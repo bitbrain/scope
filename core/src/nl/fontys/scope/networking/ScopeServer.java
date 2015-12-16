@@ -150,4 +150,5 @@ public class ScopeServer  extends  Listener implements Disposable {
         game.setStarted(true);
         sendToAllPlayersOfGameTCP(game.getID(), new GameStartedResponse());
     }
+
 }

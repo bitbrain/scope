@@ -11,6 +11,7 @@ public class JoinRequest {
     public JoinRequest(long gameID) {
 
     public void setGameID(long gameID) {
+
         GameID = gameID;
     }
 }
