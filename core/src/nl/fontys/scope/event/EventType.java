@@ -5,8 +5,17 @@ package nl.fontys.scope.event;
  */
 public class EventType {
 
+
+    // Is called after all Players joinded a Game and the server
+    // signaled everyone that the game started (param: none)
+
+    public static final String GAME_START = "game_start";
+
     // Is called after an object gets removed from the world (param: GameObject)
     public static final String OBJECT_REMOVED = "object_removed";
+
+    // Is called after an object gets created (param: GameObject)
+    public static final String OBJECT_CREATED = "object_created";
 
     // Is called on an object collision (param: GameObject, GameObject)
     public static final String COLLISION = "collision";

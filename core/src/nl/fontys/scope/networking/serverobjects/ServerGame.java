@@ -5,14 +5,21 @@ import com.esotericsoftware.kryonet.Connection;
 import java.util.HashSet;
 import java.util.UUID;
 
-/**
- * Created by jankerkenhoff on 09/12/15.
- */
+
 public class ServerGame {
 
     private long ID;
     private HashSet<Connection> players;
     private int PlayerCount;
+    private boolean started;
+
+    public boolean isStarted() {
+        return started;
+    }
+
+    public void setStarted(boolean started) {
+        this.started = started;
+    }
 
     public int getPlayerCount() {
         return PlayerCount;
@@ -21,7 +28,6 @@ public class ServerGame {
     public long getID() {
         return ID;
     }
-
 
     public HashSet<Connection> getPlayers() {
         return players;

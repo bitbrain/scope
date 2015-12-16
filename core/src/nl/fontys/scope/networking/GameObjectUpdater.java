@@ -15,4 +15,15 @@ public class GameObjectUpdater {
         GameObject ownObject = world.getObjectById(object.getId());
         ownObject.set(object);
     }
+
+    public void createGameObject(GameObject object){
+        if (world.getObjectById(object.getId()) != null) {
+            GameObject ownObject = world.createGameObject();
+            ownObject.set(object);
+        }
+    }
+
+    public void removeGameObject(GameObject object){
+        world.remove(world.getObjectById(object.getId()));
+    }
 }
