@@ -59,6 +59,6 @@ public final class Styles {
         TEXTFIELD_FORM.messageFontColor = Colors.lighten(Colors.PRIMARY, 0.5f);
         TEXTFIELD_FORM.background = new NinePatchDrawable(GraphicsFactory.createNinePatch(Assets.Textures.TEXTFIELD, 40));
         TEXTFIELD_FORM.focusedBackground = new NinePatchDrawable(GraphicsFactory.createNinePatch(Assets.Textures.TEXTFIELD_ACTIVE, 40));
-        TEXTFIELD_FORM.cursor = new SpriteDrawable(new Sprite(GraphicsFactory.createTexture(4, 16, Colors.SECONDARY)));
+        TEXTFIELD_FORM.cursor = new SpriteDrawable(new Sprite(GraphicsFactory.createTexture(3, 16, Colors.SECONDARY)));
     }
 }
