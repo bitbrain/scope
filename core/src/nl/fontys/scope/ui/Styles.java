@@ -1,10 +1,12 @@
 package nl.fontys.scope.ui;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.assets.Assets;
@@ -52,8 +54,11 @@ public final class Styles {
 
         TEXTFIELD_FORM.font = AssetManager.getFont(Assets.Fonts.OPENSANS_MEDIUM_32);
         TEXTFIELD_FORM.messageFont = AssetManager.getFont(Assets.Fonts.OPENSANS_MEDIUM_32);
-        TEXTFIELD_FORM.fontColor = Colors.PRIMARY;
-        TEXTFIELD_FORM.focusedFontColor = Colors.ACTIVE.cpy();
-        TEXTFIELD_FORM.messageFontColor = Colors.SECONDARY;
+        TEXTFIELD_FORM.fontColor = Colors.lighten(Colors.PRIMARY, 0.5f);
+        TEXTFIELD_FORM.focusedFontColor = Colors.PRIMARY.cpy();
+        TEXTFIELD_FORM.messageFontColor = Colors.lighten(Colors.PRIMARY, 0.5f);
+        TEXTFIELD_FORM.background = new NinePatchDrawable(GraphicsFactory.createNinePatch(Assets.Textures.TEXTFIELD, 40));
+        TEXTFIELD_FORM.focusedBackground = new NinePatchDrawable(GraphicsFactory.createNinePatch(Assets.Textures.TEXTFIELD_ACTIVE, 40));
+        TEXTFIELD_FORM.cursor = new SpriteDrawable(new Sprite(GraphicsFactory.createTexture(4, 16, Colors.SECONDARY)));
     }
 }

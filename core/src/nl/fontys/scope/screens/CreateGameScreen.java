@@ -49,7 +49,7 @@ public class CreateGameScreen extends AbstractScreen {
         Label name = new Label("Name", Styles.LABEL_DESCRIPTION);
         layout.add(name).row();
         TextField nameText = new TextField("Enter name...", Styles.TEXTFIELD_FORM);
-        layout.add(nameText).row();
+        layout.add(nameText).width(ButtonMenu.BUTTON_WIDTH).height(85f).row();
 
         ButtonMenu menu = new ButtonMenu(tweenManager);
         menu.add("Create", new ClickListener() {

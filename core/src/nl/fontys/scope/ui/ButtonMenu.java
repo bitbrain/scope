@@ -17,9 +17,9 @@ import nl.fontys.scope.tweens.ColorTween;
 
 public class ButtonMenu extends Table {
 
-    private static final float BUTTON_WIDTH = 300f;
+    public static final float BUTTON_WIDTH = 300f;
     private static final float BUTTON_HEIGHT = 90f;
-    private static final float PADDING = 10f;
+    public static final float PADDING = 10f;
     private static final float ALPHA = 0.5f;
 
     private TweenManager tweenManager;
