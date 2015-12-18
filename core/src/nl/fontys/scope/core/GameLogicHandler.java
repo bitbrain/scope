@@ -51,10 +51,10 @@ public class GameLogicHandler implements Disposable {
         Player currentPlayer = PlayerManager.getCurrent();
         boolean isCurrentShip = objectA.equals(currentPlayer.getShip());
         if (isCurrentShip && GameObjectType.ENERGY.equals(objectB.getType())) {
-            currentPlayer.addEnergy();
+            currentPlayer.addFocus();
             world.remove(objectB);
         } else if (full && isCurrentShip && GameObjectType.SPHERE.equals(objectB.getType())) {
-            currentPlayer.addPoints(currentPlayer.dropEnergy() * POINTS_PER_ENERGY);
+            currentPlayer.addPoints(currentPlayer.clearFocus() * POINTS_PER_ENERGY);
         } else if (isCurrentShip && GameObjectType.SHIP.equals(objectB.getType())) {
             destroyShip(objectA);
             destroyShip(objectB);
@@ -75,7 +75,7 @@ public class GameLogicHandler implements Disposable {
         if (player != null) {
             Vector3 currentPos = object.getPosition();
             Vector3 pos = arena.spawnManager.fetchAvailableSpawnPoint();
-            int energyCount = player.dropEnergy();
+            int energyCount = player.clearFocus();
             for (int i = 0; i < energyCount; ++i) {
                 factory.createEnergy(currentPos.x, currentPos.y, currentPos.z);
             }

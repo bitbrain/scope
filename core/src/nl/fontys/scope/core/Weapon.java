@@ -14,13 +14,16 @@ public class Weapon {
 
     private World world;
 
+    private FocusContainer focus;
+
     private GameObjectFactory factory;
 
     private GameObject ship;
 
-    public Weapon(GameObject ship, World world) {
+    public Weapon(GameObject ship, World world, FocusContainer focus) {
         this.world = world;
         this.ship = ship;
+        this.focus = focus;
         this.factory = new GameObjectFactory(world);
         this.timestamp = System.currentTimeMillis();
     }
@@ -30,7 +33,8 @@ public class Weapon {
     }
 
     public void shoot() {
-        if (checkShooting()) {
+        if (focus.hasFocus() && checkShooting()) {
+            focus.reduce();
             GameObject shot = factory.createShot(ship);
         }
     }
