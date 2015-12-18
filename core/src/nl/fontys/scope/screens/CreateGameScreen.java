@@ -45,13 +45,13 @@ public class CreateGameScreen extends AbstractScreen {
         layout.add(caption).padBottom(55f).row();
 
         // Name of the game
-        Label name = new Label("Name", Styles.LABEL_DESCRIPTION);
+        Label name = new Label(Bundle.general.get(Messages.GAME_NAME), Styles.LABEL_DESCRIPTION);
         layout.add(name).padBottom(10f).row();
-        TextField nameText = new TextField("Enter name...", Styles.TEXTFIELD_FORM);
+        TextField nameText = new TextField(Bundle.general.get(Messages.GAME_NAME_HINT), Styles.TEXTFIELD_FORM);
         layout.add(nameText).width(ButtonMenu.BUTTON_WIDTH).height(85f).row();
 
         ButtonMenu menu = new ButtonMenu(tweenManager);
-        menu.add("Create", new ClickListener() {
+        menu.add(Bundle.general.get(Messages.GAME_CREATE), new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
