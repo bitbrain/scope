@@ -32,6 +32,7 @@ public final class Assets {
 
         CUBEMAP_SPACE_1("cubemaps/space1.png"),
         BUTTON("images/button.9.png"),
+        BUTTON_DISABLED("images/button-disabled.9.png"),
         BUTTON_ACTIVE("images/button-active.9.png"),
         TEXTFIELD("images/textfield.9.png"),
         TEXTFIELD_ACTIVE("images/textfield-active.9.png"),

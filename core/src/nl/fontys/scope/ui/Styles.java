@@ -52,9 +52,13 @@ public final class Styles {
         BUTTON_MENU.font = AssetManager.getFont(Assets.Fonts.OPENSANS_MEDIUM_32);
         BUTTON_MENU.fontColor = Colors.PRIMARY.cpy();
         BUTTON_MENU.overFontColor = Colors.ACTIVE.cpy();
+        Color disabledColor = Colors.PRIMARY.cpy();
+        disabledColor.a = 0.4f;
+        BUTTON_MENU.disabledFontColor = disabledColor;
         BUTTON_MENU.up = new NinePatchDrawable(GraphicsFactory.createNinePatch(Assets.Textures.BUTTON, 40));
         BUTTON_MENU.down = new NinePatchDrawable(GraphicsFactory.createNinePatch(Assets.Textures.BUTTON_ACTIVE, 40));
         BUTTON_MENU.over = new NinePatchDrawable(GraphicsFactory.createNinePatch(Assets.Textures.BUTTON_ACTIVE, 40));
+        BUTTON_MENU.disabled = new NinePatchDrawable(GraphicsFactory.createNinePatch(Assets.Textures.BUTTON_DISABLED, 40));
 
         TEXTFIELD_FORM.font = AssetManager.getFont(Assets.Fonts.OPENSANS_MEDIUM_32);
         TEXTFIELD_FORM.messageFont = AssetManager.getFont(Assets.Fonts.OPENSANS_MEDIUM_32);
