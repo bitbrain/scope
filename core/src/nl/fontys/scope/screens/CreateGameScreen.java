@@ -16,6 +16,7 @@ import nl.fontys.scope.i18n.Messages;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.ui.ButtonMenu;
 import nl.fontys.scope.ui.Styles;
+import nl.fontys.scope.ui.validation.ValidationTextField;
 
 public class CreateGameScreen extends AbstractScreen {
 
@@ -47,7 +48,8 @@ public class CreateGameScreen extends AbstractScreen {
         // Name of the game
         Label name = new Label(Bundle.general.get(Messages.GAME_NAME), Styles.LABEL_DESCRIPTION);
         layout.add(name).padBottom(10f).row();
-        TextField nameText = new TextField(Bundle.general.get(Messages.GAME_NAME_HINT), Styles.TEXTFIELD_FORM);
+        TextField nameText = new ValidationTextField(Bundle.general.get(Messages.GAME_NAME_HINT), Styles.TEXTFIELD_FORM);
+        nameText.setFocusTraversal(true);
         layout.add(nameText).width(ButtonMenu.BUTTON_WIDTH).height(85f).row();
 
         ButtonMenu menu = new ButtonMenu(tweenManager);
