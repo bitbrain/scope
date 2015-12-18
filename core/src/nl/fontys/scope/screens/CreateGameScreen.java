@@ -63,8 +63,9 @@ public class CreateGameScreen extends AbstractScreen {
         // Name of the game
         Label name = new Label(Bundle.general.get(Messages.GAME_NAME), Styles.LABEL_DESCRIPTION);
         layout.add(name).padBottom(10f).row();
-        TextField nameText = new ValidationTextField(Bundle.general.get(Messages.GAME_NAME_HINT), Styles.TEXTFIELD_FORM, context);
+        ValidationTextField nameText = new ValidationTextField(Bundle.general.get(Messages.GAME_NAME_HINT), Styles.TEXTFIELD_FORM, context);
         nameText.setFocusTraversal(true);
+        nameText.setErrorMessage(Bundle.general.get(Messages.GAME_NAME_INVALID));
         layout.add(nameText).width(ButtonMenu.BUTTON_WIDTH).height(85f).row();
 
         layout.add(context.getLabel()).padTop(10f).row();

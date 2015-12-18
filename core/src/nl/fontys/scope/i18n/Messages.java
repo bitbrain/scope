@@ -10,4 +10,6 @@ public final class Messages {
     public static final String GAME_NAME="GAME_NAME";
     public static final String GAME_NAME_HINT="GAME_NAME_HINT";
     public static final String GAME_CREATE="GAME_CREATE";
+
+    public static final String GAME_NAME_INVALID="GAME_NAME_INVALID";
 }
