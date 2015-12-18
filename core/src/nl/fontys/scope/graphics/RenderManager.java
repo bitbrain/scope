@@ -25,9 +25,7 @@ public class RenderManager {
     public RenderManager(LightingManager lightingManager, ModelInstanceService modelInstanceService) {
         this.lightingManager = lightingManager;
         this.modelInstanceService = modelInstanceService;
-        TextureData data = AssetManager.getTexture(Assets.Textures.CUBEMAP_SPACE_1).getTextureData();
-        data.prepare();
-        cubemap = new EnvironmentCubemap(data.consumePixmap());
+        cubemap = SharedEnvironmentCubemap.data;
     }
 
     public void background(Camera camera) {

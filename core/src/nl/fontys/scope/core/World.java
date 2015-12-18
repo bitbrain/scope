@@ -65,7 +65,7 @@ public class World {
         camera.position.set(1f, 1f, 1f);
         camera.near = 0.2f;
         camera.far = 30000f;
-        camera.update();
+
         renderManager = new RenderManager(lightingManager, modelInstanceService);
 
         lightingManager.setAmbientLight(0.2f, 0.1f, 0.4f, 1f);

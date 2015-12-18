@@ -19,6 +19,7 @@ import nl.fontys.scope.ScopeGame;
 import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.graphics.FX;
+import nl.fontys.scope.graphics.SharedEnvironmentCubemap;
 import nl.fontys.scope.i18n.Bundle;
 import nl.fontys.scope.i18n.Messages;
 import nl.fontys.scope.tweens.ValueTween;
@@ -94,6 +95,7 @@ public class LoadingScreen implements Screen {
                         @Override
                         public void onEvent(int type, BaseTween<?> source) {
                             Styles.init();
+                            SharedEnvironmentCubemap.setup(Assets.Textures.CUBEMAP_SPACE_1);
                             game.setScreen(contextProvider.getScreen());
                         }
                     }).start(tweenManager);
