@@ -20,6 +20,7 @@ public final class Styles {
     public static final Label.LabelStyle LABEL_VERSION = new Label.LabelStyle();
     public static final Label.LabelStyle LABEL_CAPTION = new Label.LabelStyle();
     public static final Label.LabelStyle LABEL_DESCRIPTION = new Label.LabelStyle();
+    public static final Label.LabelStyle LABEL_VALIDATION = new Label.LabelStyle();
 
     public static final TextButton.TextButtonStyle BUTTON_MENU = new TextButton.TextButtonStyle();
 
@@ -44,6 +45,9 @@ public final class Styles {
 
         LABEL_DESCRIPTION.font = AssetManager.getFont(Assets.Fonts.OPENSANS_SMALL_16);
         LABEL_DESCRIPTION.fontColor = Colors.SECONDARY.cpy();
+
+        LABEL_VALIDATION.font = AssetManager.getFont(Assets.Fonts.OPENSANS_SMALL_16);
+        LABEL_VALIDATION.fontColor = Color.RED.cpy();
 
         BUTTON_MENU.font = AssetManager.getFont(Assets.Fonts.OPENSANS_MEDIUM_32);
         BUTTON_MENU.fontColor = Colors.PRIMARY.cpy();

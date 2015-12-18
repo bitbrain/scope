@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -29,7 +30,7 @@ public class ButtonMenu extends Table {
         setTouchable(Touchable.childrenOnly);
     }
 
-    public void add(String caption, ClickListener listener) {
+    public Button add(String caption, ClickListener listener) {
         final TextButton button = new TextButton(caption, Styles.BUTTON_MENU);
         button.setColor(new Color(1f, 1f, 1f, ALPHA));
         button.addCaptureListener(listener);
@@ -59,5 +60,6 @@ public class ButtonMenu extends Table {
                 }
             }
         });
+        return button;
     }
 }
