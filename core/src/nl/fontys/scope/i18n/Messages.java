@@ -12,4 +12,5 @@ public final class Messages {
     public static final String GAME_CREATE="GAME_CREATE";
 
     public static final String GAME_NAME_INVALID="GAME_NAME_INVALID";
+    public static final String GAME_JOIN = "GAME_JOIN";
 }
