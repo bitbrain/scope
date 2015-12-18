@@ -42,7 +42,7 @@ public final class Styles {
         LABEL_CAPTION.font = AssetManager.getFont(Assets.Fonts.OPENSANS_LARGE_64);
         LABEL_CAPTION.fontColor = Colors.PRIMARY.cpy();
 
-        LABEL_DESCRIPTION.font = AssetManager.getFont(Assets.Fonts.OPENSANS_MEDIUM_32);
+        LABEL_DESCRIPTION.font = AssetManager.getFont(Assets.Fonts.OPENSANS_SMALL_16);
         LABEL_DESCRIPTION.fontColor = Colors.SECONDARY.cpy();
 
         BUTTON_MENU.font = AssetManager.getFont(Assets.Fonts.OPENSANS_MEDIUM_32);
