@@ -29,7 +29,6 @@ public class ValidationTextField extends TextField implements Validable {
                 context.update();
             }
         });
-
     }
 
     public void setErrorMessage(String message) {
