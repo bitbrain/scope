@@ -47,6 +47,7 @@ public class MenuScreen extends AbstractScreen {
 
     @Override
     protected void onCreateStage(Stage stage) {
+        fadeInTime = 2f;
         Table layout = new Table();
         layout.setFillParent(true);
         Image logo = new Image(new Sprite(AssetManager.getTexture(Assets.Textures.LOGO)));

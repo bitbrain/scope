@@ -49,9 +49,11 @@ public abstract class AbstractScreen implements Screen {
 
     protected OrthographicCamera cam2D;
 
-    private FrameBuffer uiBuffer;
+    public static FrameBuffer uiBuffer;
 
     private boolean closing;
+
+    protected float fadeInTime = 0.4f, fadeOutTime = 0.4f;
 
     @Override
     public final void show() {
@@ -109,12 +111,9 @@ public abstract class AbstractScreen implements Screen {
             multiplexer.addProcessor(stage);
             fx.init(tweenManager, cam2D);
             onCreateStage(stage);
-            fx.fadeIn(5f, TweenEquations.easeInCubic);
+            fx.fadeIn(fadeInTime, TweenEquations.easeInCubic);
         }
-        if (uiBuffer != null) {
-            uiBuffer.dispose();
-        }
-        uiBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
+        updateFrameBuffer(width, height);
         cam2D.setToOrtho(false, width, height);
         world.resize(width, height);
     }
@@ -138,14 +137,12 @@ public abstract class AbstractScreen implements Screen {
     @Override
     public final void dispose() {
         world.dispose();
-        baseShaderManager.dispose();
-        uiBuffer.dispose();
     }
 
     public void setScreen(final Screen screen) {
         closing = true;
         Gdx.input.setInputProcessor(null);
-        FX.getInstance().fadeOut(0.5f, TweenEquations.easeOutCubic, new TweenCallback() {
+        FX.getInstance().fadeOut(fadeOutTime, TweenEquations.easeOutCubic, new TweenCallback() {
             @Override
             public void onEvent(int type, BaseTween<?> source) {
                 game.setScreen(screen);
@@ -156,4 +153,13 @@ public abstract class AbstractScreen implements Screen {
     protected abstract void onShow();
     protected abstract void onUpdate(float delta);
     protected abstract void onCreateStage(Stage stage);
+
+    private void updateFrameBuffer(int width, int height) {
+        if (uiBuffer == null) {
+            uiBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, width, height, false);
+        } else if (uiBuffer.getWidth() != width || uiBuffer.getHeight() != height) {
+            uiBuffer.dispose();
+            uiBuffer = new FrameBuffer(Pixmap.Format.RGBA8888,width, height, false);
+        }
+    }
 }
