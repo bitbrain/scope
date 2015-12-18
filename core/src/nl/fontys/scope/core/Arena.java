@@ -36,7 +36,7 @@ public class Arena {
         return restrictor;
     }
 
-    public void setup() {
+    public void setup(PlayerManager playerManager) {
         GameObject sphere = factory.createSphere(60f);
         sphere.getColor().set(Colors.PRIMARY);
         sphere.getColor().a = 0.75f;
@@ -50,7 +50,10 @@ public class Arena {
             v.rotate((float)(angle), 0f, 0f, 1f);
             factory.createEnergy(v.x, v.y, v.z).getColor().set(Colors.PRIMARY);
         }
-        spawnPlayer(PlayerManager.getCurrent());
+
+        for (Player player : playerManager.getPlayers()) {
+            spawnPlayer(player);
+        }
     }
 
     private void spawnPlayer(Player player) {

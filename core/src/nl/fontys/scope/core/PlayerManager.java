@@ -1,5 +1,6 @@
 package nl.fontys.scope.core;
 
+import java.util.Collection;
 import java.util.HashMap;
 
 import nl.fontys.scope.object.GameObject;
@@ -18,6 +19,11 @@ public class PlayerManager {
     public PlayerManager(World world) {
         this.world = world;
         this.current = addPlayer();
+        addPlayer();
+    }
+
+    public Collection<Player> getPlayers() {
+        return players.values();
     }
 
     public static Player getCurrent() {
