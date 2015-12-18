@@ -8,8 +8,11 @@ public class ValidationTextField extends TextField implements Validable {
 
     private String previewText;
 
+    private String errorMessage;
+
     public ValidationTextField(final String text, TextFieldStyle style, final ValidationContext context) {
         super(text, style);
+        this.errorMessage = "Text should not be empty";
         this.previewText = text;
         context.register(this);
         addCaptureListener(new ClickListener() {
@@ -29,10 +32,14 @@ public class ValidationTextField extends TextField implements Validable {
 
     }
 
+    public void setErrorMessage(String message) {
+        this.errorMessage = message;
+    }
+
     @Override
     public void checkValidity() throws ValidationException {
         if (isDefaultText() || this.getText().isEmpty()) {
-            throw new ValidationException("Text should not be empty");
+            throw new ValidationException(errorMessage);
         }
     }
 
