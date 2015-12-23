@@ -23,6 +23,7 @@ import nl.fontys.scope.core.controller.CameraTrackingController;
 import nl.fontys.scope.core.controller.ShipController;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.ui.DebugWidget;
+import nl.fontys.scope.ui.FocusWidget;
 
 public class IngameScreen extends AbstractScreen {
 
@@ -85,5 +86,7 @@ public class IngameScreen extends AbstractScreen {
         debugWidget = new DebugWidget();
         stage.addActor(debugWidget);
         debugWidget.setVisible(debug);
+        FocusWidget widget = new FocusWidget(world.getCamera(), playerManager);
+        stage.addActor(widget);
     }
 }

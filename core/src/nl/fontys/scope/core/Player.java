@@ -78,4 +78,7 @@ public class Player {
     }
 
 
+    public boolean isCurrentPlayer() {
+        return this.equals(PlayerManager.getCurrent());
+    }
 }
