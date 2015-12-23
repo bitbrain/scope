@@ -32,7 +32,8 @@ public final class Assets {
 
         CUBEMAP_SPACE_1("cubemaps/space1.png"),
         BUTTON("images/button.9.png"),
-        FOCUS("images/focus.png"),
+        FOCUS("images/focus.9.png"),
+        FOCUS_TARGET("images/focus-target.9.png"),
         TEXTFIELD("images/textfield.9.png"),
         LOGO("images/logo.png");
 
