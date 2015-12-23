@@ -1,10 +1,12 @@
 package nl.fontys.scope.ui;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
@@ -55,18 +57,24 @@ public final class Styles {
         Color disabledColor = Colors.PRIMARY.cpy();
         disabledColor.a = 0.4f;
         BUTTON_MENU.disabledFontColor = disabledColor;
-        BUTTON_MENU.up = new NinePatchDrawable(GraphicsFactory.createNinePatch(Assets.Textures.BUTTON, 40));
-        BUTTON_MENU.down = new NinePatchDrawable(GraphicsFactory.createNinePatch(Assets.Textures.BUTTON_ACTIVE, 40));
-        BUTTON_MENU.over = new NinePatchDrawable(GraphicsFactory.createNinePatch(Assets.Textures.BUTTON_ACTIVE, 40));
-        BUTTON_MENU.disabled = new NinePatchDrawable(GraphicsFactory.createNinePatch(Assets.Textures.BUTTON_DISABLED, 40));
+        BUTTON_MENU.up = createDrawable(Assets.Textures.BUTTON, Colors.UI);
+        BUTTON_MENU.down = createDrawable(Assets.Textures.BUTTON, Colors.UI);
+        BUTTON_MENU.over = createDrawable(Assets.Textures.BUTTON, Colors.ACTIVE);
+        BUTTON_MENU.disabled = createDrawable(Assets.Textures.BUTTON, Colors.trans(Colors.UI, 0.4f));
 
         TEXTFIELD_FORM.font = AssetManager.getFont(Assets.Fonts.OPENSANS_MEDIUM_32);
         TEXTFIELD_FORM.messageFont = AssetManager.getFont(Assets.Fonts.OPENSANS_MEDIUM_32);
         TEXTFIELD_FORM.fontColor = Colors.lighten(Colors.PRIMARY, 0.5f);
         TEXTFIELD_FORM.focusedFontColor = Colors.PRIMARY.cpy();
         TEXTFIELD_FORM.messageFontColor = Colors.lighten(Colors.PRIMARY, 0.5f);
-        TEXTFIELD_FORM.background = new NinePatchDrawable(GraphicsFactory.createNinePatch(Assets.Textures.TEXTFIELD, 40));
-        TEXTFIELD_FORM.focusedBackground = new NinePatchDrawable(GraphicsFactory.createNinePatch(Assets.Textures.TEXTFIELD_ACTIVE, 40));
+        TEXTFIELD_FORM.background = createDrawable(Assets.Textures.TEXTFIELD, Colors.trans(Colors.UI, 0.7f));
+        TEXTFIELD_FORM.focusedBackground = createDrawable(Assets.Textures.TEXTFIELD, Colors.UI);
         TEXTFIELD_FORM.cursor = new SpriteDrawable(new Sprite(GraphicsFactory.createTexture(3, 16, Colors.SECONDARY)));
+    }
+
+    private static Drawable createDrawable(Assets.Textures texture, Color color) {
+        NinePatch patch = GraphicsFactory.createNinePatch(texture, 40);
+        patch.setColor(color.cpy());
+        return new NinePatchDrawable(patch);
     }
 }
