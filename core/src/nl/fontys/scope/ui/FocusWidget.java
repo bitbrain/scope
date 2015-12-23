@@ -1,5 +1,6 @@
 package nl.fontys.scope.ui;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -23,6 +24,8 @@ public class FocusWidget extends Actor {
     private PerspectiveCamera camera;
 
     private Sprite focusSprite;
+
+    private Vector3 tmp = new Vector3();
 
     public FocusWidget(PerspectiveCamera camera, PlayerManager playerManager) {
         this.camera = camera;
@@ -49,11 +52,8 @@ public class FocusWidget extends Actor {
     }
 
     private Vector2 mapToCamera(GameObject ship) {
-        Vector3 point = new Vector3(camera.position);
-        Vector3 distance = new Vector3(point).sub(ship.getPosition());
-        Vector3 normal = new Vector3(camera.direction).nor();
-        distance.dot(normal);
-        Vector3 projectedPoint = point.sub(distance.x * normal.x, distance.y * normal.y, distance.z * normal.z);
-        return new Vector2(projectedPoint.x, -projectedPoint.y);
+        tmp.set(ship.getPosition());
+        camera.project(tmp, 0f, 0f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        return new Vector2(tmp.x, tmp.y);
     }
 }
