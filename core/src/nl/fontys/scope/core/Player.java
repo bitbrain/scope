@@ -23,6 +23,8 @@ public class Player {
 
     private Weapon weapon;
 
+    private int number;
+
     Player(World world) {
         this.id = UUID.randomUUID().toString();
         focus = new FocusContainer();
@@ -31,8 +33,16 @@ public class Player {
         this.weapon = new Weapon(this.ship, world, focus);
     }
 
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
     public String getId() {
         return id;
+    }
+
+    public int getNumber() {
+        return number;
     }
 
     public float getFocusProgress() {

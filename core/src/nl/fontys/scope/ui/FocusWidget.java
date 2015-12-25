@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 import java.util.Collection;
 
@@ -36,11 +37,14 @@ public class FocusWidget extends Actor {
 
     private Rectangle rect = new Rectangle();
 
+    private Label playerName;
+
     public FocusWidget(PerspectiveCamera camera, PlayerManager playerManager) {
         this.camera = camera;
         this.playerManager = playerManager;
         focusPatch = GraphicsFactory.createNinePatch(Assets.Textures.FOCUS, 35);
         focusTarget = new Sprite(AssetManager.getTexture(Assets.Textures.FOCUS_TARGET));
+        playerName = new Label("unknown", Styles.LABEL_PLAYER_NAME);
     }
 
     @Override
@@ -58,17 +62,31 @@ public class FocusWidget extends Actor {
         final float SIZE = 75f + 5000f / (float) vecTemp3D.set(ship.getPosition()).sub(camera.position.x, camera.position.y, camera.position.z).scl(0.225f).len2();
         Vector2 cameraPos2D = mapToCamera(ship);
         if (bindToScreen(cameraPos2D, 80f)) {
+            parentAlpha = 0.3f;
             vecTemp2D.set(cameraPos2D.x - Gdx.graphics.getWidth() / 2f, cameraPos2D.y - Gdx.graphics.getHeight() / 2f);
             final float angle = vecTemp2D.angle() - 45f - 180f;
+            final float posX = cameraPos2D.x - SIZE / 2f;
+            final float posY = cameraPos2D.y - SIZE / 2f;
             focusTarget.setColor(Colors.UI);
             focusTarget.setRotation(angle);
-            focusTarget.setPosition(cameraPos2D.x - SIZE / 2f, cameraPos2D.y - SIZE / 2f);
+            focusTarget.setPosition(posX, posY);
             focusTarget.setSize(75f, 75f);
             focusTarget.setOrigin(75f / 2f, 75f / 2f);
             focusTarget.draw(batch, parentAlpha);
+            playerName.setText("P" + player.getNumber());
+            playerName.setFontScale(1f);
+            playerName.setPosition(posX + (75f / 2f) - (playerName.getPrefWidth() / 2f), posY + (75f / 2f) - (playerName.getPrefHeight() / 2f));
+            playerName.draw(batch, parentAlpha);
         } else {
+            final float posX = cameraPos2D.x - SIZE / 2f;
+            final float posY = cameraPos2D.y - SIZE / 2f;
+            final float NAME_PADDING = SIZE / 6f;
             focusPatch.setColor(Colors.UI);
-            focusPatch.draw(batch, cameraPos2D.x - SIZE / 2f, cameraPos2D.y - SIZE / 2f, SIZE, SIZE);
+            focusPatch.draw(batch, posX, posY, SIZE, SIZE);
+            playerName.setText("Player " + player.getNumber());
+            playerName.setFontScale(SIZE / 75f);
+            playerName.setPosition(posX + (SIZE / 2f) - (playerName.getPrefWidth() / 2f), posY + SIZE + NAME_PADDING);
+            playerName.draw(batch, parentAlpha);
         }
     }
 
