@@ -30,7 +30,9 @@ public class FocusWidget extends Actor {
 
     private Sprite focusTarget;
 
-    private Vector3 tmp = new Vector3();
+    private Vector3 vecTemp3D = new Vector3();
+
+    private Vector2 vecTemp2D = new Vector2();
 
     private Rectangle rect = new Rectangle();
 
@@ -53,10 +55,11 @@ public class FocusWidget extends Actor {
 
     private void drawFocus(Player player, Batch batch, float parentAlpha) {
         GameObject ship = player.getShip();
-        final float SIZE = 75f + 5000f / (float)tmp.set(ship.getPosition()).sub(camera.position.x, camera.position.y, camera.position.z).scl(0.225f).len2();
+        final float SIZE = 75f + 5000f / (float) vecTemp3D.set(ship.getPosition()).sub(camera.position.x, camera.position.y, camera.position.z).scl(0.225f).len2();
         Vector2 cameraPos2D = mapToCamera(ship);
-        float angle = 180f - cameraPos2D.angle();
-        if (bindToScreen(cameraPos2D, 120f)) {
+        if (bindToScreen(cameraPos2D, 80f)) {
+            vecTemp2D.set(cameraPos2D.x - Gdx.graphics.getWidth() / 2f, cameraPos2D.y - Gdx.graphics.getHeight() / 2f);
+            final float angle = vecTemp2D.angle() - 45f - 180f;
             focusTarget.setColor(Colors.UI);
             focusTarget.setRotation(angle);
             focusTarget.setPosition(cameraPos2D.x - SIZE / 2f, cameraPos2D.y - SIZE / 2f);
@@ -70,9 +73,10 @@ public class FocusWidget extends Actor {
     }
 
     private Vector2 mapToCamera(GameObject ship) {
-        tmp.set(ship.getPosition());
-        camera.project(tmp, 0f, 0f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        return new Vector2(tmp.x, tmp.y);
+        vecTemp3D.set(ship.getPosition());
+        camera.project(vecTemp3D, 0f, 0f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        vecTemp2D.set(vecTemp3D.x, vecTemp3D.y);
+        return vecTemp2D.cpy();
     }
 
     private boolean bindToScreen(Vector2 pos, float padding) {
