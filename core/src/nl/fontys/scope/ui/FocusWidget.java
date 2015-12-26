@@ -55,7 +55,7 @@ public class FocusWidget extends Label {
     private void updateFocus() {
         tweenManager.killTarget(focusProvider);
         tweenManager.killTarget(alphaProvider);
-        Tween.to(focusProvider, ValueTween.VALUE, 0.2f).target(player.getFocusProgress()).start(tweenManager);
+        Tween.to(focusProvider, ValueTween.VALUE, 0.8f).target(player.getFocusProgress()).start(tweenManager);
         alphaProvider.setValue(1f);
         Tween.to(alphaProvider, ValueTween.VALUE, 1.5f).target(0.4f).start(tweenManager);
     }
