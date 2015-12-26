@@ -39,6 +39,8 @@ public class GameLogicHandler implements Disposable {
             handleCollision((GameObject)event.getPrimaryParam(), (GameObject)event.getSecondaryParam(0), false);
         } else if (event.isTypeOf(EventType.COLLISION_FULL)) {
             handleCollision((GameObject)event.getPrimaryParam(), (GameObject)event.getSecondaryParam(0), true);
+        } else if (event.isTypeOf(EventType.PLAYER_DEAD)) {
+            handlePlayerDead((Player)event.getPrimaryParam());
         }
     }
 
@@ -67,9 +69,15 @@ public class GameLogicHandler implements Disposable {
         }
     }
 
+    private void handlePlayerDead(Player player) {
+        destroyShip(player.getShip());
+        player.heal();
+    }
+
     private void destroyShip(GameObject object) {
         Player player = playerManager.getPlayerByShip(object);
         if (player != null) {
+            events.fire(EventType.PLAYER_SHIP_DESTROYED, player.getShip());
             Vector3 currentPos = object.getPosition();
             Vector3 pos = arena.spawnManager.fetchAvailableSpawnPoint();
             int energyCount = player.clearFocus();

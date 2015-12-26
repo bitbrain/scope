@@ -19,4 +19,10 @@ public class EventType {
 
     // Is called whenever a player drops energy (param: Player, int)
     public static final String ENERGY_DROPPED = "energy_dropped";
+
+    // Is called whenever a player gets destroyed (param: GameObject)
+    public static final String PLAYER_SHIP_DESTROYED = "player_ship_destroyed";
+
+    // Is called whenever a player dies (health <= 0) (param: PLayer)
+    public static final String PLAYER_DEAD = "player_dead";
 }

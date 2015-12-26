@@ -25,12 +25,30 @@ public class Player {
 
     private int number;
 
+    private float health;
+
     Player(World world) {
         this.id = UUID.randomUUID().toString();
         focus = new FocusContainer();
         GameObjectFactory factory = new GameObjectFactory(world);
         this.ship = factory.createShip(0f, 0f, 0f);
         this.weapon = new Weapon(this.ship, world, focus);
+    }
+
+    public float getHealth() {
+        return health;
+    }
+
+    public void heal() {
+        this.health = 1f;
+    }
+
+    public void addDamage(float percentage) {
+        health -= Math.abs(percentage);
+        if (health <= 0f) {
+            health = 0f;
+            events.fire(EventType.PLAYER_DEAD, this);
+        }
     }
 
     public void setNumber(int number) {
