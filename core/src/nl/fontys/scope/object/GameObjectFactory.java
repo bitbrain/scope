@@ -60,7 +60,7 @@ public class GameObjectFactory {
         object.getColor().set(Colors.PRIMARY);
         object.setType(GameObjectType.ENERGY);
         object.setPosition(x, y, z);
-        object.setScale(4.5f);
+        object.setScale(6.5f);
         object.setPhysics(false);
         world.addController(object, new EnergyController());
         return object;

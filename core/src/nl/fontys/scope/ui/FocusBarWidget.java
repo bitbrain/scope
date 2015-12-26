@@ -57,15 +57,15 @@ public class FocusBarWidget extends Actor {
             tweenManager.killTarget(alphaValueProvider);
             tweenManager.killTarget(focusValueProvider);
             alphaValueProvider.setValue(1f);
-            float duration = player.getFocusProgress() > lastFocus ? 1f : 3f;
+            float duration = player.getFocusProgress() > lastFocus ? 1f : 1.9f;
             lastFocus = player.getFocusProgress();
-            Tween.to(alphaValueProvider, ValueTween.VALUE, duration).target(0f).ease(TweenEquations.easeOutCubic).start(tweenManager);
+            Tween.to(alphaValueProvider, ValueTween.VALUE, duration * 1.2f).target(0f).ease(TweenEquations.easeOutCubic).start(tweenManager);
             Tween.to(focusValueProvider, ValueTween.VALUE, duration).target(player.getFocusProgress()).ease(TweenEquations.easeOutCubic).start(tweenManager);
         }
         background.getColor().a = parentAlpha * 0.1f;
         background.draw(batch, getX(), getY(), getWidth(), getHeight());
         if (focusValueProvider.getValue() > 0.04f) {
-            background.getColor().a = parentAlpha * (0.1f + alphaValueProvider.getValue());
+            background.getColor().a = parentAlpha * (0.2f + alphaValueProvider.getValue());
             background.draw(batch, getX() + BAR_PADDING, getY() + BAR_PADDING, (getWidth() - BAR_PADDING * 2) * focusValueProvider.getValue(), getHeight() - BAR_PADDING * 2);
         }
         focusWidget.setPosition(getX() + getWidth() / 2f - focusWidget.getPrefWidth() / 2f, getY() - focusWidget.getPrefHeight() - 5f);
