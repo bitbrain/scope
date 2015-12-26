@@ -24,6 +24,7 @@ import nl.fontys.scope.core.controller.ShipController;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.ui.DebugWidget;
 import nl.fontys.scope.ui.FocusWidget;
+import nl.fontys.scope.ui.LifeWidget;
 
 public class IngameScreen extends AbstractScreen {
 
@@ -79,6 +80,9 @@ public class IngameScreen extends AbstractScreen {
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             setScreen(new MenuScreen(game));
         }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F1)) {
+            PlayerManager.getCurrent().addDamage(0.1f);
+        }
     }
 
     @Override
@@ -88,5 +92,11 @@ public class IngameScreen extends AbstractScreen {
         debugWidget.setVisible(debug);
         FocusWidget widget = new FocusWidget(world.getCamera(), playerManager, tweenManager);
         stage.addActor(widget);
+        final float LIFE_WIDGET_WIDTH = 350f;
+        LifeWidget lifeWidget = new LifeWidget(PlayerManager.getCurrent(), tweenManager);
+        lifeWidget.setSize(LIFE_WIDGET_WIDTH, 40f);
+        lifeWidget.setPosition(Gdx.graphics.getWidth() / 2f - lifeWidget.getWidth() / 2f, Gdx.graphics.getHeight() - 50f - lifeWidget.getHeight());
+
+        stage.addActor(lifeWidget);
     }
 }
