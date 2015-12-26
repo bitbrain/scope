@@ -62,6 +62,12 @@ public class GameProgressWidget extends Actor {
             alphaProvider.setValue(1f);
             Tween.to(valueProvider, ValueTween.VALUE, 1.5f).ease(TweenEquations.easeOutCubic).target(player.getGameProgress()).start(tweenManager);
             Tween.to(alphaProvider, ValueTween.VALUE, 1.5f).ease(TweenEquations.easeOutCubic).target(0.1f).start(tweenManager);
+            if (player.getGameProgress() == 1f) {
+                fill.setColor(Colors.ACTIVE.cpy());
+                border.setColor(Colors.ACTIVE.cpy());
+                name.setColor(Colors.ACTIVE.cpy());
+                name.getColor().a = 0.9f;
+            }
         }
         border.getColor().a = 0.6f + alphaProvider.getValue();
         border.draw(batch, getX(), getY(), getWidth(), getHeight());
