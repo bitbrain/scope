@@ -13,7 +13,7 @@ import nl.fontys.scope.object.GameObjectType;
 
 public class GameLogicHandler implements Disposable {
 
-    private static final int POINTS_PER_ENERGY = 150;
+    private static final int POINTS_PER_ENERGY = 28;
 
     private Events events = Events.getInstance();
 
