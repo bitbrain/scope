@@ -7,6 +7,7 @@ import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import nl.fontys.scope.ScopeGame;
@@ -14,11 +15,13 @@ import nl.fontys.scope.controls.ControllerControls;
 import nl.fontys.scope.controls.KeyboardControls;
 import nl.fontys.scope.core.Arena;
 import nl.fontys.scope.core.GameLogicHandler;
+import nl.fontys.scope.core.Player;
 import nl.fontys.scope.core.PlayerManager;
 import nl.fontys.scope.core.controller.CameraTrackingController;
 import nl.fontys.scope.core.controller.ShipController;
 import nl.fontys.scope.ui.DebugWidget;
 import nl.fontys.scope.ui.FocusWidget;
+import nl.fontys.scope.ui.GameProgressWidget;
 import nl.fontys.scope.ui.PlayerInfoWidget;
 import nl.fontys.scope.ui.LifeWidget;
 
@@ -93,5 +96,18 @@ public class IngameScreen extends AbstractScreen {
         lifeWidget.setSize(LIFE_WIDGET_WIDTH, 40f);
         lifeWidget.setPosition(Gdx.graphics.getWidth() / 2f - lifeWidget.getWidth() / 2f, Gdx.graphics.getHeight() - 50f - lifeWidget.getHeight());
         stage.addActor(lifeWidget);
+
+        Iterator<Player> playerIterator = playerManager.getPlayers().iterator();
+        if (playerIterator.hasNext()) {
+            GameProgressWidget progress = new GameProgressWidget(playerIterator.next());
+            progress.setPosition(Gdx.graphics.getWidth() - progress.getWidth() - 50f, Gdx.graphics.getHeight() - progress.getHeight() - 50f);
+            stage.addActor(progress);
+        }
+        if (playerIterator.hasNext()) {
+            GameProgressWidget progress = new GameProgressWidget(playerIterator.next());
+            progress.setPosition(50f, Gdx.graphics.getHeight() - progress.getHeight() - 50f);
+            stage.addActor(progress);
+        }
+
     }
 }
