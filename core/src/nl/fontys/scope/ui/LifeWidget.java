@@ -28,8 +28,11 @@ public class LifeWidget extends Actor {
 
     private TweenManager tweenManager;
 
+    private FocusWidget focusWidget;
+
     public LifeWidget(Player player, TweenManager tweenManager) {
         this.player = player;
+        focusWidget = new FocusWidget(player, tweenManager);
         background = GraphicsFactory.createNinePatch(Assets.Textures.BAR_SMALL, 5);
         background.setColor(Colors.UI.cpy());
         alphaValueProvider = new ValueProvider();
@@ -37,6 +40,12 @@ public class LifeWidget extends Actor {
         lastHealth = this.player.getHealth();
         healthValueProvider.setValue(lastHealth);
         this.tweenManager = tweenManager;
+    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        focusWidget.act(delta);
     }
 
     @Override
@@ -55,5 +64,8 @@ public class LifeWidget extends Actor {
         background.draw(batch, getX(), getY(), getWidth(), getHeight());
         background.getColor().a = parentAlpha * (0.1f + alphaValueProvider.getValue());
         background.draw(batch, getX() + BAR_PADDING, getY() + BAR_PADDING, (getWidth() - BAR_PADDING * 2) * healthValueProvider.getValue(), getHeight() - BAR_PADDING * 2);
+
+        focusWidget.setPosition(getX() + getWidth() / 2f - focusWidget.getPrefWidth() / 2f, getY() - focusWidget.getPrefHeight() - 5f);
+        focusWidget.draw(batch, parentAlpha);
     }
 }
