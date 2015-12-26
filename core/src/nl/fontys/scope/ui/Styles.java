@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
+import static nl.fontys.scope.graphics.GraphicsFactory.*;
 import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.graphics.GraphicsFactory;
@@ -78,11 +79,5 @@ public final class Styles {
         TEXTFIELD_FORM.background = createDrawable(Assets.Textures.TEXTFIELD, Colors.trans(Colors.UI, 0.7f));
         TEXTFIELD_FORM.focusedBackground = createDrawable(Assets.Textures.TEXTFIELD, Colors.UI);
         TEXTFIELD_FORM.cursor = new SpriteDrawable(new Sprite(GraphicsFactory.createTexture(3, 16, Colors.SECONDARY)));
-    }
-
-    private static Drawable createDrawable(Assets.Textures texture, Color color) {
-        NinePatch patch = GraphicsFactory.createNinePatch(texture, 40);
-        patch.setColor(color.cpy());
-        return new NinePatchDrawable(patch);
     }
 }
