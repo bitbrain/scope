@@ -23,8 +23,8 @@ public class GameObjectFactory {
     public GameObject createShip(float x, float y, float z) {
         GameObject object = world.createGameObject();
         object.setType(GameObjectType.SHIP);
-        object.setScale(0.5f);
-        object.getColor().set(0.65f, 0.65f, 0.65f, 1f);
+        object.setScale(0.65f);
+        object.getColor().set(0.75f, 0.75f, 0.75f, 1f);
         return object;
     }
 
@@ -34,7 +34,7 @@ public class GameObjectFactory {
         object.setPosition(pos.x, pos.y, pos.z);
         object.setVelocity(new Vector3(250f, 0f, 0f).mul(ship.getOrientation()));
         object.setOrientation(ship.getOrientation().x, ship.getOrientation().y, ship.getOrientation().z, ship.getOrientation().w);
-        object.setScale(12f);
+        object.setScale(14f);
         object.setType(GameObjectType.SHOT);
         object.getColor().set(Colors.SECONDARY);
         object.setPhysics(false);
