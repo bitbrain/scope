@@ -66,7 +66,7 @@ public final class Styles {
         disabledColor.a = 0.4f;
         BUTTON_MENU.disabledFontColor = disabledColor;
         BUTTON_MENU.up = createDrawable(Assets.Textures.BUTTON, Colors.UI);
-        BUTTON_MENU.down = createDrawable(Assets.Textures.BUTTON, Colors.UI);
+        BUTTON_MENU.down = createDrawable(Assets.Textures.BUTTON, Colors.lighten(Colors.ACTIVE, 1.5f));
         BUTTON_MENU.over = createDrawable(Assets.Textures.BUTTON, Colors.ACTIVE);
         BUTTON_MENU.disabled = createDrawable(Assets.Textures.BUTTON, Colors.trans(Colors.UI, 0.4f));
 
