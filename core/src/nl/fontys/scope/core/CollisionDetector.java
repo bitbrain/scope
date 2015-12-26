@@ -43,13 +43,13 @@ public class CollisionDetector {
     }
 
     public void detect(GameObject objectA, GameObject objectB) {
-            BoundingBox boxA = getBoundingBox(objectA);
-            BoundingBox boxB = getBoundingBox(objectB);
-            if (boxA.intersects(boxB)) {
-                events.fire(EventType.COLLISION, objectA, objectB);
-            } else if (boxA.contains(boxB)) {
-                events.fire(EventType.COLLISION_FULL, objectA, objectB);
-            }
+        BoundingBox boxA = getBoundingBox(objectA);
+        BoundingBox boxB = getBoundingBox(objectB);
+        if (boxA.contains(boxB)) {
+            events.fire(EventType.COLLISION_FULL, objectA, objectB);
+        } else if (boxA.intersects(boxB)) {
+            events.fire(EventType.COLLISION, objectA, objectB);
+        }
     }
 
     private BoundingBox getBoundingBox(GameObject object) {
