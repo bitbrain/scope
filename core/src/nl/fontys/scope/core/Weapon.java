@@ -12,6 +12,8 @@ public class Weapon {
 
     private long interval = 200;
 
+    private static final int MUNITION_GAP = 5;
+
     private World world;
 
     private FocusContainer focus;
@@ -19,6 +21,8 @@ public class Weapon {
     private GameObjectFactory factory;
 
     private GameObject ship;
+
+    private float munition;
 
     public Weapon(GameObject ship, World world, FocusContainer focus) {
         this.world = world;
@@ -34,8 +38,11 @@ public class Weapon {
 
     public void shoot() {
         if (focus.hasFocus() && checkShooting()) {
-            focus.reduce();
-            GameObject shot = factory.createShot(ship);
+            factory.createShot(ship);
+            if (++munition >= MUNITION_GAP) {
+                focus.reduce();
+                munition = 0;
+            }
         }
     }
 
