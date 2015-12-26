@@ -86,7 +86,7 @@ public class IngameScreen extends AbstractScreen {
         debugWidget = new DebugWidget();
         stage.addActor(debugWidget);
         debugWidget.setVisible(debug);
-        FocusWidget widget = new FocusWidget(world.getCamera(), playerManager);
+        FocusWidget widget = new FocusWidget(world.getCamera(), playerManager, tweenManager);
         stage.addActor(widget);
     }
 }
