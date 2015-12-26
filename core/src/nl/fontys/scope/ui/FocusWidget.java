@@ -89,44 +89,54 @@ public class FocusWidget extends Actor {
         final float SIZE = 75f + 5000f / (float) vecTemp3D.set(ship.getPosition()).sub(camera.position.x, camera.position.y, camera.position.z).scl(0.225f).len2();
         Vector2 cameraPos2D = mapToCamera(ship);
         if (!camera.frustum.pointInFrustum(ship.getPosition()) && bindToScreen(cameraPos2D, 80f)) {
-            if (focusData.visible) {
-                focusData.visible = false;
-                tweenManager.killTarget(focusData.value);
-                Tween.to(focusData.value, ValueTween.VALUE, TRANSITION_TIME).target(0.3f).ease(TweenEquations.easeOutCubic).start(tweenManager);
-            }
-            parentAlpha = focusData.value.getValue();
-            vecTemp2D.set(cameraPos2D.x - Gdx.graphics.getWidth() / 2f, cameraPos2D.y - Gdx.graphics.getHeight() / 2f);
-            final float angle = vecTemp2D.angle() - 45f - 180f;
-            final float posX = cameraPos2D.x - SIZE / 2f;
-            final float posY = cameraPos2D.y - SIZE / 2f;
-            focusTarget.setColor(Colors.UI);
-            focusTarget.setRotation(angle);
-            focusTarget.setPosition(posX, posY);
-            focusTarget.setSize(75f, 75f);
-            focusTarget.setOrigin(75f / 2f, 75f / 2f);
-            focusTarget.draw(batch, parentAlpha);
-            playerName.setText("P" + player.getNumber());
-            playerName.setFontScale(1f);
-            playerName.setPosition(posX + (75f / 2f) - (playerName.getPrefWidth() / 2f), posY + (75f / 2f) - (playerName.getPrefHeight() / 2f));
-            playerName.draw(batch, parentAlpha);
+            drawPlayerDirection(player, batch, focusData, SIZE, cameraPos2D);
         } else if (camera.frustum.pointInFrustum(ship.getPosition())) {
-            if (!focusData.visible) {
-                focusData.visible = true;
-                tweenManager.killTarget(focusData.value);
-                Tween.to(focusData.value, ValueTween.VALUE, TRANSITION_TIME).target(1f).ease(TweenEquations.easeOutCubic).start(tweenManager);
-            }
-            parentAlpha = focusData.value.getValue();
-            final float posX = cameraPos2D.x - SIZE / 2f;
-            final float posY = cameraPos2D.y - SIZE / 2f;
-            final float NAME_PADDING = (SIZE * SIZE) / 360f;
-            focusPatch.setColor(Colors.UI.cpy());
-            focusPatch.getColor().a = parentAlpha;
-            focusPatch.draw(batch, posX, posY, SIZE, SIZE);
-            playerName.setText("Player " + player.getNumber());
-            playerName.setFontScale(SIZE / 75f);
-            playerName.setPosition(posX + (SIZE / 2f) - (playerName.getPrefWidth() / 2f), posY + SIZE + NAME_PADDING);
-            playerName.draw(batch, parentAlpha);
+            drawPlayerInformation(player, batch, focusData, SIZE, cameraPos2D);
         }
+    }
+
+    private void drawPlayerInformation(Player player, Batch batch, FocusData focusData, float size, Vector2 cameraPos2D) {
+        float parentAlpha;
+        if (!focusData.visible) {
+            focusData.visible = true;
+            tweenManager.killTarget(focusData.value);
+            Tween.to(focusData.value, ValueTween.VALUE, TRANSITION_TIME).target(1f).ease(TweenEquations.easeOutCubic).start(tweenManager);
+        }
+        parentAlpha = focusData.value.getValue();
+        final float posX = cameraPos2D.x - size / 2f;
+        final float posY = cameraPos2D.y - size / 2f;
+        final float NAME_PADDING = (size * size) / 360f;
+        focusPatch.setColor(Colors.UI.cpy());
+        focusPatch.getColor().a = parentAlpha;
+        focusPatch.draw(batch, posX, posY, size, size);
+        playerName.setText("Player " + player.getNumber());
+        playerName.setFontScale(size / 75f);
+        playerName.setPosition(posX + (size / 2f) - (playerName.getPrefWidth() / 2f), posY + size + NAME_PADDING);
+        playerName.draw(batch, parentAlpha);
+    }
+
+    private void drawPlayerDirection(Player player, Batch batch, FocusData focusData, float size, Vector2 cameraPos2D) {
+        float parentAlpha;
+        if (focusData.visible) {
+            focusData.visible = false;
+            tweenManager.killTarget(focusData.value);
+            Tween.to(focusData.value, ValueTween.VALUE, TRANSITION_TIME).target(0.3f).ease(TweenEquations.easeOutCubic).start(tweenManager);
+        }
+        parentAlpha = focusData.value.getValue();
+        vecTemp2D.set(cameraPos2D.x - Gdx.graphics.getWidth() / 2f, cameraPos2D.y - Gdx.graphics.getHeight() / 2f);
+        final float angle = vecTemp2D.angle() - 45f - 180f;
+        final float posX = cameraPos2D.x - size / 2f;
+        final float posY = cameraPos2D.y - size / 2f;
+        focusTarget.setColor(Colors.UI);
+        focusTarget.setRotation(angle);
+        focusTarget.setPosition(posX, posY);
+        focusTarget.setSize(75f, 75f);
+        focusTarget.setOrigin(75f / 2f, 75f / 2f);
+        focusTarget.draw(batch, parentAlpha);
+        playerName.setText("P" + player.getNumber());
+        playerName.setFontScale(1f);
+        playerName.setPosition(posX + (75f / 2f) - (playerName.getPrefWidth() / 2f), posY + (75f / 2f) - (playerName.getPrefHeight() / 2f));
+        playerName.draw(batch, parentAlpha);
     }
 
     private Vector2 mapToCamera(GameObject ship) {
