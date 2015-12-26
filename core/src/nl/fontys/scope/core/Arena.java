@@ -16,7 +16,7 @@ public class Arena {
         void restrict(World world, GameObject object);
     }
 
-    private static final int DEFAULT_ENERGY_COUNT =100;
+    private static final int DEFAULT_ENERGY_COUNT = 45;
     public static final float RADIUS = 140;
     private static final float OUTER_RADIUS = 100;
 
