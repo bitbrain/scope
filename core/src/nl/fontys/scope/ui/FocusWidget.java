@@ -3,6 +3,8 @@ package nl.fontys.scope.ui;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
+import java.text.DecimalFormat;
+
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenManager;
 import nl.fontys.scope.core.Player;
@@ -15,12 +17,16 @@ public class FocusWidget extends Label {
 
     private Player player;
 
-    private int lastFocus;
+    private float lastFocus;
 
     private ValueProvider focusProvider, alphaProvider;
 
+    private DecimalFormat df = new DecimalFormat();
+
     public FocusWidget(Player player, TweenManager tweenManager) {
         super("0", Styles.LABEL_FOCUS);
+        df.setMaximumFractionDigits(2);
+        df.setMinimumFractionDigits(2);
         this.player = player;
         this.tweenManager = tweenManager;
         focusProvider = new ValueProvider();
@@ -33,11 +39,11 @@ public class FocusWidget extends Label {
     @Override
     public void act(float delta) {
         super.act(delta);
-        if (lastFocus != player.getFocusCount()) {
-            lastFocus = player.getFocusCount();
+        if (lastFocus != player.getFocusProgress()) {
+            lastFocus = player.getFocusProgress();
             updateFocus();
         }
-        setText(String.valueOf(Math.round(focusProvider.getValue())) + "% focus");
+        setText(String.valueOf(df.format(focusProvider.getValue() * 100f)) + "% focus");
     }
 
     @Override
@@ -49,7 +55,7 @@ public class FocusWidget extends Label {
     private void updateFocus() {
         tweenManager.killTarget(focusProvider);
         tweenManager.killTarget(alphaProvider);
-        Tween.to(focusProvider, ValueTween.VALUE, 0.2f).target(player.getFocusCount()).start(tweenManager);
+        Tween.to(focusProvider, ValueTween.VALUE, 0.2f).target(player.getFocusProgress()).start(tweenManager);
         alphaProvider.setValue(1f);
         Tween.to(alphaProvider, ValueTween.VALUE, 1.5f).target(0.4f).start(tweenManager);
     }

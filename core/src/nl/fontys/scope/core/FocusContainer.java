@@ -2,7 +2,7 @@ package nl.fontys.scope.core;
 
 public class FocusContainer {
 
-    public static final int FOCUS_SOFT_GAP = 10;
+    public static final int FOCUS_SOFT_GAP = 8;
 
     private int focus;
 
