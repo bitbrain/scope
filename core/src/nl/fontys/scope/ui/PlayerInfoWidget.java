@@ -29,7 +29,7 @@ import nl.fontys.scope.tweens.ValueTween;
 import nl.fontys.scope.util.Colors;
 import nl.fontys.scope.util.ValueProvider;
 
-public class FocusWidget extends Actor {
+public class PlayerInfoWidget extends Actor {
 
     private static final float TRANSITION_TIME = 1f;
 
@@ -61,7 +61,7 @@ public class FocusWidget extends Actor {
 
     private TweenManager tweenManager;
 
-    public FocusWidget(PerspectiveCamera camera, PlayerManager playerManager, TweenManager tweenManager) {
+    public PlayerInfoWidget(PerspectiveCamera camera, PlayerManager playerManager, TweenManager tweenManager) {
         this.camera = camera;
         this.playerManager = playerManager;
         this.tweenManager = tweenManager;

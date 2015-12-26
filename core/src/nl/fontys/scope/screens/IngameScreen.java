@@ -6,24 +6,19 @@ import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import nl.fontys.scope.ScopeGame;
-import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.controls.ControllerControls;
 import nl.fontys.scope.controls.KeyboardControls;
 import nl.fontys.scope.core.Arena;
 import nl.fontys.scope.core.GameLogicHandler;
-import nl.fontys.scope.core.Player;
 import nl.fontys.scope.core.PlayerManager;
 import nl.fontys.scope.core.controller.CameraTrackingController;
 import nl.fontys.scope.core.controller.ShipController;
-import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.ui.DebugWidget;
-import nl.fontys.scope.ui.FocusWidget;
+import nl.fontys.scope.ui.PlayerInfoWidget;
 import nl.fontys.scope.ui.LifeWidget;
 
 public class IngameScreen extends AbstractScreen {
@@ -90,7 +85,7 @@ public class IngameScreen extends AbstractScreen {
         debugWidget = new DebugWidget();
         stage.addActor(debugWidget);
         debugWidget.setVisible(debug);
-        FocusWidget widget = new FocusWidget(world.getCamera(), playerManager, tweenManager);
+        PlayerInfoWidget widget = new PlayerInfoWidget(world.getCamera(), playerManager, tweenManager);
         stage.addActor(widget);
         final float LIFE_WIDGET_WIDTH = 350f;
         LifeWidget lifeWidget = new LifeWidget(PlayerManager.getCurrent(), tweenManager);
