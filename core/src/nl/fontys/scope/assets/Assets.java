@@ -35,6 +35,7 @@ public final class Assets {
         FOCUS("images/focus.9.png"),
         FOCUS_TARGET("images/focus-target.9.png"),
         TEXTFIELD("images/textfield.9.png"),
+        BAR_SMALL("images/bar-small.9.png"),
         LOGO("images/logo.png");
 
         private String path;

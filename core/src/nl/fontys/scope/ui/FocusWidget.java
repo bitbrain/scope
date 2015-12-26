@@ -45,7 +45,7 @@ public class FocusWidget extends Actor {
 
     private PerspectiveCamera camera;
 
-    private NinePatch focusPatch;
+    private NinePatch focusPatch, barPatch;
 
     private Sprite focusTarget;
 
@@ -66,6 +66,7 @@ public class FocusWidget extends Actor {
         this.playerManager = playerManager;
         this.tweenManager = tweenManager;
         focusPatch = GraphicsFactory.createNinePatch(Assets.Textures.FOCUS, 35);
+        barPatch = GraphicsFactory.createNinePatch(Assets.Textures.BAR_SMALL, 4);
         focusTarget = new Sprite(AssetManager.getTexture(Assets.Textures.FOCUS_TARGET));
         playerName = new Label("unknown", Styles.LABEL_PLAYER_NAME);
     }
@@ -106,9 +107,16 @@ public class FocusWidget extends Actor {
         final float posX = cameraPos2D.x - size / 2f;
         final float posY = cameraPos2D.y - size / 2f;
         final float NAME_PADDING = (size * size) / 360f;
+        final float BAR_PADDING = 10f;
+        final float FONT_SCALE = size / 75f;
         focusPatch.setColor(Colors.UI.cpy());
         focusPatch.getColor().a = parentAlpha;
         focusPatch.draw(batch, posX, posY, size, size);
+        barPatch.setColor(Colors.ACTIVE.cpy());
+        barPatch.getColor().a = parentAlpha * 0.1f;
+        barPatch.draw(batch, posX + BAR_PADDING, posY + size + NAME_PADDING / 2f - 10f, size - BAR_PADDING * 2f, 8f * FONT_SCALE);
+        barPatch.getColor().a = parentAlpha * 0.5f;
+        barPatch.draw(batch, posX + BAR_PADDING, posY + size + NAME_PADDING / 2f - 10f, (size - BAR_PADDING * 2f) * player.getHealth(), 8f * FONT_SCALE);
         playerName.setText("Player " + player.getNumber());
         playerName.setFontScale(size / 75f);
         playerName.setPosition(posX + (size / 2f) - (playerName.getPrefWidth() / 2f), posY + size + NAME_PADDING);

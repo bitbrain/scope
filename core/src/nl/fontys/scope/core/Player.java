@@ -25,7 +25,7 @@ public class Player {
 
     private int number;
 
-    private float health;
+    private float health = 1f;
 
     Player(World world) {
         this.id = UUID.randomUUID().toString();
