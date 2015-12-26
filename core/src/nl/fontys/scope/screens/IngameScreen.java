@@ -99,12 +99,12 @@ public class IngameScreen extends AbstractScreen {
 
         Iterator<Player> playerIterator = playerManager.getPlayers().iterator();
         if (playerIterator.hasNext()) {
-            GameProgressWidget progress = new GameProgressWidget(playerIterator.next());
+            GameProgressWidget progress = new GameProgressWidget(playerIterator.next(), tweenManager);
             progress.setPosition(Gdx.graphics.getWidth() - progress.getWidth() - 50f, Gdx.graphics.getHeight() - progress.getHeight() - 50f);
             stage.addActor(progress);
         }
         if (playerIterator.hasNext()) {
-            GameProgressWidget progress = new GameProgressWidget(playerIterator.next());
+            GameProgressWidget progress = new GameProgressWidget(playerIterator.next(), tweenManager);
             progress.setPosition(50f, Gdx.graphics.getHeight() - progress.getHeight() - 50f);
             stage.addActor(progress);
         }
