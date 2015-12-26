@@ -37,7 +37,7 @@ public class FocusWidget extends Label {
             lastFocus = player.getFocusCount();
             updateFocus();
         }
-        setText(String.valueOf(Math.round(focusProvider.getValue())) + " focus");
+        setText(String.valueOf(Math.round(focusProvider.getValue())) + "% focus");
     }
 
     @Override

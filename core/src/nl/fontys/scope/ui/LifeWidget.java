@@ -3,6 +3,7 @@ package nl.fontys.scope.ui;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenEquations;
@@ -30,10 +31,13 @@ public class LifeWidget extends Actor {
 
     private FocusWidget focusWidget;
 
+    private Label lifeInfo;
+
     public LifeWidget(Player player, TweenManager tweenManager) {
         this.player = player;
         focusWidget = new FocusWidget(player, tweenManager);
         background = GraphicsFactory.createNinePatch(Assets.Textures.BAR_SMALL, 5);
+        lifeInfo = new Label("life", Styles.LABEL_DESCRIPTION);
         background.setColor(Colors.UI.cpy());
         alphaValueProvider = new ValueProvider();
         healthValueProvider = new ValueProvider();
@@ -67,5 +71,9 @@ public class LifeWidget extends Actor {
 
         focusWidget.setPosition(getX() + getWidth() / 2f - focusWidget.getPrefWidth() / 2f, getY() - focusWidget.getPrefHeight() - 5f);
         focusWidget.draw(batch, parentAlpha);
+        lifeInfo.getColor().a = parentAlpha * (0.5f + alphaValueProvider.getValue());
+        lifeInfo.setPosition(getX() + getWidth() / 2f - lifeInfo.getPrefWidth() / 2f, getY() + getHeight() + 5f);
+        lifeInfo.draw(batch, parentAlpha);
+
     }
 }
