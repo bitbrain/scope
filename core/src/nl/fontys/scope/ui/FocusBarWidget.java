@@ -66,7 +66,8 @@ public class FocusBarWidget extends Actor {
         background.draw(batch, getX(), getY(), getWidth(), getHeight());
         if (focusValueProvider.getValue() > 0.04f) {
             background.getColor().a = parentAlpha * (0.2f + alphaValueProvider.getValue());
-            background.draw(batch, getX() + BAR_PADDING, getY() + BAR_PADDING, (getWidth() - BAR_PADDING * 2) * focusValueProvider.getValue(), getHeight() - BAR_PADDING * 2);
+            final float PROGRESS = Math.min(focusValueProvider.getValue(), 1f);
+            background.draw(batch, getX() + BAR_PADDING, getY() + BAR_PADDING, (getWidth() - BAR_PADDING * 2) * PROGRESS, getHeight() - BAR_PADDING * 2);
         }
         focusWidget.setPosition(getX() + getWidth() / 2f - focusWidget.getPrefWidth() / 2f, getY() - focusWidget.getPrefHeight() - 5f);
         focusWidget.draw(batch, parentAlpha);
