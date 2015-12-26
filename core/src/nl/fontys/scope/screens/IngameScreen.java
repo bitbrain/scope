@@ -22,7 +22,7 @@ import nl.fontys.scope.core.controller.ShipController;
 import nl.fontys.scope.ui.DebugWidget;
 import nl.fontys.scope.ui.GameProgressWidget;
 import nl.fontys.scope.ui.PlayerInfoWidget;
-import nl.fontys.scope.ui.LifeWidget;
+import nl.fontys.scope.ui.FocusBarWidget;
 
 public class IngameScreen extends AbstractScreen {
 
@@ -91,7 +91,7 @@ public class IngameScreen extends AbstractScreen {
         PlayerInfoWidget widget = new PlayerInfoWidget(world.getCamera(), playerManager, tweenManager);
         stage.addActor(widget);
         final float LIFE_WIDGET_WIDTH = 350f;
-        LifeWidget lifeWidget = new LifeWidget(PlayerManager.getCurrent(), tweenManager);
+        FocusBarWidget lifeWidget = new FocusBarWidget(PlayerManager.getCurrent(), tweenManager);
         lifeWidget.setSize(LIFE_WIDGET_WIDTH, 40f);
         lifeWidget.setPosition(Gdx.graphics.getWidth() / 2f - lifeWidget.getWidth() / 2f, Gdx.graphics.getHeight() - 50f - lifeWidget.getHeight());
         stage.addActor(lifeWidget);

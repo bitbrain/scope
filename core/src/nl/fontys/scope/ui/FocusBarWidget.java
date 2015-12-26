@@ -15,7 +15,7 @@ import nl.fontys.scope.tweens.ValueTween;
 import nl.fontys.scope.util.Colors;
 import nl.fontys.scope.util.ValueProvider;
 
-public class LifeWidget extends Actor {
+public class FocusBarWidget extends Actor {
 
     private static final float BAR_PADDING = 4f;
 
@@ -23,26 +23,24 @@ public class LifeWidget extends Actor {
 
     private Player player;
 
-    private ValueProvider alphaValueProvider, healthValueProvider;
+    private ValueProvider alphaValueProvider, focusValueProvider;
 
-    private float lastHealth;
+    private float lastFocus;
 
     private TweenManager tweenManager;
 
     private FocusValueWidget focusWidget;
 
-    private Label lifeInfo;
+    private Label focusInfo;
 
-    public LifeWidget(Player player, TweenManager tweenManager) {
+    public FocusBarWidget(Player player, TweenManager tweenManager) {
         this.player = player;
         focusWidget = new FocusValueWidget(player, tweenManager);
         background = GraphicsFactory.createNinePatch(Assets.Textures.BAR_SMALL, 5);
-        lifeInfo = new Label("life", Styles.LABEL_DESCRIPTION);
+        focusInfo = new Label("focus", Styles.LABEL_DESCRIPTION);
         background.setColor(Colors.UI.cpy());
         alphaValueProvider = new ValueProvider();
-        healthValueProvider = new ValueProvider();
-        lastHealth = this.player.getHealth();
-        healthValueProvider.setValue(lastHealth);
+        focusValueProvider = new ValueProvider();
         this.tweenManager = tweenManager;
     }
 
@@ -55,25 +53,26 @@ public class LifeWidget extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        if (lastHealth != player.getHealth()) {
-            lastHealth = player.getHealth();
+        if (lastFocus != player.getFocusProgress()) {
             tweenManager.killTarget(alphaValueProvider);
-            tweenManager.killTarget(healthValueProvider);
+            tweenManager.killTarget(focusValueProvider);
             alphaValueProvider.setValue(1f);
-            Tween.to(alphaValueProvider, ValueTween.VALUE, 1.0f).target(0f).ease(TweenEquations.easeOutCubic).start(tweenManager);
-            Tween.to(healthValueProvider, ValueTween.VALUE, 0.5f).target(player.getHealth()).ease(TweenEquations.easeOutCubic).start(tweenManager);
-
+            float duration = player.getFocusProgress() > lastFocus ? 1f : 3f;
+            lastFocus = player.getFocusProgress();
+            Tween.to(alphaValueProvider, ValueTween.VALUE, duration).target(0f).ease(TweenEquations.easeOutCubic).start(tweenManager);
+            Tween.to(focusValueProvider, ValueTween.VALUE, duration).target(player.getFocusProgress()).ease(TweenEquations.easeOutCubic).start(tweenManager);
         }
         background.getColor().a = parentAlpha * 0.1f;
         background.draw(batch, getX(), getY(), getWidth(), getHeight());
-        background.getColor().a = parentAlpha * (0.1f + alphaValueProvider.getValue());
-        background.draw(batch, getX() + BAR_PADDING, getY() + BAR_PADDING, (getWidth() - BAR_PADDING * 2) * healthValueProvider.getValue(), getHeight() - BAR_PADDING * 2);
-
+        if (focusValueProvider.getValue() > 0.04f) {
+            background.getColor().a = parentAlpha * (0.1f + alphaValueProvider.getValue());
+            background.draw(batch, getX() + BAR_PADDING, getY() + BAR_PADDING, (getWidth() - BAR_PADDING * 2) * focusValueProvider.getValue(), getHeight() - BAR_PADDING * 2);
+        }
         focusWidget.setPosition(getX() + getWidth() / 2f - focusWidget.getPrefWidth() / 2f, getY() - focusWidget.getPrefHeight() - 5f);
         focusWidget.draw(batch, parentAlpha);
-        lifeInfo.getColor().a = parentAlpha * (0.5f + alphaValueProvider.getValue());
-        lifeInfo.setPosition(getX() + getWidth() / 2f - lifeInfo.getPrefWidth() / 2f, getY() + getHeight() + 5f);
-        lifeInfo.draw(batch, parentAlpha);
+        focusInfo.getColor().a = parentAlpha * (0.5f + alphaValueProvider.getValue());
+        focusInfo.setPosition(getX() + getWidth() / 2f - focusInfo.getPrefWidth() / 2f, getY() + getHeight() + 5f);
+        focusInfo.draw(batch, parentAlpha);
 
     }
 }
