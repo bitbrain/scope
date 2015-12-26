@@ -53,7 +53,7 @@ public final class Styles {
         LABEL_VALIDATION.font = AssetManager.getFont(Assets.Fonts.OPENSANS_SMALL_16);
         LABEL_VALIDATION.fontColor = Color.RED.cpy();
 
-        LABEL_PLAYER_NAME.font = AssetManager.getFont(Assets.Fonts.OPENSANS_MEDIUM_32);
+        LABEL_PLAYER_NAME.font = AssetManager.getFont(Assets.Fonts.OPENSANS_SMALL_16);
         LABEL_PLAYER_NAME.fontColor = Colors.UI.cpy();
 
         LABEL_FOCUS.font = AssetManager.getFont(Assets.Fonts.OPENSANS_MEDIUM_32);
