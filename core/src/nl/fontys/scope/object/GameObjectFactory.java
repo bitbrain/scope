@@ -57,6 +57,7 @@ public class GameObjectFactory {
 
     public GameObject createEnergy(float x, float y, float z) {
         GameObject object = world.createGameObject();
+        object.getColor().set(Colors.PRIMARY);
         object.setType(GameObjectType.ENERGY);
         object.setPosition(x, y, z);
         object.setScale(4.5f);

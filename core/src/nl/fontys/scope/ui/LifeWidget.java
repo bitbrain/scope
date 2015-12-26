@@ -53,7 +53,7 @@ public class LifeWidget extends Actor {
         }
         background.getColor().a = parentAlpha * 0.1f;
         background.draw(batch, getX(), getY(), getWidth(), getHeight());
-        background.getColor().a = parentAlpha * (0.2f + alphaValueProvider.getValue());
+        background.getColor().a = parentAlpha * (0.1f + alphaValueProvider.getValue());
         background.draw(batch, getX() + BAR_PADDING, getY() + BAR_PADDING, (getWidth() - BAR_PADDING * 2) * healthValueProvider.getValue(), getHeight() - BAR_PADDING * 2);
     }
 }

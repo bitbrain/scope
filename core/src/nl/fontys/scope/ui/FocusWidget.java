@@ -112,7 +112,7 @@ public class FocusWidget extends Actor {
         focusPatch.setColor(Colors.UI.cpy());
         focusPatch.getColor().a = parentAlpha;
         focusPatch.draw(batch, posX, posY, size, size);
-        barPatch.setColor(Colors.ACTIVE.cpy());
+        barPatch.setColor(Colors.PRIMARY.cpy());
         barPatch.getColor().a = parentAlpha * 0.1f;
         barPatch.draw(batch, posX + BAR_PADDING, posY + size + NAME_PADDING / 2f - 10f, size - BAR_PADDING * 2f, 8f * FONT_SCALE);
         barPatch.getColor().a = parentAlpha * 0.5f;
