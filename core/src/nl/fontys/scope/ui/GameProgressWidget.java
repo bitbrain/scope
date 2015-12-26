@@ -37,7 +37,9 @@ public class GameProgressWidget extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         border.draw(batch, getX(), getY(), getWidth(), getHeight());
-        fill.draw(batch, getX() + BORDER_PADDING, getY() + BORDER_PADDING, getWidth() - BORDER_PADDING * 2, getHeight() - BORDER_PADDING * 2);
+        final float FILL_HEIGHT = getHeight() - BORDER_PADDING * 2;
+        fill.draw(batch, getX() + BORDER_PADDING, getY() + BORDER_PADDING, getWidth() - BORDER_PADDING * 2, FILL_HEIGHT);
+        fill.draw(batch, getX() + BORDER_PADDING, getY() + BORDER_PADDING, getWidth() - BORDER_PADDING * 2, FILL_HEIGHT * player.getGameProgress());
         name.setPosition(getX() + getWidth() / 2f - name.getPrefWidth() / 2f, getY() + getHeight() + 5f);
         name.draw(batch, parentAlpha);
     }

@@ -98,7 +98,7 @@ public class Player {
     }
 
     public float getGameProgress() {
-        return (float)this.points / (float)POINT_GAP;
+        return Math.min((float)this.points / (float)POINT_GAP, 1f);
     }
 
     public GameObject getShip() {
