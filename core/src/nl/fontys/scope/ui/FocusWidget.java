@@ -88,7 +88,7 @@ public class FocusWidget extends Actor {
         GameObject ship = player.getShip();
         final float SIZE = 75f + 5000f / (float) vecTemp3D.set(ship.getPosition()).sub(camera.position.x, camera.position.y, camera.position.z).scl(0.225f).len2();
         Vector2 cameraPos2D = mapToCamera(ship);
-        if (bindToScreen(cameraPos2D, 80f)) {
+        if (!camera.frustum.pointInFrustum(ship.getPosition()) && bindToScreen(cameraPos2D, 80f)) {
             if (focusData.visible) {
                 focusData.visible = false;
                 tweenManager.killTarget(focusData.value);
@@ -109,7 +109,7 @@ public class FocusWidget extends Actor {
             playerName.setFontScale(1f);
             playerName.setPosition(posX + (75f / 2f) - (playerName.getPrefWidth() / 2f), posY + (75f / 2f) - (playerName.getPrefHeight() / 2f));
             playerName.draw(batch, parentAlpha);
-        } else {
+        } else if (camera.frustum.pointInFrustum(ship.getPosition())) {
             if (!focusData.visible) {
                 focusData.visible = true;
                 tweenManager.killTarget(focusData.value);
