@@ -11,7 +11,7 @@ import nl.fontys.scope.core.Player;
 import nl.fontys.scope.tweens.ValueTween;
 import nl.fontys.scope.util.ValueProvider;
 
-public class FocusWidget extends Label {
+public class FocusValueWidget extends Label {
 
     private TweenManager tweenManager;
 
@@ -23,7 +23,7 @@ public class FocusWidget extends Label {
 
     private DecimalFormat df = new DecimalFormat();
 
-    public FocusWidget(Player player, TweenManager tweenManager) {
+    public FocusValueWidget(Player player, TweenManager tweenManager) {
         super("0", Styles.LABEL_FOCUS);
         df.setMaximumFractionDigits(2);
         df.setMinimumFractionDigits(2);

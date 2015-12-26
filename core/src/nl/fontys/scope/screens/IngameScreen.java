@@ -20,7 +20,6 @@ import nl.fontys.scope.core.PlayerManager;
 import nl.fontys.scope.core.controller.CameraTrackingController;
 import nl.fontys.scope.core.controller.ShipController;
 import nl.fontys.scope.ui.DebugWidget;
-import nl.fontys.scope.ui.FocusWidget;
 import nl.fontys.scope.ui.GameProgressWidget;
 import nl.fontys.scope.ui.PlayerInfoWidget;
 import nl.fontys.scope.ui.LifeWidget;

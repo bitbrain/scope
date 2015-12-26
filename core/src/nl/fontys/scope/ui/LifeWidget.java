@@ -29,13 +29,13 @@ public class LifeWidget extends Actor {
 
     private TweenManager tweenManager;
 
-    private FocusWidget focusWidget;
+    private FocusValueWidget focusWidget;
 
     private Label lifeInfo;
 
     public LifeWidget(Player player, TweenManager tweenManager) {
         this.player = player;
-        focusWidget = new FocusWidget(player, tweenManager);
+        focusWidget = new FocusValueWidget(player, tweenManager);
         background = GraphicsFactory.createNinePatch(Assets.Textures.BAR_SMALL, 5);
         lifeInfo = new Label("life", Styles.LABEL_DESCRIPTION);
         background.setColor(Colors.UI.cpy());
