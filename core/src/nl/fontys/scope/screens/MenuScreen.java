@@ -2,6 +2,7 @@ package nl.fontys.scope.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -12,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
+import aurelienribon.tweenengine.TweenEquations;
 import nl.fontys.scope.Config;
 import nl.fontys.scope.ScopeGame;
 import nl.fontys.scope.assets.AssetManager;
@@ -23,6 +25,7 @@ import nl.fontys.scope.i18n.Messages;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.ui.ButtonMenu;
 import nl.fontys.scope.ui.Styles;
+import nl.fontys.scope.util.Colors;
 
 public class MenuScreen extends AbstractScreen {
 
@@ -42,6 +45,9 @@ public class MenuScreen extends AbstractScreen {
     protected void onUpdate(float delta) {
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F)) {
+            tooltip.create(0f, Styles.LABEL_CAPTION, "Dein Schiff wurde vernichtet!");
         }
     }
 

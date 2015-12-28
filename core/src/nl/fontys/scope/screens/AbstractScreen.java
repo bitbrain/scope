@@ -23,8 +23,11 @@ import nl.fontys.scope.graphics.FX;
 import nl.fontys.scope.graphics.ShaderManager;
 import nl.fontys.scope.object.GameObjectFactory;
 import nl.fontys.scope.core.World;
+import nl.fontys.scope.ui.Tooltip;
 
 public abstract class AbstractScreen implements Screen {
+
+    protected Tooltip tooltip = Tooltip.getInstance();
 
     protected World world;
 
@@ -112,6 +115,7 @@ public abstract class AbstractScreen implements Screen {
         if (stage == null) {
             stage = new Stage();
             multiplexer.addProcessor(stage);
+            tooltip.init(stage, cam2D, tweenManager);
             fx.init(tweenManager, cam2D);
             onCreateStage(stage);
             fx.fadeIn(fadeInTime, TweenEquations.easeInCubic);
