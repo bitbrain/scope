@@ -46,9 +46,6 @@ public class MenuScreen extends AbstractScreen {
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
         }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.F)) {
-            tooltip.create(0f, Styles.LABEL_CAPTION, "Dein Schiff wurde vernichtet!");
-        }
     }
 
     @Override
