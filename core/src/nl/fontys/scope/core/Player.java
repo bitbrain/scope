@@ -91,9 +91,12 @@ public class Player {
     }
 
     public void addPoints(int points) {
-        if (points > 0) {
+        if (points > 0 && getGameProgress() < 1f) {
             this.points += points;
             events.fire(EventType.POINTS_GAINED, this, points);
+            if (getGameProgress() == 1f) {
+                events.fire(EventType.GAME_OVER, this);
+            }
         }
     }
 

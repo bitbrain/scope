@@ -18,6 +18,7 @@ import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
 import nl.fontys.scope.ScopeGame;
 import nl.fontys.scope.audio.SoundManager;
+import nl.fontys.scope.event.Events;
 import nl.fontys.scope.graphics.FX;
 import nl.fontys.scope.graphics.ShaderManager;
 import nl.fontys.scope.object.GameObjectFactory;
@@ -40,6 +41,8 @@ public abstract class AbstractScreen implements Screen {
     protected ScopeGame game;
 
     private FX fx = FX.getInstance();
+
+    protected Events events = Events.getInstance();
 
     public AbstractScreen(ScopeGame game) {
         this.game = game;
@@ -137,6 +140,7 @@ public abstract class AbstractScreen implements Screen {
     @Override
     public final void dispose() {
         world.dispose();
+        events.clear();
     }
 
     public void setScreen(final Screen screen) {

@@ -28,6 +28,11 @@ public final class Events {
         bus.unsubscribe(object);
     }
 
+    public void clear() {
+        bus.shutdown();
+        bus = new MBassador();
+    }
+
     public static class GdxEvent {
 
         private Object primary;

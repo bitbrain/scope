@@ -6,6 +6,8 @@ import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
+import net.engio.mbassy.listener.Handler;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -15,10 +17,13 @@ import nl.fontys.scope.controls.ControllerControls;
 import nl.fontys.scope.controls.KeyboardControls;
 import nl.fontys.scope.core.Arena;
 import nl.fontys.scope.core.GameLogicHandler;
+import nl.fontys.scope.core.GameStats;
 import nl.fontys.scope.core.Player;
 import nl.fontys.scope.core.PlayerManager;
 import nl.fontys.scope.core.controller.CameraTrackingController;
 import nl.fontys.scope.core.controller.ShipController;
+import nl.fontys.scope.event.EventType;
+import nl.fontys.scope.event.Events;
 import nl.fontys.scope.ui.DebugWidget;
 import nl.fontys.scope.ui.GameProgressWidget;
 import nl.fontys.scope.ui.PlayerInfoWidget;
@@ -42,6 +47,9 @@ public class IngameScreen extends AbstractScreen {
 
     private PlayerManager playerManager;
 
+    // Todo: synchronize stats over the network
+    private GameStats stats = new GameStats();
+
     public IngameScreen(ScopeGame game, boolean debug) {
         super(game);
         this.debug = debug;
@@ -49,6 +57,7 @@ public class IngameScreen extends AbstractScreen {
 
     @Override
     protected void onShow() {
+        events.register(this);
         playerManager = new PlayerManager(world);
         ShipController controller = new ShipController();
         world.addController(PlayerManager.getCurrent().getShip(), controller);
@@ -108,5 +117,13 @@ public class IngameScreen extends AbstractScreen {
             stage.addActor(progress);
         }
 
+    }
+
+    @Handler
+    public void onEvent(Events.GdxEvent event) {
+        if (event.isTypeOf(EventType.GAME_OVER)) {
+            stats.winner = (Player) event.getPrimaryParam();
+            setScreen(new GameOverScreen(game, stats));
+        }
     }
 }

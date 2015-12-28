@@ -25,4 +25,7 @@ public class EventType {
 
     // Is called whenever a player dies (health <= 0) (param: PLayer)
     public static final String PLAYER_DEAD = "player_dead";
+
+    // Is called whenever a game is over on the client
+    public static final String GAME_OVER = "game_over";
 }
