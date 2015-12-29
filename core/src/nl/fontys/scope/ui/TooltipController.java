@@ -36,7 +36,7 @@ public class TooltipController {
                 if (player.isCurrentPlayer()) {
                     show(Messages.TOOLTIP_DESTROYED);
                 } else {
-                    show(Messages.TOOLTIP_DESTROYED_OTHER);
+                    show(Messages.TOOLTIP_DESTROYED_OTHER, player.getNumber());
                 }
             }
         } else if (event.isTypeOf(EventType.ON_SHOT)) {

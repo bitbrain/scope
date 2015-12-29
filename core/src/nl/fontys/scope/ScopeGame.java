@@ -24,6 +24,8 @@ public class ScopeGame extends Game {
     public void dispose() {
         super.dispose();
         AssetManager.dispose();
-        AbstractScreen.uiBuffer.dispose();
+        if (AbstractScreen.uiBuffer != null) {
+            AbstractScreen.uiBuffer.dispose();
+        }
     }
 }
