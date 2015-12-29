@@ -72,11 +72,9 @@ public class IngameScreen extends AbstractScreen {
         logicHandler = new GameLogicHandler(world, factory, arena, playerManager);
         tooltipController = new TooltipController(playerManager);
         keyboardControls = new KeyboardControls(controller);
-        for (Controller c : Controllers.getControllers()) {
-            ControllerControls cc = new ControllerControls(controller);
-            controls.add(cc);
-            c.addListener(cc);
-        }
+        ControllerControls cc = new ControllerControls(controller);
+        controls.add(cc);
+        Controllers.addListener(cc);
     }
 
     @Override
