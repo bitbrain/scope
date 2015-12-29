@@ -28,10 +28,20 @@ public class TooltipController {
         if (event.isTypeOf(EventType.PLAYER_SHIP_DESTROYED)) {
             GameObject playerShip = (GameObject) event.getPrimaryParam();
             Player player = playerManager.getPlayerByShip(playerShip);
-            if (player.isCurrentPlayer()) {
-                tooltip.create(Styles.LABEL_CAPTION, "You got destroyed!");
-            } else {
-                tooltip.create(Styles.LABEL_CAPTION, "Player " + player.getNumber() + " got destroyed!");
+            if (player != null) {
+                if (player.isCurrentPlayer()) {
+                    tooltip.create(Styles.LABEL_CAPTION, "You got destroyed!");
+                } else {
+                    tooltip.create(Styles.LABEL_CAPTION, "Player " + player.getNumber() + " got destroyed!");
+                }
+            }
+        } else if (event.isTypeOf(EventType.ON_SHOT)) {
+            GameObject object = (GameObject) event.getSecondaryParam(0);
+            Player player = playerManager.getPlayerByShip(object);
+            if (player != null) {
+                if (player.isCurrentPlayer() && player.getHealth() < 0.2f) {
+                    tooltip.create(Styles.LABEL_CAPTION, "Achtung! Energie unter 20%!");
+                }
             }
         }
     }
