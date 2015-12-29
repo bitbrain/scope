@@ -24,6 +24,8 @@ import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.core.Player;
 import nl.fontys.scope.core.PlayerManager;
 import nl.fontys.scope.graphics.GraphicsFactory;
+import nl.fontys.scope.i18n.Bundle;
+import nl.fontys.scope.i18n.Messages;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.tweens.ValueTween;
 import nl.fontys.scope.util.Colors;
@@ -117,7 +119,7 @@ public class PlayerInfoWidget extends Actor {
         barPatch.draw(batch, posX + BAR_PADDING, posY + size + NAME_PADDING / 2f - 10f, size - BAR_PADDING * 2f, 8f * FONT_SCALE);
         barPatch.getColor().a = parentAlpha * 0.5f;
         barPatch.draw(batch, posX + BAR_PADDING, posY + size + NAME_PADDING / 2f - 10f, (size - BAR_PADDING * 2f) * player.getHealth(), 8f * FONT_SCALE);
-        playerName.setText("Player " + player.getNumber());
+        playerName.setText(Bundle.general.get(Messages.PLAYER) + " " + player.getNumber());
         playerName.setFontScale(size / 75f);
         playerName.setPosition(posX + (size / 2f) - (playerName.getPrefWidth() / 2f), posY + size + NAME_PADDING);
         playerName.draw(batch, parentAlpha);

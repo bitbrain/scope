@@ -11,6 +11,8 @@ import aurelienribon.tweenengine.TweenManager;
 import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.core.Player;
 import nl.fontys.scope.graphics.GraphicsFactory;
+import nl.fontys.scope.i18n.Bundle;
+import nl.fontys.scope.i18n.Messages;
 import nl.fontys.scope.tweens.ValueTween;
 import nl.fontys.scope.util.Colors;
 import nl.fontys.scope.util.ValueProvider;
@@ -49,7 +51,7 @@ public class GameProgressWidget extends Actor {
         fill = GraphicsFactory.createNinePatch(Assets.Textures.FILL, 10);
         fill.setColor(Colors.UI.cpy());
         fill.getColor().a = 0.1f;
-        name = new Label("player " + player.getNumber(), Styles.LABEL_PLAYER_NAME);
+        name = new Label(Bundle.general.get(Messages.PLAYER) + " " + player.getNumber(), Styles.LABEL_PLAYER_NAME);
         name.getColor().a = 0.5f;
     }
 

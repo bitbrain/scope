@@ -11,6 +11,8 @@ import aurelienribon.tweenengine.TweenManager;
 import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.core.Player;
 import nl.fontys.scope.graphics.GraphicsFactory;
+import nl.fontys.scope.i18n.Bundle;
+import nl.fontys.scope.i18n.Messages;
 import nl.fontys.scope.tweens.ValueTween;
 import nl.fontys.scope.util.Colors;
 import nl.fontys.scope.util.ValueProvider;
@@ -37,7 +39,7 @@ public class FocusBarWidget extends Actor {
         this.player = player;
         focusWidget = new FocusValueWidget(player, tweenManager);
         background = GraphicsFactory.createNinePatch(Assets.Textures.BAR_SMALL, 5);
-        focusInfo = new Label("focus", Styles.LABEL_DESCRIPTION);
+        focusInfo = new Label(Bundle.general.get(Messages.FOCUS), Styles.LABEL_DESCRIPTION);
         background.setColor(Colors.UI.cpy());
         alphaValueProvider = new ValueProvider();
         focusValueProvider = new ValueProvider();
