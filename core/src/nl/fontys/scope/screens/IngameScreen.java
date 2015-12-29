@@ -28,6 +28,7 @@ import nl.fontys.scope.ui.DebugWidget;
 import nl.fontys.scope.ui.GameProgressWidget;
 import nl.fontys.scope.ui.PlayerInfoWidget;
 import nl.fontys.scope.ui.FocusBarWidget;
+import nl.fontys.scope.ui.TooltipController;
 
 public class IngameScreen extends AbstractScreen {
 
@@ -44,6 +45,8 @@ public class IngameScreen extends AbstractScreen {
     private Arena arena;
 
     private GameLogicHandler logicHandler;
+
+    private TooltipController tooltipController;
 
     private PlayerManager playerManager;
 
@@ -67,7 +70,7 @@ public class IngameScreen extends AbstractScreen {
         arena.setup(playerManager);
         world.setRestrictor(arena.getRestrictor());
         logicHandler = new GameLogicHandler(world, factory, arena, playerManager);
-
+        tooltipController = new TooltipController(playerManager);
         keyboardControls = new KeyboardControls(controller);
         for (Controller c : Controllers.getControllers()) {
             ControllerControls cc = new ControllerControls(controller);
