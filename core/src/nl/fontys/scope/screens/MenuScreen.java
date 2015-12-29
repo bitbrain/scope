@@ -25,6 +25,7 @@ import nl.fontys.scope.i18n.Messages;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.ui.ButtonMenu;
 import nl.fontys.scope.ui.Styles;
+import nl.fontys.scope.ui.Tooltip;
 import nl.fontys.scope.util.Colors;
 
 public class MenuScreen extends AbstractScreen {

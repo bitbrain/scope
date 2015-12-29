@@ -38,6 +38,7 @@ public final class Assets {
         BAR_SMALL("images/bar-small.9.png"),
         FILL("images/fill.9.png"),
         BORDER("images/border.9.png"),
+        SHADOW("images/shadow.9.png"),
         LOGO("images/logo.png");
 
         private String path;

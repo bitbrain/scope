@@ -3,8 +3,11 @@ package nl.fontys.scope.ui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 import java.util.HashSet;
@@ -16,11 +19,16 @@ import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenEquation;
 import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
+import nl.fontys.scope.assets.Assets;
+import nl.fontys.scope.graphics.GraphicsFactory;
 import nl.fontys.scope.tweens.ActorTween;
+import nl.fontys.scope.util.Colors;
 
 public class Tooltip {
 
     private static final Tooltip instance = new Tooltip();
+
+    private static final float SHADOW_MARGIN = 64f;
 
     private Stage stage;
 
@@ -36,11 +44,15 @@ public class Tooltip {
 
     private TweenManager tweenManager;
 
+    private NinePatch shadowPatch;
+
     static {
         Tween.registerAccessor(Actor.class, new ActorTween());
     }
 
     private Tooltip() {
+        shadowPatch = GraphicsFactory.createNinePatch(Assets.Textures.SHADOW, 80);
+        shadowPatch.setColor(Colors.lighten(Colors.BACKGROUND, 0.4f));
         setTweenEquation(TweenEquations.easeOutCubic);
         duration = 2.5f;
         scale = 1.0f;
@@ -96,7 +108,16 @@ public class Tooltip {
     }
 
     private Label createInternally(float x, float y, Label.LabelStyle style, String text, Color color) {
-        final Label tooltip = new Label(text, style);
+        final Label tooltip = new Label(text, style) {
+            @Override
+            public void draw(Batch batch, float parentAlpha) {
+                shadowPatch.getColor().a = 1.2f * getColor().a;
+                shadowPatch.draw(batch, getX() - SHADOW_MARGIN, getY() - SHADOW_MARGIN, getWidth() + SHADOW_MARGIN * 2f, getHeight() + SHADOW_MARGIN * 2f);
+                super.draw(batch, parentAlpha);
+            }
+        };
+        tooltip.setZIndex(100);
+        tooltip.setTouchable(Touchable.disabled);
         tooltip.setColor(color.cpy());
         tooltip.setPosition(x, y);
         stage.addActor(tooltip);
