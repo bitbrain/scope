@@ -14,6 +14,8 @@ import nl.fontys.scope.object.GameObject;
 
 public class TooltipController {
 
+    private static final float OFFSET = 75f;
+
     private Events events = Events.getInstance();
 
     private Tooltip tooltip = Tooltip.getInstance();
@@ -32,9 +34,9 @@ public class TooltipController {
             Player player = playerManager.getPlayerByShip(playerShip);
             if (player != null) {
                 if (player.isCurrentPlayer()) {
-                    tooltip.create(Styles.LABEL_CAPTION, Bundle.general.get(Messages.TOOLTIP_DESTROYED));
+                    show(Messages.TOOLTIP_DESTROYED);
                 } else {
-                    tooltip.create(Styles.LABEL_CAPTION, Bundle.general.get(Messages.TOOLTIP_DESTROYED_OTHER));
+                    show(Messages.TOOLTIP_DESTROYED_OTHER);
                 }
             }
         } else if (event.isTypeOf(EventType.ON_SHOT)) {
@@ -42,17 +44,21 @@ public class TooltipController {
             Player player = playerManager.getPlayerByShip(object);
             if (player != null) {
                 if (player.isCurrentPlayer() && player.getHealth() < 0.2f) {
-                    tooltip.create(Styles.LABEL_CAPTION,  Bundle.general.get(Messages.TOOLTIP_ENERGY_WARNING));
+                    show(Messages.TOOLTIP_ENERGY_WARNING);
                 }
             }
         } else if (event.isTypeOf(EventType.POINTS_GAINED)) {
             Player player = (Player) event.getPrimaryParam();
             final int PROGRESS = Math.round(player.getGameProgress() * 100f);
             if (player.isCurrentPlayer()) {
-                tooltip.create(Styles.LABEL_CAPTION, Bundle.general.format(Messages.TOOLTIP_POINTS_GAINED, PROGRESS));
+                show(Messages.TOOLTIP_POINTS_GAINED, PROGRESS);
             } else {
-                tooltip.create(Styles.LABEL_CAPTION, Bundle.general.format(Messages.TOOLTIP_POINTS_GAINED_OTHER, PROGRESS, player.getNumber()));
+                show(Messages.TOOLTIP_POINTS_GAINED_OTHER, PROGRESS, player.getNumber());
             }
         }
+    }
+
+    private void show(String key, Object ... args) {
+        tooltip.create(OFFSET, Styles.LABEL_CAPTION, Bundle.general.format(key, args));
     }
 }
