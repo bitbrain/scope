@@ -8,6 +8,8 @@ import nl.fontys.scope.core.Player;
 import nl.fontys.scope.core.PlayerManager;
 import nl.fontys.scope.event.EventType;
 import nl.fontys.scope.event.Events;
+import nl.fontys.scope.i18n.Bundle;
+import nl.fontys.scope.i18n.Messages;
 import nl.fontys.scope.object.GameObject;
 
 public class TooltipController {
@@ -30,9 +32,9 @@ public class TooltipController {
             Player player = playerManager.getPlayerByShip(playerShip);
             if (player != null) {
                 if (player.isCurrentPlayer()) {
-                    tooltip.create(Styles.LABEL_CAPTION, "You got destroyed!");
+                    tooltip.create(Styles.LABEL_CAPTION, Bundle.general.get(Messages.TOOLTIP_DESTROYED));
                 } else {
-                    tooltip.create(Styles.LABEL_CAPTION, "Player " + player.getNumber() + " got destroyed!");
+                    tooltip.create(Styles.LABEL_CAPTION, Bundle.general.get(Messages.TOOLTIP_DESTROYED_OTHER));
                 }
             }
         } else if (event.isTypeOf(EventType.ON_SHOT)) {
@@ -40,7 +42,7 @@ public class TooltipController {
             Player player = playerManager.getPlayerByShip(object);
             if (player != null) {
                 if (player.isCurrentPlayer() && player.getHealth() < 0.2f) {
-                    tooltip.create(Styles.LABEL_CAPTION, "Achtung! Energie unter 20%!");
+                    tooltip.create(Styles.LABEL_CAPTION,  Bundle.general.get(Messages.TOOLTIP_ENERGY_WARNING));
                 }
             }
         }

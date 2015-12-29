@@ -13,4 +13,8 @@ public final class Messages {
 
     public static final String GAME_NAME_INVALID="GAME_NAME_INVALID";
     public static final String GAME_JOIN = "GAME_JOIN";
+
+    public static final String TOOLTIP_DESTROYED="TOOLTIP_DESTROYED";
+    public static final String TOOLTIP_DESTROYED_OTHER="TOOLTIP_DESTROYED_OTHER";
+    public static final String TOOLTIP_ENERGY_WARNING="TOOLTIP_ENERGY_WARNING";
 }
