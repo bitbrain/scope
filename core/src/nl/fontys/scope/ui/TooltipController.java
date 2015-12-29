@@ -45,6 +45,14 @@ public class TooltipController {
                     tooltip.create(Styles.LABEL_CAPTION,  Bundle.general.get(Messages.TOOLTIP_ENERGY_WARNING));
                 }
             }
+        } else if (event.isTypeOf(EventType.POINTS_GAINED)) {
+            Player player = (Player) event.getPrimaryParam();
+            final int PROGRESS = Math.round(player.getGameProgress() * 100f);
+            if (player.isCurrentPlayer()) {
+                tooltip.create(Styles.LABEL_CAPTION, Bundle.general.format(Messages.TOOLTIP_POINTS_GAINED, PROGRESS));
+            } else {
+                tooltip.create(Styles.LABEL_CAPTION, Bundle.general.format(Messages.TOOLTIP_POINTS_GAINED_OTHER, PROGRESS, player.getNumber()));
+            }
         }
     }
 }
