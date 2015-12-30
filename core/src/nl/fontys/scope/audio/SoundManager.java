@@ -72,7 +72,8 @@ public final class SoundManager implements GameObjectController {
     public void play(GameObject target, Assets.Sounds sounds, boolean loop) {
         removeTarget(target);
         Sound sound = AssetManager.getSound(sounds);
-        long id = sound.play(1f, 1f, 1f);
+        float pan = calculatePanning(target.getPosition());
+        long id = sound.play(1f, 1f, pan);
         sound.setLooping(id, loop);
         targets.put(target, new SoundData(sound, id, loop));
     }
@@ -81,7 +82,8 @@ public final class SoundManager implements GameObjectController {
     public void update(GameObject object, float delta) {
         SoundData data = targets.get(object);
         if (data != null) {
-            updateData(object.getPosition(), data);
+            final float pan = calculatePanning(object.getPosition());
+            data.source.setPan(data.id, pan, 1f);
         }
     }
 
@@ -106,7 +108,7 @@ public final class SoundManager implements GameObjectController {
         }
     }
 
-    private void updateData(Vector3 position, SoundData data) {
+    private float calculatePanning(Vector3 position) {
         if (camera != null) {
             tmp.set(camera.up);
             tmp.crs(camera.direction);
@@ -115,8 +117,9 @@ public final class SoundManager implements GameObjectController {
             final float lenY = position.y - camera.position.y;
             final float lenZ = position.z - camera.position.z;
             final float clampX = tmp.dot(new Vector3(lenX, lenY, lenZ));
-            final float pan = MathUtils.clamp(clampX / MAX_PAN_DISTANCE, 0f, 2f);
-            data.source.setPan(data.id, pan, 1f);
+            return MathUtils.clamp(clampX / MAX_PAN_DISTANCE, -1f, 1f);
+        } else {
+            return 0f;
         }
     }
 }
