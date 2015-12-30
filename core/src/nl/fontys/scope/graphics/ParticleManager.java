@@ -1,5 +1,6 @@
 package nl.fontys.scope.graphics;
 
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.particles.ParticleEffect;
@@ -83,7 +84,7 @@ public final class ParticleManager {
         return effect;
     }
 
-    public void setCamera(PerspectiveCamera camera) {
+    public void setCamera(Camera camera) {
         batch.setCamera(camera);
     }
 

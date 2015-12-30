@@ -43,7 +43,8 @@ public class RenderManager {
         modelBatch.end();
     }
 
-    public void particles() {
+    public void particles(Camera camera) {
+        particleManager.setCamera(camera);
         particleManager.render(modelBatch);
     }
 }

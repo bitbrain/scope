@@ -155,6 +155,6 @@ public class World {
             }
             renderManager.render(object, camera);
         }
-        renderManager.particles();
+        renderManager.particles(camera);
     }
 }

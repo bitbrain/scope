@@ -6,8 +6,10 @@ import com.badlogic.gdx.utils.Disposable;
 import net.engio.mbassy.listener.Handler;
 
 import nl.fontys.scope.Config;
+import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.event.EventType;
 import nl.fontys.scope.event.Events;
+import nl.fontys.scope.graphics.ParticleManager;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.object.GameObjectFactory;
 import nl.fontys.scope.object.GameObjectType;
@@ -78,13 +80,14 @@ public class GameLogicHandler implements Disposable {
         Player player = playerManager.getPlayerByShip(object);
         if (player != null) {
             events.fire(EventType.PLAYER_SHIP_DESTROYED, player.getShip());
-            Vector3 currentPos = object.getPosition();
+            Vector3 currentPos = object.getPosition().cpy();
             Vector3 pos = arena.spawnManager.fetchAvailableSpawnPoint();
             int energyCount = player.clearFocus();
             for (int i = 0; i < energyCount; ++i) {
                 factory.createEnergy(currentPos.x, currentPos.y, currentPos.z);
             }
             object.setPosition(pos.x, pos.y, pos.z);
+            ParticleManager.getInstance().create(currentPos, Assets.ParticleEffects.EXPLOSION);
         }
     }
 }
