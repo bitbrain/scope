@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
+import nl.fontys.scope.Config;
 import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.core.Player;
 import nl.fontys.scope.graphics.GraphicsFactory;
@@ -19,7 +20,7 @@ import nl.fontys.scope.util.ValueProvider;
 
 public class GameProgressWidget extends Actor {
 
-    private static final float BORDER_PADDING = 12f;
+    private static final float BORDER_PADDING = Config.UI_BAR_PADDING * 3f;
 
     private Player player;
 

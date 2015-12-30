@@ -2,14 +2,13 @@ package nl.fontys.scope.core;
 
 import java.util.UUID;
 
+import nl.fontys.scope.Config;
 import nl.fontys.scope.event.EventType;
 import nl.fontys.scope.event.Events;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.object.GameObjectFactory;
 
 public class Player {
-
-    public static final int POINT_GAP = 500;
 
     private FocusContainer focus;
 
@@ -101,7 +100,7 @@ public class Player {
     }
 
     public float getGameProgress() {
-        return Math.min((float)this.points / (float)POINT_GAP, 1f);
+        return Math.min((float)this.points / (float) Config.POINT_GAP, 1f);
     }
 
     public GameObject getShip() {

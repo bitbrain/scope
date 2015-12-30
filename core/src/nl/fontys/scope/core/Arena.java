@@ -5,8 +5,7 @@ import com.badlogic.gdx.math.Vector3;
 import java.security.SecureRandom;
 import java.util.UUID;
 
-import nl.fontys.scope.assets.Assets;
-import nl.fontys.scope.audio.SoundManager;
+import nl.fontys.scope.Config;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.object.GameObjectFactory;
 import nl.fontys.scope.object.GameObjectType;
@@ -18,10 +17,6 @@ public class Arena {
         void restrict(World world, GameObject object);
     }
 
-    private static final int DEFAULT_ENERGY_COUNT = 45;
-    public static final float RADIUS = 140;
-    private static final float OUTER_RADIUS = 100;
-
     private GameObjectFactory factory;
 
     private SecureRandom random;
@@ -30,7 +25,7 @@ public class Arena {
 
     public Arena(GameObjectFactory factory, int playerCount) {
         this.factory = factory;
-        this.spawnManager = new SpawnManager(playerCount, RADIUS);
+        this.spawnManager = new SpawnManager(playerCount, Config.ARENA_RADIUS);
         random = new SecureRandom(UUID.randomUUID().toString().getBytes());
     }
 
@@ -43,9 +38,9 @@ public class Arena {
         sphere.getColor().set(Colors.PRIMARY);
         sphere.getColor().a = 0.75f;
         Vector3 v = new Vector3(0f, 0f, 0f);
-        for (int i = 0; i < DEFAULT_ENERGY_COUNT; ++i) {
+        for (int i = 0; i < Config.ENERGY_COUNT; ++i) {
             double angle = 360f * random.nextFloat();
-            float r = (RADIUS - OUTER_RADIUS) + OUTER_RADIUS * random.nextFloat();
+            float r = (Config.ARENA_RADIUS - Config.ARENA_OUTER_RADIUS) + Config.ARENA_OUTER_RADIUS * random.nextFloat();
             v.set(r, 0f, 0f);
             v.rotate((float) (angle), 0f, 1f, 0f);
             angle = 360f * random.nextFloat();
@@ -94,11 +89,11 @@ public class Arena {
         @Override
         public void restrict(World world, GameObject object) {
             Vector3 pos = object.getPosition();
-            if (pos.len() > RADIUS) {
+            if (pos.len() > Config.ARENA_RADIUS) {
                 if (object.getType().equals(GameObjectType.SHOT)) {
                     world.remove(object);
                 } else {
-                    pos.setLength(RADIUS);
+                    pos.setLength(Config.ARENA_RADIUS);
                 }
             }
         }

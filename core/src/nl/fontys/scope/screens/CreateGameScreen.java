@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
+import nl.fontys.scope.Config;
 import nl.fontys.scope.ScopeGame;
 import nl.fontys.scope.core.controller.CameraRotatingController;
 import nl.fontys.scope.i18n.Bundle;
@@ -66,7 +67,7 @@ public class CreateGameScreen extends AbstractScreen {
         ValidationTextField nameText = new ValidationTextField(Bundle.general.get(Messages.GAME_NAME_HINT), Styles.TEXTFIELD_FORM, context);
         nameText.setFocusTraversal(true);
         nameText.setErrorMessage(Bundle.general.get(Messages.GAME_NAME_INVALID));
-        layout.add(nameText).width(ButtonMenu.BUTTON_WIDTH).height(85f).row();
+        layout.add(nameText).width(Config.MENU_BUTTON_WIDTH).height(85f).row();
 
         layout.add(context.getLabel()).padTop(10f).row();
         layout.add(menu).padTop(30f).row();

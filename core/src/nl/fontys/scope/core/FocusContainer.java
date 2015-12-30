@@ -1,8 +1,8 @@
 package nl.fontys.scope.core;
 
-public class FocusContainer {
+import nl.fontys.scope.Config;
 
-    public static final int FOCUS_SOFT_GAP = 8;
+public class FocusContainer {
 
     private int focus;
 
@@ -17,7 +17,7 @@ public class FocusContainer {
     }
 
     public float getProgress() {
-        return (float)focus / (float)FOCUS_SOFT_GAP;
+        return (float)focus / (float) Config.FOCUS_SOFT_GAP;
     }
 
     public boolean hasFocus() {

@@ -11,6 +11,7 @@ import net.engio.mbassy.listener.Handler;
 import java.util.HashMap;
 import java.util.Map;
 
+import nl.fontys.scope.Config;
 import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.core.controller.GameObjectController;
@@ -19,10 +20,6 @@ import nl.fontys.scope.event.Events;
 import nl.fontys.scope.object.GameObject;
 
 public final class SoundManager implements GameObjectController {
-
-    private static final float MAX_PAN_DISTANCE = 50f;
-
-    private static final float MAX_VOLUME_DISTANCE = 100f;
 
     private class SoundData {
 
@@ -121,7 +118,7 @@ public final class SoundManager implements GameObjectController {
             final float lenY = camera.position.y - position.y;
             final float lenZ = camera.position.z - position.z;
             final float clampX = tmp.dot(new Vector3(lenX, lenY, lenZ));
-            return MathUtils.clamp(clampX / MAX_PAN_DISTANCE, -1f, 1f);
+            return MathUtils.clamp(clampX / Config.MAX_PAN_DISTANCE, -1f, 1f);
         } else {
             return 0f;
         }
@@ -130,6 +127,6 @@ public final class SoundManager implements GameObjectController {
     private float calculateVolume(Vector3 position) {
         tmp.set(camera.position.x, camera.position.y, camera.position.z);
         tmp.sub(position);
-        return MathUtils.clamp(0.1f / (tmp.len() / MAX_VOLUME_DISTANCE), 0f, 1f);
+        return MathUtils.clamp(0.1f / (tmp.len() / Config.MAX_VOLUME_DISTANCE), 0f, 1f);
     }
 }

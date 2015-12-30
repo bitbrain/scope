@@ -2,8 +2,7 @@ package nl.fontys.scope.ui;
 
 import net.engio.mbassy.listener.Handler;
 
-import javax.tools.Tool;
-
+import nl.fontys.scope.Config;
 import nl.fontys.scope.core.Player;
 import nl.fontys.scope.core.PlayerManager;
 import nl.fontys.scope.event.EventType;
@@ -13,8 +12,6 @@ import nl.fontys.scope.i18n.Messages;
 import nl.fontys.scope.object.GameObject;
 
 public class TooltipController {
-
-    private static final float OFFSET = 75f;
 
     private Events events = Events.getInstance();
 
@@ -59,6 +56,6 @@ public class TooltipController {
     }
 
     private void show(String key, Object ... args) {
-        tooltip.create(OFFSET, Styles.LABEL_CAPTION, Bundle.general.format(key, args));
+        tooltip.create(Config.TOOLTIP_VERTICAL_OFFSET, Styles.LABEL_CAPTION, Bundle.general.format(key, args));
     }
 }

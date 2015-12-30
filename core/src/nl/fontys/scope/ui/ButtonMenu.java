@@ -12,16 +12,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
+import nl.fontys.scope.Config;
 import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.audio.SoundManager;
 import nl.fontys.scope.tweens.ColorTween;
 
 public class ButtonMenu extends Table {
-
-    public static final float BUTTON_WIDTH = 300f;
-    private static final float BUTTON_HEIGHT = 90f;
-    public static final float PADDING = 10f;
-    private static final float ALPHA = 0.5f;
 
     private TweenManager tweenManager;
 
@@ -32,7 +28,7 @@ public class ButtonMenu extends Table {
 
     public Button add(String caption, final ClickListener listener) {
         final TextButton button = new TextButton(caption, Styles.BUTTON_MENU);
-        button.setColor(new Color(1f, 1f, 1f, ALPHA));
+        button.setColor(new Color(1f, 1f, 1f, Config.MENU_ALPHA));
         button.addCaptureListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -55,7 +51,7 @@ public class ButtonMenu extends Table {
                 }
             }
         });
-        center().add(button).width(BUTTON_WIDTH).height(BUTTON_HEIGHT).padBottom(PADDING);
+        center().add(button).width(Config.MENU_BUTTON_WIDTH).height(Config.MENU_BUTTON_HEIGHT).padBottom(Config.MENU_PADDING);
         row();
         button.addCaptureListener(new ClickListener() {
             @Override
@@ -82,7 +78,7 @@ public class ButtonMenu extends Table {
                     if (event.getRelatedActor() == null || (!event.getRelatedActor().equals(button) &&
                             event.getRelatedActor() instanceof TextButton)) {
                         tweenManager.killTarget(button);
-                        Tween.to(button.getColor(), ColorTween.A, 1.0f).target(ALPHA).ease(TweenEquations.easeOutCubic).start(tweenManager);
+                        Tween.to(button.getColor(), ColorTween.A, 1.0f).target(Config.MENU_ALPHA).ease(TweenEquations.easeOutCubic).start(tweenManager);
                     }
                 }
             }

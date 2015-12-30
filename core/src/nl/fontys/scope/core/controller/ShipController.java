@@ -3,12 +3,11 @@ package nl.fontys.scope.core.controller;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 
+import nl.fontys.scope.Config;
 import nl.fontys.scope.controls.Moveable;
 import nl.fontys.scope.object.GameObject;
 
 public class ShipController implements GameObjectController, Moveable {
-
-    public static final float SPEED = 2.4f;
 
     private Vector3 accel = new Vector3();
 
@@ -46,21 +45,21 @@ public class ShipController implements GameObjectController, Moveable {
 
     @Override
     public void moveForward() {
-        accel.x = SPEED;
+        accel.x = Config.MAX_SHIP_SPEED;
     }
 
     @Override
     public void moveBack() {
-        accel.x = -SPEED;
+        accel.x = -Config.MAX_SHIP_SPEED;
     }
 
     @Override
     public void moveUp() {
-        accel.y = SPEED;
+        accel.y = Config.MAX_SHIP_SPEED;
     }
 
     @Override
     public void moveDown() {
-        accel.y = -SPEED;
+        accel.y = -Config.MAX_SHIP_SPEED;
     }
 }

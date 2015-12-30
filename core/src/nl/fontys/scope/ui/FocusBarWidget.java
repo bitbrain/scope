@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
+import nl.fontys.scope.Config;
 import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.core.Player;
 import nl.fontys.scope.graphics.GraphicsFactory;
@@ -18,8 +19,6 @@ import nl.fontys.scope.util.Colors;
 import nl.fontys.scope.util.ValueProvider;
 
 public class FocusBarWidget extends Actor {
-
-    private static final float BAR_PADDING = 4f;
 
     private NinePatch background;
 
@@ -69,7 +68,7 @@ public class FocusBarWidget extends Actor {
         if (focusValueProvider.getValue() > 0.04f) {
             background.getColor().a = parentAlpha * (0.2f + alphaValueProvider.getValue());
             final float PROGRESS = Math.min(focusValueProvider.getValue(), 1f);
-            background.draw(batch, getX() + BAR_PADDING, getY() + BAR_PADDING, (getWidth() - BAR_PADDING * 2) * PROGRESS, getHeight() - BAR_PADDING * 2);
+            background.draw(batch, getX() + Config.UI_BAR_PADDING, getY() + Config.UI_BAR_PADDING, (getWidth() - Config.UI_BAR_PADDING * 2) * PROGRESS, getHeight() - Config.UI_BAR_PADDING * 2);
         }
         focusWidget.setPosition(getX() + getWidth() / 2f - focusWidget.getPrefWidth() / 2f, getY() - focusWidget.getPrefHeight() - 5f);
         focusWidget.draw(batch, parentAlpha);

@@ -5,12 +5,11 @@ import com.badlogic.gdx.math.Vector3;
 import java.security.SecureRandom;
 import java.util.UUID;
 
+import nl.fontys.scope.Config;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.object.GameObjectType;
 
 public class EnergyController implements GameObjectController {
-
-    private static final float MAX_SPEED = 8f;
 
     private Vector3 velocity = new Vector3();
 
@@ -19,10 +18,10 @@ public class EnergyController implements GameObjectController {
     private SecureRandom random = new SecureRandom(UUID.randomUUID().toString().getBytes());
 
     public EnergyController() {
-        velocity.x = random.nextFloat() * MAX_SPEED;
-        velocity.y = random.nextFloat() * MAX_SPEED;
-        if (velocity.len() > MAX_SPEED) {
-            velocity.setLength(MAX_SPEED);
+        velocity.x = random.nextFloat() * Config.MAX_ENERGY_SPEED;
+        velocity.y = random.nextFloat() * Config.MAX_ENERGY_SPEED;
+        if (velocity.len() > Config.MAX_ENERGY_SPEED) {
+            velocity.setLength(Config.MAX_ENERGY_SPEED);
         }
     }
 
@@ -37,8 +36,8 @@ public class EnergyController implements GameObjectController {
         if (random.nextFloat() > 0.1f) {
             velocity.z += random.nextFloat() < 0.5f ? -random.nextFloat() : random.nextFloat();
         }
-        if (velocity.len() > MAX_SPEED) {
-            velocity.setLength(MAX_SPEED);
+        if (velocity.len() > Config.MAX_ENERGY_SPEED) {
+            velocity.setLength(Config.MAX_ENERGY_SPEED);
         }
         object.setVelocity(velocity);
     }

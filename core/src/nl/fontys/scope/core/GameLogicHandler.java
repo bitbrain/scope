@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.Disposable;
 
 import net.engio.mbassy.listener.Handler;
 
+import nl.fontys.scope.Config;
 import nl.fontys.scope.event.EventType;
 import nl.fontys.scope.event.Events;
 import nl.fontys.scope.object.GameObject;
@@ -12,8 +13,6 @@ import nl.fontys.scope.object.GameObjectFactory;
 import nl.fontys.scope.object.GameObjectType;
 
 public class GameLogicHandler implements Disposable {
-
-    private static final int POINTS_PER_ENERGY = 28;
 
     private Events events = Events.getInstance();
 
@@ -56,7 +55,7 @@ public class GameLogicHandler implements Disposable {
             currentPlayer.addFocus();
             world.remove(objectB);
         } else if (GameObjectType.SPHERE.equals(objectA.getType()) && full && objectB.equals(currentPlayer.getShip())) {
-            currentPlayer.addPoints(currentPlayer.clearFocus() * POINTS_PER_ENERGY);
+            currentPlayer.addPoints(currentPlayer.clearFocus() * Config.POINTS_PER_ENERGY);
         } else if (GameObjectType.SHOT.equals(objectA.getType()) && GameObjectType.SPHERE.equals(objectB.getType())) {
             world.remove(objectA);
         }  else if (GameObjectType.SHOT.equals(objectA.getType()) && GameObjectType.SHIP.equals(objectB.getType())) {

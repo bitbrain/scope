@@ -3,6 +3,7 @@ package nl.fontys.scope.core;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector3;
 
+import nl.fontys.scope.Config;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.object.GameObjectFactory;
 
@@ -11,8 +12,6 @@ public class Weapon {
     private long timestamp;
 
     private long interval = 200;
-
-    private static final int MUNITION_GAP = 5;
 
     private World world;
 
@@ -39,7 +38,7 @@ public class Weapon {
     public void shoot() {
         if (focus.hasFocus() && checkShooting()) {
             factory.createShot(ship);
-            if (++munition >= MUNITION_GAP) {
+            if (++munition >= Config.MUNITION_GAP) {
                 focus.reduce();
                 munition = 0;
             }
