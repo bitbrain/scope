@@ -5,8 +5,6 @@ import com.badlogic.gdx.math.Vector3;
 import java.security.SecureRandom;
 import java.util.UUID;
 
-import nl.fontys.scope.assets.Assets;
-import nl.fontys.scope.audio.SoundManager;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.object.GameObjectFactory;
 import nl.fontys.scope.object.GameObjectType;

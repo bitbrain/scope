@@ -20,7 +20,7 @@ import nl.fontys.scope.object.GameObject;
 
 public final class SoundManager implements GameObjectController {
 
-    private static final float MAX_PAN_DISTANCE = 200f;
+    private static final float MAX_PAN_DISTANCE = 50f;
 
     private class SoundData {
 
@@ -113,9 +113,9 @@ public final class SoundManager implements GameObjectController {
             tmp.set(camera.up);
             tmp.crs(camera.direction);
             tmp.nor();
-            final float lenX = position.x - camera.position.x;
-            final float lenY = position.y - camera.position.y;
-            final float lenZ = position.z - camera.position.z;
+            final float lenX = camera.position.x - position.x;
+            final float lenY = camera.position.y - position.y;
+            final float lenZ = camera.position.z - position.z;
             final float clampX = tmp.dot(new Vector3(lenX, lenY, lenZ));
             return MathUtils.clamp(clampX / MAX_PAN_DISTANCE, -1f, 1f);
         } else {
