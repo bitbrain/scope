@@ -109,4 +109,21 @@ public final class Assets {
             return path;
         }
     }
+
+    /**
+     * Contains particle effect definitions
+     */
+    public enum ParticleEffects {
+        EXPLOSION("particles/explosion.p");
+
+        private String path;
+
+        ParticleEffects(String path) {
+            this.path = path;
+        }
+
+        public String getPath() {
+            return path;
+        }
+    }
 }

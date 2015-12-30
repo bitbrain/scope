@@ -1,10 +1,16 @@
 package nl.fontys.scope.assets;
 
+import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g3d.Model;
+import com.badlogic.gdx.graphics.g3d.particles.ParticleEffect;
+import com.badlogic.gdx.graphics.g3d.particles.ParticleEffectLoader;
+import com.badlogic.gdx.graphics.g3d.particles.ParticleSystem;
+
+import nl.fontys.scope.graphics.ParticleManager;
 
 /**
  * Manages different kind of assets
@@ -56,6 +62,7 @@ public class AssetManager {
     }
 
     public static void init() {
+        initLoaders();
         for (Assets.Fonts font : Assets.Fonts.values()) {
             assetManager.load(font.getPath(), BitmapFont.class);
         }
@@ -71,6 +78,11 @@ public class AssetManager {
         for (Assets.Sounds sound : Assets.Sounds.values()) {
             assetManager.load(sound.getPath(), Sound.class);
         }
+        ParticleSystem particleSystem = ParticleManager.getInstance().getSystem();
+        ParticleEffectLoader.ParticleEffectLoadParameter particleLoadParam = new ParticleEffectLoader.ParticleEffectLoadParameter(particleSystem.getBatches());
+        for (Assets.ParticleEffects effects : Assets.ParticleEffects.values()) {
+            assetManager.load(effects.getPath(), ParticleEffect.class, particleLoadParam);
+        }
     }
 
     public static float getProgress() {
@@ -83,5 +95,11 @@ public class AssetManager {
 
     public static void dispose() {
         assetManager.dispose();
+    }
+
+    private static void initLoaders() {
+        // Initialize particle loading
+        ParticleEffectLoader loader = new ParticleEffectLoader(new InternalFileHandleResolver());
+        assetManager.setLoader(ParticleEffect.class, loader);
     }
 }
