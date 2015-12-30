@@ -61,4 +61,7 @@ public class Config {
 
     // Offset of tooltips (vertical)
     public static final float TOOLTIP_VERTICAL_OFFSET = 75f;
+
+    // Margin of UI shadows
+    public static final float UI_SHADOW_MARGIN = 64f;
 }

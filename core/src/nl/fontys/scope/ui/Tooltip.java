@@ -19,6 +19,7 @@ import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenEquation;
 import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
+import nl.fontys.scope.Config;
 import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.graphics.GraphicsFactory;
 import nl.fontys.scope.tweens.ActorTween;
@@ -27,8 +28,6 @@ import nl.fontys.scope.util.Colors;
 public class Tooltip {
 
     private static final Tooltip instance = new Tooltip();
-
-    private static final float SHADOW_MARGIN = 64f;
 
     private Stage stage;
 
@@ -112,7 +111,7 @@ public class Tooltip {
             @Override
             public void draw(Batch batch, float parentAlpha) {
                 shadowPatch.getColor().a = 1.2f * getColor().a;
-                shadowPatch.draw(batch, getX() - SHADOW_MARGIN, getY() - SHADOW_MARGIN, getWidth() + SHADOW_MARGIN * 2f, getHeight() + SHADOW_MARGIN * 2f);
+                shadowPatch.draw(batch, getX() - Config.UI_SHADOW_MARGIN, getY() - Config.UI_SHADOW_MARGIN, getWidth() + Config.UI_SHADOW_MARGIN * 2f, getHeight() + Config.UI_SHADOW_MARGIN * 2f);
                 super.draw(batch, parentAlpha);
             }
         };
