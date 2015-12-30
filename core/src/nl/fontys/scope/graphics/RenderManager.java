@@ -16,6 +16,8 @@ public class RenderManager {
 
     private LightingManager lightingManager;
 
+    private ParticleManager particleManager = ParticleManager.getInstance();
+
     private ModelBatch modelBatch = new ModelBatch();
 
     private EnvironmentCubemap cubemap;
@@ -39,5 +41,9 @@ public class RenderManager {
             modelBatch.render(instance, modelInstanceService.isLightingEnabledFor(object) ? lightingManager.getEnvironment() : null);
         }
         modelBatch.end();
+    }
+
+    public void particles() {
+        particleManager.render(modelBatch);
     }
 }

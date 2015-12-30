@@ -18,6 +18,7 @@ import nl.fontys.scope.event.EventType;
 import nl.fontys.scope.event.Events;
 import nl.fontys.scope.graphics.LightingManager;
 import nl.fontys.scope.graphics.ModelInstanceService;
+import nl.fontys.scope.graphics.ParticleManager;
 import nl.fontys.scope.graphics.RenderManager;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.util.Colors;
@@ -34,6 +35,8 @@ public class World {
     private Physics physics;
 
     private LightingManager lightingManager;
+
+    private ParticleManager particleManager = ParticleManager.getInstance();
 
     Pool<nl.fontys.scope.object.GameObject> gameObjectPool = new Pool(256) {
         @Override
@@ -152,5 +155,6 @@ public class World {
             }
             renderManager.render(object, camera);
         }
+        renderManager.particles();
     }
 }

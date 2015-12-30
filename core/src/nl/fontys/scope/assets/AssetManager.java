@@ -40,8 +40,13 @@ public class AssetManager {
     public static Sound getSound(Assets.Sounds sounds) {
         return assetManager.get(sounds.getPath(), Sound.class);
     }
+
     public static BitmapFont getFont(Assets.Fonts fonts) {
         return assetManager.get(fonts.getPath(), BitmapFont.class);
+    }
+
+    public static ParticleEffect getParticleEffect(Assets.ParticleEffects effectType) {
+        return assetManager.get(effectType.getPath(), ParticleEffect.class);
     }
 
     public static boolean isLoaded(String path) {
