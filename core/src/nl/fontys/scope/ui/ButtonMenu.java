@@ -1,6 +1,7 @@
 package nl.fontys.scope.ui;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -27,7 +28,13 @@ public class ButtonMenu extends Table {
     }
 
     public Button add(String caption, final ClickListener listener) {
-        final TextButton button = new TextButton(caption, Styles.BUTTON_MENU);
+        final TextButton button = new TextButton(caption, Styles.BUTTON_MENU) {
+            @Override
+            public void draw(Batch batch, float parentAlpha) {
+                ActorShadow.draw(batch, this);
+                super.draw(batch, parentAlpha);
+            }
+        };
         button.setColor(new Color(1f, 1f, 1f, Config.MENU_ALPHA));
         button.addCaptureListener(new ClickListener() {
             @Override

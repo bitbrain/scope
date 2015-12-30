@@ -54,6 +54,7 @@ public class FocusBarWidget extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
+        ActorShadow.draw(batch, this);
         if (lastFocus != player.getFocusProgress()) {
             tweenManager.killTarget(alphaValueProvider);
             tweenManager.killTarget(focusValueProvider);

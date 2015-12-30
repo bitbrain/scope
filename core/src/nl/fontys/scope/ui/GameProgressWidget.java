@@ -58,6 +58,7 @@ public class GameProgressWidget extends Actor {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+        ActorShadow.draw(batch, this);
         if (lastProgress != player.getGameProgress()) {
             lastProgress = player.getGameProgress();
             tweenManager.killTarget(valueProvider);

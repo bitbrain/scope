@@ -43,15 +43,11 @@ public class Tooltip {
 
     private TweenManager tweenManager;
 
-    private NinePatch shadowPatch;
-
     static {
         Tween.registerAccessor(Actor.class, new ActorTween());
     }
 
     private Tooltip() {
-        shadowPatch = GraphicsFactory.createNinePatch(Assets.Textures.SHADOW, 80);
-        shadowPatch.setColor(Colors.lighten(Colors.BACKGROUND, 0.4f));
         setTweenEquation(TweenEquations.easeOutCubic);
         duration = 2.5f;
         scale = 1.0f;
@@ -110,8 +106,7 @@ public class Tooltip {
         final Label tooltip = new Label(text, style) {
             @Override
             public void draw(Batch batch, float parentAlpha) {
-                shadowPatch.getColor().a = 1.2f * getColor().a;
-                shadowPatch.draw(batch, getX() - Config.UI_SHADOW_MARGIN, getY() - Config.UI_SHADOW_MARGIN, getWidth() + Config.UI_SHADOW_MARGIN * 2f, getHeight() + Config.UI_SHADOW_MARGIN * 2f);
+                ActorShadow.draw(batch, this);
                 super.draw(batch, parentAlpha);
             }
         };
