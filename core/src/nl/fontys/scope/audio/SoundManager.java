@@ -3,6 +3,7 @@ package nl.fontys.scope.audio;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
 
 import net.engio.mbassy.listener.Handler;
@@ -19,6 +20,8 @@ import nl.fontys.scope.object.GameObject;
 
 public final class SoundManager implements GameObjectController {
 
+    private static final float MAX_PAN_DISTANCE = 200f;
+
     private class SoundData {
 
         public Sound source;
@@ -31,6 +34,8 @@ public final class SoundManager implements GameObjectController {
             this.looping = looping;
         }
     }
+
+    private Vector3 tmp = new Vector3();
 
     private static final SoundManager INSTANCE = new SoundManager();
 
@@ -103,7 +108,15 @@ public final class SoundManager implements GameObjectController {
 
     private void updateData(Vector3 position, SoundData data) {
         if (camera != null) {
-            
+            tmp.set(camera.up);
+            tmp.crs(camera.direction);
+            tmp.nor();
+            final float lenX = position.x - camera.position.x;
+            final float lenY = position.y - camera.position.y;
+            final float lenZ = position.z - camera.position.z;
+            final float clampX = tmp.dot(new Vector3(lenX, lenY, lenZ));
+            final float pan = MathUtils.clamp(clampX / MAX_PAN_DISTANCE, 0f, 2f);
+            data.source.setPan(data.id, pan, 1f);
         }
     }
 }
