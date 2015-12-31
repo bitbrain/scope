@@ -97,6 +97,12 @@ public class Arena {
             if (pos.len() > Config.ARENA_RADIUS) {
                 if (object.getType().equals(GameObjectType.SHOT)) {
                     world.remove(object);
+                } else if (object.getType().equals(GameObjectType.ENERGY)){
+                    pos.setLength(Config.ARENA_RADIUS);
+                    Vector3 velocity = object.getVelocity();
+                    velocity.x *= -1f;
+                    velocity.y *= -1f;
+                    velocity.z *= -1f;
                 } else {
                     pos.setLength(Config.ARENA_RADIUS);
                 }
