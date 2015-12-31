@@ -3,8 +3,10 @@ package nl.fontys.scope.object;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 
+import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.core.World;
 import nl.fontys.scope.core.controller.EnergyController;
+import nl.fontys.scope.core.controller.ParticleEffectController;
 import nl.fontys.scope.core.controller.PlanetController;
 import nl.fontys.scope.core.controller.RingController;
 import nl.fontys.scope.util.Colors;
@@ -62,6 +64,8 @@ public class GameObjectFactory {
         object.setPosition(x, y, z);
         object.setScale(6.5f);
         object.setPhysics(false);
+        ParticleEffectController pec = new ParticleEffectController(Assets.ParticleEffects.ENERGY);
+        world.addController(object, pec);
         world.addController(object, new EnergyController());
         return object;
     }

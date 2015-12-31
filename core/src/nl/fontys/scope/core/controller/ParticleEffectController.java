@@ -1,6 +1,7 @@
 package nl.fontys.scope.core.controller;
 
 import com.badlogic.gdx.graphics.g3d.particles.ParticleEffect;
+import com.badlogic.gdx.math.Matrix4;
 
 import net.engio.mbassy.listener.Handler;
 
@@ -22,6 +23,8 @@ public class ParticleEffectController implements GameObjectController {
 
     private GameObject target;
 
+    private Matrix4 trans = new Matrix4();
+
     public ParticleEffectController(Assets.ParticleEffects effect) {
         this.type = effect;
         events.register(this);
@@ -33,7 +36,9 @@ public class ParticleEffectController implements GameObjectController {
             effect = particleManager.create(object.getPosition(), type);
             target = object;
         }
-        effect.translate(object.getPosition());
+        trans = trans.toNormalMatrix();
+        trans.translate(object.getPosition());
+        effect.setTransform(trans);
     }
 
     @Override
