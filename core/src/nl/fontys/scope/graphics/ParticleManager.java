@@ -83,7 +83,7 @@ public final class ParticleManager {
     public ParticleEffect create(Vector3 position, Assets.ParticleEffects effectType) {
         ParticleEffectPool pool = preparePool(effectType);
         ParticleEffect effect = pool.obtain();
-        effect.translate(position);
+        effect.translate(position.cpy());
         effect.init();
         effect.start();
         system.add(effect);
