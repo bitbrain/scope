@@ -18,7 +18,7 @@ public class Config {
     public static final float MAX_VOLUME_DISTANCE = 100f;
 
     // Maximum energy speed
-    public static final float MAX_ENERGY_SPEED = 8f;
+    public static final float MAX_ENERGY_SPEED = 28f;
 
     // Maximum ship speed
     public static final float MAX_SHIP_SPEED = 2.4f;
