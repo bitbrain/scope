@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g3d.particles.ParticleEffect;
 import com.badlogic.gdx.graphics.g3d.particles.ParticleSystem;
 import com.badlogic.gdx.graphics.g3d.particles.batches.BillboardParticleBatch;
 import com.badlogic.gdx.graphics.g3d.particles.batches.PointSpriteParticleBatch;
+import com.badlogic.gdx.graphics.g3d.particles.emitters.Emitter;
+import com.badlogic.gdx.graphics.g3d.particles.emitters.RegularEmitter;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Pool;
 
@@ -86,6 +88,21 @@ public final class ParticleManager {
         effect.start();
         system.add(effect);
         return effect;
+    }
+
+    public void remove(ParticleEffect effect) {
+        remove(effect, false);
+    }
+
+    public void remove(ParticleEffect effect, boolean force) {
+        if (force) {
+            system.remove(effect);
+        } else {
+            Emitter emitter = effect.getControllers().first().emitter;
+            if (emitter instanceof RegularEmitter) {
+                ((RegularEmitter)emitter).setContinuous(false);
+            }
+        }
     }
 
     public void setCamera(Camera camera) {
