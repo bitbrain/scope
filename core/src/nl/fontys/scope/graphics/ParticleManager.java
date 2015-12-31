@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.particles.ParticleEffect;
 import com.badlogic.gdx.graphics.g3d.particles.ParticleSystem;
 import com.badlogic.gdx.graphics.g3d.particles.batches.BillboardParticleBatch;
+import com.badlogic.gdx.graphics.g3d.particles.batches.PointSpriteParticleBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Pool;
 
@@ -46,7 +47,9 @@ public final class ParticleManager {
 
     private ParticleSystem system = ParticleSystem.get();
 
-    private BillboardParticleBatch batch = new BillboardParticleBatch();
+    private PointSpriteParticleBatch pointBatch = new PointSpriteParticleBatch();
+
+    private BillboardParticleBatch billboardBatch = new BillboardParticleBatch();
 
     private Map<Assets.ParticleEffects, ParticleEffectPool> poolMap = new HashMap<Assets.ParticleEffects, ParticleEffectPool>();
 
@@ -55,7 +58,8 @@ public final class ParticleManager {
     }
 
     private ParticleManager() {
-        system.add(batch);
+        system.add(pointBatch);
+        system.add(billboardBatch);
     }
 
     public ParticleSystem getSystem() {
@@ -85,7 +89,8 @@ public final class ParticleManager {
     }
 
     public void setCamera(Camera camera) {
-        batch.setCamera(camera);
+        pointBatch.setCamera(camera);
+        billboardBatch.setCamera(camera);
     }
 
     private ParticleEffectPool preparePool(Assets.ParticleEffects effectType) {
