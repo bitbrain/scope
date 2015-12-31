@@ -29,6 +29,9 @@ public class GameObjectFactory {
         object.setType(GameObjectType.SHIP);
         object.setScale(0.65f);
         object.getColor().set(0.75f, 0.75f, 0.75f, 1f);
+        ParticleEffectController c = new ParticleEffectController(Assets.ParticleEffects.POWER);
+        c.setOffset(-4.5f, 0f, 0f);
+        world.addController(object, c);
         return object;
     }
 

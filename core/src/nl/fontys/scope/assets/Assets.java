@@ -115,7 +115,8 @@ public final class Assets {
      */
     public enum ParticleEffects {
         EXPLOSION("particles/explosion.p"),
-        ENERGY("particles/energy.p");
+        ENERGY("particles/energy.p"),
+        POWER("particles/power.p");
 
         private String path;
 

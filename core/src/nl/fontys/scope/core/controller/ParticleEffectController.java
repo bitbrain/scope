@@ -2,6 +2,8 @@ package nl.fontys.scope.core.controller;
 
 import com.badlogic.gdx.graphics.g3d.particles.ParticleEffect;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Quaternion;
+import com.badlogic.gdx.math.Vector3;
 
 import net.engio.mbassy.listener.Handler;
 
@@ -25,9 +27,15 @@ public class ParticleEffectController implements GameObjectController {
 
     private Matrix4 trans = new Matrix4();
 
+    private Vector3 offset = new Vector3(), tmp = new Vector3();
+
     public ParticleEffectController(Assets.ParticleEffects effect) {
         this.type = effect;
         events.register(this);
+    }
+
+    public void setOffset(float x, float y, float z) {
+        offset.set(x, y, z);
     }
 
     @Override
@@ -37,7 +45,12 @@ public class ParticleEffectController implements GameObjectController {
             target = object;
         }
         trans = trans.toNormalMatrix();
-        trans.translate(object.getPosition());
+        Quaternion orientation = object.getOrientation();
+        tmp.set(offset);
+        tmp.rotate(Vector3.X, orientation.getAngleAround(Vector3.X));
+        tmp.rotate(Vector3.Y, orientation.getAngleAround(Vector3.Y));
+        tmp.rotate(Vector3.Z, orientation.getAngleAround(Vector3.Z));
+        trans.translate(tmp.add(object.getPosition()));
         effect.setTransform(trans);
     }
 
