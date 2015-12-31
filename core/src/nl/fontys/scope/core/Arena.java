@@ -5,10 +5,14 @@ import com.badlogic.gdx.math.Vector3;
 import java.security.SecureRandom;
 import java.util.UUID;
 
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenEquations;
+import aurelienribon.tweenengine.TweenManager;
 import nl.fontys.scope.Config;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.object.GameObjectFactory;
 import nl.fontys.scope.object.GameObjectType;
+import nl.fontys.scope.tweens.ColorTween;
 import nl.fontys.scope.util.Colors;
 
 public class Arena {
@@ -33,8 +37,9 @@ public class Arena {
         return restrictor;
     }
 
-    public void setup(PlayerManager playerManager) {
+    public void setup(PlayerManager playerManager, TweenManager tweenManager) {
         GameObject sphere = factory.createSphere(60f);
+        Tween.to(sphere.getColor(), ColorTween.A, 6.5f).target(0.6f).repeatYoyo(Tween.INFINITY, 0f).ease(TweenEquations.easeInOutCubic).start(tweenManager);
         sphere.getColor().set(Colors.PRIMARY);
         sphere.getColor().a = 0.75f;
         Vector3 v = new Vector3(0f, 0f, 0f);

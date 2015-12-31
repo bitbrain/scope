@@ -3,12 +3,14 @@ package nl.fontys.scope.object;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 
+import aurelienribon.tweenengine.Tween;
 import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.core.World;
 import nl.fontys.scope.core.controller.EnergyController;
 import nl.fontys.scope.core.controller.ParticleEffectController;
 import nl.fontys.scope.core.controller.PlanetController;
 import nl.fontys.scope.core.controller.RingController;
+import nl.fontys.scope.tweens.ColorTween;
 import nl.fontys.scope.util.Colors;
 
 /**

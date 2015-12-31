@@ -67,7 +67,7 @@ public class IngameScreen extends AbstractScreen {
         camController = new CameraTrackingController(world.getCamera());
         world.addController(PlayerManager.getCurrent().getShip(), camController);
         arena = new Arena(factory, 2);
-        arena.setup(playerManager);
+        arena.setup(playerManager, tweenManager);
         world.setRestrictor(arena.getRestrictor());
         logicHandler = new GameLogicHandler(world, factory, arena, playerManager);
         tooltipController = new TooltipController(playerManager);
