@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.particles.ParticleEffect;
+import com.badlogic.gdx.graphics.g3d.particles.ParticleSorter;
 import com.badlogic.gdx.graphics.g3d.particles.ParticleSystem;
 import com.badlogic.gdx.graphics.g3d.particles.batches.BillboardParticleBatch;
 import com.badlogic.gdx.graphics.g3d.particles.batches.PointSpriteParticleBatch;
@@ -60,6 +61,8 @@ public final class ParticleManager {
     }
 
     private ParticleManager() {
+        pointBatch.setSorter(new ParticleSorter.Distance());
+        billboardBatch.setSorter(new ParticleSorter.Distance());
         system.add(pointBatch);
         system.add(billboardBatch);
     }

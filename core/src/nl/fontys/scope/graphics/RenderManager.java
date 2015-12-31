@@ -45,6 +45,8 @@ public class RenderManager {
 
     public void particles(Camera camera) {
         particleManager.setCamera(camera);
+        modelBatch.begin(camera);
         particleManager.render(modelBatch);
+        modelBatch.end();
     }
 }
