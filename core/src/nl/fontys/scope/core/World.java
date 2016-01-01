@@ -76,6 +76,10 @@ public class World {
         lightingManager.addPointLight(UUID.randomUUID().toString(), new PointLight().set(Colors.PRIMARY, 0f, 0f, 0f, 2000f));
     }
 
+    public LightingManager getLightingManager() {
+        return lightingManager;
+    }
+
     public void setRestrictor(Arena.ArenaBoundRestrictor restrictor) {
         this.restrictor = restrictor;
     }
