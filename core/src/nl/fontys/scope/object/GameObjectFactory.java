@@ -7,6 +7,7 @@ import aurelienribon.tweenengine.Tween;
 import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.core.World;
 import nl.fontys.scope.core.controller.EnergyController;
+import nl.fontys.scope.core.controller.LightingController;
 import nl.fontys.scope.core.controller.ParticleEffectController;
 import nl.fontys.scope.core.controller.PlanetController;
 import nl.fontys.scope.core.controller.RingController;
@@ -30,8 +31,12 @@ public class GameObjectFactory {
         object.setScale(0.65f);
         object.getColor().set(0.75f, 0.75f, 0.75f, 1f);
         ParticleEffectController c = new ParticleEffectController(Assets.ParticleEffects.POWER);
-        c.setOffset(-4.5f, 0f, 0f);
+        final float X_OFFSET = -4.5f;
+        c.setOffset(X_OFFSET, 0f, 0f);
+        LightingController lc = new LightingController(world.getLightingManager());
+        lc.setOffset(X_OFFSET, 0f, 0f);
         world.addController(object, c);
+        world.addController(object, lc);
         return object;
     }
 
