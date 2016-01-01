@@ -28,12 +28,12 @@ public class ParticleEffectController extends DynamicGameObjectController {
     }
 
     @Override
-    protected void onUpdate(GameObject object, Vector3 localPos, float delta) {
+    protected void onUpdate(GameObject object, Vector3 offset, float delta) {
         if (effect == null) {
             effect = particleManager.create(object.getPosition(), type);
         }
         trans = trans.toNormalMatrix();
-        trans.translate(localPos.add(object.getPosition()));
+        trans.translate(offset.add(object.getPosition()));
         effect.setTransform(trans);
     }
 

@@ -55,5 +55,5 @@ public abstract class DynamicGameObjectController implements GameObjectControlle
 
     protected abstract void onRemove(GameObject target);
 
-    protected abstract void onUpdate(GameObject object, Vector3 localPos, float delta);
+    protected abstract void onUpdate(GameObject object, Vector3 offset, float delta);
 }
