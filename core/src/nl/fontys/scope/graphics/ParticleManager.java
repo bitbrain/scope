@@ -3,6 +3,7 @@ package nl.fontys.scope.graphics;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
+import com.badlogic.gdx.graphics.g3d.particles.ParticleController;
 import com.badlogic.gdx.graphics.g3d.particles.ParticleEffect;
 import com.badlogic.gdx.graphics.g3d.particles.ParticleSorter;
 import com.badlogic.gdx.graphics.g3d.particles.ParticleSystem;
@@ -101,9 +102,11 @@ public final class ParticleManager {
         if (force) {
             system.remove(effect);
         } else {
-            Emitter emitter = effect.getControllers().first().emitter;
-            if (emitter instanceof RegularEmitter) {
-                ((RegularEmitter)emitter).setContinuous(false);
+            for (ParticleController c :effect.getControllers()) {
+                Emitter emitter = c.emitter;
+                if (emitter instanceof RegularEmitter) {
+                    ((RegularEmitter)emitter).setContinuous(false);
+                }
             }
         }
     }
