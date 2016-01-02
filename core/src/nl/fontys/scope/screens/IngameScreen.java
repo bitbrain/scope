@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.bitfire.postprocessing.effects.Zoomer;
 
 import net.engio.mbassy.listener.Handler;
 
@@ -12,6 +13,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenEquations;
+import nl.fontys.scope.Config;
 import nl.fontys.scope.ScopeGame;
 import nl.fontys.scope.controls.ControllerControls;
 import nl.fontys.scope.controls.KeyboardControls;
@@ -24,10 +28,16 @@ import nl.fontys.scope.core.controller.CameraTrackingController;
 import nl.fontys.scope.core.controller.ShipController;
 import nl.fontys.scope.event.EventType;
 import nl.fontys.scope.event.Events;
+import nl.fontys.scope.graphics.ShaderManager;
+import nl.fontys.scope.i18n.Bundle;
+import nl.fontys.scope.i18n.Messages;
+import nl.fontys.scope.object.GameObject;
+import nl.fontys.scope.tweens.ZoomerShaderTween;
 import nl.fontys.scope.ui.DebugWidget;
 import nl.fontys.scope.ui.GameProgressWidget;
 import nl.fontys.scope.ui.PlayerInfoWidget;
 import nl.fontys.scope.ui.FocusBarWidget;
+import nl.fontys.scope.ui.Styles;
 import nl.fontys.scope.ui.TooltipController;
 
 public class IngameScreen extends AbstractScreen {

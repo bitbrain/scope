@@ -14,6 +14,8 @@ import com.bitfire.postprocessing.filters.Blur;
 import com.bitfire.postprocessing.filters.RadialBlur;
 import com.bitfire.utils.ShaderLoader;
 
+import nl.fontys.scope.event.Events;
+
 public final class ShaderManager {
 
     private static final boolean isDesktop = (Gdx.app.getType() == Application.ApplicationType.Desktop);
@@ -38,6 +40,8 @@ public final class ShaderManager {
         ShaderLoader.BasePath = "postprocessing/shaders/";
         processor = new PostProcessor( true, true, isDesktop );
         zoomer = new Zoomer(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), RadialBlur.Quality.High);
+        zoomer.setBlurStrength(0f);
+        zoomer.setZoom(1f);
         processor.addEffect(zoomer);
         vignette = new Vignette(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
         processor.addEffect(vignette);
@@ -91,8 +95,6 @@ public final class ShaderManager {
         INSTANCE.fxaa.setEnabled(true);
         INSTANCE.bloom.setEnabled(true);
         INSTANCE.lenseflare.setEnabled(false);
-        INSTANCE.zoomer.setBlurStrength(0f);
-        INSTANCE.zoomer.setZoom(1f);
         INSTANCE.vignette.setIntensity(1.0f);
         INSTANCE.bloom.setBaseIntesity(0.5f);
         INSTANCE.bloom.setBaseSaturation(0.5f);
