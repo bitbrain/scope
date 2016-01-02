@@ -33,15 +33,15 @@ public class Config {
     public static final float ARENA_OUTER_RADIUS = 100;
 
     // Soft gap of focus (100% approach)
-    public static final int FOCUS_SOFT_GAP = 8;
+    public static final int FOCUS_SOFT_GAP = 16;
 
     // Points player gets per energy
-    public static final int POINTS_PER_ENERGY = 28;
+    public static final int POINTS_PER_ENERGY = 18;
 
     // Points to win the game
     public static final int POINT_GAP = 500;
 
-    // Number of munitions per energy consumtion
+    // Number of munitions per energy consumption
     public static final int MUNITION_GAP = 5;
 
     // Width of a menu button
