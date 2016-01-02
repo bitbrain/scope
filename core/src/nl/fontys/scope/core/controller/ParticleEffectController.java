@@ -34,7 +34,6 @@ public class ParticleEffectController extends DynamicGameObjectController {
         }
         trans.set(offset.add(object.getPosition()), object.getOrientation());
         effect.setTransform(trans);
-        effect.rotate(Vector3.Y, 90f);
     }
 
     @Override
