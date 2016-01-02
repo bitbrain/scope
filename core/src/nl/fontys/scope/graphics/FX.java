@@ -4,11 +4,15 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.math.Vector3;
 import com.bitfire.postprocessing.effects.Zoomer;
 
 import net.engio.mbassy.listener.Handler;
 
+import java.util.UUID;
+
+import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenEquation;
@@ -22,9 +26,11 @@ import nl.fontys.scope.event.Events;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.screens.GameOverScreen;
 import nl.fontys.scope.tweens.ColorTween;
+import nl.fontys.scope.tweens.PointLightTween;
 import nl.fontys.scope.tweens.SpriteTween;
 import nl.fontys.scope.tweens.ValueTween;
 import nl.fontys.scope.tweens.ZoomerShaderTween;
+import nl.fontys.scope.util.Colors;
 import nl.fontys.scope.util.ValueProvider;
 
 public final class FX {
@@ -32,6 +38,8 @@ public final class FX {
     private static final FX INSTANCE = new FX();
 
     private TweenManager tweenManager;
+
+    private LightingManager lightingManager;
 
     private Sprite flash;
 
@@ -46,6 +54,7 @@ public final class FX {
         Tween.registerAccessor(Color.class, new ColorTween());
         Tween.registerAccessor(ValueProvider.class, new ValueTween());
         Tween.registerAccessor(Zoomer.class, new ZoomerShaderTween());
+        Tween.registerAccessor(PointLight.class, new PointLightTween());
     }
 
     private FX() {
@@ -62,9 +71,10 @@ public final class FX {
         flashColor = color.cpy();
     }
 
-    public void init(TweenManager tweenManager, OrthographicCamera camera) {
+    public void init(TweenManager tweenManager, LightingManager lightingManager, OrthographicCamera camera) {
         this.tweenManager = tweenManager;
         this.camera = camera;
+        this.lightingManager = lightingManager;
         events.register(this);
     }
 
@@ -108,8 +118,20 @@ public final class FX {
         // Show zoom effect
         ShaderManager shaderManager = ShaderManager.getBaseInstance();
         tweenManager.killTarget(shaderManager.zoomer);
-        Tween.to(shaderManager.zoomer, ZoomerShaderTween.ZOOM, 0.85f).target(0.75f).repeatYoyo(1, 0).ease(TweenEquations.easeInCubic).start(tweenManager);
-        Tween.to(shaderManager.zoomer, ZoomerShaderTween.BLUR_STRENGTH, 0.25f).target(5f).repeatYoyo(1, 0).ease(TweenEquations.easeInCubic).start(tweenManager);
+        shaderManager.zoomer.setZoom(1f);
+        shaderManager.zoomer.setBlurStrength(0f);
+        Tween.to(shaderManager.zoomer, ZoomerShaderTween.ZOOM, 0.6f).target(1.01f).repeatYoyo(1, 0).ease(TweenEquations.easeInCubic).start(tweenManager);
+        Tween.to(shaderManager.zoomer, ZoomerShaderTween.BLUR_STRENGTH, 0.6f).target(0.4f).repeatYoyo(1, 0).ease(TweenEquations.easeInCubic).start(tweenManager);
+        final PointLight light = new PointLight().set(Colors.ACTIVE, position, 0);
+        final String lightId = UUID.randomUUID().toString();
+        lightingManager.addPointLight(lightId, light);
+        Tween.to(light, PointLightTween.INTENSITY, 1.5f).target(15).repeatYoyo(1, 0).ease(TweenEquations.easeInCubic).setCallbackTriggers(TweenCallback.COMPLETE).setCallback(new TweenCallback() {
+
+            @Override
+            public void onEvent(int type, BaseTween<?> source) {
+                lightingManager.removePointLight(lightId);
+            }
+        }).start(tweenManager);
         ParticleManager.getInstance().create(position, Assets.ParticleEffects.EXPLOSION);
     }
 

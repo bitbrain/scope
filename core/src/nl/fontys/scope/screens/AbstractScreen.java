@@ -117,7 +117,7 @@ public abstract class AbstractScreen implements Screen {
             stage = new Stage();
             multiplexer.addProcessor(stage);
             tooltip.init(stage, cam2D, tweenManager);
-            fx.init(tweenManager, cam2D);
+            fx.init(tweenManager, world.getLightingManager(), cam2D);
             onCreateStage(stage);
             fx.fadeIn(fadeInTime, TweenEquations.easeInCubic);
         }

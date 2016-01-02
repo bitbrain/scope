@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.Controllers;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.Ray;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.bitfire.postprocessing.effects.Zoomer;
 
@@ -28,6 +30,7 @@ import nl.fontys.scope.core.controller.CameraTrackingController;
 import nl.fontys.scope.core.controller.ShipController;
 import nl.fontys.scope.event.EventType;
 import nl.fontys.scope.event.Events;
+import nl.fontys.scope.graphics.FX;
 import nl.fontys.scope.graphics.ShaderManager;
 import nl.fontys.scope.i18n.Bundle;
 import nl.fontys.scope.i18n.Messages;
@@ -101,6 +104,11 @@ public class IngameScreen extends AbstractScreen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.F1)) {
             PlayerManager.getCurrent().addDamage(0.1f);
         }
+        /*if (Gdx.input.isTouched()) {
+            Ray ray = world.getCamera().getPickRay(Gdx.input.getX(), Gdx.input.getY());
+            Vector3 pos = ray.getEndPoint(world.getCamera().direction.cpy(), 100f);
+            FX.getInstance().explosion(pos);
+        }*/
     }
 
     @Override
