@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector3;
 import com.bitfire.postprocessing.effects.Zoomer;
 
 import net.engio.mbassy.listener.Handler;
@@ -13,6 +14,7 @@ import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenEquation;
 import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
+import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.core.Player;
 import nl.fontys.scope.core.PlayerManager;
 import nl.fontys.scope.event.EventType;
@@ -102,16 +104,21 @@ public final class FX {
         fadeIn(duration, TweenEquations.easeInQuad);
     }
 
+    public void explosion(Vector3 position) {
+        // Show zoom effect
+        ShaderManager shaderManager = ShaderManager.getBaseInstance();
+        tweenManager.killTarget(shaderManager.zoomer);
+        Tween.to(shaderManager.zoomer, ZoomerShaderTween.ZOOM, 0.85f).target(0.75f).repeatYoyo(1, 0).ease(TweenEquations.easeInCubic).start(tweenManager);
+        Tween.to(shaderManager.zoomer, ZoomerShaderTween.BLUR_STRENGTH, 0.25f).target(5f).repeatYoyo(1, 0).ease(TweenEquations.easeInCubic).start(tweenManager);
+        ParticleManager.getInstance().create(position, Assets.ParticleEffects.EXPLOSION);
+    }
+
     @Handler
     public void onEvent(Events.GdxEvent event) {
         if (event.isTypeOf(EventType.PLAYER_SHIP_DESTROYED)) {
             GameObject playerShip = (GameObject) event.getPrimaryParam();
             if (!PlayerManager.getCurrent().getShip().equals(playerShip)) {
-                // Show zoom effect
-                ShaderManager shaderManager = ShaderManager.getBaseInstance();
-                tweenManager.killTarget(shaderManager.zoomer);
-                Tween.to(shaderManager.zoomer, ZoomerShaderTween.ZOOM, 0.45f).target(2f).repeatYoyo(1, 0).ease(TweenEquations.easeInCubic).start(tweenManager);
-                Tween.to(shaderManager.zoomer, ZoomerShaderTween.BLUR_STRENGTH, 0.25f).target(15f).repeatYoyo(1, 0).ease(TweenEquations.easeInCubic).start(tweenManager);
+                explosion(playerShip.getPosition().cpy());
             }
         }
     }

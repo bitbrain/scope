@@ -87,7 +87,6 @@ public class GameLogicHandler implements Disposable {
                 factory.createEnergy(currentPos.x, currentPos.y, currentPos.z);
             }
             object.setPosition(pos.x, pos.y, pos.z);
-            ParticleManager.getInstance().create(currentPos, Assets.ParticleEffects.EXPLOSION);
         }
     }
 }
