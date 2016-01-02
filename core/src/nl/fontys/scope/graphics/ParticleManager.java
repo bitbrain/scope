@@ -111,6 +111,10 @@ public final class ParticleManager {
         }
     }
 
+    public void clear() {
+        system.removeAll();
+    }
+
     public void setCamera(Camera camera) {
         pointBatch.setCamera(camera);
         billboardBatch.setCamera(camera);

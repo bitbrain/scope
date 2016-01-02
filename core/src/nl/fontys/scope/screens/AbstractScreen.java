@@ -20,6 +20,7 @@ import nl.fontys.scope.ScopeGame;
 import nl.fontys.scope.audio.SoundManager;
 import nl.fontys.scope.event.Events;
 import nl.fontys.scope.graphics.FX;
+import nl.fontys.scope.graphics.ParticleManager;
 import nl.fontys.scope.graphics.ShaderManager;
 import nl.fontys.scope.object.GameObjectFactory;
 import nl.fontys.scope.core.World;
@@ -146,6 +147,7 @@ public abstract class AbstractScreen implements Screen {
     public final void dispose() {
         world.dispose();
         events.clear();
+        ParticleManager.getInstance().clear();
     }
 
     public void setScreen(final Screen screen) {
