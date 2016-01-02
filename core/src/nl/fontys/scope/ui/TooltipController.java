@@ -33,7 +33,8 @@ public class TooltipController {
                 if (player.isCurrentPlayer()) {
                     show(Messages.TOOLTIP_DESTROYED);
                 } else {
-                    show(Messages.TOOLTIP_DESTROYED_OTHER, player.getNumber());
+                    tooltip.create(Config.TOOLTIP_VERTICAL_OFFSET, Styles.LABEL_CAPTION, "BOOOOM!");
+                    tooltip.create(Config.TOOLTIP_VERTICAL_OFFSET / 3f, Styles.LABEL_PLAYER_NAME, Bundle.general.format(Messages.TOOLTIP_DESTROYED_OTHER, player.getNumber()));
                 }
             }
         } else if (event.isTypeOf(EventType.ON_SHOT)) {
