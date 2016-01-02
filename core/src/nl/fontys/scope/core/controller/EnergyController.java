@@ -49,6 +49,9 @@ public class EnergyController implements GameObjectController {
             distance.y = other.getPosition().y - object.getPosition().y;
             distance.z = other.getPosition().z - object.getPosition().z;
             if (distance.len() < 30f) {
+                distance.setLength(10f / distance.len());
+                object.getVelocity().add(distance);
+            } else if (distance.len() < 100f) {
                 distance.setLength(2f / distance.len());
                 object.getVelocity().add(distance);
             }
