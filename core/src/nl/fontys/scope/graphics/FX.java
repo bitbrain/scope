@@ -21,6 +21,7 @@ import aurelienribon.tweenengine.TweenEquation;
 import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
 import nl.fontys.scope.assets.Assets;
+import nl.fontys.scope.audio.SoundManager;
 import nl.fontys.scope.core.PlayerManager;
 import nl.fontys.scope.event.EventType;
 import nl.fontys.scope.event.Events;
@@ -165,6 +166,7 @@ public final class FX {
         }
         ParticleManager.getInstance().create(position, Assets.ParticleEffects.EXPLOSION);
         screenShaker.shake(0.6f, 2f, 0.35f);
+        SoundManager.getInstance().play(position, (float) (Math.random() * 0.3f + 0.8f), Assets.Sounds.EXPLOSION);
     }
 
     @Handler

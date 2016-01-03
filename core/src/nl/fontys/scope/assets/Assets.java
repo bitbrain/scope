@@ -97,7 +97,8 @@ public final class Assets {
     public enum Sounds {
 
         MENU_SELECT("sounds/select-01.mp3"),
-        MENU_HOVER("sounds/rollover-00.mp3");
+        MENU_HOVER("sounds/rollover-00.mp3"),
+        EXPLOSION("sounds/explosion.mp3");
 
         private String path;
 

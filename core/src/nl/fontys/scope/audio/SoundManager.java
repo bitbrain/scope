@@ -78,6 +78,14 @@ public final class SoundManager implements GameObjectController {
         targets.put(target, new SoundData(sound, id, loop));
     }
 
+    public void play(Vector3 position, float pitch, Assets.Sounds sounds) {
+        Sound sound = AssetManager.getSound(sounds);
+        final float volume = calculateVolume(position);
+        final float pan = calculatePanning(position);
+        final long id = sound.play(volume, pitch, pan);
+        sound.play(volume, 1f, pan);
+    }
+
     @Override
     public void update(GameObject object, float delta) {
         SoundData data = targets.get(object);
