@@ -39,9 +39,7 @@ public class Arena {
 
     public void setup(PlayerManager playerManager, TweenManager tweenManager) {
         GameObject sphere = factory.createSphere(60f);
-        Tween.to(sphere.getColor(), ColorTween.A, 6.5f).target(0.6f).repeatYoyo(Tween.INFINITY, 0f).ease(TweenEquations.easeInOutCubic).start(tweenManager);
         sphere.getColor().set(Colors.PRIMARY);
-        sphere.getColor().a = 0.75f;
         Vector3 v = new Vector3(0f, 0f, 0f);
         for (int i = 0; i < Config.ENERGY_COUNT; ++i) {
             double angle = 360f * random.nextFloat();
