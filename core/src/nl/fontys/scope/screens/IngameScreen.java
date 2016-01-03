@@ -90,16 +90,6 @@ public class IngameScreen extends AbstractScreen {
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             setScreen(new MenuScreen(game));
         }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.F1)) {
-            PlayerManager.getCurrent().addDamage(0.1f);
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.F2)) {
-            FX.getInstance().shake(25f, 2.5f);
-        }
-        if (Gdx.input.isTouched()) {
-            Ray ray = world.getCamera().getPickRay(Gdx.input.getX(), Gdx.input.getY());
-            Vector3 pos = ray.getEndPoint(world.getCamera().direction.cpy(), 100f);
-            FX.getInstance().explosion(pos);
-        }
     }
 
     @Override
