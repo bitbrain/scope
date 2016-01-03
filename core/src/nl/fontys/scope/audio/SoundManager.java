@@ -135,6 +135,6 @@ public final class SoundManager implements GameObjectController {
     private float calculateVolume(Vector3 position) {
         tmp.set(camera.position.x, camera.position.y, camera.position.z);
         tmp.sub(position);
-        return MathUtils.clamp(0.1f / (tmp.len() / Config.MAX_VOLUME_DISTANCE), 0f, 1f);
+        return MathUtils.clamp(0.1f / (tmp.len() / Config.MAX_VOLUME_DISTANCE), 0.2f, 0.8f);
     }
 }
