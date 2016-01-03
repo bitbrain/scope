@@ -3,6 +3,8 @@ package nl.fontys.scope.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.controllers.Controllers;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.Ray;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import net.engio.mbassy.listener.Handler;
@@ -93,11 +95,11 @@ public class IngameScreen extends AbstractScreen {
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.F2)) {
             FX.getInstance().shake(25f, 2.5f);
         }
-        /*if (Gdx.input.isTouched()) {
+        if (Gdx.input.isTouched()) {
             Ray ray = world.getCamera().getPickRay(Gdx.input.getX(), Gdx.input.getY());
             Vector3 pos = ray.getEndPoint(world.getCamera().direction.cpy(), 100f);
             FX.getInstance().explosion(pos);
-        }*/
+        }
     }
 
     @Override

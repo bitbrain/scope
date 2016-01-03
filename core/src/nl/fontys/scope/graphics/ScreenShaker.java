@@ -14,7 +14,7 @@ import nl.fontys.scope.tweens.Vector3Tween;
 public class ScreenShaker {
 
     // Interval in miliseconds between each movement
-    public static final float STEP_INTERVAL = 0.05f;
+    public static final float STEP_INTERVAL = 0.03f;
 
     private Vector3 shake, tmp;
 
@@ -43,7 +43,7 @@ public class ScreenShaker {
 
     // strength is the maximum radius
     // duration is the time in miliseconds
-    public void shake(float strength, final float duration) {
+    public void shake(float strength, final float duration, float globalDelay) {
         // Calculate the number of steps to take until radius is 0
         final int STEPS = Math.round(duration / STEP_INTERVAL);
         // Radius reduction on each iteration
@@ -52,16 +52,16 @@ public class ScreenShaker {
         tweenManager.killTarget(shake);
         for (int step = 0; step < STEPS; ++step) {
             // Step 1: Let's find a random angle
-            tmp.setLength(strength);
             tmp.setToRandomDirection();
+            tmp.setLength(strength);
 
             // Step 2: ease to the calculated point. Do not forget to set
             // delay!
-            Tween.to(shake, Vector3Tween.POS_X, STEP_INTERVAL).delay(step * STEP_INTERVAL).target(tmp.x)
+            Tween.to(shake, Vector3Tween.POS_X, STEP_INTERVAL).delay(globalDelay + step * STEP_INTERVAL).target(tmp.x)
                     .ease(TweenEquations.easeInOutCubic).start(tweenManager);
-            Tween.to(shake, Vector3Tween.POS_Y, STEP_INTERVAL).delay(step * STEP_INTERVAL).target(tmp.y)
+            Tween.to(shake, Vector3Tween.POS_Y, STEP_INTERVAL).delay(globalDelay + step * STEP_INTERVAL).target(tmp.y)
                     .ease(TweenEquations.easeInOutCubic).start(tweenManager);
-            Tween.to(shake, Vector3Tween.POS_Z, STEP_INTERVAL).delay(step * STEP_INTERVAL).target(tmp.z)
+            Tween.to(shake, Vector3Tween.POS_Z, STEP_INTERVAL).delay(globalDelay + step * STEP_INTERVAL).target(tmp.z)
                     .ease(TweenEquations.easeInOutCubic).start(tweenManager);
 
             // Step 3: reduce the radius of the screen shake circle

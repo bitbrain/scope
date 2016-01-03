@@ -112,7 +112,7 @@ public final class FX {
     }
 
     public void shake(float strength, float duration) {
-        screenShaker.shake(strength, duration);
+        screenShaker.shake(strength, duration, 0f);
     }
 
     public void fadeIn(float duration, TweenEquation equation) {
@@ -164,7 +164,7 @@ public final class FX {
             }).start(tweenManager);
         }
         ParticleManager.getInstance().create(position, Assets.ParticleEffects.EXPLOSION);
-        shake(5f, 3f);
+        screenShaker.shake(0.6f, 2f, 0.35f);
     }
 
     @Handler
