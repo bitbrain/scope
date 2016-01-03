@@ -18,6 +18,7 @@ import nl.fontys.scope.Config;
 import nl.fontys.scope.ScopeGame;
 import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.assets.Assets;
+import nl.fontys.scope.core.World;
 import nl.fontys.scope.graphics.FX;
 import nl.fontys.scope.graphics.LightingManager;
 import nl.fontys.scope.graphics.SharedEnvironmentCubemap;
@@ -72,7 +73,7 @@ public class LoadingScreen implements Screen {
         this.batch = new SpriteBatch();
         cam = new OrthographicCamera();
         renderer = new ShapeRenderer();
-        fx.init(tweenManager, new LightingManager(), cam);
+        fx.init(tweenManager, null, cam);
         fx.fadeIn(FADE_TIME, TweenEquations.easeInCubic);
         Bundle.load();
     }

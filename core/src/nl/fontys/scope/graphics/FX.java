@@ -2,11 +2,13 @@ package nl.fontys.scope.graphics;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.math.Vector3;
 import com.bitfire.postprocessing.effects.Zoomer;
+import com.badlogic.gdx.math.Vector3;
 
 import net.engio.mbassy.listener.Handler;
 
@@ -19,12 +21,11 @@ import aurelienribon.tweenengine.TweenEquation;
 import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
 import nl.fontys.scope.assets.Assets;
-import nl.fontys.scope.core.Player;
 import nl.fontys.scope.core.PlayerManager;
 import nl.fontys.scope.event.EventType;
 import nl.fontys.scope.event.Events;
 import nl.fontys.scope.object.GameObject;
-import nl.fontys.scope.screens.GameOverScreen;
+import nl.fontys.scope.core.World;
 import nl.fontys.scope.tweens.ColorTween;
 import nl.fontys.scope.tweens.PointLightTween;
 import nl.fontys.scope.tweens.SpriteTween;
@@ -41,6 +42,8 @@ public final class FX {
 
     private LightingManager lightingManager;
 
+    private World world;
+
     private Sprite flash;
 
     private OrthographicCamera camera;
@@ -48,6 +51,8 @@ public final class FX {
     private Color flashColor;
 
     private Events events = Events.getInstance();
+
+    private ScreenShaker screenShaker;
 
     static {
         Tween.registerAccessor(Sprite.class, new SpriteTween());
@@ -71,11 +76,31 @@ public final class FX {
         flashColor = color.cpy();
     }
 
-    public void init(TweenManager tweenManager, LightingManager lightingManager, OrthographicCamera camera) {
+    public void init(TweenManager tweenManager, World world, OrthographicCamera camera) {
         this.tweenManager = tweenManager;
+        this.world = world;
         this.camera = camera;
-        this.lightingManager = lightingManager;
+        if (world != null) {
+            this.lightingManager = world.getLightingManager();
+        }
         events.register(this);
+        screenShaker = new ScreenShaker(tweenManager);
+    }
+
+    public void begin() {
+        Vector3 vec = screenShaker.getShake();
+        if (world != null) {
+            PerspectiveCamera camera = world.getCamera();
+            camera.translate(vec.x, vec.y, vec.z);
+        }
+    }
+
+    public void end() {
+        Vector3 vec = screenShaker.getShake();
+        if (world != null) {
+            PerspectiveCamera camera = world.getCamera();
+            camera.translate(-vec.x, -vec.y, -vec.z);
+        }
     }
 
     public void render(Batch batch, float delta) {
@@ -84,6 +109,10 @@ public final class FX {
         flash.setSize(camera.viewportWidth * camera.zoom, camera.viewportHeight * camera.zoom);
         flash.setColor(flashColor.r, flashColor.g, flashColor.b, flash.getColor().a);
         flash.draw(batch, 1f);
+    }
+
+    public void shake(float strength, float duration) {
+        screenShaker.shake(strength, duration);
     }
 
     public void fadeIn(float duration, TweenEquation equation) {
@@ -122,17 +151,20 @@ public final class FX {
         shaderManager.zoomer.setBlurStrength(0f);
         Tween.to(shaderManager.zoomer, ZoomerShaderTween.ZOOM, 0.6f).target(1.01f).repeatYoyo(1, 0).ease(TweenEquations.easeInCubic).start(tweenManager);
         Tween.to(shaderManager.zoomer, ZoomerShaderTween.BLUR_STRENGTH, 0.6f).target(0.4f).repeatYoyo(1, 0).ease(TweenEquations.easeInCubic).start(tweenManager);
-        final PointLight light = new PointLight().set(Colors.ACTIVE, position, 0);
-        final String lightId = UUID.randomUUID().toString();
-        lightingManager.addPointLight(lightId, light);
-        Tween.to(light, PointLightTween.INTENSITY, 1.5f).target(15).repeatYoyo(1, 0).ease(TweenEquations.easeInCubic).setCallbackTriggers(TweenCallback.COMPLETE).setCallback(new TweenCallback() {
+        if (lightingManager != null) {
+            final PointLight light = new PointLight().set(Colors.ACTIVE, position, 0);
+            final String lightId = UUID.randomUUID().toString();
+            lightingManager.addPointLight(lightId, light);
+            Tween.to(light, PointLightTween.INTENSITY, 1.5f).target(15).repeatYoyo(1, 0).ease(TweenEquations.easeInCubic).setCallbackTriggers(TweenCallback.COMPLETE).setCallback(new TweenCallback() {
 
-            @Override
-            public void onEvent(int type, BaseTween<?> source) {
-                lightingManager.removePointLight(lightId);
-            }
-        }).start(tweenManager);
+                @Override
+                public void onEvent(int type, BaseTween<?> source) {
+                    lightingManager.removePointLight(lightId);
+                }
+            }).start(tweenManager);
+        }
         ParticleManager.getInstance().create(position, Assets.ParticleEffects.EXPLOSION);
+        shake(5f, 3f);
     }
 
     @Handler

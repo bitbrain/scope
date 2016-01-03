@@ -83,7 +83,7 @@ public abstract class AbstractScreen implements Screen {
         Gdx.gl.glClearColor(0.02f, 0f, 0.05f, 1f);
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT | (Gdx.graphics.getBufferFormat().coverageSampling ? GL20.GL_COVERAGE_BUFFER_BIT_NV : 0));
-
+        fx.begin();
         cam2D.update();
         // Draw world (background)
         ShaderManager.configureBase();
@@ -110,6 +110,7 @@ public abstract class AbstractScreen implements Screen {
         stage.getBatch().begin();
             fx.render(stage.getBatch(), delta);
         stage.getBatch().end();
+        fx.end();
     }
 
     @Override
@@ -118,7 +119,7 @@ public abstract class AbstractScreen implements Screen {
             stage = new Stage();
             multiplexer.addProcessor(stage);
             tooltip.init(stage, cam2D, tweenManager);
-            fx.init(tweenManager, world.getLightingManager(), cam2D);
+            fx.init(tweenManager, world, cam2D);
             onCreateStage(stage);
             fx.fadeIn(fadeInTime, TweenEquations.easeInCubic);
         }
