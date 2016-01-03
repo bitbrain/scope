@@ -64,6 +64,7 @@ public class GameObjectFactory {
     public GameObject createSphere(float scale) {
         GameObject sphere = createPlanet(0f, scale, 0f, 0f);
         sphere.setType(GameObjectType.SPHERE);
+        world.addController(sphere, new ParticleEffectController(Assets.ParticleEffects.SPHERE));
         return sphere;
     }
 
