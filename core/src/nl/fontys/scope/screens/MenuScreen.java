@@ -53,7 +53,7 @@ public class MenuScreen extends AbstractScreen {
             LightingController lightingController = new LightingController(world.getLightingManager());
             lightingController.setStrength(925);
             world.addController(energy, lightingController);
-            world.addController(energy, new RotationController(1.5f));
+            world.addController(energy, new RotationController(15f));
         }
 
         GameObject planet = factory.createPlanet(10f);

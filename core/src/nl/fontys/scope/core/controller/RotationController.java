@@ -13,7 +13,7 @@ public class RotationController implements GameObjectController {
 
     public RotationController(float speed) {
         this.speed = speed;
-        angle.setToRandomDirection().setLength(15f);
+        angle.setToRandomDirection().setLength(speed);
 
     }
 
