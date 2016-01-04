@@ -18,20 +18,20 @@ public class KeyboardControls {
     public void update(float delta) {
         Player current = PlayerManager.getCurrent();
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            moveable.moveForward();
+            //moveable.moveForward();
         } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            moveable.moveBack();
+            //moveable.moveBack();
         }
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            moveable.moveLeft();
+           // moveable.moveLeft();
         } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            moveable.moveRight();
+            //moveable.moveRight();
         }
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-            moveable.moveUp();
+            //moveable.moveUp();
         }
         if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-            moveable.moveDown();
+           // moveable.moveDown();
         }
         if (Gdx.input.isTouched()) {
             current.getWeapon().shoot();

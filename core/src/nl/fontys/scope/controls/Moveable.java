@@ -2,15 +2,9 @@ package nl.fontys.scope.controls;
 
 public interface Moveable {
 
-    void moveLeft();
+    void rotate(float yaw, float pitch, float roll);
 
-    void moveRight();
+    void rise(float factor);
 
-    void moveForward();
-
-    void moveBack();
-
-    void moveUp();
-
-    void moveDown();
+    void boost();
 }

@@ -27,17 +27,17 @@ public class ControllerControls implements ControllerListener {
 
     public void update(float delta) {
         if (isDown(BUTTON_A)) {
-            moveable.moveForward();
+            //moveable.moveForward();
         }
         if (isDown(BUTTON_B)) {
-            moveable.moveUp();
+            //moveable.moveUp();
         } else if (isDown(BUTTON_X)) {
-            moveable.moveDown();
+            //moveable.moveDown();
         }
         if (isDown(6)) {
-            moveable.moveRight();
+            //moveable.moveRight();
         } else if (isDown(7)) {
-            moveable.moveLeft();
+            //moveable.moveLeft();
         }
     }
 
@@ -71,7 +71,7 @@ public class ControllerControls implements ControllerListener {
     @Override
     public boolean povMoved(Controller controller, int povCode, PovDirection value) {
         if (value.equals(PovDirection.east)) {
-            moveable.moveRight();
+            //moveable.moveRight();
             pressed[6] = true;
         } else if  (value.equals(PovDirection.west)) {
             pressed[7] = true;

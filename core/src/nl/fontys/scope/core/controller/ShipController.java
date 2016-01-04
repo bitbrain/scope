@@ -34,32 +34,17 @@ public class ShipController implements GameObjectController, Moveable {
     }
 
     @Override
-    public void moveLeft() {
-        angle += 0.2f;
+    public void rotate(float yaw, float pitch, float roll) {
+        // TODO
     }
 
     @Override
-    public void moveRight() {
-        angle += -0.2f;
+    public void rise(float factor) {
+        // TODO
     }
 
     @Override
-    public void moveForward() {
-        accel.x = Config.MAX_SHIP_SPEED;
-    }
-
-    @Override
-    public void moveBack() {
-        accel.x = -Config.MAX_SHIP_SPEED;
-    }
-
-    @Override
-    public void moveUp() {
-        accel.y = Config.MAX_SHIP_SPEED;
-    }
-
-    @Override
-    public void moveDown() {
-        accel.y = -Config.MAX_SHIP_SPEED;
+    public void boost() {
+        // TODO
     }
 }
