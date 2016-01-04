@@ -8,8 +8,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.particles.ParticleEffect;
 import com.badlogic.gdx.graphics.g3d.particles.ParticleEffectLoader;
-import com.badlogic.gdx.graphics.g3d.particles.ParticleSystem;
 
+import nl.fontys.scope.graphics.CustomParticleSystem;
 import nl.fontys.scope.graphics.ParticleManager;
 
 /**
@@ -83,7 +83,7 @@ public class AssetManager {
         for (Assets.Sounds sound : Assets.Sounds.values()) {
             assetManager.load(sound.getPath(), Sound.class);
         }
-        ParticleSystem particleSystem = ParticleManager.getInstance().getSystem();
+        CustomParticleSystem particleSystem = ParticleManager.getInstance().getSystem();
         ParticleEffectLoader.ParticleEffectLoadParameter particleLoadParam = new ParticleEffectLoader.ParticleEffectLoadParameter(particleSystem.getBatches());
         for (Assets.ParticleEffects effects : Assets.ParticleEffects.values()) {
             assetManager.load(effects.getPath(), ParticleEffect.class, particleLoadParam);

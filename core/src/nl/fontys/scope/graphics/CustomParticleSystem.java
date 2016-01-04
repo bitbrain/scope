@@ -1,7 +1,8 @@
-package com.badlogic.gdx.graphics.g3d.particles;
+package nl.fontys.scope.graphics;
 
 import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.RenderableProvider;
+import com.badlogic.gdx.graphics.g3d.particles.ParticleEffect;
 import com.badlogic.gdx.graphics.g3d.particles.batches.ParticleBatch;
 import com.badlogic.gdx.graphics.g3d.particles.emitters.Emitter;
 import com.badlogic.gdx.graphics.g3d.particles.emitters.RegularEmitter;
@@ -14,16 +15,16 @@ import java.util.List;
 /**Singleton class which manages the particle effects.
  * It's a utility class to ease particle batches management and particle effects update. 
  * @author inferno*/
-public final class ParticleSystem implements RenderableProvider{
-    private static ParticleSystem instance;
+public final class CustomParticleSystem implements RenderableProvider{
+    private static CustomParticleSystem instance;
 
     public interface ParticleSystemListener {
         void onComplete(ParticleEffect effect);
     }
 
-    public static ParticleSystem get(){
+    public static CustomParticleSystem get(){
         if(instance == null)
-            instance = new ParticleSystem();
+            instance = new CustomParticleSystem();
         return instance;
     }
 
@@ -31,7 +32,7 @@ public final class ParticleSystem implements RenderableProvider{
     private Array<ParticleEffect> effects;
     private List<ParticleSystemListener> listeners;
 
-    private ParticleSystem () {
+    private CustomParticleSystem() {
         batches = new Array<ParticleBatch<?>>();
         effects = new Array<ParticleEffect>();
         listeners = new ArrayList<ParticleSystemListener>();

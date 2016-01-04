@@ -22,7 +22,7 @@ import nl.fontys.scope.assets.Assets;
 
 public final class ParticleManager {
 
-    private class ParticleEffectPool extends Pool<ParticleEffect> implements ParticleSystem.ParticleSystemListener {
+    private class ParticleEffectPool extends Pool<ParticleEffect> implements CustomParticleSystem.ParticleSystemListener {
 
         private ParticleEffect sourceEffect;
 
@@ -49,7 +49,7 @@ public final class ParticleManager {
 
     private static final ParticleManager INSTANCE;
 
-    private ParticleSystem system = ParticleSystem.get();
+    private CustomParticleSystem system = CustomParticleSystem.get();
 
     private PointSpriteParticleBatch pointBatch = new PointSpriteParticleBatch();
 
@@ -68,7 +68,7 @@ public final class ParticleManager {
         system.add(billboardBatch);
     }
 
-    public ParticleSystem getSystem() {
+    public CustomParticleSystem getSystem() {
         return system;
     }
 
