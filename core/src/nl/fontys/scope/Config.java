@@ -6,7 +6,7 @@ public class Config {
     public static final String APP_NAME = "scope";
 
     // Version of the application
-    public static final String APP_VERSION = "0.5.3";
+    public static final String APP_VERSION = "0.6.2";
 
     // console string of the debug statement
     public static final String FLAG_DEBUG = "-debug";
