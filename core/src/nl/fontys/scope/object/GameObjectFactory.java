@@ -75,9 +75,7 @@ public class GameObjectFactory {
         object.setPosition(x, y, z);
         object.setScale(6.5f);
         object.setPhysics(false);
-        ParticleEffectController pec = new ParticleEffectController(Assets.ParticleEffects.ENERGY);
-        world.addController(object, pec);
-        world.addController(object, new EnergyController());
+        world.addController(object, new ParticleEffectController(Assets.ParticleEffects.ENERGY));
         return object;
     }
 }

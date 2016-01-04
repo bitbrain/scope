@@ -9,6 +9,7 @@ import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
 import nl.fontys.scope.Config;
+import nl.fontys.scope.core.controller.EnergyController;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.object.GameObjectFactory;
 import nl.fontys.scope.object.GameObjectType;
@@ -37,7 +38,7 @@ public class Arena {
         return restrictor;
     }
 
-    public void setup(PlayerManager playerManager, TweenManager tweenManager) {
+    public void setup(PlayerManager playerManager, World world, TweenManager tweenManager) {
         GameObject sphere = factory.createSphere(60f);
         sphere.getColor().set(Colors.PRIMARY);
         Vector3 v = new Vector3(0f, 0f, 0f);
@@ -47,8 +48,10 @@ public class Arena {
             v.set(r, 0f, 0f);
             v.rotate((float) (angle), 0f, 1f, 0f);
             angle = 360f * random.nextFloat();
-            v.rotate((float)(angle), 0f, 0f, 1f);
-            factory.createEnergy(v.x, v.y, v.z).getColor().set(Colors.PRIMARY);
+            v.rotate((float) (angle), 0f, 0f, 1f);
+            GameObject energy = factory.createEnergy(v.x, v.y, v.z);
+            energy.getColor().set(Colors.PRIMARY);
+            world.addController(energy, new EnergyController());
         }
 
         for (Player player : playerManager.getPlayers()) {
