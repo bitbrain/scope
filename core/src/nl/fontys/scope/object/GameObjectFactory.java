@@ -34,6 +34,7 @@ public class GameObjectFactory {
         final float X_OFFSET = -4.5f;
         c.setOffset(X_OFFSET, 0f, 0f);
         LightingController lc = new LightingController(world.getLightingManager());
+        lc.setStrength(7);
         lc.setOffset(X_OFFSET, 0f, 0f);
         world.addController(object, c);
         world.addController(object, lc);
