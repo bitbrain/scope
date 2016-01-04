@@ -30,7 +30,7 @@ public class CreateGameScreen extends AbstractScreen {
 
     @Override
     protected void onShow() {
-        GameObject planet = factory.createPlanet(0f, 80f, 0f, 0f);
+        GameObject planet = factory.createPlanet(80f);
         world.addController(new CameraRotatingController(500f, world.getCamera(), planet));
     }
 

@@ -49,16 +49,15 @@ public class GameObjectFactory {
         return object;
     }
 
-    public GameObject createPlanet(float radius, float scale, float angle, float speed) {
+    public GameObject createPlanet(float scale) {
         GameObject object = world.createGameObject();
         object.setType(GameObjectType.PLANET);
         object.setScale(scale);
-        world.addController(object, new RotationController(radius, angle, speed));
         return object;
     }
 
     public GameObject createSphere(float scale) {
-        GameObject sphere = createPlanet(0f, scale, 0f, 0f);
+        GameObject sphere = createPlanet(scale);
         sphere.setType(GameObjectType.SPHERE);
         world.addController(sphere, new ParticleEffectController(Assets.ParticleEffects.SPHERE));
         return sphere;

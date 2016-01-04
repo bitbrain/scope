@@ -27,7 +27,7 @@ public class GameOverScreen extends AbstractScreen {
 
     @Override
     protected void onShow() {
-        GameObject planet = factory.createPlanet(0f, 30f, 0f, 0f);
+        GameObject planet = factory.createPlanet(30f);
         world.addController(new CameraRotatingController(500f, world.getCamera(), planet));
     }
 

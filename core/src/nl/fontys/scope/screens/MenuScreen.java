@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -19,6 +20,8 @@ import nl.fontys.scope.ScopeGame;
 import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.core.controller.CameraRotatingController;
+import nl.fontys.scope.core.controller.LightingController;
+import nl.fontys.scope.core.controller.RotationController;
 import nl.fontys.scope.graphics.ShaderManager;
 import nl.fontys.scope.i18n.Bundle;
 import nl.fontys.scope.i18n.Messages;
@@ -38,8 +41,23 @@ public class MenuScreen extends AbstractScreen {
 
     @Override
     protected void onShow() {
-        GameObject planet = factory.createPlanet(0f, 50f, 0f, 0f);
-        world.addController(new CameraRotatingController(500f, world.getCamera(), planet));
+        final int ENERGY_COUNT = 4;
+        final float MIN_DISTANCE = 55;
+        final float MAX_DISTANCE = 60;
+        Vector3 tmp = new Vector3();
+
+        for (int i = 0; i < ENERGY_COUNT; ++i) {
+            tmp.setToRandomDirection();
+            tmp.setLength((float) (MIN_DISTANCE + Math.random() * (MAX_DISTANCE - MIN_DISTANCE)));
+            GameObject energy = factory.createEnergy(tmp.x, tmp.y, tmp.z);
+            LightingController lightingController = new LightingController(world.getLightingManager());
+            lightingController.setStrength(925);
+            world.addController(energy, lightingController);
+            world.addController(energy, new RotationController(1.5f));
+        }
+
+        GameObject planet = factory.createPlanet(10f);
+        world.addController(planet, new CameraRotatingController(100f, world.getCamera(), planet));
     }
 
     @Override
