@@ -1,17 +1,12 @@
 package nl.fontys.scope.object;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 
-import aurelienribon.tweenengine.Tween;
 import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.core.World;
-import nl.fontys.scope.core.controller.EnergyController;
 import nl.fontys.scope.core.controller.LightingController;
 import nl.fontys.scope.core.controller.ParticleEffectController;
-import nl.fontys.scope.core.controller.PlanetController;
-import nl.fontys.scope.core.controller.RingController;
-import nl.fontys.scope.tweens.ColorTween;
+import nl.fontys.scope.core.controller.RotationController;
 import nl.fontys.scope.util.Colors;
 
 /**
@@ -31,7 +26,7 @@ public class GameObjectFactory {
         object.setScale(1.65f);
         object.getColor().set(0.75f, 0.75f, 0.75f, 1f);
         ParticleEffectController c = new ParticleEffectController(Assets.ParticleEffects.POWER);
-        final float X_OFFSET = -4.5f;
+        final float X_OFFSET = -3.2f;
         c.setOffset(X_OFFSET, 0f, 0f);
         LightingController lc = new LightingController(world.getLightingManager());
         lc.setStrength(7);
@@ -58,7 +53,7 @@ public class GameObjectFactory {
         GameObject object = world.createGameObject();
         object.setType(GameObjectType.PLANET);
         object.setScale(scale);
-        world.addController(object, new PlanetController(radius, angle, speed));
+        world.addController(object, new RotationController(radius, angle, speed));
         return object;
     }
 

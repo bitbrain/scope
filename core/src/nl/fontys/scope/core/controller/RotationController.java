@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector3;
 
 import nl.fontys.scope.object.GameObject;
 
-public class PlanetController implements GameObjectController {
+public class RotationController implements GameObjectController {
 
     private float angle;
 
@@ -13,7 +13,7 @@ public class PlanetController implements GameObjectController {
 
     private float speed;
 
-    public PlanetController(float radius, float angle, float speed) {
+    public RotationController(float radius, float angle, float speed) {
         this.radius = radius;
         this.angle = angle;
         this.speed = speed;
