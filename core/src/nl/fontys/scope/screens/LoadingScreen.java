@@ -138,7 +138,11 @@ public class LoadingScreen implements Screen {
     }
 
     private void drawLoadingBar() {
+        final float WIDTH_LIMIT = 500f;
         float width = Gdx.graphics.getWidth() * 0.8f;
+        if (width > WIDTH_LIMIT) {
+            width = WIDTH_LIMIT;
+        }
         float height = 4f;
         renderer.setProjectionMatrix(cam.combined);
         renderer.begin(ShapeRenderer.ShapeType.Filled);
