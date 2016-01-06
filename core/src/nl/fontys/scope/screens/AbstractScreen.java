@@ -157,6 +157,7 @@ public abstract class AbstractScreen implements Screen {
         FX.getInstance().fadeOut(fadeOutTime, TweenEquations.easeOutCubic, new TweenCallback() {
             @Override
             public void onEvent(int type, BaseTween<?> source) {
+                dispose();
                 game.setScreen(screen);
             }
         });
