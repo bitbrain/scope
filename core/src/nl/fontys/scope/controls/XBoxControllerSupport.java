@@ -31,17 +31,25 @@ class XBoxControllerSupport extends ControllerSupport {
     protected void onUpdate() {
         act(MoveableAction.BOOST, Buttons.T_TRIGGER_CODE, 0.02f);
         act(MoveableAction.RISE, Buttons.RIGHT_STICK_CODE_Y, 0.02f);
+
+        float value = getAxisValue(Buttons.LEFT_STICK_CODE_X);
+        if (value > 0.2f || value < -0.2f) {
+            MoveableAction.ROTATE.act(moveable, value, 0f, 0f);
+        }
+        value = getAxisValue(Buttons.LEFT_STICK_CODE_Y);
+        if (value > 0.2f || value < -0.2f) {
+            MoveableAction.ROTATE.act(moveable, 0f, 0f, value);
+        }
+        value = getAxisValue(Buttons.RIGHT_STICK_CODE_X);
+        if (value > 0.2f || value < -0.2f) {
+            MoveableAction.ROTATE.act(moveable, 0f, -value, 0f);
+        }
     }
 
     private void act(MoveableAction action, int code, float tolerance) {
         float value = getAxisValue(code);
-        act(action, code, tolerance, -value);
-    }
-
-    private void act(MoveableAction action, int code, float tolerance, Object ... args) {
-        float value = getAxisValue(code);
         if (value > tolerance || value < -tolerance) {
-            action.act(moveable, args);
+            action.act(moveable, -value);
         }
     }
 }

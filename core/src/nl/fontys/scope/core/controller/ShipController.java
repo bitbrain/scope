@@ -1,5 +1,6 @@
 package nl.fontys.scope.core.controller;
 
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 
@@ -14,6 +15,10 @@ public class ShipController implements GameObjectController, Moveable {
 
     private float angle = 0;
 
+    private Vector3 rotation = new Vector3();
+
+    Matrix4 m = new Matrix4();
+
     @Override
     public void update(GameObject object, float delta) {
         Quaternion q = object.getOrientation();
@@ -24,8 +29,13 @@ public class ShipController implements GameObjectController, Moveable {
         object.getVelocity().x += accel.x;
         object.getVelocity().y += accel.y;
         object.getVelocity().z += accel.z;
+        m.set(q);
+        m.rotate(Vector3.X, rotation.x);
+        m.rotate(Vector3.Y, rotation.y);
+        m.rotate(Vector3.Z, rotation.z);
+        q.setFromMatrix(m);
         accel.scl(0.9f);
-        angle *= 0.95f;
+        rotation.scl(0.9f);
     }
 
     @Override
@@ -35,7 +45,9 @@ public class ShipController implements GameObjectController, Moveable {
 
     @Override
     public void rotate(float yaw, float pitch, float roll) {
-        // TODO
+        rotation.x = yaw;
+        rotation.y = pitch;
+        rotation.z = roll;
     }
 
     @Override

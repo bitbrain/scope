@@ -21,7 +21,14 @@ enum MoveableAction {
             }
         }
     },
-    ROTATE,
+    ROTATE  {
+        @Override
+        public void act(Moveable moveable, Object ... args) {
+            if (args.length == 3) {
+                moveable.rotate((Float)args[0], (Float)args[1], (Float)args[2]);
+            }
+        }
+    },
     SHOOT {
         @Override
         public void act(Moveable moveable, Object ... args) {
