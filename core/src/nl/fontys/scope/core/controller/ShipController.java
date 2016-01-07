@@ -11,7 +11,7 @@ import nl.fontys.scope.object.GameObject;
 
 public class ShipController implements GameObjectController, Moveable {
 
-    private Vector3 accel = new Vector3();
+    private Vector3 accel = new Vector3(), v = new Vector3();
 
     private float angle = 0;
 
@@ -22,18 +22,19 @@ public class ShipController implements GameObjectController, Moveable {
     @Override
     public void update(GameObject object, float delta) {
         Quaternion q = object.getOrientation();
-        accel.z = 0;
-        accel.rotate(q.getAngleAround(Vector3.X), 1f, 0f, 0f);
-        accel.rotate(q.getAngleAround(Vector3.Y), 0f, 1f, 0f);
-        accel.rotate(q.getAngleAround(Vector3.Z), 0f, 0f, 1f);
-        object.getVelocity().x += accel.x;
-        object.getVelocity().y += accel.y;
-        object.getVelocity().z += accel.z;
+        v.set(accel.x, accel.y, accel.z);
+        v.rotate(q.getAngleAround(Vector3.X), 1f, 0f, 0f);
+        v.rotate(q.getAngleAround(Vector3.Y), 0f, 1f, 0f);
+        v.rotate(q.getAngleAround(Vector3.Z), 0f, 0f, 1f);
+        object.getVelocity().x += v.x;
+        object.getVelocity().y += v.y;
+        object.getVelocity().z += v.z;
+        m = m.toNormalMatrix();
         m.set(q);
         m.rotate(Vector3.X, rotation.x);
         m.rotate(Vector3.Y, rotation.y);
         m.rotate(Vector3.Z, rotation.z);
-        q.setFromMatrix(m);
+        q.setFromMatrix(true, m);
         accel.scl(0.9f);
         rotation.scl(0.9f);
     }

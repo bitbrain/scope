@@ -32,17 +32,18 @@ class XBoxControllerSupport extends ControllerSupport {
         act(MoveableAction.BOOST, Buttons.T_TRIGGER_CODE, 0.02f);
         act(MoveableAction.RISE, Buttons.RIGHT_STICK_CODE_Y, 0.02f);
 
+        final float ROTATION_SPEED = 3f;
         float value = getAxisValue(Buttons.LEFT_STICK_CODE_X);
         if (value > 0.2f || value < -0.2f) {
-            MoveableAction.ROTATE.act(moveable, value, 0f, 0f);
+            MoveableAction.ROTATE.act(moveable, value * ROTATION_SPEED, 0f, 0f);
         }
         value = getAxisValue(Buttons.LEFT_STICK_CODE_Y);
         if (value > 0.2f || value < -0.2f) {
-            MoveableAction.ROTATE.act(moveable, 0f, 0f, value);
+            MoveableAction.ROTATE.act(moveable, 0f, 0f, value * ROTATION_SPEED);
         }
         value = getAxisValue(Buttons.RIGHT_STICK_CODE_X);
         if (value > 0.2f || value < -0.2f) {
-            MoveableAction.ROTATE.act(moveable, 0f, -value, 0f);
+            MoveableAction.ROTATE.act(moveable, 0f, -value * ROTATION_SPEED, 0f);
         }
     }
 
