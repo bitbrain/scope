@@ -37,7 +37,6 @@ public class CameraTrackingController implements GameObjectController {
         v.rot(m);
         v.add(pos);
         cam.position.set(v);
-
         v.set(0f, 1f, 0f);
         v.rot(m);
         cam.up.set(v);
