@@ -32,7 +32,7 @@ public class ShipController implements GameObjectController, Moveable {
         v.rot(m);
         object.getVelocity().add(v);
 
-        accel.scl(0.9f);
+        accel.scl(0.95f);
         rotation.scl(0.9f);
     }
 
@@ -43,9 +43,9 @@ public class ShipController implements GameObjectController, Moveable {
 
     @Override
     public void rotate(float yaw, float pitch, float roll) {
-        rotation.x = yaw;
-        rotation.y = pitch;
-        rotation.z = roll;
+        rotation.x += yaw / 10f;
+        rotation.y += pitch / 10f;
+        rotation.z += roll / 10f;
     }
 
     @Override
@@ -55,7 +55,7 @@ public class ShipController implements GameObjectController, Moveable {
 
     @Override
     public void boost(float strength) {
-        accel.x = strength * 3f;
+        accel.x = strength * 5f;
     }
 
     @Override
