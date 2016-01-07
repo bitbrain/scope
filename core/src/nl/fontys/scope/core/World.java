@@ -64,7 +64,7 @@ public class World {
         lightingManager = new LightingManager();
         modelInstanceService = new ModelInstanceService();
         collisionDetector = new CollisionDetector(modelInstanceService);
-        camera = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        camera = new PerspectiveCamera(80f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.position.set(1f, 1f, 1f);
         camera.near = 0.2f;
         camera.far = 30000f;
