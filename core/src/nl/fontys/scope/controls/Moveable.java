@@ -7,4 +7,6 @@ public interface Moveable {
     void rise(float factor);
 
     void boost();
+
+    void shoot();
 }

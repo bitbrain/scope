@@ -7,11 +7,11 @@ import com.badlogic.gdx.InputProcessor;
 import nl.fontys.scope.core.Player;
 import nl.fontys.scope.core.PlayerManager;
 
-public class KeyboardControls {
+class KeyboardSupport {
 
     private Moveable moveable;
 
-    public KeyboardControls(Moveable moveable) {
+    public KeyboardSupport(Moveable moveable) {
         this.moveable = moveable;
     }
 

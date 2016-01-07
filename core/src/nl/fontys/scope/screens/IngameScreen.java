@@ -2,20 +2,14 @@ package nl.fontys.scope.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.controllers.Controllers;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.math.collision.Ray;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import net.engio.mbassy.listener.Handler;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import nl.fontys.scope.ScopeGame;
-import nl.fontys.scope.controls.ControllerControls;
-import nl.fontys.scope.controls.KeyboardControls;
+import nl.fontys.scope.controls.ControllerManager;
 import nl.fontys.scope.core.Arena;
 import nl.fontys.scope.core.GameLogicHandler;
 import nl.fontys.scope.core.GameStats;
@@ -25,7 +19,6 @@ import nl.fontys.scope.core.controller.CameraTrackingController;
 import nl.fontys.scope.core.controller.ShipController;
 import nl.fontys.scope.event.EventType;
 import nl.fontys.scope.event.Events;
-import nl.fontys.scope.graphics.FX;
 import nl.fontys.scope.ui.DebugWidget;
 import nl.fontys.scope.ui.GameProgressWidget;
 import nl.fontys.scope.ui.PlayerInfoWidget;
@@ -34,11 +27,7 @@ import nl.fontys.scope.ui.TooltipController;
 
 public class IngameScreen extends AbstractScreen {
 
-    private KeyboardControls keyboardControls;
-
     private CameraTrackingController camController;
-
-    private List<ControllerControls> controls = new ArrayList<ControllerControls>();
 
     private boolean debug;
 
@@ -51,6 +40,8 @@ public class IngameScreen extends AbstractScreen {
     private TooltipController tooltipController;
 
     private PlayerManager playerManager;
+
+    private ControllerManager controllerManager;
 
     // Todo: synchronize stats over the network
     private GameStats stats = new GameStats();
@@ -73,19 +64,12 @@ public class IngameScreen extends AbstractScreen {
         world.setRestrictor(arena.getRestrictor());
         logicHandler = new GameLogicHandler(world, factory, arena, playerManager);
         tooltipController = new TooltipController(playerManager);
-        keyboardControls = new KeyboardControls(controller);
-        ControllerControls cc = new ControllerControls(controller);
-        controls.add(cc);
-        Controllers.addListener(cc);
+        controllerManager = new ControllerManager(controller);
     }
 
     @Override
     protected void onUpdate(float delta) {
-        keyboardControls.update(delta);
-        for (ControllerControls c : controls) {
-            c.update(delta);
-        }
-
+        controllerManager.update(delta);
         // Input handling
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             setScreen(new MenuScreen(game));

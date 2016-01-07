@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector3;
 
 import nl.fontys.scope.Config;
 import nl.fontys.scope.controls.Moveable;
+import nl.fontys.scope.core.PlayerManager;
 import nl.fontys.scope.object.GameObject;
 
 public class ShipController implements GameObjectController, Moveable {
@@ -46,5 +47,10 @@ public class ShipController implements GameObjectController, Moveable {
     @Override
     public void boost() {
         // TODO
+    }
+
+    @Override
+    public void shoot() {
+        PlayerManager.getCurrent().getWeapon().shoot();
     }
 }

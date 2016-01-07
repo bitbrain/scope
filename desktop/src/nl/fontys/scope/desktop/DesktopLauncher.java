@@ -13,8 +13,8 @@ public class DesktopLauncher {
 		config.title = Config.APP_NAME + " v. " + Config.APP_VERSION;
 		config.vSyncEnabled = true;
 		config.useHDPI = true;
-		config.width = 800;
-		config.height = 600;
+		config.width = 1920;
+		config.height = 1080;
 		new LwjglApplication(new ScopeGame(arg), config);
 	}
 }
