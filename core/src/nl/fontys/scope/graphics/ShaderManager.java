@@ -95,9 +95,9 @@ public final class ShaderManager {
         INSTANCE.fxaa.setEnabled(true);
         INSTANCE.bloom.setEnabled(true);
         INSTANCE.lenseflare.setEnabled(false);
-        INSTANCE.vignette.setIntensity(1.0f);
-        INSTANCE.bloom.setBaseIntesity(0.5f);
-        INSTANCE.bloom.setBaseSaturation(0.5f);
+        INSTANCE.vignette.setIntensity(0.85f);
+        INSTANCE.bloom.setBaseIntesity(0.4f);
+        INSTANCE.bloom.setBaseSaturation(0.4f);
     }
 
     public static void configureUI() {
@@ -107,7 +107,7 @@ public final class ShaderManager {
         INSTANCE.fxaa.setEnabled(false);
         INSTANCE.bloom.setEnabled(false);
         INSTANCE.lenseflare.setEnabled(false);
-        INSTANCE.uiBloom.setBaseIntesity(1.1f);
-        INSTANCE.uiBloom.setBaseSaturation(1.1f);
+        INSTANCE.uiBloom.setBaseIntesity(1.2f);
+        INSTANCE.uiBloom.setBaseSaturation(1.2f);
     }
 }
