@@ -21,7 +21,6 @@ public class ShipController implements GameObjectController, Moveable {
     public void update(GameObject object, float delta) {
         Quaternion q = object.getOrientation();
 
-
         m = m.toNormalMatrix();
         m.set(object.getPosition(), q);
         m.rotate(Vector3.X, rotation.x);

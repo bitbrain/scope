@@ -1,5 +1,6 @@
 package nl.fontys.scope.core.controller;
 
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 
@@ -16,6 +17,8 @@ public abstract class DynamicGameObjectController implements GameObjectControlle
     protected GameObject target;
 
     private Vector3 offset = new Vector3(), tmp = new Vector3();
+
+    private Matrix4 m = new Matrix4();
 
     public DynamicGameObjectController() {
         events.register(this);
@@ -42,9 +45,9 @@ public abstract class DynamicGameObjectController implements GameObjectControlle
         }
         Quaternion orientation = object.getOrientation();
         tmp.set(offset);
-        tmp.rotate(Vector3.X, orientation.getAngleAround(Vector3.X));
-        tmp.rotate(Vector3.Y, orientation.getAngleAround(Vector3.Y));
-        tmp.rotate(Vector3.Z, orientation.getAngleAround(Vector3.Z));
+        m.toNormalMatrix();
+        m.set(object.getPosition(), orientation);
+        tmp.rot(m);
         onUpdate(object, tmp, delta);
     }
 
