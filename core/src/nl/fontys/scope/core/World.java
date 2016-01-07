@@ -71,7 +71,7 @@ public class World {
 
         renderManager = new RenderManager(lightingManager, modelInstanceService);
 
-        lightingManager.setAmbientLight(0.2f, 0.1f, 0.4f, 1f);
+        lightingManager.setAmbientLight(0.3f, 0.2f, 0.6f, 1f);
         lightingManager.addPointLight(UUID.randomUUID().toString(), new PointLight().set(Colors.PRIMARY, 0f, 0f, 0f, 1800f));
     }
 
