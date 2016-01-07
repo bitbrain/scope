@@ -14,7 +14,7 @@ abstract class ControllerSupport implements ControllerListener {
 
     private boolean button[];
 
-    private Moveable moveable;
+    protected Moveable moveable;
 
     private Map<Integer, MoveableAction> actionMapping;
 
@@ -51,6 +51,7 @@ abstract class ControllerSupport implements ControllerListener {
 
     @Override
     public final boolean buttonDown(Controller controller, int buttonCode) {
+        System.out.println("buttonDown" + buttonCode);
         if (validButtonCode(buttonCode)) {
             button[buttonCode] = true;
             return true;
@@ -70,27 +71,26 @@ abstract class ControllerSupport implements ControllerListener {
     }
 
     @Override
-    public final boolean axisMoved(Controller controller, int axisCode, float value) {
-        return false;
-    }
-
-    @Override
     public final boolean povMoved(Controller controller, int povCode, PovDirection value) {
+        System.out.println("povMoved" + povCode + " -> " + value);
         return false;
     }
 
     @Override
     public final boolean xSliderMoved(Controller controller, int sliderCode, boolean value) {
+        System.out.println("xSliderMoved" + sliderCode + " -> " + value);
         return false;
     }
 
     @Override
     public final boolean ySliderMoved(Controller controller, int sliderCode, boolean value) {
+        System.out.println("ySliderMoved" + sliderCode + " -> " + value);
         return false;
     }
 
     @Override
     public final boolean accelerometerMoved(Controller controller, int accelerometerCode, Vector3 value) {
+        System.out.println("xSliderMoved" + accelerometerCode + " -> " + value);
         return false;
     }
 

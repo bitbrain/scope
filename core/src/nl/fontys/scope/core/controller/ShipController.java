@@ -45,7 +45,7 @@ public class ShipController implements GameObjectController, Moveable {
     }
 
     @Override
-    public void boost() {
+    public void boost(float strength) {
         // TODO
     }
 
