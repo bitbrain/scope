@@ -13,8 +13,6 @@ public class ShipController implements GameObjectController, Moveable {
 
     private Vector3 accel = new Vector3(), v = new Vector3();
 
-    private float angle = 0;
-
     private Vector3 rotation = new Vector3();
 
     Matrix4 m = new Matrix4();
@@ -22,19 +20,17 @@ public class ShipController implements GameObjectController, Moveable {
     @Override
     public void update(GameObject object, float delta) {
         Quaternion q = object.getOrientation();
-        v.set(accel.x, accel.y, accel.z);
-        v.rotate(q.getAngleAround(Vector3.X), 1f, 0f, 0f);
-        v.rotate(q.getAngleAround(Vector3.Y), 0f, 1f, 0f);
-        v.rotate(q.getAngleAround(Vector3.Z), 0f, 0f, 1f);
-        object.getVelocity().x += v.x;
-        object.getVelocity().y += v.y;
-        object.getVelocity().z += v.z;
         m = m.toNormalMatrix();
         m.set(q);
         m.rotate(Vector3.X, rotation.x);
         m.rotate(Vector3.Y, rotation.y);
         m.rotate(Vector3.Z, rotation.z);
         q.setFromMatrix(true, m);
+        v.set(accel.x, accel.y, accel.z);
+        v.rotate(q.getAngleAround(Vector3.X), 1f, 0f, 0f);
+        v.rotate(q.getAngleAround(Vector3.Y), 0f, 1f, 0f);
+        v.rotate(q.getAngleAround(Vector3.Z), 0f, 0f, 1f);
+        object.getVelocity().add(v);
         accel.scl(0.9f);
         rotation.scl(0.9f);
     }
