@@ -16,6 +16,8 @@ public class GameObject implements Pool.Poolable {
 
     private Vector3 lastPosition = new Vector3();
 
+    private float collisionScale = 0f;
+
     private Quaternion orientation = new Quaternion();
 
     private Vector3 velocity = new Vector3();
@@ -40,6 +42,7 @@ public class GameObject implements Pool.Poolable {
         this.type = object.type;
         this.color = object.color;
         this.physics = object.physics;
+        this.collisionScale = object.collisionScale;
     }
 
     public float getScale() {
@@ -47,6 +50,10 @@ public class GameObject implements Pool.Poolable {
     }
 
     public Color getColor() { return color; }
+
+    public float getCollisionScale() {
+        return collisionScale;
+    }
 
     public GameObjectType getType() {
         return type;
@@ -71,6 +78,10 @@ public class GameObject implements Pool.Poolable {
     public void setPosition(float x, float y, float z) {
         lastPosition.set(this.position.x, this.position.y, this.position.z);
         this.position.set(x, y, z);
+    }
+
+    public void setCollisionScale(float scale) {
+        this.collisionScale = Math.abs(scale);
     }
 
     public boolean hasMoved() {
@@ -111,6 +122,7 @@ public class GameObject implements Pool.Poolable {
         velocity.set(0f, 0f, 0f);
         type = GameObjectType.NONE;
         color = Color.WHITE.cpy();
+        collisionScale = 0f;
     }
 
     @Override

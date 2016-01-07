@@ -64,6 +64,8 @@ public class CollisionDetector {
             originals.put(object.getId(), original);
         }
         box.set(original);
+        box.min.sub(object.getCollisionScale());
+        box.max.add(object.getCollisionScale());
         box.mul(instance.transform);
         return box;
     }
