@@ -9,8 +9,8 @@ import nl.fontys.scope.object.GameObject;
 
 public class CameraTrackingController implements GameObjectController {
 
-    private static final float CAMERA_HEIGHT = 6f;
-    private static final float CAMERA_DISTANCE = 23f;
+    private static final float CAMERA_HEIGHT = 7f;
+    private static final float CAMERA_DISTANCE = 12f;
 
     private static final float FRONT_OFFSET = 30f;
 
