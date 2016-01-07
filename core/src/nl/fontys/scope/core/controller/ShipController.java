@@ -24,7 +24,6 @@ public class ShipController implements GameObjectController, Moveable {
         object.getVelocity().x += accel.x;
         object.getVelocity().y += accel.y;
         object.getVelocity().z += accel.z;
-        q.set(Vector3.Y, q.getAngleAround(Vector3.Y)  + angle);
         accel.scl(0.9f);
         angle *= 0.95f;
     }
@@ -41,12 +40,12 @@ public class ShipController implements GameObjectController, Moveable {
 
     @Override
     public void rise(float factor) {
-        // TODO
+        accel.y = factor * 3f;
     }
 
     @Override
     public void boost(float strength) {
-        accel.x = (strength / 3f) * 16f;
+        accel.x = strength * 6f;
     }
 
     @Override

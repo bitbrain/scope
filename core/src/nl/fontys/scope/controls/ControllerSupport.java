@@ -18,12 +18,11 @@ abstract class ControllerSupport implements ControllerListener {
 
     private Map<Integer, MoveableAction> actionMapping;
 
-    protected int currentAxisCode;
-
-    protected float currentAxisValue;
+    private Map<Integer, Float> axisMove;
 
     public ControllerSupport(Moveable moveable) {
         actionMapping = new HashMap<Integer, MoveableAction>();
+        axisMove = new HashMap<Integer, Float>();
         button = new boolean[BUTTON_COUNT];
         this.moveable = moveable;
     }
@@ -56,8 +55,7 @@ abstract class ControllerSupport implements ControllerListener {
 
     @Override
     public boolean axisMoved(Controller controller, int axisCode, float value) {
-        currentAxisCode = axisCode;
-        currentAxisValue = value;
+        axisMove.put(axisCode, value);
         return true;
     }
 
@@ -115,4 +113,8 @@ abstract class ControllerSupport implements ControllerListener {
     }
 
     protected abstract void onUpdate();
+
+    protected float getAxisValue(int axisCode) {
+        return axisMove.getOrDefault(axisCode, 0f);
+    }
 }

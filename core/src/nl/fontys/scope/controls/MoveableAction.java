@@ -1,7 +1,16 @@
 package nl.fontys.scope.controls;
 
 enum MoveableAction {
-    RISE,
+    RISE {
+        @Override
+        public void act(Moveable moveable, Object ... args) {
+            if (args.length == 1 && args[0] instanceof Float) {
+                moveable.rise((Float) args[0]);
+            } else {
+                moveable.rise(1f);
+            }
+        }
+    },
     BOOST {
         @Override
         public void act(Moveable moveable, Object ... args) {
