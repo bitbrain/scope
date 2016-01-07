@@ -18,23 +18,35 @@ class KeyboardSupport {
     public void update(float delta) {
         Player current = PlayerManager.getCurrent();
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            //moveable.moveForward();
+            moveable.rotate(0f, 0f, -1f);
         } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            //moveable.moveBack();
+            moveable.rotate(0f, 0f, 1f);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-           // moveable.moveLeft();
+            moveable.rotate(-1f, 0f, 0f);
         } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            //moveable.moveRight();
+            moveable.rotate(1f, 0f, 0f);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-            //moveable.moveUp();
+            moveable.shoot();
         }
         if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-           // moveable.moveDown();
+           moveable.boost(1f);
         }
-        if (Gdx.input.isTouched()) {
-            current.getWeapon().shoot();
+        if (Gdx.input.isKeyPressed(Input.Keys.ALT_LEFT)) {
+            moveable.boost(-1f);
         }
+        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+            moveable.rise(1f);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            moveable.rise(-1f);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            moveable.rotate(0f, 1f, 1f);
+        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            moveable.rotate(0f, -1f, 1f);
+        }
+
     }
 }
