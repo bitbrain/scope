@@ -18,6 +18,10 @@ abstract class ControllerSupport implements ControllerListener {
 
     private Map<Integer, MoveableAction> actionMapping;
 
+    protected int currentAxisCode;
+
+    protected float currentAxisValue;
+
     public ControllerSupport(Moveable moveable) {
         actionMapping = new HashMap<Integer, MoveableAction>();
         button = new boolean[BUTTON_COUNT];
@@ -31,6 +35,7 @@ abstract class ControllerSupport implements ControllerListener {
                 action.getValue().act(moveable);
             }
         }
+        onUpdate();
     }
 
     protected void register(int buttonCode, MoveableAction action) {
@@ -47,6 +52,13 @@ abstract class ControllerSupport implements ControllerListener {
     @Override
     public final void disconnected(Controller controller) {
         System.out.println("Disconnected " + controller.getName());
+    }
+
+    @Override
+    public boolean axisMoved(Controller controller, int axisCode, float value) {
+        currentAxisCode = axisCode;
+        currentAxisValue = value;
+        return true;
     }
 
     @Override
@@ -101,4 +113,6 @@ abstract class ControllerSupport implements ControllerListener {
     private boolean isButtonPressed(int code) {
         return button[code];
     }
+
+    protected abstract void onUpdate();
 }

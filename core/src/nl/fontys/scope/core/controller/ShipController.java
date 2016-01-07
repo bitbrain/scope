@@ -46,7 +46,7 @@ public class ShipController implements GameObjectController, Moveable {
 
     @Override
     public void boost(float strength) {
-        // TODO
+        accel.x = (strength / 3f) * 16f;
     }
 
     @Override

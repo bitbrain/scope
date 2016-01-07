@@ -24,13 +24,12 @@ class XBoxControllerSupport extends ControllerSupport {
     }
 
     @Override
-    public boolean axisMoved(Controller controller, int axisCode, float value) {
-        if (Buttons.T_TRIGGER_CODE == axisCode) {
-            final float TOLERANCE = 0.1f;
-            if (value > TOLERANCE || value < -TOLERANCE) {
-                MoveableAction.BOOST.act(moveable, value);
+    protected void onUpdate() {
+        if (Buttons.T_TRIGGER_CODE == currentAxisCode) {
+            final float TOLERANCE = 0.02f;
+            if (currentAxisValue > TOLERANCE || currentAxisValue < -TOLERANCE) {
+                MoveableAction.BOOST.act(moveable, -currentAxisValue);
             }
         }
-        return false;
     }
 }
