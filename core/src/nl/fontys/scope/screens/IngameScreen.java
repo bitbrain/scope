@@ -83,9 +83,9 @@ public class IngameScreen extends AbstractScreen {
         debugWidget.setVisible(debug);
         PlayerInfoWidget widget = new PlayerInfoWidget(world.getCamera(), playerManager, tweenManager);
         stage.addActor(widget);
-        final float LIFE_WIDGET_WIDTH = 350f;
+        final float LIFE_WIDGET_WIDTH = Gdx.graphics.getWidth() / 3f;
         FocusBarWidget lifeWidget = new FocusBarWidget(PlayerManager.getCurrent(), tweenManager);
-        lifeWidget.setSize(LIFE_WIDGET_WIDTH, 40f);
+        lifeWidget.setSize(LIFE_WIDGET_WIDTH, LIFE_WIDGET_WIDTH / 8f);
         lifeWidget.setPosition(Gdx.graphics.getWidth() / 2f - lifeWidget.getWidth() / 2f, Gdx.graphics.getHeight() - 50f - lifeWidget.getHeight());
         stage.addActor(lifeWidget);
 

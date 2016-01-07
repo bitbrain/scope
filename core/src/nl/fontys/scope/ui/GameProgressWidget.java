@@ -1,5 +1,6 @@
 package nl.fontys.scope.ui;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -44,8 +45,8 @@ public class GameProgressWidget extends Actor {
         alphaProvider = new ValueProvider();
         alphaProvider.setValue(0.1f);
         lastProgress = this.player.getGameProgress();
-        setWidth(80f);
-        setHeight(200f);
+        setHeight(Gdx.graphics.getHeight() / 2.4f);
+        setWidth(getHeight() / 3f);
         border = GraphicsFactory.createNinePatch(Assets.Textures.BORDER, 20);
         border.setColor(Colors.UI.cpy());
         border.getColor().a = 0.8f;
