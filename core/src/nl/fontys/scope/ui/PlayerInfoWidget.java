@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import aurelienribon.tweenengine.Tween;
-import aurelienribon.tweenengine.TweenEquation;
 import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
 import nl.fontys.scope.assets.AssetManager;
