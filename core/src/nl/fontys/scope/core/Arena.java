@@ -101,11 +101,15 @@ public class Arena {
                 } else if (object.getType().equals(GameObjectType.ENERGY)){
                     pos.setLength(Config.ARENA_RADIUS);
                     Vector3 velocity = object.getVelocity();
-                    velocity.x *= -1f;
-                    velocity.y *= -1f;
-                    velocity.z *= -1f;
+                    velocity.setToRandomDirection();
                 } else {
                     pos.setLength(Config.ARENA_RADIUS);
+                }
+            } else if (pos.len() < Config.ARENA_RADIUS - Config.ARENA_OUTER_RADIUS) {
+                if (object.getType().equals(GameObjectType.ENERGY)){
+                    pos.setLength(Config.ARENA_RADIUS - Config.ARENA_OUTER_RADIUS);
+                    Vector3 velocity = object.getVelocity();
+                    velocity.setToRandomDirection();
                 }
             }
         }

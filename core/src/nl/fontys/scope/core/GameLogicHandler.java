@@ -66,8 +66,6 @@ public class GameLogicHandler implements Disposable {
             world.remove(objectA);
         } else if (full && GameObjectType.SHOT.equals(objectA.getType()) && GameObjectType.ENERGY.equals(objectB.getType())) {
             world.remove(objectA);
-        } else if (GameObjectType.ENERGY.equals(objectA.getType()) && GameObjectType.SPHERE.equals(objectB.getType())) {
-            world.remove(objectA);
         }
     }
 
