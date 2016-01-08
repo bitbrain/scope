@@ -1,7 +1,6 @@
 package nl.fontys.scope.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Graphics;
 
 import nl.fontys.scope.Config;
 
