@@ -11,6 +11,9 @@ public class Config {
     // console string of the debug statement
     public static final String FLAG_DEBUG = "-debug";
 
+    // Set to false if game should start not in fullscreen mode
+    public static final boolean AUTO_FULLSCREEN = true;
+
     // Maximum distance for panning
     public static final float MAX_PAN_DISTANCE = 50f;
 

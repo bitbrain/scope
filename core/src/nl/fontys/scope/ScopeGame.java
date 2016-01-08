@@ -6,6 +6,7 @@ import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.screens.AbstractScreen;
 import nl.fontys.scope.screens.IngameScreen;
 import nl.fontys.scope.screens.LoadingScreen;
+import nl.fontys.scope.screens.ScreenHandler;
 
 public class ScopeGame extends Game {
 
@@ -17,6 +18,7 @@ public class ScopeGame extends Game {
 
 	@Override
 	public void create() {
+        ScreenHandler.setFull();
         setScreen(new LoadingScreen(this, this.args));
 	}
 
