@@ -8,7 +8,6 @@ import nl.fontys.scope.Config;
 public final class ScreenHandler {
 
     public static void setFull() {
-        Graphics.Monitor monitor = Gdx.graphics.getMonitor();
         Gdx.graphics.setWindowedMode(Gdx.graphics.getDisplayMode().width, Gdx.graphics.getDisplayMode().height);
         if (Config.AUTO_FULLSCREEN) {
             Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
