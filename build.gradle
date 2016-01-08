@@ -68,7 +68,6 @@ project(":ios") {
 
 
     dependencies {
-        compile "net.engio:mbassador:1.2.4"
         compile project(":core")
         compile "org.robovm:robovm-rt:$roboVMVersion"
         compile "org.robovm:robovm-cocoatouch:$roboVMVersion"
@@ -82,10 +81,10 @@ project(":core") {
 
 
     dependencies {
+        compile "aurelienribon:tweenengine:6.3.3"
+        compile "net.engio:mbassador:1.2.4"
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
-        compile "net.engio:mbassador:1.2.4"
-        compile "aurelienribon:tweenengine:6.3.3"
     }
 }
 

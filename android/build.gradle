@@ -15,11 +15,11 @@ android {
         instrumentTest.setRoot('tests')
     }
     dexOptions {
-        incremental false
+        incremental true
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_6
-        targetCompatibility JavaVersion.VERSION_1_6
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
     }
 }
 // called every time gradle gets executed, takes the native dependencies of
