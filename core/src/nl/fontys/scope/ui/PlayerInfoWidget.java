@@ -129,7 +129,7 @@ public class PlayerInfoWidget extends Actor {
         if (focusData.visible) {
             focusData.visible = false;
             tweenManager.killTarget(focusData.value);
-            Tween.to(focusData.value, ValueTween.VALUE, TRANSITION_TIME).target(0.2f).ease(TweenEquations.easeOutCubic).start(tweenManager);
+            Tween.to(focusData.value, ValueTween.VALUE, TRANSITION_TIME).target(0.7f).ease(TweenEquations.easeOutCubic).start(tweenManager);
         }
         parentAlpha = focusData.value.getValue();
         vecTemp2D.set(cameraPos2D.x - Gdx.graphics.getWidth() / 2f, cameraPos2D.y - Gdx.graphics.getHeight() / 2f);
