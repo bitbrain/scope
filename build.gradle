@@ -59,6 +59,8 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86"
         compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-controllers-android:$gdxVersion"
+        compile "aurelienribon:tweenengine:6.3.3"
+        compile "net.engio:mbassador:1.2.4"
     }
 }
 
