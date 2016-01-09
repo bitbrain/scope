@@ -56,7 +56,7 @@ public final class CustomParticleSystem implements RenderableProvider{
 
     public void add(ParticleEffect effect){
         effects.add(effect);
-        if (!Config.HIGH_QUALITY) {
+        if (Gdx.app.getType() != Application.ApplicationType.Desktop) {
             Emitter emitter = effect.getControllers().first().emitter;
             if (emitter instanceof RegularEmitter) {
                 RegularEmitter reg = (RegularEmitter) emitter;

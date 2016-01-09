@@ -84,7 +84,7 @@ public final class ShaderManager {
         INSTANCE.uiBloom.setEnabled(false);
         INSTANCE.vignette.setEnabled(true);
         INSTANCE.zoomer.setEnabled(true);
-        INSTANCE.fxaa.setEnabled(Config.HIGH_QUALITY);
+        INSTANCE.fxaa.setEnabled(isDesktop);
         INSTANCE.bloom.setEnabled(true);
         INSTANCE.vignette.setIntensity(0.85f);
         INSTANCE.bloom.setBaseIntesity(0.4f);
