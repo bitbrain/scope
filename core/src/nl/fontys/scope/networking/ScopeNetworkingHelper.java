@@ -1,7 +1,9 @@
 package nl.fontys.scope.networking;
 
+import com.badlogic.gdx.graphics.Color;
 import com.esotericsoftware.kryo.Kryo;
 
+import nl.fontys.scope.core.Player;
 import nl.fontys.scope.networking.broadCasts.BroadcastRequest;
 import nl.fontys.scope.networking.broadCasts.CollisionBroadCast;
 import nl.fontys.scope.networking.broadCasts.GameObjectBroadCast;
@@ -17,6 +19,8 @@ import nl.fontys.scope.networking.responses.GameStartedResponse;
 import nl.fontys.scope.networking.responses.GetGamesResponse;
 import nl.fontys.scope.networking.responses.JoinedResponse;
 import nl.fontys.scope.networking.serverobjects.ServerGame;
+import nl.fontys.scope.object.GameObject;
+import nl.fontys.scope.object.GameObjectType;
 
 public abstract class ScopeNetworkingHelper {
 
@@ -32,6 +36,10 @@ public abstract class ScopeNetworkingHelper {
         kryo.register(com.esotericsoftware.kryonet.Connection.class);
         kryo.register(com.esotericsoftware.kryonet.Server.class);
         kryo.register(com.esotericsoftware.kryonet.Connection[].class);
+        kryo.register(GameObject.class);
+        kryo.register(Color.class);
+        kryo.register(Player.class);
+        kryo.register(GameObjectType.class);
 
         // Broadcasts
         kryo.register(BroadcastRequest.class);

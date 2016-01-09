@@ -52,8 +52,13 @@ public abstract class AbstractScreen implements Screen {
 
     protected Events events = Events.getInstance();
 
-    public AbstractScreen(ScopeGame game) {
+    public AbstractScreen(ScopeGame game, World world) {
         this.game = game;
+        this.world = world;
+    }
+
+    public AbstractScreen(ScopeGame game) {
+        this(game, new World());
     }
 
     protected TweenManager tweenManager;
@@ -70,7 +75,6 @@ public abstract class AbstractScreen implements Screen {
     public final void show() {
         tweenManager = new TweenManager();
         baseShaderManager = ShaderManager.getBaseInstance();
-        world = new World();
         factory = new GameObjectFactory(world);
         multiplexer = new InputMultiplexer();
         Gdx.input.setInputProcessor(multiplexer);

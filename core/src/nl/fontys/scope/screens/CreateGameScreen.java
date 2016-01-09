@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import nl.fontys.scope.Config;
 import nl.fontys.scope.ScopeGame;
+import nl.fontys.scope.core.World;
 import nl.fontys.scope.core.controller.CameraRotatingController;
 import nl.fontys.scope.i18n.Bundle;
 import nl.fontys.scope.i18n.Messages;
@@ -56,18 +57,18 @@ public class CreateGameScreen extends AbstractScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                IngameScreen screen = new IngameScreen(game, false);
-                screen.show();
+                World world = new World();
+                IngameScreen screen = new IngameScreen(game, world, false);
 
                 game.startServer();
 
-                game.setClient(new ScopeClient(screen.world));
+                game.setClient(new ScopeClient(world));
                 game.getClient().connectToServer(game.getClient().findServer(), 54555, 54777);
                 game.getClient().createGame(2, "Test");
                 long gameID = game.getClient().searchGame("Test");
                 game.getClient().joinGame(gameID);
 
-                setScreen(new WaitingForPlayersScreen(game));
+                setScreen(new WaitingForPlayersScreen(game, screen));
             }
         });
 

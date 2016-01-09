@@ -5,12 +5,13 @@ import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Pool;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 /**
  * Basic game object
  */
-public class GameObject implements Pool.Poolable {
+public class GameObject implements Pool.Poolable, Serializable {
 
     private Vector3 position = new Vector3();
 

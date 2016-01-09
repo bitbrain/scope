@@ -15,6 +15,7 @@ import nl.fontys.scope.core.GameLogicHandler;
 import nl.fontys.scope.core.GameStats;
 import nl.fontys.scope.core.Player;
 import nl.fontys.scope.core.PlayerManager;
+import nl.fontys.scope.core.World;
 import nl.fontys.scope.core.controller.CameraTrackingController;
 import nl.fontys.scope.core.controller.ShipController;
 import nl.fontys.scope.event.EventType;
@@ -49,8 +50,8 @@ public class IngameScreen extends AbstractScreen {
     // Todo: synchronize stats over the network
     private GameStats stats = new GameStats();
 
-    public IngameScreen(ScopeGame game, boolean debug) {
-        super(game);
+    public IngameScreen(ScopeGame game, World world, boolean debug) {
+        super(game, world);
         this.debug = debug;
     }
 

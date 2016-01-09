@@ -17,13 +17,16 @@ import nl.fontys.scope.ui.Styles;
 
 public class WaitingForPlayersScreen extends AbstractScreen {
 
-    public WaitingForPlayersScreen(ScopeGame game) {
-        super(game);
-    }
+    private final IngameScreen ingameScreen;
 
     private Thread keepAliveThread;
 
     private Events events = Events.getInstance();
+
+    public WaitingForPlayersScreen(ScopeGame game, IngameScreen ingame) {
+        super(game);
+        this.ingameScreen = ingame;
+    }
 
     @Override
     protected void onShow() {
@@ -68,11 +71,12 @@ public class WaitingForPlayersScreen extends AbstractScreen {
 
     @Handler
     public void onEvent(Events.GdxEvent event) {
+        System.out.println("THIS IS " + event.getType());
         if (event.isTypeOf(EventType.GAME_START)) {
             System.out.println("Starting Game Event");
             keepAliveThread.stop();
             game.getClient().setStarted(true);
-            setScreen(new IngameScreen(game, false));
+            setScreen(ingameScreen);
         }
     }
 }
