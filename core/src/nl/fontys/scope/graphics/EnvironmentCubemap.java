@@ -138,7 +138,7 @@ public class EnvironmentCubemap implements Disposable {
     public void render(Camera camera){
 
         //SPECIAL THANKS TO Jos van Egmond
-        camera.view.getRotation( q, true );
+        camera.view.getRotation(q, true);
         q.conjugate();
         ///////////////////////////////////
         worldTrans.idt();

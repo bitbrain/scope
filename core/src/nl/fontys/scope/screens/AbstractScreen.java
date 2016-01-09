@@ -1,5 +1,6 @@
 package nl.fontys.scope.screens;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
@@ -16,6 +17,7 @@ import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenEquation;
 import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
+import nl.fontys.scope.Config;
 import nl.fontys.scope.ScopeGame;
 import nl.fontys.scope.audio.SoundManager;
 import nl.fontys.scope.event.Events;
@@ -27,6 +29,8 @@ import nl.fontys.scope.core.World;
 import nl.fontys.scope.ui.Tooltip;
 
 public abstract class AbstractScreen implements Screen {
+
+    private static final boolean isDesktop = (Gdx.app.getType() == Application.ApplicationType.Desktop);
 
     protected Tooltip tooltip = Tooltip.getInstance();
 
@@ -85,10 +89,23 @@ public abstract class AbstractScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT | (Gdx.graphics.getBufferFormat().coverageSampling ? GL20.GL_COVERAGE_BUFFER_BIT_NV : 0));
         fx.begin();
         cam2D.update();
+        if (Config.HIGH_QUALITY) {
+            renderHighQuality(delta);
+        } else {
+            renderLowQuality(delta);
+        }
+        // Draw special effects (fading etc.)
+        stage.getBatch().begin();
+            fx.render(stage.getBatch(), delta);
+        stage.getBatch().end();
+        fx.end();
+    }
+
+    private void renderHighQuality(float delta) {
         // Draw world (background)
         ShaderManager.configureBase();
         baseShaderManager.begin();
-            world.updateAndRender(closing ? 0f : delta);
+        world.updateAndRender(closing ? 0f : delta);
         baseShaderManager.end(uiBuffer);
         // Draw UI (foreground)
         ShaderManager.configureUI();
@@ -96,21 +113,28 @@ public abstract class AbstractScreen implements Screen {
         cam2D.update();
         stage.getBatch().setProjectionMatrix(cam2D.combined);
         baseShaderManager.begin();
-            stage.getBatch().begin();
-                stage.getBatch().setColor(Color.WHITE);
-                stage.getBatch().draw(uiBuffer.getColorBufferTexture(), 0f, 0f);
-            stage.getBatch().end();
-            cam2D.setToOrtho(false);
-            cam2D.update();
-            stage.getBatch().setProjectionMatrix(cam2D.combined);
-            stage.act(delta);
-            stage.draw();
-        baseShaderManager.end(null);
-        // Draw special effects (fading etc.)
         stage.getBatch().begin();
-            fx.render(stage.getBatch(), delta);
+        stage.getBatch().setColor(Color.WHITE);
+        stage.getBatch().draw(uiBuffer.getColorBufferTexture(), 0f, 0f);
         stage.getBatch().end();
-        fx.end();
+        cam2D.setToOrtho(false);
+        cam2D.update();
+        stage.getBatch().setProjectionMatrix(cam2D.combined);
+        stage.act(delta);
+        stage.draw();
+        baseShaderManager.end(null);
+    }
+
+    private void renderLowQuality(float delta) {
+        ShaderManager.configureUI();
+        baseShaderManager.begin();
+        world.updateAndRender(closing ? 0f : delta);
+        cam2D.setToOrtho(false);
+        cam2D.update();
+        stage.getBatch().setProjectionMatrix(cam2D.combined);
+        stage.act(delta);
+        stage.draw();
+        baseShaderManager.end(null);
     }
 
     @Override

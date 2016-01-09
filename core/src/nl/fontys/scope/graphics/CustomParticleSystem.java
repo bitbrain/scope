@@ -1,5 +1,7 @@
 package nl.fontys.scope.graphics;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.RenderableProvider;
 import com.badlogic.gdx.graphics.g3d.particles.ParticleEffect;
@@ -11,6 +13,8 @@ import com.badlogic.gdx.utils.Pool;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import nl.fontys.scope.Config;
 
 /**Singleton class which manages the particle effects.
  * It's a utility class to ease particle batches management and particle effects update. 
@@ -52,6 +56,15 @@ public final class CustomParticleSystem implements RenderableProvider{
 
     public void add(ParticleEffect effect){
         effects.add(effect);
+        if (!Config.HIGH_QUALITY) {
+            Emitter emitter = effect.getControllers().first().emitter;
+            if (emitter instanceof RegularEmitter) {
+                RegularEmitter reg = (RegularEmitter) emitter;
+                final int REDUCTION_FACTOR =5;
+                reg.setMinParticleCount(reg.getMinParticleCount() / REDUCTION_FACTOR);
+                reg.setMaxParticleCount(reg.getMaxParticleCount() / REDUCTION_FACTOR);
+            }
+        }
     }
 
     public void remove(ParticleEffect effect){

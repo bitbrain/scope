@@ -27,7 +27,7 @@ public class Config {
     public static final float MAX_SHIP_SPEED = 2.4f;
 
     // Default energy count
-    public static final int ENERGY_COUNT = 45;
+    public static final int ENERGY_COUNT = 25;
 
     // Arena radius
     public static final float ARENA_RADIUS = 140;
@@ -67,4 +67,7 @@ public class Config {
 
     // Margin of UI shadows
     public static final float UI_SHADOW_MARGIN = 64f;
+
+    // High quality rendering
+    public static final boolean HIGH_QUALITY = true;
 }
