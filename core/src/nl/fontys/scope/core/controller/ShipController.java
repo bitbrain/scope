@@ -20,8 +20,6 @@ public class ShipController implements GameObjectController, Moveable {
     @Override
     public void update(GameObject object, float delta) {
         Quaternion q = object.getOrientation();
-
-        m = m.toNormalMatrix();
         m.set(object.getPosition(), q);
         m.rotate(Vector3.X, rotation.x);
         m.rotate(Vector3.Y, rotation.y);
@@ -32,8 +30,14 @@ public class ShipController implements GameObjectController, Moveable {
         v.rot(m);
         object.getVelocity().add(v);
 
-        accel.scl(0.95f);
+        accel.scl(0.9f);
         rotation.scl(0.9f);
+        if (accel.len() < 0.1f) {
+            accel.setLength(0f);
+        }
+        if (rotation.len() < 0.1f) {
+            rotation.setLength(0f);
+        }
     }
 
     @Override
@@ -50,12 +54,12 @@ public class ShipController implements GameObjectController, Moveable {
 
     @Override
     public void rise(float factor) {
-        accel.y = factor * 2f;
+        accel.y = factor * 1f;
     }
 
     @Override
     public void boost(float strength) {
-        accel.x = strength * 5f;
+        accel.x = strength * 2f;
     }
 
     @Override
