@@ -21,16 +21,6 @@ public class ServerGame {
         this.started = started;
     }
 
-    private boolean started;
-
-    public boolean isStarted() {
-        return started;
-    }
-
-    public void setStarted(boolean started) {
-        this.started = started;
-    }
-
 
     public int getPlayerCount() {
         return PlayerCount;
