@@ -6,19 +6,21 @@ import com.badlogic.gdx.controllers.mappings.Xbox;
 class XBoxControllerSupport extends ControllerSupport {
 
     public static class Buttons {
-        public static final int A = Xbox.A;
-        public static final int B = Xbox.B;
-        public static final int X = Xbox.X;
-        public static final int Y = Xbox.Y;
-        public static final int LB = Xbox.L_BUMPER;
-        public static final int RB = Xbox.R_BUMPER;
-        public static final int BACK = Xbox.BACK;
-        public static final int START = Xbox.START;
+        public static final int A = 0;
+        public static final int B = 1;
+        public static final int X = 2;
+        public static final int Y = 3;
+        public static final int LB = 4;
+        public static final int RB = 5;
+        public static final int BACK = 6;
+        public static final int START = 7;
+        public static final int LEFT_STICK = 8;
+        public static final int RIGHT_STICK = 9;
         public static final int T_TRIGGER_CODE = 4;
-        public static final int LEFT_STICK_CODE_Y = Xbox.L_STICK_VERTICAL_AXIS;
-        public static final int LEFT_STICK_CODE_X = Xbox.L_STICK_HORIZONTAL_AXIS;
-        public static final int RIGHT_STICK_CODE_Y = Xbox.R_STICK_VERTICAL_AXIS;
-        public static final int RIGHT_STICK_CODE_X = Xbox.R_STICK_HORIZONTAL_AXIS;
+        public static final int LEFT_STICK_CODE_Y = 0;
+        public static final int LEFT_STICK_CODE_X = 1;
+        public static final int RIGHT_STICK_CODE_Y = 2;
+        public static final int RIGHT_STICK_CODE_X = 3;
     }
 
     public XBoxControllerSupport(Moveable moveable) {
