@@ -2,6 +2,7 @@ package nl.fontys.scope.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -82,6 +83,13 @@ public class LoadingScreen implements Screen {
     public void render(float delta) {
         if (AssetManager.isLoaded(Assets.Fonts.OPENSANS_MEDIUM_32.getPath())) {
             font = AssetManager.getFont(Assets.Fonts.OPENSANS_MEDIUM_32);
+        }
+        if (AssetManager.isLoaded(Assets.Musics.MAIN_THEME.getPath())) {
+            Music music = AssetManager.getMusic(Assets.Musics.MAIN_THEME);
+            if (!music.isPlaying()) {
+                music.setLooping(true);
+                music.play();
+            }
         }
         if (target < AssetManager.getProgress()) {
             target = AssetManager.getProgress();

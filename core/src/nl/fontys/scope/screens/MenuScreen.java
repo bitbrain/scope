@@ -2,6 +2,7 @@ package nl.fontys.scope.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
@@ -62,6 +63,11 @@ public class MenuScreen extends AbstractScreen {
 
     @Override
     protected void onUpdate(float delta) {
+        Music music = AssetManager.getMusic(Assets.Musics.MAIN_THEME);
+        if (!music.isPlaying()) {
+            music.setLooping(true);
+            music.play();
+        }
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
         }

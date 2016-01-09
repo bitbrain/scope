@@ -78,7 +78,7 @@ public final class Assets {
      */
     public enum Musics {
 
-        STARSURFER("music/starsurfer.ogg");
+        MAIN_THEME("music/scope_theme.ogg");
 
         private String path;
 
