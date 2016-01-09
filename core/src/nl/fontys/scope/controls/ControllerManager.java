@@ -17,6 +17,7 @@ public class ControllerManager {
         this.moveable = moveable;
         keyboard = new KeyboardSupport(moveable);
         registerSupport(new XBoxControllerSupport(moveable));
+        registerSupport(new ShieldControllerSupport(moveable));
     }
 
     public void update(float delta) {

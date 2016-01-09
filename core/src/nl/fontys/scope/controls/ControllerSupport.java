@@ -55,12 +55,20 @@ abstract class ControllerSupport implements ControllerListener {
 
     @Override
     public boolean axisMoved(Controller controller, int axisCode, float value) {
+        System.out.println(controller.getName() + " " + axisCode + " " + value);
+        if (!isSupported(controller)) {
+            return false;
+        }
         axisMove.put(axisCode, value);
         return false;
     }
 
     @Override
     public final boolean buttonDown(Controller controller, int buttonCode) {
+        System.out.println(controller.getName() + " " + buttonCode);
+        if (!isSupported(controller)) {
+            return false;
+        }
         if (validButtonCode(buttonCode)) {
             button[buttonCode] = true;
             return true;
@@ -71,6 +79,10 @@ abstract class ControllerSupport implements ControllerListener {
 
     @Override
     public final boolean buttonUp(Controller controller, int buttonCode) {
+        System.out.println(controller.getName() + " " + buttonCode);
+        if (!isSupported(controller)) {
+            return false;
+        }
         if (validButtonCode(buttonCode)) {
             button[buttonCode] = false;
             return true;
@@ -81,21 +93,33 @@ abstract class ControllerSupport implements ControllerListener {
 
     @Override
     public final boolean povMoved(Controller controller, int povCode, PovDirection value) {
+        if (!isSupported(controller)) {
+            return false;
+        }
         return false;
     }
 
     @Override
     public final boolean xSliderMoved(Controller controller, int sliderCode, boolean value) {
+        if (!isSupported(controller)) {
+            return false;
+        }
         return false;
     }
 
     @Override
     public final boolean ySliderMoved(Controller controller, int sliderCode, boolean value) {
+        if (!isSupported(controller)) {
+            return false;
+        }
         return false;
     }
 
     @Override
     public final boolean accelerometerMoved(Controller controller, int accelerometerCode, Vector3 value) {
+        if (!isSupported(controller)) {
+            return false;
+        }
         return false;
     }
 
@@ -113,4 +137,6 @@ abstract class ControllerSupport implements ControllerListener {
         Float value = axisMove.get(axisCode);
         return value != null ? value : 0f;
     }
+
+    protected abstract boolean isSupported(Controller controller);
 }

@@ -3,25 +3,25 @@ package nl.fontys.scope.controls;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.mappings.Xbox;
 
-class XBoxControllerSupport extends ControllerSupport {
+class ShieldControllerSupport extends ControllerSupport {
 
     public static class Buttons {
-        public static final int A = Xbox.A;
-        public static final int B = Xbox.B;
-        public static final int X = Xbox.X;
-        public static final int Y = Xbox.Y;
-        public static final int LB = Xbox.L_BUMPER;
-        public static final int RB = Xbox.R_BUMPER;
-        public static final int BACK = Xbox.BACK;
-        public static final int START = Xbox.START;
+        public static final int A = 0;
+        public static final int B = 0;
+        public static final int X = 0;
+        public static final int Y = 0;
+        public static final int LB = 0;
+        public static final int RB = 0;
+        public static final int BACK = 0;
+        public static final int START = 0;
         public static final int T_TRIGGER_CODE = 4;
-        public static final int LEFT_STICK_CODE_Y = Xbox.L_STICK_VERTICAL_AXIS;
-        public static final int LEFT_STICK_CODE_X = Xbox.L_STICK_HORIZONTAL_AXIS;
-        public static final int RIGHT_STICK_CODE_Y = Xbox.R_STICK_VERTICAL_AXIS;
-        public static final int RIGHT_STICK_CODE_X = Xbox.R_STICK_HORIZONTAL_AXIS;
+        public static final int LEFT_STICK_CODE_Y = 0;
+        public static final int LEFT_STICK_CODE_X = 0;
+        public static final int RIGHT_STICK_CODE_Y = 0;
+        public static final int RIGHT_STICK_CODE_X = 0;
     }
 
-    public XBoxControllerSupport(Moveable moveable) {
+    public ShieldControllerSupport(Moveable moveable) {
         super(moveable);
     }
 
@@ -53,7 +53,7 @@ class XBoxControllerSupport extends ControllerSupport {
 
     @Override
     protected boolean isSupported(Controller controller) {
-        return Xbox.isXboxController(controller);
+        return controller.getName().equals("Shield");
     }
 
     private void act(MoveableAction action, int code, float tolerance) {
