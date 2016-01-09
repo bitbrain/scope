@@ -8,6 +8,8 @@ import net.engio.mbassy.listener.Handler;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.util.HashMap;
+import java.util.Map;
 
 import nl.fontys.scope.core.Player;
 import nl.fontys.scope.core.World;
@@ -16,12 +18,17 @@ import nl.fontys.scope.event.EventType;
 import nl.fontys.scope.event.Events;
 import nl.fontys.scope.networking.broadCasts.CollisionBroadCast;
 import nl.fontys.scope.networking.broadCasts.GameObjectBroadCast;
-import nl.fontys.scope.networking.broadCasts.MovementBroadCast;
 import nl.fontys.scope.networking.broadCasts.ObjectBroadCast;
 import nl.fontys.scope.networking.broadCasts.PlayerBroadCast;
+import nl.fontys.scope.networking.requests.GameCreateRequest;
+import nl.fontys.scope.networking.requests.GameStartedCheckRequest;
+import nl.fontys.scope.networking.requests.GetGamesRequest;
 import nl.fontys.scope.networking.requests.JoinRequest;
+import nl.fontys.scope.networking.responses.GameStartedCheckResponse;
 import nl.fontys.scope.networking.responses.GameStartedResponse;
+import nl.fontys.scope.networking.responses.GetGamesResponse;
 import nl.fontys.scope.networking.responses.JoinedResponse;
+import nl.fontys.scope.networking.serverobjects.ServerGame;
 import nl.fontys.scope.object.GameObject;
 
 public class ScopeClient extends Listener implements GameObjectController{
@@ -29,6 +36,31 @@ public class ScopeClient extends Listener implements GameObjectController{
     private boolean connected;
     private boolean joined;
     private long gameID;
+    private boolean started;
+
+    public boolean isStarted() {
+        if (!startedRefreshing){
+            gameStarted();
+            startedRefreshing = true;
+        }
+        return started;
+    }
+
+    public void setStarted(boolean started) {
+        this.started = started;
+    }
+
+    public boolean isConnected() {
+        return connected;
+    }
+
+    public boolean isJoined() {
+        return joined;
+    }
+
+    public long getGameID() {
+        return gameID;
+    }
 
     private GameObjectUpdater updater;
 
@@ -38,15 +70,20 @@ public class ScopeClient extends Listener implements GameObjectController{
 
     public static int TIMEOUT = 5000;
 
+    private boolean gamesListRefreshed = false;
+    private boolean startedRefreshing = false;
+
+    private HashMap<String, Long> gamesList;
+
     public ScopeClient(World world) {
+
+        events.register(this);
 
         client = new Client();
 
         updater = new GameObjectUpdater(world);
 
         world.addController(this);
-
-        events.register(this);
 
         ScopeNetworkingHelper.registerClasses(client.getKryo());
 
@@ -58,9 +95,18 @@ public class ScopeClient extends Listener implements GameObjectController{
 
     public void received(Connection connection, Object object) {
         if (object instanceof JoinedResponse) {
-
             joined = ((JoinedResponse) object).isSuccessful();
             gameID = ((JoinedResponse) object).getGameID();
+        }
+
+        if (object instanceof GameStartedCheckResponse) {
+            started = ((GameStartedCheckResponse) object).started;
+            startedRefreshing = false;
+        }
+
+        if (object instanceof GetGamesResponse) {
+             gamesList = ((GetGamesResponse) object).getGames();
+             gamesListRefreshed = true;
         }
 
         if (object instanceof GameObjectBroadCast) {
@@ -77,12 +123,14 @@ public class ScopeClient extends Listener implements GameObjectController{
         }
 
         if (object instanceof GameStartedResponse) {
+            System.out.println("Start Event recived from server");
             events.fire(EventType.GAME_START, null, null);
         }
     }
 
     @Handler
     private void handleEvents(Events.GdxEvent event){
+        System.out.println("Client recived Event" + event.getType().toString());
         if (event.isTypeOf(EventType.OBJECT_CREATED) || event.isTypeOf(EventType.OBJECT_REMOVED)){
             client.sendTCP(new ObjectBroadCast(Gdx.graphics.getFrameId(), gameID,
                     (GameObject) event.getPrimaryParam(), event.getType()));
@@ -105,6 +153,25 @@ public class ScopeClient extends Listener implements GameObjectController{
         client.sendTCP(new JoinRequest(gameID));
     }
 
+    public long searchGame(String gameName){
+        gamesListRefreshed = false;
+        client.sendTCP(new GetGamesRequest(gameName));
+        while (!gamesListRefreshed) {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return gamesList.get(gameName);
+
+    }
+
+    public InetAddress findServer(){
+        return client.discoverHost(ScopeNetworkingHelper.UDP_PORT,  5000);
+    }
+
     public void connectToServer(InetAddress serverAddress, int tcpPort, int udpPort){
         try {
             client.connect(TIMEOUT, serverAddress, tcpPort, udpPort);
@@ -113,6 +180,14 @@ public class ScopeClient extends Listener implements GameObjectController{
         }
 
         connected = true;
+    }
+
+    public void createGame(int playerCount, String gameName){
+        client.sendTCP(new GameCreateRequest(playerCount, gameName));
+    }
+
+    private void gameStarted(){
+        client.sendTCP(new GameStartedCheckRequest(gameID));
     }
 
     @Override
@@ -125,5 +200,6 @@ public class ScopeClient extends Listener implements GameObjectController{
         if (object.hasMoved()) {
             client.sendUDP(new GameObjectBroadCast(Gdx.graphics.getFrameId(), gameID, object));
         }
+
     }
 }

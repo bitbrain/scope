@@ -2,8 +2,8 @@ package nl.fontys.scope.networking.responses;
 
 public class JoinedResponse {
 
-    private boolean successful;
-    private long gameID;
+    public boolean successful;
+    public long gameID;
 
     public long getGameID() {
         return gameID;
@@ -22,4 +22,6 @@ public class JoinedResponse {
     public void setSuccessful(boolean successful) {
         this.successful = successful;
     }
+
+    public JoinedResponse(){}
 }

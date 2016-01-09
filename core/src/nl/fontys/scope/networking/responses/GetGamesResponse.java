@@ -5,13 +5,15 @@ import java.util.HashMap;
 import nl.fontys.scope.networking.serverobjects.ServerGame;
 
 public class GetGamesResponse {
-    private HashMap<Long, ServerGame> games;
+    private HashMap<String, Long> games;
 
-    public HashMap<Long, ServerGame> getGames() {
+    public HashMap<String, Long> getGames() {
         return games;
     }
 
-    public void setGames(HashMap<Long, ServerGame> games) {
+    public void setGames(HashMap<String, Long> games) {
         this.games = games;
     }
+
+    public GetGamesResponse(){}
 }

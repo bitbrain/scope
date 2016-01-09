@@ -1,5 +1,7 @@
 package nl.fontys.scope.networking.requests;
 
+import nl.fontys.scope.networking.responses.JoinedResponse;
+
 public class JoinRequest {
 
     private long GameID;
@@ -14,4 +16,6 @@ public class JoinRequest {
 
         GameID = gameID;
     }
+
+    public JoinRequest(){}
 }

@@ -5,14 +5,17 @@ import com.esotericsoftware.kryonet.*;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 
 
 import nl.fontys.scope.networking.broadCasts.GameObjectBroadCast;
 import nl.fontys.scope.networking.broadCasts.MovementBroadCast;
 import nl.fontys.scope.networking.broadCasts.PlayerBroadCast;
 import nl.fontys.scope.networking.requests.GameCreateRequest;
+import nl.fontys.scope.networking.requests.GameStartedCheckRequest;
 import nl.fontys.scope.networking.requests.GetGamesRequest;
 import nl.fontys.scope.networking.requests.JoinRequest;
+import nl.fontys.scope.networking.responses.GameStartedCheckResponse;
 import nl.fontys.scope.networking.responses.GameStartedResponse;
 import nl.fontys.scope.networking.responses.GetGamesResponse;
 import nl.fontys.scope.networking.responses.JoinedResponse;
@@ -22,7 +25,7 @@ import nl.fontys.scope.networking.serverobjects.ServerGame;
 public class ScopeServer  extends  Listener implements Disposable {
     private Server server;
 
-    private static int TcpKeepAliveTimeOut = 2000;
+    private static int TcpKeepAliveTimeOut = 20000;
 
     private HashMap<Long, ServerGame> games;
 
@@ -39,7 +42,7 @@ public class ScopeServer  extends  Listener implements Disposable {
         server.start();
 
         try {
-            server.bind(54555, 54777);
+            server.bind(ScopeNetworkingHelper.TCP_PORT, ScopeNetworkingHelper.UDP_PORT);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -48,6 +51,10 @@ public class ScopeServer  extends  Listener implements Disposable {
 
     @Override
     public void received(Connection connection, Object object) {
+
+        if (object instanceof GameStartedCheckRequest){
+            connection.sendTCP(new GameStartedCheckResponse(games.get(((GameStartedCheckRequest) object).gameID).isStarted()));
+        }
 
         if (object instanceof GameCreateRequest){
             handleCreateGameRequest(connection, object);
@@ -82,6 +89,7 @@ public class ScopeServer  extends  Listener implements Disposable {
     }
 
     private void handleJoinRequest(Connection connection, Object object){
+        System.out.println("Joinning Game " + ((JoinRequest) object).getGameID());
         ServerGame game = games.get(((JoinRequest) object).getGameID());
 
         JoinedResponse response = new JoinedResponse(game.getID());
@@ -100,18 +108,24 @@ public class ScopeServer  extends  Listener implements Disposable {
     }
 
     private void handleCreateGameRequest(Connection connection, Object object){
-        ServerGame newGame = new ServerGame(((GameCreateRequest) object).getPlayerCount());
+        ServerGame newGame = new ServerGame(((GameCreateRequest) object).getPlayerCount(), ((GameCreateRequest) object).getGameName());
         newGame.getPlayers().add(connection);
 
         JoinedResponse response = new JoinedResponse(newGame.getID());
-        connection.sendTCP(response);
-
+        response.setSuccessful(true);
         games.put(newGame.getID(), newGame);
+
+        connection.sendTCP(response);
     }
 
     private void handleGetGamesRequest(Connection connection, Object object){
         GetGamesResponse response = new GetGamesResponse();
-        response.setGames(games);
+        HashMap<String, Long> gameNames = new HashMap<String, Long>();
+        for (Map.Entry game : games.entrySet())
+        {
+            gameNames.put(((ServerGame) game.getValue()).getGameName(), (Long) game.getKey());
+        }
+        response.setGames(gameNames);
         connection.sendTCP(response);
     }
 
@@ -130,13 +144,18 @@ public class ScopeServer  extends  Listener implements Disposable {
     }
 
     @Override
+    public void idle(Connection connection) {
+        super.idle(connection);
+    }
+
+    @Override
     public void connected(Connection connection) {
         connection.setKeepAliveTCP(TcpKeepAliveTimeOut);
     }
 
     @Override
     public void disconnected(Connection connection) {
-        dispose();
+        //dispose();
     }
 
     @Override
@@ -148,6 +167,7 @@ public class ScopeServer  extends  Listener implements Disposable {
     private void startGame(ServerGame game){
 
         game.setStarted(true);
+        System.out.println("Starting Game " + game.getID());
         sendToAllPlayersOfGameTCP(game.getID(), new GameStartedResponse());
     }
 

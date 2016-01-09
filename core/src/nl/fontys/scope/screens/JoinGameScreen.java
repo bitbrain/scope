@@ -9,11 +9,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
+import java.net.Inet4Address;
+import java.net.InetAddress;
+
 import nl.fontys.scope.Config;
 import nl.fontys.scope.ScopeGame;
 import nl.fontys.scope.core.controller.CameraRotatingController;
 import nl.fontys.scope.i18n.Bundle;
 import nl.fontys.scope.i18n.Messages;
+import nl.fontys.scope.networking.ScopeClient;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.ui.ButtonMenu;
 import nl.fontys.scope.ui.Styles;
@@ -51,7 +55,16 @@ public class JoinGameScreen extends AbstractScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                setScreen(new IngameScreen(game, false));
+                IngameScreen screen = new IngameScreen(game, false);
+                screen.show();
+
+                game.setClient(new ScopeClient(screen.world));
+                game.getClient().connectToServer(game.getClient().findServer(), 54555, 54777);
+
+                long gameID = game.getClient().searchGame("Test");
+                game.getClient().joinGame(gameID);
+                setScreen(new WaitingForPlayersScreen(game));
+
             }
         });
 
