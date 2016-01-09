@@ -110,6 +110,7 @@ abstract class ControllerSupport implements ControllerListener {
     protected abstract void onUpdate();
 
     protected float getAxisValue(int axisCode) {
-        return axisMove.getOrDefault(axisCode, 0f);
+        Float value = axisMove.get(axisCode);
+        return value != null ? value : 0f;
     }
 }
