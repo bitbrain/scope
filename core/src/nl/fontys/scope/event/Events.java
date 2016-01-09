@@ -47,6 +47,8 @@ public final class Events {
             this.secondaries = secondaryParameters;
         }
 
+        public String getType() {return  type;}
+
         public void setType(String type) {
             this.type = type;
         }

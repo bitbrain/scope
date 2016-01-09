@@ -16,6 +16,8 @@ import nl.fontys.scope.ScopeGame;
 import nl.fontys.scope.core.controller.CameraRotatingController;
 import nl.fontys.scope.i18n.Bundle;
 import nl.fontys.scope.i18n.Messages;
+import nl.fontys.scope.networking.ScopeClient;
+import nl.fontys.scope.networking.ScopeServer;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.ui.ButtonMenu;
 import nl.fontys.scope.ui.Styles;
@@ -44,7 +46,7 @@ public class CreateGameScreen extends AbstractScreen {
 
     @Override
     protected void onCreateStage(Stage stage) {
-        Table layout = new Table();
+        final Table layout = new Table();
         layout.setFillParent(true);
         Label caption = new Label(Bundle.general.get(Messages.MENU_NEW_GAME), Styles.LABEL_CAPTION);
         layout.add(caption).padBottom(55f).row();
@@ -54,7 +56,18 @@ public class CreateGameScreen extends AbstractScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                setScreen(new IngameScreen(game, false));
+                IngameScreen screen = new IngameScreen(game, false);
+                screen.show();
+
+                game.startServer();
+
+                game.setClient(new ScopeClient(screen.world));
+                game.getClient().connectToServer(game.getClient().findServer(), 54555, 54777);
+                game.getClient().createGame(2, "Test");
+                long gameID = game.getClient().searchGame("Test");
+                game.getClient().joinGame(gameID);
+
+                setScreen(new WaitingForPlayersScreen(game));
             }
         });
 

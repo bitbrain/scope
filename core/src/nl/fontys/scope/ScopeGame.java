@@ -3,6 +3,8 @@ package nl.fontys.scope;
 import com.badlogic.gdx.Game;
 
 import nl.fontys.scope.assets.AssetManager;
+import nl.fontys.scope.networking.ScopeClient;
+import nl.fontys.scope.networking.ScopeServer;
 import nl.fontys.scope.screens.AbstractScreen;
 import nl.fontys.scope.screens.IngameScreen;
 import nl.fontys.scope.screens.LoadingScreen;
@@ -16,7 +18,26 @@ public class ScopeGame extends Game {
         this.args = args;
     }
 
-	@Override
+    private ScopeServer server;
+
+    private ScopeClient client;
+
+    public ScopeServer startServer() {
+        if (server == null){
+            server = new ScopeServer();
+        }
+        return server;
+    }
+
+    public ScopeClient getClient() {
+        return client;
+    }
+
+    public void setClient(ScopeClient client) {
+        this.client = client;
+    }
+
+    @Override
 	public void create() {
         ScreenHandler.setFull();
         setScreen(new LoadingScreen(this, this.args));
