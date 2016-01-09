@@ -7,14 +7,10 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.bitfire.postprocessing.PostProcessor;
 import com.bitfire.postprocessing.effects.Bloom;
 import com.bitfire.postprocessing.effects.Fxaa;
-import com.bitfire.postprocessing.effects.LensFlare2;
 import com.bitfire.postprocessing.effects.Vignette;
 import com.bitfire.postprocessing.effects.Zoomer;
-import com.bitfire.postprocessing.filters.Blur;
 import com.bitfire.postprocessing.filters.RadialBlur;
 import com.bitfire.utils.ShaderLoader;
-
-import nl.fontys.scope.event.Events;
 
 public final class ShaderManager {
 
@@ -32,8 +28,6 @@ public final class ShaderManager {
 
     public Vignette vignette;
 
-    public LensFlare2 lenseflare;
-
     private Bloom uiBloom;
 
     private ShaderManager() {
@@ -45,10 +39,6 @@ public final class ShaderManager {
         processor.addEffect(zoomer);
         vignette = new Vignette(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
         processor.addEffect(vignette);
-        lenseflare = new LensFlare2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        lenseflare.setLensColorTexture(new Texture(Gdx.files.internal("postprocessing/lenscolor.png")));
-        processor.addEffect(lenseflare);
-        lenseflare.setEnabled(false);
         uiBloom = new Bloom(Math.round(Gdx.graphics.getWidth() * 0.25f), Math.round(Gdx.graphics.getHeight() * 0.25f));
         uiBloom.setBlurAmount(30f);
         uiBloom.setBloomIntesity(2.0f);
@@ -94,7 +84,6 @@ public final class ShaderManager {
         INSTANCE.zoomer.setEnabled(true);
         INSTANCE.fxaa.setEnabled(true);
         INSTANCE.bloom.setEnabled(true);
-        INSTANCE.lenseflare.setEnabled(false);
         INSTANCE.vignette.setIntensity(0.85f);
         INSTANCE.bloom.setBaseIntesity(0.4f);
         INSTANCE.bloom.setBaseSaturation(0.4f);
@@ -106,7 +95,6 @@ public final class ShaderManager {
         INSTANCE.zoomer.setEnabled(false);
         INSTANCE.fxaa.setEnabled(false);
         INSTANCE.bloom.setEnabled(false);
-        INSTANCE.lenseflare.setEnabled(false);
         INSTANCE.uiBloom.setBaseIntesity(1.2f);
         INSTANCE.uiBloom.setBaseSaturation(1.2f);
     }
