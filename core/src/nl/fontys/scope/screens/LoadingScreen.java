@@ -88,7 +88,7 @@ public class LoadingScreen implements Screen {
             Music music = AssetManager.getMusic(Assets.Musics.MAIN_THEME);
             if (!music.isPlaying()) {
                 music.setLooping(true);
-                music.play();
+                //music.play();
             }
         }
         if (target < AssetManager.getProgress()) {

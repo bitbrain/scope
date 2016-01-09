@@ -66,7 +66,7 @@ public class MenuScreen extends AbstractScreen {
         Music music = AssetManager.getMusic(Assets.Musics.MAIN_THEME);
         if (!music.isPlaying()) {
             music.setLooping(true);
-            music.play();
+            //music.play();
         }
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
