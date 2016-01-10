@@ -51,7 +51,7 @@ public class AIController implements GameObjectController {
         if (player.getFocusProgress() > 1f && other.getType().equals(GameObjectType.SPHERE)) {
             lastFindDistance = getDistanceTo(other);
             target = other;
-        } else if (target == null && getDistanceTo(other) < lastFindDistance && !other.getType().equals(GameObjectType.SPHERE)) {
+        } else if (target == null && getDistanceTo(other) < lastFindDistance && !other.getType().equals(GameObjectType.SPHERE) && !other.getType().equals(GameObjectType.SHIP)) {
             lastFindDistance = getDistanceTo(other);
             target = other;
         }
