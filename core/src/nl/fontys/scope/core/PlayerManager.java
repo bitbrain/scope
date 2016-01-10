@@ -19,7 +19,6 @@ public class PlayerManager {
     public PlayerManager(World world) {
         this.world = world;
         this.current = addPlayer();
-        addPlayer();
     }
 
     public Collection<Player> getPlayers() {

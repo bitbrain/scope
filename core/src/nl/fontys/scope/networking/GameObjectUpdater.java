@@ -2,6 +2,7 @@ package nl.fontys.scope.networking;
 
 import nl.fontys.scope.core.World;
 import nl.fontys.scope.object.GameObject;
+import nl.fontys.scope.object.GameObjectType;
 
 public class GameObjectUpdater {
 
@@ -13,7 +14,6 @@ public class GameObjectUpdater {
 
     public void updateGameObject(GameObject object) {
         GameObject ownObject = world.getObjectById(object.getId());
-        System.out.println("Update: " + ownObject);
         if (ownObject != null) {
             ownObject.set(object);
         }
