@@ -107,6 +107,9 @@ public class MenuScreen extends AbstractScreen {
         Label credits = new Label(Bundle.general.get(Messages.CREDITS), Styles.LABEL_CREDITS);
         layout.row();
         layout.add(credits);
+        credits = new Label(Bundle.general.get(Messages.CREDITS_ADDITION), Styles.LABEL_CREDITS);
+        layout.row();
+        layout.add(credits);
         stage.addActor(layout);
     }
 }
