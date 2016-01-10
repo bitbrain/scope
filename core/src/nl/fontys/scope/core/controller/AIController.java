@@ -11,7 +11,7 @@ public class AIController implements GameObjectController {
 
     private GameObject target;
 
-    private float lastTargetDistance, lastFindDistance = Float.MAX_VALUE;
+    private float lastTargetDistance, lastFindDistance = Float.MAX_VALUE, nearestShipDistance = Float.MAX_VALUE;
 
     private Vector3 tmp = new Vector3();
 
@@ -38,9 +38,16 @@ public class AIController implements GameObjectController {
 
     @Override
     public void update(GameObject object, GameObject other, float delta) {
-        if (player.getFocusProgress() > 1f && other.getType().equals(GameObjectType.SPHERE)) {
+        if (other.getType().equals(GameObjectType.SHIP) && getDistanceTo(other) < nearestShipDistance) {
+            nearestShipDistance = getDistanceTo(other);
+            if (nearestShipDistance < 200f) {
+                lastFindDistance = getDistanceTo(other);
+                target = other;
+            }
+        } else if (player.getFocusProgress() > 1f && other.getType().equals(GameObjectType.SPHERE)) {
+            lastFindDistance = getDistanceTo(other);
             target = other;
-        } else if (target == null && getDistanceTo(other) < lastFindDistance) {
+        } else if (target == null && getDistanceTo(other) < lastFindDistance && !other.getType().equals(GameObjectType.SPHERE)) {
             lastFindDistance = getDistanceTo(other);
             target = other;
         }
@@ -54,6 +61,7 @@ public class AIController implements GameObjectController {
         }
         if (lastTargetDistance >= MAX_SHIP_DISTANCE) {
             target = null;
+            lastFindDistance = Float.MAX_VALUE;
         }
         player.getWeapon().shoot();
     }
@@ -62,6 +70,7 @@ public class AIController implements GameObjectController {
         moveToTarget(thisObject, target);
         if (lastTargetDistance < 40f) {
             target = null;
+            lastFindDistance = Float.MAX_VALUE;
         }
     }
 
@@ -69,6 +78,7 @@ public class AIController implements GameObjectController {
         moveToTarget(thisObject, target);
         if (lastTargetDistance < 10f) {
             target = null;
+            lastFindDistance = Float.MAX_VALUE;
         }
     }
 
@@ -81,7 +91,7 @@ public class AIController implements GameObjectController {
         tmp.set(targetObject.getPosition()).sub(thisObject.getPosition());
         lastTargetDistance = tmp.len();
         tmp.nor();
-        thisObject.getVelocity().add(tmp.scl(3f));
+        thisObject.getVelocity().add(tmp.scl(2.6f));
         mat.set(0f, 0f, 0f, 0f);
         tmp.prj(mat);
         thisObject.getOrientation().setFromMatrix(mat);

@@ -105,7 +105,7 @@ public class MenuScreen extends AbstractScreen {
                     public void initialize(IngameScreen screen) {
                         PlayerManager playerManager = screen.getPlayerManager();
                         Player player = playerManager.addPlayer();
-                        world.addController(player.getShip(), new AIController(player));
+                        screen.world.addController(player.getShip(), new AIController(player));
                     }
                 });
                 setScreen(screen);
