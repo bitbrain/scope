@@ -55,7 +55,6 @@ abstract class ControllerSupport implements ControllerListener {
 
     @Override
     public boolean axisMoved(Controller controller, int axisCode, float value) {
-        System.out.println(controller.getName() + " " + axisCode + " " + value);
         if (!isSupported(controller)) {
             return false;
         }
@@ -65,7 +64,6 @@ abstract class ControllerSupport implements ControllerListener {
 
     @Override
     public final boolean buttonDown(Controller controller, int buttonCode) {
-        System.out.println(controller.getName() + " " + buttonCode);
         if (!isSupported(controller)) {
             return false;
         }
@@ -79,7 +77,6 @@ abstract class ControllerSupport implements ControllerListener {
 
     @Override
     public final boolean buttonUp(Controller controller, int buttonCode) {
-        System.out.println(controller.getName() + " " + buttonCode);
         if (!isSupported(controller)) {
             return false;
         }
