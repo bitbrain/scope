@@ -13,25 +13,25 @@ import java.util.UUID;
  */
 public class GameObject implements Pool.Poolable, Serializable {
 
-    private Vector3 position = new Vector3();
+    private Vector3 position;
 
-    private Vector3 lastPosition = new Vector3();
+    private Vector3 lastPosition;
 
-    private float collisionScale = 0f;
+    private float collisionScale;
 
-    private Quaternion orientation = new Quaternion();
+    private Quaternion orientation;
 
-    private Vector3 velocity = new Vector3();
+    private Vector3 velocity;
 
-    private float scale = 1f;
+    private float scale;
 
-    private String id = UUID.randomUUID().toString();
+    private String id;
 
-    private GameObjectType type = GameObjectType.NONE;
+    private GameObjectType type;
 
-    private Color color = Color.WHITE.cpy();
+    private Color color;
 
-    private boolean physics = true;
+    private boolean physics;
 
     public void set(GameObject object) {
         this.position = object.position;
@@ -115,6 +115,18 @@ public class GameObject implements Pool.Poolable, Serializable {
 
     @Override
     public void reset() {
+        if (position == null) {
+            position = new Vector3();
+        }
+        if (lastPosition == null) {
+            lastPosition = new Vector3();
+        }
+        if (velocity == null) {
+            velocity = new Vector3();
+        }
+        if (orientation == null) {
+            orientation = new Quaternion();
+        }
         physics = true;
         lastPosition.set(0f, 0f, 0f);
         position.set(0f, 0f, 0f);
@@ -124,6 +136,7 @@ public class GameObject implements Pool.Poolable, Serializable {
         type = GameObjectType.NONE;
         color = Color.WHITE.cpy();
         collisionScale = 0f;
+        id = UUID.randomUUID().toString();
     }
 
     @Override

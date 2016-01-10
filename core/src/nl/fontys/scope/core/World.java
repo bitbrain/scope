@@ -112,6 +112,7 @@ public class World {
 
     public nl.fontys.scope.object.GameObject createGameObject() {
         nl.fontys.scope.object.GameObject object = gameObjectPool.obtain();
+        object.reset();
         objects.put(object.getId(), object);
         events.fire(EventType.OBJECT_CREATED, object);
         return object;
