@@ -53,6 +53,11 @@ public class GameLogicHandler implements Disposable {
     private void handleCollision(GameObject objectA, GameObject objectB, boolean full) {
         Player currentPlayer = PlayerManager.getCurrent();
         boolean isCurrentShip = objectA.equals(currentPlayer.getShip());
+        Player aiPlayer = playerManager.getPlayerByShip(objectA);
+        if (aiPlayer != null) {
+            currentPlayer = aiPlayer;
+            isCurrentShip = true;
+        }
         if (isCurrentShip && GameObjectType.ENERGY.equals(objectB.getType())) {
             currentPlayer.addFocus();
             world.remove(objectB);

@@ -3,7 +3,11 @@ package nl.fontys.scope.core.controller;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 
+import net.engio.mbassy.listener.Handler;
+
 import nl.fontys.scope.core.Player;
+import nl.fontys.scope.event.EventType;
+import nl.fontys.scope.event.Events;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.object.GameObjectType;
 
@@ -19,8 +23,11 @@ public class AIController implements GameObjectController {
 
     private Player player;
 
+    private Events events  = Events.getInstance();
+
     public AIController(Player player) {
         this.player = player;
+        events.register(this);
     }
 
     @Override
@@ -94,5 +101,16 @@ public class AIController implements GameObjectController {
         mat.rotate(Vector3.Z, tmp.z);
         thisObject.getVelocity().add(tmp.scl(2.6f));
         thisObject.getOrientation().setFromMatrix(mat);
+    }
+
+    @Handler
+    public void onEvent(Events.GdxEvent event) {
+        if (event.isTypeOf(EventType.OBJECT_REMOVED)) {
+            GameObject object = (GameObject) event.getPrimaryParam();
+            if (object.equals(target)) {
+                target = null;
+                lastFindDistance = Float.MAX_VALUE;
+            }
+        }
     }
 }

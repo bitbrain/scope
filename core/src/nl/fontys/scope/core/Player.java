@@ -26,12 +26,22 @@ public class Player {
 
     private float health = 1f;
 
+    private boolean ai;
+
     Player(World world) {
         this.id = UUID.randomUUID().toString();
         focus = new FocusContainer();
         GameObjectFactory factory = new GameObjectFactory(world);
         this.ship = factory.createShip(0f, 0f, 0f);
         this.weapon = new Weapon(this.ship, world, focus);
+    }
+
+    public boolean isAI() {
+        return ai;
+    }
+
+    public void setAI(boolean ai) {
+        this.ai = ai;
     }
 
     public float getHealth() {
