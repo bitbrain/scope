@@ -13,7 +13,9 @@ public class GameObjectUpdater {
 
     public void updateGameObject(GameObject object) {
         GameObject ownObject = world.getObjectById(object.getId());
-        ownObject.set(object);
+        if (ownObject != null) {
+            ownObject.set(object);
+        }
     }
 
     public void createGameObject(GameObject object){

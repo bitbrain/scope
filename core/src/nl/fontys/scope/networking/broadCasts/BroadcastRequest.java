@@ -7,6 +7,9 @@ public abstract class  BroadcastRequest implements Serializable {
     long timeStamp;
     long gameID;
 
+    public BroadcastRequest() {
+
+    }
 
     public BroadcastRequest(long timeStamp, long gameID) {
         this.timeStamp = timeStamp;

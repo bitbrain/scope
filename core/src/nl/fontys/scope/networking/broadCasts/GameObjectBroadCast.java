@@ -6,6 +6,10 @@ public class GameObjectBroadCast extends BroadcastRequest {
 
     private GameObject object;
 
+    public GameObjectBroadCast() {
+
+    }
+
     public GameObjectBroadCast(long timeStamp, long gameID, GameObject object ) {
         super(timeStamp, gameID);
         this.object = object;

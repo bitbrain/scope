@@ -1,6 +1,8 @@
 package nl.fontys.scope.networking;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Quaternion;
+import com.badlogic.gdx.math.Vector3;
 import com.esotericsoftware.kryo.Kryo;
 
 import nl.fontys.scope.core.Player;
@@ -40,6 +42,8 @@ public abstract class ScopeNetworkingHelper {
         kryo.register(Color.class);
         kryo.register(Player.class);
         kryo.register(GameObjectType.class);
+        kryo.register(Vector3.class);
+        kryo.register(Quaternion.class);
 
         // Broadcasts
         kryo.register(BroadcastRequest.class);

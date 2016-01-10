@@ -9,6 +9,10 @@ public class CollisionBroadCast extends GameObjectBroadCast {
     private GameObject other;
     private boolean fullCollision;
 
+    public CollisionBroadCast() {
+
+    }
+
     public GameObject getOther() {
         return other;
     }

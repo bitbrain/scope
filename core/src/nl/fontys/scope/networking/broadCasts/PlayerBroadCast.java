@@ -12,6 +12,10 @@ public class PlayerBroadCast extends BroadcastRequest {
     private int Value;
     private String EventType;
 
+    public PlayerBroadCast() {
+
+    }
+
     public PlayerBroadCast(long timeStamp, long gameID, Player payer, int value, String eventType) {
         super(timeStamp, gameID);
         this.payer = payer;

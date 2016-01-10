@@ -6,6 +6,10 @@ public class MovementBroadCast extends GameObjectBroadCast {
 
     private double x, y, z;
 
+    public MovementBroadCast() {
+
+    }
+
     public MovementBroadCast(double x, double y, double z, long startTime, long gameID, GameObject object) {
         super(startTime, gameID, object);
         this.x = x;
