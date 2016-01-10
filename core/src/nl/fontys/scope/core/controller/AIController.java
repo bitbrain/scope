@@ -45,9 +45,9 @@ public class AIController implements GameObjectController {
 
     @Override
     public void update(GameObject object, GameObject other, float delta) {
-        if (other.getType().equals(GameObjectType.SHIP) && getDistanceTo(other) < nearestShipDistance) {
-            nearestShipDistance = getDistanceTo(other);
-        }
+        //if (other.getType().equals(GameObjectType.SHIP) && getDistanceTo(other) < nearestShipDistance) {
+        //    nearestShipDistance = getDistanceTo(other);
+        //}
         if (player.getFocusProgress() > 1f && other.getType().equals(GameObjectType.SPHERE)) {
             lastFindDistance = getDistanceTo(other);
             target = other;
@@ -80,7 +80,7 @@ public class AIController implements GameObjectController {
 
     private void handleSphere(GameObject thisObject) {
         moveToTarget(thisObject, target);
-        if (lastTargetDistance < 10f) {
+        if (lastTargetDistance < 40f) {
             target = null;
             lastFindDistance = Float.MAX_VALUE;
         }

@@ -18,6 +18,8 @@ import nl.fontys.scope.util.Colors;
 
 public class Arena {
 
+    private Vector3 tmp = new Vector3();
+
     public static interface ArenaBoundRestrictor {
         void restrict(World world, GameObject object);
     }
@@ -41,22 +43,25 @@ public class Arena {
     public void setup(PlayerManager playerManager, World world, TweenManager tweenManager) {
         GameObject sphere = factory.createSphere(60f);
         sphere.getColor().set(Colors.PRIMARY);
-        Vector3 v = new Vector3(0f, 0f, 0f);
         for (int i = 0; i < Config.ENERGY_COUNT; ++i) {
-            double angle = 360f * random.nextFloat();
-            float r = (Config.ARENA_RADIUS - Config.ARENA_OUTER_RADIUS) + Config.ARENA_OUTER_RADIUS * random.nextFloat();
-            v.set(r, 0f, 0f);
-            v.rotate((float) (angle), 0f, 1f, 0f);
-            angle = 360f * random.nextFloat();
-            v.rotate((float) (angle), 0f, 0f, 1f);
-            GameObject energy = factory.createEnergy(v.x, v.y, v.z);
-            energy.getColor().set(Colors.PRIMARY);
-            world.addController(energy, new EnergyController());
+            spawnRandomEnergy(world);
         }
 
         for (Player player : playerManager.getPlayers()) {
             spawnPlayer(player);
         }
+    }
+
+    public void spawnRandomEnergy(World world) {
+        double angle = 360f * random.nextFloat();
+        float r = (Config.ARENA_RADIUS - Config.ARENA_OUTER_RADIUS) + Config.ARENA_OUTER_RADIUS * random.nextFloat();
+        tmp.set(r, 0f, 0f);
+        tmp.rotate((float) (angle), 0f, 1f, 0f);
+        angle = 360f * random.nextFloat();
+        tmp.rotate((float) (angle), 0f, 0f, 1f);
+        GameObject energy = factory.createEnergy(tmp.x, tmp.y, tmp.z);
+        energy.getColor().set(Colors.PRIMARY);
+        world.addController(energy, new EnergyController());
     }
 
     private void spawnPlayer(Player player) {

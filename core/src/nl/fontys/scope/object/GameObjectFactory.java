@@ -61,6 +61,7 @@ public class GameObjectFactory {
     public GameObject createSphere(float scale) {
         GameObject sphere = createPlanet(scale);
         sphere.setType(GameObjectType.SPHERE);
+        sphere.setCollisionScale(0.6f);
         world.addController(sphere, new ParticleEffectController(Assets.ParticleEffects.SPHERE));
         return sphere;
     }
