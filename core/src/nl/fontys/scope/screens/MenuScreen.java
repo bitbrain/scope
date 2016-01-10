@@ -20,7 +20,10 @@ import nl.fontys.scope.Config;
 import nl.fontys.scope.ScopeGame;
 import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.assets.Assets;
+import nl.fontys.scope.core.Player;
+import nl.fontys.scope.core.PlayerManager;
 import nl.fontys.scope.core.World;
+import nl.fontys.scope.core.controller.AIController;
 import nl.fontys.scope.core.controller.CameraRotatingController;
 import nl.fontys.scope.core.controller.LightingController;
 import nl.fontys.scope.core.controller.RotationController;
@@ -97,7 +100,15 @@ public class MenuScreen extends AbstractScreen {
         menu.add("singleplayer", new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                setScreen(new IngameScreen(game, new World(), false));
+                IngameScreen screen = new IngameScreen(game, new World(), new IngameScreen.IngameInitializer() {
+                    @Override
+                    public void initialize(IngameScreen screen) {
+                        PlayerManager playerManager = screen.getPlayerManager();
+                        Player player = playerManager.addPlayer();
+                        world.addController(player.getShip(), new AIController(player));
+                    }
+                });
+                setScreen(screen);
             }
         });
         layout.add(menu).padBottom(30f).row();

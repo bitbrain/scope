@@ -31,6 +31,10 @@ import nl.fontys.scope.ui.TooltipController;
 
 public class IngameScreen extends AbstractScreen {
 
+    public interface IngameInitializer {
+        void initialize(IngameScreen screen);
+    }
+
     private CameraTrackingController camController;
 
     private boolean debug;
@@ -50,9 +54,16 @@ public class IngameScreen extends AbstractScreen {
     // Todo: synchronize stats over the network
     private GameStats stats = new GameStats();
 
+    private IngameInitializer initializer;
+
     public IngameScreen(ScopeGame game, World world, boolean debug) {
         super(game, world);
         this.debug = debug;
+    }
+
+    public IngameScreen(ScopeGame game, World world, IngameInitializer initializer) {
+        this(game, world, false);
+        this.initializer = initializer;
     }
 
     @Override
@@ -69,6 +80,13 @@ public class IngameScreen extends AbstractScreen {
         logicHandler = new GameLogicHandler(world, factory, arena, playerManager);
         tooltipController = new TooltipController(playerManager);
         controllerManager = new ControllerManager(controller);
+        if (initializer != null) {
+            initializer.initialize(this);
+        }
+    }
+
+    public PlayerManager getPlayerManager() {
+        return playerManager;
     }
 
     @Override
