@@ -98,7 +98,8 @@ public final class Assets {
 
         MENU_SELECT("sounds/select-01.mp3"),
         MENU_HOVER("sounds/rollover-00.mp3"),
-        EXPLOSION("sounds/explosion.mp3");
+        EXPLOSION("sounds/explosion.mp3"),
+        LASER("sounds/laser.ogg");
 
         private String path;
 

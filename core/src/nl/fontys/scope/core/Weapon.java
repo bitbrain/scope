@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector3;
 
 import nl.fontys.scope.Config;
+import nl.fontys.scope.assets.Assets;
+import nl.fontys.scope.audio.SoundManager;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.object.GameObjectFactory;
 
@@ -37,7 +39,8 @@ public class Weapon {
 
     public void shoot() {
         if (focus.hasFocus() && checkShooting()) {
-            factory.createShot(ship);
+            GameObject shot = factory.createShot(ship);
+            SoundManager.getInstance().play(shot, Assets.Sounds.LASER, false);
             if (++munition >= Config.MUNITION_GAP) {
                 focus.reduce();
                 munition = 0;
