@@ -17,34 +17,25 @@ import nl.fontys.scope.networking.ScopeClient;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.ui.Styles;
 
-public class WaitingForPlayersScreen extends AbstractScreen {
+public class JoiningGameScreen extends AbstractScreen {
 
     private IngameScreen ingameScreen;
-
-    private String gameName;
 
     private Thread keepAliveThread;
 
     private Events events = Events.getInstance();
 
-    public WaitingForPlayersScreen(ScopeGame game, String gameName) {
+    private String gameName;
+
+    public JoiningGameScreen(ScopeGame game, String name) {
         super(game);
-        this.gameName = gameName;
+        this.gameName = name;
     }
 
     @Override
     protected void onShow() {
-
         World world = new World();
-        ingameScreen = new IngameScreen(game, world, false);
-        game.startServer();
-
-        game.setClient(new ScopeClient(world));
-        game.getClient().connectToServer(game.getClient().findServer(), 54555, 54777);
-        game.getClient().createGame(2, gameName);
-        long gameID = game.getClient().searchGame(gameName);
-        game.getClient().joinGame(gameID);
-
+        this.ingameScreen = new IngameScreen(game, world, false);
         events.register(this);
         GameObject planet = factory.createPlanet(30f);
         world.addController(new CameraRotatingController(800f, world.getCamera(), planet));
@@ -63,13 +54,19 @@ public class WaitingForPlayersScreen extends AbstractScreen {
         Table layout = new Table();
         layout.setFillParent(true);
 
-        Label caption = new Label("Waiting for Players", Styles.LABEL_CAPTION);
+        Label caption = new Label("Joining game '" + gameName + "'", Styles.LABEL_CAPTION);
+
+        World world = new World();
+        ingameScreen = new IngameScreen(game, world, false);
+        game.setClient(new ScopeClient(world));
+        game.getClient().connectToServer(game.getClient().findServer(), 54555, 54777);
+        long gameID = game.getClient().searchGame(gameName);
+        game.getClient().joinGame(gameID);
 
         layout.add(caption);
         stage.addActor(layout);
 
-        keepAliveThread =  new Thread()
-        {
+        keepAliveThread = new Thread() {
             public void run() {
                 do {
                     game.getClient().isStarted();

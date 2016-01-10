@@ -27,6 +27,8 @@ import nl.fontys.scope.ui.validation.ValidationTextField;
 
 public class CreateGameScreen extends AbstractScreen {
 
+    private ValidationTextField nameText;
+
     public CreateGameScreen(ScopeGame game) {
         super(game);
     }
@@ -56,19 +58,7 @@ public class CreateGameScreen extends AbstractScreen {
         Button submit = menu.add(Bundle.general.get(Messages.GAME_CREATE), new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-                World world = new World();
-                IngameScreen screen = new IngameScreen(game, world, false);
-
-                game.startServer();
-
-                game.setClient(new ScopeClient(world));
-                game.getClient().connectToServer(game.getClient().findServer(), 54555, 54777);
-                game.getClient().createGame(2, "Test");
-                long gameID = game.getClient().searchGame("Test");
-                game.getClient().joinGame(gameID);
-
-                setScreen(new WaitingForPlayersScreen(game, screen));
+                setScreen(new WaitingForPlayersScreen(game, nameText.getText()));
             }
         });
 
@@ -78,7 +68,7 @@ public class CreateGameScreen extends AbstractScreen {
         // Name of the game
         Label name = new Label(Bundle.general.get(Messages.GAME_NAME), Styles.LABEL_DESCRIPTION);
         layout.add(name).padBottom(10f).row();
-        ValidationTextField nameText = new ValidationTextField(Bundle.general.get(Messages.GAME_NAME_HINT), Styles.TEXTFIELD_FORM, context);
+        nameText = new ValidationTextField(Bundle.general.get(Messages.GAME_NAME_HINT), Styles.TEXTFIELD_FORM, context);
         nameText.setFocusTraversal(true);
         nameText.setErrorMessage(Bundle.general.get(Messages.GAME_NAME_INVALID));
         layout.add(nameText).width(Config.MENU_BUTTON_WIDTH).height(85f).row();
