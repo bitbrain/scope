@@ -1,19 +1,22 @@
 package nl.fontys.scope.networking.broadCasts;
 
-import java.io.Serializable;
-
-public abstract class  BroadcastRequest implements Serializable {
+public abstract class  BroadcastRequest{
 
     long timeStamp;
     long gameID;
+    long clientID;
 
     public BroadcastRequest() {
-
     }
 
-    public BroadcastRequest(long timeStamp, long gameID) {
+    public BroadcastRequest(long timeStamp, long gameID, long clientID) {
         this.timeStamp = timeStamp;
         this.gameID = gameID;
+        this.clientID = clientID;
+    }
+
+    public long getClientID() {
+        return clientID;
     }
 
     public long getTimeStamp() {

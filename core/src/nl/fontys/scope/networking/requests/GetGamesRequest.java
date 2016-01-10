@@ -1,6 +1,6 @@
 package nl.fontys.scope.networking.requests;
 
-public class GetGamesRequest {
+public class GetGamesRequest{
 
     public String Name;
 

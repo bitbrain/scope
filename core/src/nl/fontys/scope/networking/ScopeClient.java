@@ -37,6 +37,7 @@ public class ScopeClient extends Listener implements GameObjectController{
     private boolean joined;
     private long gameID;
     private boolean started;
+    private long clientID;
 
     public boolean isStarted() {
         if (!startedRefreshing){
@@ -91,12 +92,15 @@ public class ScopeClient extends Listener implements GameObjectController{
 
         client.start();
 
+        clientID = (long)(Math.random()*176532342);
+
     }
 
     public void received(Connection connection, Object object) {
         if (object instanceof JoinedResponse) {
             joined = ((JoinedResponse) object).isSuccessful();
             gameID = ((JoinedResponse) object).getGameID();
+            System.out.println("Joined Game " + gameID);
         }
 
         if (object instanceof GameStartedCheckResponse) {
@@ -123,26 +127,27 @@ public class ScopeClient extends Listener implements GameObjectController{
         }
 
         if (object instanceof GameStartedResponse) {
-            System.out.println("Start Event recived from server");
+            System.out.println("Start Event received from server");
             events.fire(EventType.GAME_START, null, null);
         }
     }
 
     @Handler
     private void handleEvents(Events.GdxEvent event){
-        System.out.println("Client recived Event" + event.getType().toString());
+        System.out.println("Client send Event" + event.getType().toString() + " gameID: " + gameID);
+
         if (event.isTypeOf(EventType.OBJECT_CREATED) || event.isTypeOf(EventType.OBJECT_REMOVED)){
-            client.sendTCP(new ObjectBroadCast(Gdx.graphics.getFrameId(), gameID,
+            client.sendTCP(new ObjectBroadCast(clientID, Gdx.graphics.getFrameId(), gameID,
                     (GameObject) event.getPrimaryParam(), event.getType()));
         }
         else if (event.isTypeOf(EventType.COLLISION) || event.isTypeOf(EventType.COLLISION_FULL)){
-            client.sendTCP(new CollisionBroadCast(Gdx.graphics.getFrameId(), gameID,
+            client.sendTCP(new CollisionBroadCast(clientID, Gdx.graphics.getFrameId(), gameID,
                     (GameObject) event.getPrimaryParam(),
                     (GameObject) event.getSecondaryParam(0),
                     event.isTypeOf(EventType.COLLISION_FULL)));
         }
         else if (event.isTypeOf(EventType.ENERGY_DROPPED) || event.isTypeOf(EventType.POINTS_GAINED)){
-            client.sendTCP(new PlayerBroadCast(Gdx.graphics.getFrameId(), gameID,
+            client.sendTCP(new PlayerBroadCast(clientID, Gdx.graphics.getFrameId(), gameID,
                     (Player) event.getPrimaryParam(),
                     (Integer) event.getSecondaryParam(0),
                     event.getType()));
@@ -150,7 +155,7 @@ public class ScopeClient extends Listener implements GameObjectController{
     }
 
     public void joinGame(long gameID){
-        client.sendTCP(new JoinRequest(gameID));
+        client.sendTCP(new JoinRequest(clientID, gameID));
     }
 
     public long searchGame(String gameName){
@@ -183,7 +188,7 @@ public class ScopeClient extends Listener implements GameObjectController{
     }
 
     public void createGame(int playerCount, String gameName){
-        client.sendTCP(new GameCreateRequest(playerCount, gameName));
+        client.sendTCP(new GameCreateRequest(clientID, playerCount, gameName));
     }
 
     private void gameStarted(){
@@ -198,7 +203,7 @@ public class ScopeClient extends Listener implements GameObjectController{
     @Override
     public void update(GameObject object, float delta) {
         if (object.hasMoved()) {
-            client.sendUDP(new GameObjectBroadCast(Gdx.graphics.getFrameId(), gameID, object));
+            client.sendUDP(new GameObjectBroadCast(clientID, Gdx.graphics.getFrameId(), gameID, object));
         }
 
     }

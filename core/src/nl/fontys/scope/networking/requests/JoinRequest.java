@@ -1,8 +1,7 @@
 package nl.fontys.scope.networking.requests;
 
-import nl.fontys.scope.networking.responses.JoinedResponse;
 
-public class JoinRequest {
+public class JoinRequest extends AbstractRequest{
 
     private long GameID;
 
@@ -10,8 +9,8 @@ public class JoinRequest {
         return GameID;
     }
 
-    public JoinRequest(long gameID) {
-
+    public JoinRequest(long clientID, long gameID) {
+        super(clientID);
         GameID = gameID;
     }
 

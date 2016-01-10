@@ -17,8 +17,8 @@ public class CollisionBroadCast extends GameObjectBroadCast {
         return other;
     }
 
-    public CollisionBroadCast(long startTime, long gameID, GameObject object, GameObject other, boolean fullCollision) {
-        super(startTime, gameID, object);
+    public CollisionBroadCast(long clientID, long startTime, long gameID, GameObject object, GameObject other, boolean fullCollision) {
+        super(clientID, startTime, gameID, object);
         this.other = other;
         this.fullCollision= fullCollision;
     }

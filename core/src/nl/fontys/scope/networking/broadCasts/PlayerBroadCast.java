@@ -3,9 +3,6 @@ package nl.fontys.scope.networking.broadCasts;
 import nl.fontys.scope.core.Player;
 import nl.fontys.scope.object.GameObject;
 
-/**
- * Created by Jan Kerkenhoff on 16/12/15.
- */
 public class PlayerBroadCast extends BroadcastRequest {
 
     private Player payer;
@@ -16,8 +13,8 @@ public class PlayerBroadCast extends BroadcastRequest {
 
     }
 
-    public PlayerBroadCast(long timeStamp, long gameID, Player payer, int value, String eventType) {
-        super(timeStamp, gameID);
+    public PlayerBroadCast(long clientID, long timeStamp, long gameID, Player payer, int value, String eventType) {
+        super(clientID,timeStamp, gameID);
         this.payer = payer;
         Value = value;
         EventType = eventType;

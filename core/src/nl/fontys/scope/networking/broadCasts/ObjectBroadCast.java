@@ -14,8 +14,8 @@ public class ObjectBroadCast extends GameObjectBroadCast {
 
     }
 
-    public ObjectBroadCast(long startTime, long gameID, GameObject object, String eventType) {
-        super(startTime, gameID, object);
+    public ObjectBroadCast(long clientID,long startTime, long gameID, GameObject object, String eventType) {
+        super(clientID, startTime, gameID, object);
         this.eventType = eventType;
     }
 

@@ -1,6 +1,6 @@
 package nl.fontys.scope.networking.requests;
 
-public class GameCreateRequest {
+public class GameCreateRequest extends AbstractRequest{
 
     private int playerCount;
 
@@ -10,7 +10,8 @@ public class GameCreateRequest {
         return playerCount;
     }
 
-    public GameCreateRequest(int playerCount, String gameName) {
+    public GameCreateRequest(long clientID, int playerCount, String gameName) {
+        super(clientID);
         this.playerCount = playerCount;
         this.gameName = gameName;
     }

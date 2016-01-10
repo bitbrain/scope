@@ -43,7 +43,7 @@ public class WaitingForPlayersScreen extends AbstractScreen {
         game.getClient().connectToServer(game.getClient().findServer(), 54555, 54777);
         game.getClient().createGame(2, gameName);
         long gameID = game.getClient().searchGame(gameName);
-        game.getClient().joinGame(gameID);
+        //game.getClient().joinGame(gameID);
 
         events.register(this);
         GameObject planet = factory.createPlanet(30f);

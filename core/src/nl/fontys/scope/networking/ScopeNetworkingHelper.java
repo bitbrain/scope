@@ -12,6 +12,7 @@ import nl.fontys.scope.networking.broadCasts.GameObjectBroadCast;
 import nl.fontys.scope.networking.broadCasts.MovementBroadCast;
 import nl.fontys.scope.networking.broadCasts.ObjectBroadCast;
 import nl.fontys.scope.networking.broadCasts.PlayerBroadCast;
+import nl.fontys.scope.networking.requests.AbstractRequest;
 import nl.fontys.scope.networking.requests.GameCreateRequest;
 import nl.fontys.scope.networking.requests.GameStartedCheckRequest;
 import nl.fontys.scope.networking.requests.GetGamesRequest;
@@ -46,6 +47,7 @@ public abstract class ScopeNetworkingHelper {
         kryo.register(Quaternion.class);
 
         // Broadcasts
+        kryo.register(AbstractRequest.class);
         kryo.register(BroadcastRequest.class);
         kryo.register(CollisionBroadCast.class);
         kryo.register(GameObjectBroadCast.class);
