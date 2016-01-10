@@ -37,7 +37,8 @@ public class ServerGame {
     }
 
     public ServerGame(int playerCount, String gameName) {
-        this.ID = (long)(Math.random()*12131);//UUID.randomUUID().getMostSignificantBits();
+        //this.ID = (long)(Math.random()*12131);//UUID.randomUUID().getMostSignificantBits();
+        this.ID = 999;
         PlayerCount = playerCount;
         players = new HashMap<Long, Connection>();
         this.gameName = gameName;

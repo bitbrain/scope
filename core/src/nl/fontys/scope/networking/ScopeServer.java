@@ -6,6 +6,7 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.*;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -60,9 +61,11 @@ public class ScopeServer  extends  Listener implements Disposable {
     public void received(Connection connection, Object object) {
 
         if (object instanceof GameStartedCheckRequest){
-            if (games.containsKey(((GameStartedCheckRequest) object).gameID)) {
-                connection.sendTCP(new GameStartedCheckResponse(games.get(((GameStartedCheckRequest) object).gameID).isStarted()));
-            }
+            ServerGame game = games.get(999L);
+            connection.sendTCP(new GameStartedCheckResponse(game.isStarted()));
+            //if (games.containsKey(((GameStartedCheckRequest) object).gameID)) {
+            //    connection.sendTCP(new GameStartedCheckResponse(games.get(((GameStartedCheckRequest) object).gameID).isStarted()));
+           // }
         }
 
         if (object instanceof GameCreateRequest){
@@ -82,14 +85,16 @@ public class ScopeServer  extends  Listener implements Disposable {
         }
 
         if (object instanceof PlayerBroadCast) {
-            sendToAllPlayersOfGameTCP(((PlayerBroadCast) object).getClientID(), ((PlayerBroadCast) object).getGameID(), object);
+            //sendToAllPlayersOfGameTCP(((PlayerBroadCast) object).getClientID(), ((PlayerBroadCast) object).getGameID(), object);
+            sendToAllPlayersOfGameTCP(((PlayerBroadCast) object).getClientID(), 999L, object);
         }
     }
 
     private void handleGameObjectBroadCast(Connection connection, Object object){
-        long gameID = ((GameObjectBroadCast) object).getGameID();
+        //long gameID = ((GameObjectBroadCast) object).getGameID();
+        long gameID = 999;
         long clientID = ((GameObjectBroadCast) object).getClientID();
-        System.out.println("Broadcasting Event for game: " + gameID);
+        //System.out.println("Broadcasting Event for game: " + gameID + " clientID " + clientID);
 
         if (object instanceof MovementBroadCast) {
             sendToAllPlayersOfGameUDP(clientID, gameID, object);
@@ -101,9 +106,12 @@ public class ScopeServer  extends  Listener implements Disposable {
 
     private void handleJoinRequest(Connection connection, Object object){
         System.out.println("Joining Game " + ((JoinRequest) object).getGameID());
-        ServerGame game = games.get(((JoinRequest) object).getGameID());
+        long gameID = 999;
+        //ServerGame game = games.get(((JoinRequest) object).getGameID());
+        ServerGame game = games.get(gameID);
 
-        JoinedResponse response = new JoinedResponse(game.getID());
+        //JoinedResponse response = new JoinedResponse(game.getID());
+        JoinedResponse response = new JoinedResponse(gameID);
 
         if (game.getPlayers().size() < game.getPlayerCount()) {
             game.getPlayers().put(((JoinRequest) object).getClientID(), connection);
@@ -143,6 +151,7 @@ public class ScopeServer  extends  Listener implements Disposable {
 
     public void sendToAllPlayersOfGameUDP(long clientID, long gameID, Object message ){
         ServerGame game = games.get(gameID);
+        System.out.println("UDP Broadcast from " + clientID);
         if (game != null && game.isStarted()) {
             for (Map.Entry<Long, Connection> entry : game.getPlayers().entrySet()) {
                 if (entry.getKey() != clientID){
@@ -153,7 +162,7 @@ public class ScopeServer  extends  Listener implements Disposable {
     }
 
     public void sendToAllPlayersOfGameTCP(long clientID, long gameID, Object message ){
-        System.out.println("Sending to Game " + gameID);
+        System.out.println("TCP Broadcast from " + clientID);
         ServerGame game = games.get(gameID);
         if (game != null && game.isStarted()) {
             for (Map.Entry<Long, Connection> entry : game.getPlayers().entrySet()) {
@@ -190,7 +199,7 @@ public class ScopeServer  extends  Listener implements Disposable {
 
         game.setStarted(true);
         System.out.println("Starting Game " + game.getID());
-        sendToAllPlayersOfGameTCP(-1, game.getID(), new GameStartedResponse());
+        sendToAllPlayersOfGameTCP(-1L, game.getID(), new GameStartedResponse());
     }
 
 }

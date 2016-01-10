@@ -11,7 +11,6 @@ public class GameObjectBroadCast extends BroadcastRequest {
 
     public GameObjectBroadCast(long clientID, long timeStamp, long gameID, GameObject object ) {
         super(clientID, timeStamp, gameID);
-        System.out.println("Broadcast with gameID: " + gameID);
         this.object = object;
     }
 
