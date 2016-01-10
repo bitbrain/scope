@@ -20,6 +20,7 @@ import nl.fontys.scope.Config;
 import nl.fontys.scope.ScopeGame;
 import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.assets.Assets;
+import nl.fontys.scope.core.World;
 import nl.fontys.scope.core.controller.CameraRotatingController;
 import nl.fontys.scope.core.controller.LightingController;
 import nl.fontys.scope.core.controller.RotationController;
@@ -91,6 +92,12 @@ public class MenuScreen extends AbstractScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 setScreen(new JoinGameScreen(game));
+            }
+        });
+        menu.add("singleplayer", new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                setScreen(new IngameScreen(game, new World(), false));
             }
         });
         layout.add(menu).padBottom(30f).row();
