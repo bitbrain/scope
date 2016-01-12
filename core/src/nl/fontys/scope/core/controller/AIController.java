@@ -72,7 +72,7 @@ public class AIController implements GameObjectController {
 
     private void handleEnergy(GameObject thisObject) {
         moveToTarget(thisObject, target);
-        if (lastTargetDistance < 40f) {
+        if (lastTargetDistance < 20f) {
             target = null;
             lastFindDistance = Float.MAX_VALUE;
         }
@@ -80,7 +80,7 @@ public class AIController implements GameObjectController {
 
     private void handleSphere(GameObject thisObject) {
         moveToTarget(thisObject, target);
-        if (lastTargetDistance < 40f) {
+        if (lastTargetDistance < 2f) {
             target = null;
             lastFindDistance = Float.MAX_VALUE;
         }

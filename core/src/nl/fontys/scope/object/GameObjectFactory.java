@@ -72,7 +72,7 @@ public class GameObjectFactory {
         object.setType(GameObjectType.ENERGY);
         object.setPosition(x, y, z);
         object.setCollisionScale(2f);
-        object.setScale(6.5f);
+        object.setScale(2.5f);
         object.setPhysics(false);
         world.addController(object, new ParticleEffectController(Assets.ParticleEffects.ENERGY));
         return object;
