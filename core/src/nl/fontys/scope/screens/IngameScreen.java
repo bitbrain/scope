@@ -10,6 +10,9 @@ import java.util.Iterator;
 
 import nl.fontys.scope.ScopeGame;
 import nl.fontys.scope.controls.ControllerManager;
+import nl.fontys.scope.controls.KeyboardIngameSupport;
+import nl.fontys.scope.controls.ShieldIngameControllerSupport;
+import nl.fontys.scope.controls.XBoxIngameControllerSupport;
 import nl.fontys.scope.core.Arena;
 import nl.fontys.scope.core.GameLogicHandler;
 import nl.fontys.scope.core.GameStats;
@@ -20,9 +23,6 @@ import nl.fontys.scope.core.controller.CameraTrackingController;
 import nl.fontys.scope.core.controller.ShipController;
 import nl.fontys.scope.event.EventType;
 import nl.fontys.scope.event.Events;
-import nl.fontys.scope.graphics.FX;
-import nl.fontys.scope.networking.ScopeClient;
-import nl.fontys.scope.networking.ScopeServer;
 import nl.fontys.scope.ui.DebugWidget;
 import nl.fontys.scope.ui.GameProgressWidget;
 import nl.fontys.scope.ui.PlayerInfoWidget;
@@ -37,6 +37,8 @@ public class IngameScreen extends AbstractScreen {
 
     private CameraTrackingController camController;
 
+    private KeyboardIngameSupport keyboard;
+
     private boolean debug;
 
     private DebugWidget debugWidget;
@@ -48,8 +50,6 @@ public class IngameScreen extends AbstractScreen {
     private TooltipController tooltipController;
 
     private PlayerManager playerManager;
-
-    private ControllerManager controllerManager;
 
     // Todo: synchronize stats over the network
     private GameStats stats = new GameStats();
@@ -78,7 +78,9 @@ public class IngameScreen extends AbstractScreen {
         world.setRestrictor(arena.getRestrictor());
         logicHandler = new GameLogicHandler(world, factory, arena, playerManager);
         tooltipController = new TooltipController(playerManager);
-        controllerManager = new ControllerManager(controller);
+        controllerManager.registerSupport(new XBoxIngameControllerSupport(controller));
+        controllerManager.registerSupport(new ShieldIngameControllerSupport(controller));
+        keyboard = new KeyboardIngameSupport(controller);
         if (initializer != null) {
             initializer.initialize(this);
         }
@@ -92,6 +94,7 @@ public class IngameScreen extends AbstractScreen {
     @Override
     protected void onUpdate(float delta) {
         controllerManager.update(delta);
+        keyboard.update(delta);
         // Input handling
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             setScreen(new MenuScreen(game));

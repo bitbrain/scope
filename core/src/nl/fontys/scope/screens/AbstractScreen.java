@@ -20,6 +20,7 @@ import aurelienribon.tweenengine.TweenManager;
 import nl.fontys.scope.Config;
 import nl.fontys.scope.ScopeGame;
 import nl.fontys.scope.audio.SoundManager;
+import nl.fontys.scope.controls.ControllerManager;
 import nl.fontys.scope.event.Events;
 import nl.fontys.scope.graphics.FX;
 import nl.fontys.scope.graphics.ParticleManager;
@@ -52,6 +53,8 @@ public abstract class AbstractScreen implements Screen {
 
     protected Events events = Events.getInstance();
 
+    protected ControllerManager controllerManager;
+
     public AbstractScreen(ScopeGame game, World world) {
         this.game = game;
         this.world = world;
@@ -73,6 +76,7 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public final void show() {
+        controllerManager = new ControllerManager();
         tweenManager = new TweenManager();
         baseShaderManager = ShaderManager.getBaseInstance();
         factory = new GameObjectFactory(world);

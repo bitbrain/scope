@@ -21,6 +21,8 @@ import nl.fontys.scope.Config;
 import nl.fontys.scope.ScopeGame;
 import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.assets.Assets;
+import nl.fontys.scope.controls.KeyboardMenuSupport;
+import nl.fontys.scope.controls.XboxMenuControllerSupport;
 import nl.fontys.scope.core.Player;
 import nl.fontys.scope.core.PlayerManager;
 import nl.fontys.scope.core.World;
@@ -40,7 +42,7 @@ import nl.fontys.scope.util.Colors;
 public class MenuScreen extends AbstractScreen {
 
     private ShaderManager shaderManager = ShaderManager.getBaseInstance();
-    private ButtonMenu menu;
+    private KeyboardMenuSupport keyboard;
 
     public MenuScreen(ScopeGame game) {
         super(game);
@@ -69,6 +71,7 @@ public class MenuScreen extends AbstractScreen {
 
     @Override
     protected void onUpdate(float delta) {
+        keyboard.update(delta);
         Music music = AssetManager.getMusic(Assets.Musics.MAIN_THEME);
         if (!music.isPlaying()) {
             music.setLooping(true);
@@ -76,13 +79,6 @@ public class MenuScreen extends AbstractScreen {
         }
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
-        }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
-            menu.checkNext();
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
-            menu.checkPrevious();
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-            menu.clickChecked();
         }
     }
 
@@ -93,7 +89,7 @@ public class MenuScreen extends AbstractScreen {
         Image logo = new Image(new Sprite(AssetManager.getTexture(Assets.Textures.LOGO)));
         layout.center().add(logo).padBottom(20f);
         layout.row();
-        menu = new ButtonMenu(tweenManager, Controllers.getControllers().size > 0);
+        ButtonMenu menu = new ButtonMenu(tweenManager, Controllers.getControllers().size > 0);
         menu.add(Bundle.general.get(Messages.MENU_NEW_GAME), new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -132,5 +128,7 @@ public class MenuScreen extends AbstractScreen {
         layout.row();
         layout.add(credits);
         stage.addActor(layout);
+        keyboard = new KeyboardMenuSupport(menu);
+        controllerManager.registerSupport(new XboxMenuControllerSupport(menu));
     }
 }

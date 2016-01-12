@@ -28,10 +28,12 @@ abstract class ControllerSupport implements ControllerListener {
     }
 
     public final void update(float delta) {
-        for (Map.Entry<Integer, MoveableAction> action : actionMapping.entrySet()) {
-            int button = action.getKey();
-            if (isButtonPressed(button)) {
-                action.getValue().act(moveable);
+        if (moveable != null) {
+            for (Map.Entry<Integer, MoveableAction> action : actionMapping.entrySet()) {
+                int button = action.getKey();
+                if (isButtonPressed(button)) {
+                    action.getValue().act(moveable);
+                }
             }
         }
         onUpdate();
@@ -58,6 +60,7 @@ abstract class ControllerSupport implements ControllerListener {
         if (!isSupported(controller)) {
             return false;
         }
+        onButtonClick(axisCode, value);
         axisMove.put(axisCode, value);
         return false;
     }
@@ -69,6 +72,7 @@ abstract class ControllerSupport implements ControllerListener {
         }
         if (validButtonCode(buttonCode)) {
             button[buttonCode] = true;
+            onButtonClick(buttonCode, 0f);
             return true;
         } else {
             return false;
@@ -93,6 +97,7 @@ abstract class ControllerSupport implements ControllerListener {
         if (!isSupported(controller)) {
             return false;
         }
+        povMoved(value);
         return false;
     }
 
@@ -135,5 +140,13 @@ abstract class ControllerSupport implements ControllerListener {
         return value != null ? value : 0f;
     }
 
+    protected void onButtonClick(int code, float strength) {
+        // noOp
+    }
+
     protected abstract boolean isSupported(Controller controller);
+
+    protected void povMoved(PovDirection direction) {
+        // noOp
+    }
 }
