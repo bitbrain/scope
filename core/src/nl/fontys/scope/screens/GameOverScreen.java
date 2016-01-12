@@ -6,15 +6,18 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 import nl.fontys.scope.ScopeGame;
+import nl.fontys.scope.controls.KeyboardMenuSupport;
+import nl.fontys.scope.controls.XboxMenuControllerSupport;
 import nl.fontys.scope.core.GameStats;
 import nl.fontys.scope.core.PlayerManager;
 import nl.fontys.scope.core.controller.CameraRotatingController;
 import nl.fontys.scope.i18n.Bundle;
 import nl.fontys.scope.i18n.Messages;
 import nl.fontys.scope.object.GameObject;
+import nl.fontys.scope.ui.ExitHandler;
 import nl.fontys.scope.ui.Styles;
 
-public class GameOverScreen extends AbstractScreen {
+public class GameOverScreen extends AbstractScreen implements ExitHandler {
 
     private GameStats stats;
 
@@ -35,7 +38,7 @@ public class GameOverScreen extends AbstractScreen {
     protected void onUpdate(float delta) {
         if (Gdx.input.isTouched() && !touched) {
             touched = true;
-            setScreen(new MenuScreen(game));
+            exit();
         }
     }
 
@@ -54,5 +57,15 @@ public class GameOverScreen extends AbstractScreen {
         } else {
             return Bundle.general.get(Messages.LOSS);
         }
+    }
+
+    @Override
+    protected ExitHandler getExitHandler() {
+        return this;
+    }
+
+    @Override
+    public void exit() {
+        setScreen(new MenuScreen(game));
     }
 }

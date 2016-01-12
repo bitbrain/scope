@@ -35,14 +35,14 @@ import nl.fontys.scope.i18n.Bundle;
 import nl.fontys.scope.i18n.Messages;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.ui.ButtonMenu;
+import nl.fontys.scope.ui.ExitHandler;
 import nl.fontys.scope.ui.Styles;
 import nl.fontys.scope.ui.Tooltip;
 import nl.fontys.scope.util.Colors;
 
-public class MenuScreen extends AbstractScreen {
+public class MenuScreen extends AbstractScreen implements ExitHandler {
 
-    private ShaderManager shaderManager = ShaderManager.getBaseInstance();
-    private KeyboardMenuSupport keyboard;
+    private ButtonMenu menu;
 
     public MenuScreen(ScopeGame game) {
         super(game);
@@ -71,14 +71,10 @@ public class MenuScreen extends AbstractScreen {
 
     @Override
     protected void onUpdate(float delta) {
-        keyboard.update(delta);
         Music music = AssetManager.getMusic(Assets.Musics.MAIN_THEME);
         if (!music.isPlaying()) {
             music.setLooping(true);
             music.play();
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-            Gdx.app.exit();
         }
     }
 
@@ -89,7 +85,7 @@ public class MenuScreen extends AbstractScreen {
         Image logo = new Image(new Sprite(AssetManager.getTexture(Assets.Textures.LOGO)));
         layout.center().add(logo).padBottom(20f);
         layout.row();
-        ButtonMenu menu = new ButtonMenu(tweenManager, Controllers.getControllers().size > 0);
+        menu = new ButtonMenu(tweenManager, Controllers.getControllers().size > 0);
         menu.add(Bundle.general.get(Messages.MENU_NEW_GAME), new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -128,7 +124,20 @@ public class MenuScreen extends AbstractScreen {
         layout.row();
         layout.add(credits);
         stage.addActor(layout);
-        keyboard = new KeyboardMenuSupport(menu);
-        controllerManager.registerSupport(new XboxMenuControllerSupport(menu));
+    }
+
+    @Override
+    public void exit() {
+        Gdx.app.exit();
+    }
+
+    @Override
+    protected ButtonMenu getMenu() {
+        return menu;
+    }
+
+    @Override
+    protected ExitHandler getExitHandler() {
+        return this;
     }
 }

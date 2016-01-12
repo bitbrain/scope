@@ -15,9 +15,10 @@ import nl.fontys.scope.event.EventType;
 import nl.fontys.scope.event.Events;
 import nl.fontys.scope.networking.ScopeClient;
 import nl.fontys.scope.object.GameObject;
+import nl.fontys.scope.ui.ExitHandler;
 import nl.fontys.scope.ui.Styles;
 
-public class JoiningGameScreen extends AbstractScreen {
+public class JoiningGameScreen extends AbstractScreen implements ExitHandler {
 
     private IngameScreen ingameScreen;
 
@@ -43,10 +44,7 @@ public class JoiningGameScreen extends AbstractScreen {
 
     @Override
     protected void onUpdate(float delta) {
-        // Input handling
-        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-            setScreen(new MenuScreen(game));
-        }
+
     }
 
     @Override
@@ -83,12 +81,20 @@ public class JoiningGameScreen extends AbstractScreen {
 
     @Handler
     public void onEvent(Events.GdxEvent event) {
-        System.out.println("THIS IS " + event.getType());
         if (event.isTypeOf(EventType.GAME_START)) {
-            System.out.println("Starting Game Event");
             keepAliveThread.stop();
             game.getClient().setStarted(true);
             setScreen(ingameScreen);
         }
+    }
+
+    @Override
+    public void exit() {
+        setScreen(new MenuScreen(game));
+    }
+
+    @Override
+    protected ExitHandler getExitHandler() {
+        return this;
     }
 }

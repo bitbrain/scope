@@ -21,12 +21,16 @@ import nl.fontys.scope.Config;
 import nl.fontys.scope.ScopeGame;
 import nl.fontys.scope.audio.SoundManager;
 import nl.fontys.scope.controls.ControllerManager;
+import nl.fontys.scope.controls.KeyboardMenuSupport;
+import nl.fontys.scope.controls.XboxMenuControllerSupport;
 import nl.fontys.scope.event.Events;
 import nl.fontys.scope.graphics.FX;
 import nl.fontys.scope.graphics.ParticleManager;
 import nl.fontys.scope.graphics.ShaderManager;
 import nl.fontys.scope.object.GameObjectFactory;
 import nl.fontys.scope.core.World;
+import nl.fontys.scope.ui.ButtonMenu;
+import nl.fontys.scope.ui.ExitHandler;
 import nl.fontys.scope.ui.Tooltip;
 
 public abstract class AbstractScreen implements Screen {
@@ -54,6 +58,8 @@ public abstract class AbstractScreen implements Screen {
     protected Events events = Events.getInstance();
 
     protected ControllerManager controllerManager;
+
+    private KeyboardMenuSupport keyboard;
 
     public AbstractScreen(ScopeGame game, World world) {
         this.game = game;
@@ -91,6 +97,8 @@ public abstract class AbstractScreen implements Screen {
     @Override
     public final void render(float delta) {
         onUpdate(delta);
+        keyboard.update(delta);
+        controllerManager.update(delta);
         tweenManager.update(delta);
         Gdx.gl.glClearColor(0.02f, 0f, 0.05f, 1f);
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -153,6 +161,9 @@ public abstract class AbstractScreen implements Screen {
             tooltip.init(stage, cam2D, tweenManager);
             fx.init(tweenManager, world, cam2D);
             onCreateStage(stage);
+
+            keyboard = new KeyboardMenuSupport(getMenu(), getExitHandler());
+            controllerManager.registerSupport(new XboxMenuControllerSupport(getMenu(), getExitHandler()));
             fx.fadeIn(fadeInTime, TweenEquations.easeInCubic);
         }
         updateFrameBuffer(width, height);
@@ -206,5 +217,13 @@ public abstract class AbstractScreen implements Screen {
             uiBuffer.dispose();
             uiBuffer = new FrameBuffer(Pixmap.Format.RGBA8888,width, height, false);
         }
+    }
+
+    protected ButtonMenu getMenu() {
+        return null;
+    }
+
+    protected ExitHandler getExitHandler() {
+        return null;
     }
 }

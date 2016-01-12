@@ -24,12 +24,13 @@ import nl.fontys.scope.core.controller.ShipController;
 import nl.fontys.scope.event.EventType;
 import nl.fontys.scope.event.Events;
 import nl.fontys.scope.ui.DebugWidget;
+import nl.fontys.scope.ui.ExitHandler;
 import nl.fontys.scope.ui.GameProgressWidget;
 import nl.fontys.scope.ui.PlayerInfoWidget;
 import nl.fontys.scope.ui.FocusBarWidget;
 import nl.fontys.scope.ui.TooltipController;
 
-public class IngameScreen extends AbstractScreen {
+public class IngameScreen extends AbstractScreen implements ExitHandler {
 
     public interface IngameInitializer {
         void initialize(IngameScreen screen);
@@ -93,12 +94,7 @@ public class IngameScreen extends AbstractScreen {
 
     @Override
     protected void onUpdate(float delta) {
-        controllerManager.update(delta);
         keyboard.update(delta);
-        // Input handling
-        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-            setScreen(new MenuScreen(game));
-        }
     }
 
     @Override
@@ -134,5 +130,15 @@ public class IngameScreen extends AbstractScreen {
             stats.winner = (Player) event.getPrimaryParam();
             setScreen(new GameOverScreen(game, stats));
         }
+    }
+
+    @Override
+    protected ExitHandler getExitHandler() {
+        return this;
+    }
+
+    @Override
+    public void exit() {
+        setScreen(new MenuScreen(game));
     }
 }

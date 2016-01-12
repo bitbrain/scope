@@ -13,6 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import nl.fontys.scope.Config;
 import nl.fontys.scope.ScopeGame;
+import nl.fontys.scope.controls.KeyboardMenuSupport;
+import nl.fontys.scope.controls.XboxMenuControllerSupport;
 import nl.fontys.scope.core.World;
 import nl.fontys.scope.core.controller.CameraRotatingController;
 import nl.fontys.scope.i18n.Bundle;
@@ -21,13 +23,15 @@ import nl.fontys.scope.networking.ScopeClient;
 import nl.fontys.scope.networking.ScopeServer;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.ui.ButtonMenu;
+import nl.fontys.scope.ui.ExitHandler;
 import nl.fontys.scope.ui.Styles;
 import nl.fontys.scope.ui.validation.ValidationContext;
 import nl.fontys.scope.ui.validation.ValidationTextField;
 
-public class CreateGameScreen extends AbstractScreen {
+public class CreateGameScreen extends AbstractScreen implements ExitHandler {
 
     private ValidationTextField nameText;
+    private ButtonMenu menu;
 
     public CreateGameScreen(ScopeGame game) {
         super(game);
@@ -41,10 +45,6 @@ public class CreateGameScreen extends AbstractScreen {
 
     @Override
     protected void onUpdate(float delta) {
-        // Input handling
-        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-            setScreen(new MenuScreen(game));
-        }
     }
 
     @Override
@@ -54,7 +54,7 @@ public class CreateGameScreen extends AbstractScreen {
         Label caption = new Label(Bundle.general.get(Messages.MENU_NEW_GAME), Styles.LABEL_CAPTION);
         layout.add(caption).padBottom(55f).row();
 
-        ButtonMenu menu = new ButtonMenu(tweenManager);
+        menu = new ButtonMenu(tweenManager);
         Button submit = menu.add(Bundle.general.get(Messages.GAME_CREATE), new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -76,5 +76,20 @@ public class CreateGameScreen extends AbstractScreen {
         layout.add(context.getLabel()).padTop(10f).row();
         layout.add(menu).padTop(30f).row();
         stage.addActor(layout);
+    }
+
+    @Override
+    protected ButtonMenu getMenu() {
+        return menu;
+    }
+
+    @Override
+    protected ExitHandler getExitHandler() {
+        return this;
+    }
+
+    @Override
+    public void exit() {
+        setScreen(new MenuScreen(game));
     }
 }

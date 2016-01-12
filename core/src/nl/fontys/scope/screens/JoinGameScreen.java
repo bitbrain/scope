@@ -21,13 +21,15 @@ import nl.fontys.scope.i18n.Messages;
 import nl.fontys.scope.networking.ScopeClient;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.ui.ButtonMenu;
+import nl.fontys.scope.ui.ExitHandler;
 import nl.fontys.scope.ui.Styles;
 import nl.fontys.scope.ui.validation.ValidationContext;
 import nl.fontys.scope.ui.validation.ValidationTextField;
 
-public class JoinGameScreen extends AbstractScreen {
+public class JoinGameScreen extends AbstractScreen implements ExitHandler {
 
     private ValidationTextField nameText;
+    private ButtonMenu menu;
 
     public JoinGameScreen(ScopeGame game) {
         super(game);
@@ -41,10 +43,7 @@ public class JoinGameScreen extends AbstractScreen {
 
     @Override
     protected void onUpdate(float delta) {
-        // Input handling
-        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-            setScreen(new MenuScreen(game));
-        }
+
     }
 
     @Override
@@ -53,7 +52,7 @@ public class JoinGameScreen extends AbstractScreen {
         layout.setFillParent(true);
         Label caption = new Label(Bundle.general.get(Messages.MENU_JOIN_GAME), Styles.LABEL_CAPTION);
         layout.add(caption).padBottom(55f).row();
-        ButtonMenu menu = new ButtonMenu(tweenManager);
+        menu = new ButtonMenu(tweenManager);
         Button submit = menu.add(Bundle.general.get(Messages.GAME_JOIN), new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -77,5 +76,20 @@ public class JoinGameScreen extends AbstractScreen {
         layout.add(context.getLabel()).padTop(10f).row();
         layout.add(menu).padTop(30f).row();
         stage.addActor(layout);
+    }
+
+    @Override
+    public void exit() {
+        setScreen(new MenuScreen(game));
+    }
+
+    @Override
+    protected ExitHandler getExitHandler() {
+        return this;
+    }
+
+    @Override
+    public ButtonMenu getMenu() {
+        return menu;
     }
 }
