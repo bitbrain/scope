@@ -54,10 +54,16 @@ public class GameLogicHandler implements Disposable {
         Player currentPlayer = PlayerManager.getCurrent();
         boolean isCurrentShip = objectA.equals(currentPlayer.getShip());
         Player aiPlayer = playerManager.getPlayerByShip(objectA);
-        if (aiPlayer != null) {
+        if (aiPlayer != null && aiPlayer.isAI()) {
             currentPlayer = aiPlayer;
             isCurrentShip = true;
+        } else {
+            aiPlayer = playerManager.getPlayerByShip(objectB);
+            if (aiPlayer != null && aiPlayer.isAI()) {
+                currentPlayer = aiPlayer;
+            }
         }
+
         if (isCurrentShip && GameObjectType.ENERGY.equals(objectB.getType())) {
             currentPlayer.addFocus();
             world.remove(objectB);

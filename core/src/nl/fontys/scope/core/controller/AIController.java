@@ -48,7 +48,7 @@ public class AIController implements GameObjectController {
         //if (other.getType().equals(GameObjectType.SHIP) && getDistanceTo(other) < nearestShipDistance) {
         //    nearestShipDistance = getDistanceTo(other);
         //}
-        if (player.getFocusProgress() > 1f && other.getType().equals(GameObjectType.SPHERE)) {
+        if (player.getFocusProgress() >= 1f && other.getType().equals(GameObjectType.SPHERE)) {
             lastFindDistance = getDistanceTo(other);
             target = other;
         } else if (target == null && getDistanceTo(other) < lastFindDistance && !other.getType().equals(GameObjectType.SPHERE) && !other.getType().equals(GameObjectType.SHIP)) {
@@ -95,8 +95,10 @@ public class AIController implements GameObjectController {
         tmp.set(targetObject.getPosition()).sub(thisObject.getPosition());
         lastTargetDistance = tmp.len();
         tmp.nor();
-        mat.set(tmp.x, tmp.y, tmp.z, 0f);
         thisObject.getVelocity().add(tmp.scl(2.6f));
+        tmp.set(thisObject.getVelocity());
+        tmp.nor();
+        mat.set(tmp.x, tmp.y, tmp.z, 0f);
         thisObject.getOrientation().setFromMatrix(mat);
     }
 
