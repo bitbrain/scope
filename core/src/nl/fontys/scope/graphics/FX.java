@@ -23,6 +23,7 @@ import aurelienribon.tweenengine.TweenManager;
 import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.audio.SoundManager;
 import nl.fontys.scope.core.PlayerManager;
+import nl.fontys.scope.core.controller.ParticleEffectController;
 import nl.fontys.scope.event.EventType;
 import nl.fontys.scope.event.Events;
 import nl.fontys.scope.object.GameObject;
@@ -176,6 +177,9 @@ public final class FX {
             if (!PlayerManager.getCurrent().getShip().equals(playerShip)) {
                 explosion(playerShip.getPosition().cpy());
             }
+        } else if (event.isTypeOf(EventType.ON_SHOT)) {
+            Vector3 pos = (Vector3) event.getPrimaryParam();
+            ParticleManager.getInstance().create(pos, Assets.ParticleEffects.HIT);
         }
     }
 }

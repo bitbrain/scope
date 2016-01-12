@@ -119,7 +119,8 @@ public final class Assets {
         EXPLOSION("particles/explosion.p"),
         ENERGY("particles/energy.p"),
         POWER("particles/power.p"),
-        SPHERE("particles/sphere.p");
+        SPHERE("particles/sphere.p"),
+        HIT("particles/hit.p");
 
         private String path;
 
