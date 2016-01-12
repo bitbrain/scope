@@ -3,6 +3,7 @@ package nl.fontys.scope.ui;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -53,7 +54,7 @@ public class ButtonMenu extends Table {
 
             @Override
             public void setChecked(boolean isChecked) {
-                if (isChecked() && !isChecked) {
+                if (!isChecked) {
                     tweenManager.killTarget(this);
                     Tween.to(this.getColor(), ColorTween.A, 1.0f).target(Config.MENU_ALPHA).ease(TweenEquations.easeOutCubic).start(tweenManager);
                 } else {
@@ -143,7 +144,13 @@ public class ButtonMenu extends Table {
     public void clickChecked() {
         if (currentCheckIndex >= 0f && currentCheckIndex < buttons.size()) {
             Button button = buttons.get(currentCheckIndex);
-            button.getClickListener().clicked(new InputEvent(), 0f, 0f);
+            for (EventListener l : button.getCaptureListeners()) {
+                if (l instanceof ClickListener) {
+                    ClickListener cl = (ClickListener)l;
+                    cl.clicked(new InputEvent(), 0f, 0f);
+                }
+            }
+            button.setChecked(true);
         }
     }
 
