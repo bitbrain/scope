@@ -105,6 +105,8 @@ public class ButtonMenu extends Table {
                     tweenManager.killTarget(button);
                     Tween.to(button.getColor(), ColorTween.A, 1.0f).target(1f).ease(TweenEquations.easeOutCubic).start(tweenManager);
                     SoundManager.getInstance().play(Assets.Sounds.MENU_HOVER, 0.4f, 1f, 0f);
+                    setChecked(buttons.indexOf(button));
+
                 }
             }
 
