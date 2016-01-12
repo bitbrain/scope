@@ -95,10 +95,7 @@ public class AIController implements GameObjectController {
         tmp.set(targetObject.getPosition()).sub(thisObject.getPosition());
         lastTargetDistance = tmp.len();
         tmp.nor();
-        mat.set(0f, 0f, 0f, 0f);
-        mat.rotate(Vector3.X, tmp.x);
-        mat.rotate(Vector3.Y, tmp.y);
-        mat.rotate(Vector3.Z, tmp.z);
+        mat.set(tmp.x, tmp.y, tmp.z, 0f);
         thisObject.getVelocity().add(tmp.scl(2.6f));
         thisObject.getOrientation().setFromMatrix(mat);
     }

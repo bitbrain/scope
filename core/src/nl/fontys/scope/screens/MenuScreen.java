@@ -86,18 +86,6 @@ public class MenuScreen extends AbstractScreen implements ExitHandler {
         layout.center().add(logo).padBottom(20f);
         layout.row();
         menu = new ButtonMenu(tweenManager, Controllers.getControllers().size > 0);
-        menu.add(Bundle.general.get(Messages.MENU_NEW_GAME), new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                setScreen(new CreateGameScreen(game));
-            }
-        });
-        menu.add(Bundle.general.get(Messages.MENU_JOIN_GAME), new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                setScreen(new JoinGameScreen(game));
-            }
-        });
         menu.add("singleplayer", new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -111,6 +99,18 @@ public class MenuScreen extends AbstractScreen implements ExitHandler {
                     }
                 });
                 setScreen(screen);
+            }
+        });
+        menu.add(Bundle.general.get(Messages.MENU_NEW_GAME), new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                setScreen(new CreateGameScreen(game));
+            }
+        });
+        menu.add(Bundle.general.get(Messages.MENU_JOIN_GAME), new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                setScreen(new JoinGameScreen(game));
             }
         });
         layout.add(menu).padBottom(30f).row();
