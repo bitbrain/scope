@@ -3,6 +3,7 @@ package nl.fontys.scope.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
@@ -39,6 +40,7 @@ import nl.fontys.scope.util.Colors;
 public class MenuScreen extends AbstractScreen {
 
     private ShaderManager shaderManager = ShaderManager.getBaseInstance();
+    private ButtonMenu menu;
 
     public MenuScreen(ScopeGame game) {
         super(game);
@@ -75,6 +77,13 @@ public class MenuScreen extends AbstractScreen {
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
         }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
+            menu.checkNext();
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+            menu.checkPrevious();
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+            menu.clickChecked();
+        }
     }
 
     @Override
@@ -84,7 +93,7 @@ public class MenuScreen extends AbstractScreen {
         Image logo = new Image(new Sprite(AssetManager.getTexture(Assets.Textures.LOGO)));
         layout.center().add(logo).padBottom(20f);
         layout.row();
-        ButtonMenu menu = new ButtonMenu(tweenManager);
+        menu = new ButtonMenu(tweenManager, Controllers.getControllers().size > 0);
         menu.add(Bundle.general.get(Messages.MENU_NEW_GAME), new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {

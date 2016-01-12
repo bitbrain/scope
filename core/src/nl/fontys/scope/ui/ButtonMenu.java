@@ -8,7 +8,12 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Pools;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenEquations;
@@ -22,8 +27,19 @@ public class ButtonMenu extends Table {
 
     private TweenManager tweenManager;
 
+    private List<Button> buttons = new ArrayList<Button>();
+
+    private int currentCheckIndex = -1;
+
+    private boolean checkMode;
+
     public ButtonMenu(TweenManager tweenManager) {
+        this(tweenManager, false);
+    }
+
+    public ButtonMenu(TweenManager tweenManager, boolean checkMode) {
         this.tweenManager = tweenManager;
+        this.checkMode = checkMode;
         setTouchable(Touchable.childrenOnly);
     }
 
@@ -33,6 +49,19 @@ public class ButtonMenu extends Table {
             public void draw(Batch batch, float parentAlpha) {
                 ActorShadow.draw(batch, this);
                 super.draw(batch, parentAlpha);
+            }
+
+            @Override
+            public void setChecked(boolean isChecked) {
+                if (isChecked() && !isChecked) {
+                    tweenManager.killTarget(this);
+                    Tween.to(this.getColor(), ColorTween.A, 1.0f).target(Config.MENU_ALPHA).ease(TweenEquations.easeOutCubic).start(tweenManager);
+                } else {
+                    tweenManager.killTarget(this);
+                    Tween.to(this.getColor(), ColorTween.A, 1.0f).target(1f).ease(TweenEquations.easeOutCubic).start(tweenManager);
+                    SoundManager.getInstance().play(Assets.Sounds.MENU_HOVER, 0.4f, 1f, 0f);
+                }
+                super.setChecked(isChecked);
             }
         };
         button.setColor(new Color(1f, 1f, 1f, Config.MENU_ALPHA));
@@ -70,7 +99,7 @@ public class ButtonMenu extends Table {
 
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                if (!button.isDisabled()) {
+                if (!button.isDisabled() && !button.isChecked()) {
                     super.enter(event, x, y, pointer, fromActor);
                     tweenManager.killTarget(button);
                     Tween.to(button.getColor(), ColorTween.A, 1.0f).target(1f).ease(TweenEquations.easeOutCubic).start(tweenManager);
@@ -80,7 +109,7 @@ public class ButtonMenu extends Table {
 
             @Override
             public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-                if (!button.isDisabled()) {
+                if (!button.isDisabled() && !button.isChecked()) {
                     super.exit(event, x, y, pointer, toActor);
                     if (event.getRelatedActor() == null || (!event.getRelatedActor().equals(button) &&
                             event.getRelatedActor() instanceof TextButton)) {
@@ -90,6 +119,45 @@ public class ButtonMenu extends Table {
                 }
             }
         });
+        buttons.add(button);
+        validateCheckState();
         return button;
+    }
+
+    public void checkNext() {
+        int nextCheck = currentCheckIndex + 1;
+        if (nextCheck >= buttons.size()) {
+            nextCheck = 0;
+        }
+        setChecked(nextCheck);
+    }
+
+    public void checkPrevious() {
+        int previousCheck = currentCheckIndex - 1;
+        if (previousCheck < 0) {
+            previousCheck = buttons.size() - 1;
+        }
+        setChecked(previousCheck);
+    }
+
+    public void clickChecked() {
+        if (currentCheckIndex >= 0f && currentCheckIndex < buttons.size()) {
+            Button button = buttons.get(currentCheckIndex);
+            button.getClickListener().clicked(new InputEvent(), 0f, 0f);
+        }
+    }
+
+    private void validateCheckState() {
+        if (checkMode && buttons.size() == 1) {
+            setChecked(0);
+        }
+    }
+
+    private void setChecked(int index) {
+        for (int i = 0; i < buttons.size(); ++i) {
+            Button button = buttons.get(i);
+            button.setChecked(i == index);
+        }
+        currentCheckIndex = index;
     }
 }
