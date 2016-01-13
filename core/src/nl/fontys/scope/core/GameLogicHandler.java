@@ -67,7 +67,9 @@ public class GameLogicHandler implements Disposable {
         if (isCurrentShip && GameObjectType.ENERGY.equals(objectB.getType())) {
             currentPlayer.addFocus();
             world.remove(objectB);
-            arena.spawnRandomEnergy(world);
+            if (objectB.getExternalId().isEmpty()) {
+                arena.spawnRandomEnergy(world);
+            }
         } else if (GameObjectType.SPHERE.equals(objectA.getType()) && full && objectB.equals(currentPlayer.getShip())) {
             currentPlayer.addPoints(currentPlayer.clearFocus() * Config.POINTS_PER_ENERGY);
         } else if (GameObjectType.SHOT.equals(objectA.getType()) && GameObjectType.SPHERE.equals(objectB.getType())) {
@@ -94,7 +96,8 @@ public class GameLogicHandler implements Disposable {
             Vector3 pos = arena.spawnManager.fetchAvailableSpawnPoint();
             int energyCount = player.clearFocus();
             for (int i = 0; i < energyCount; ++i) {
-                factory.createEnergy(currentPos.x, currentPos.y, currentPos.z);
+                GameObject energy = factory.createEnergy(currentPos.x, currentPos.y, currentPos.z);
+                energy.setExternalId(object.getId());
             }
             object.setPosition(pos.x, pos.y, pos.z);
         }
