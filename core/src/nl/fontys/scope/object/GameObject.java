@@ -31,6 +31,8 @@ public class GameObject implements Pool.Poolable, Serializable {
 
     private Color color;
 
+    private String externalId;
+
     private boolean physics;
 
     public void set(GameObject object) {
@@ -44,6 +46,7 @@ public class GameObject implements Pool.Poolable, Serializable {
         this.color = object.color;
         this.physics = object.physics;
         this.collisionScale = object.collisionScale;
+        this.externalId = object.externalId;
     }
 
     public float getScale() {
@@ -51,6 +54,14 @@ public class GameObject implements Pool.Poolable, Serializable {
     }
 
     public Color getColor() { return color; }
+
+    public String getExternalId() {
+        return externalId;
+    }
+
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
+    }
 
     public float getCollisionScale() {
         return collisionScale;
@@ -137,6 +148,7 @@ public class GameObject implements Pool.Poolable, Serializable {
         color = Color.WHITE.cpy();
         collisionScale = 0f;
         id = UUID.randomUUID().toString();
+        externalId = "";
     }
 
     @Override
