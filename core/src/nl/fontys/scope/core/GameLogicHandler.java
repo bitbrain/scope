@@ -74,7 +74,7 @@ public class GameLogicHandler implements Disposable {
             world.remove(objectA);
         }  else if (GameObjectType.SHOT.equals(objectA.getType()) && GameObjectType.SHIP.equals(objectB.getType())) {
             playerManager.getPlayerByShip(objectB).addDamage(0.1f);
-            events.fire(EventType.ON_SHOT, objectA.getPosition(), objectB);
+            events.fire(EventType.ON_SHOT, objectA.getPosition(), objectB, objectA.getExternalId());
             world.remove(objectA);
         } else if (full && GameObjectType.SHOT.equals(objectA.getType()) && GameObjectType.ENERGY.equals(objectB.getType())) {
             world.remove(objectA);

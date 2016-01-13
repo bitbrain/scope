@@ -29,7 +29,7 @@ public class EventType {
     // Is called whenever a player drops energy (param: Player, int)
     public static final String ENERGY_DROPPED = "energy_dropped";
 
-    // Is called when a player got shot (param: Vector3, GameObject)
+    // Is called when a player got shot (param: Vector3, GameObject, String)
     public static final String ON_SHOT = "on_shot";
 
     // Is called whenever a player gets destroyed (param: GameObject)

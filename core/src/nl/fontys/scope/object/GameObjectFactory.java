@@ -40,6 +40,7 @@ public class GameObjectFactory {
     public GameObject createShot(GameObject ship) {
         GameObject object = world.createGameObject();
         Vector3 pos = new Vector3(ship.getPosition()).add(new Vector3(20f, 0f, 0f).mul(ship.getOrientation()));
+        object.setExternalId(ship.getId());
         object.setPosition(pos.x, pos.y, pos.z);
         object.setVelocity(new Vector3(250f, 0f, 0f).mul(ship.getOrientation()));
         object.setOrientation(ship.getOrientation().x, ship.getOrientation().y, ship.getOrientation().z, ship.getOrientation().w);
