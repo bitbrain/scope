@@ -23,7 +23,7 @@ public class GameObjectFactory {
     public GameObject createShip(float x, float y, float z) {
         GameObject object = world.createGameObject();
         object.setType(GameObjectType.SHIP);
-        object.setCollisionScale(2f);
+        object.setCollisionScale(0f);
         object.setScale(1.65f);
         object.getColor().set(0.75f, 0.75f, 0.75f, 1f);
         ParticleEffectController c = new ParticleEffectController(Assets.ParticleEffects.POWER);
