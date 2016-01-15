@@ -6,7 +6,6 @@ import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.networking.ScopeClient;
 import nl.fontys.scope.networking.ScopeServer;
 import nl.fontys.scope.screens.AbstractScreen;
-import nl.fontys.scope.screens.IngameScreen;
 import nl.fontys.scope.screens.LoadingScreen;
 import nl.fontys.scope.screens.ScreenHandler;
 

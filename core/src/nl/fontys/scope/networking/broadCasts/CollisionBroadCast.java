@@ -1,7 +1,5 @@
 package nl.fontys.scope.networking.broadCasts;
 
-import com.badlogic.gdx.Game;
-
 import nl.fontys.scope.object.GameObject;
 
 public class CollisionBroadCast extends GameObjectBroadCast {

@@ -1,21 +1,17 @@
 package nl.fontys.scope.networking;
 
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Disposable;
 import com.esotericsoftware.kryo.Kryo;
-import com.esotericsoftware.kryonet.*;
+import com.esotericsoftware.kryonet.Connection;
+import com.esotericsoftware.kryonet.Listener;
+import com.esotericsoftware.kryonet.Server;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-
-import nl.fontys.scope.core.Player;
-import nl.fontys.scope.networking.broadCasts.CollisionBroadCast;
 import nl.fontys.scope.networking.broadCasts.GameObjectBroadCast;
 import nl.fontys.scope.networking.broadCasts.MovementBroadCast;
-import nl.fontys.scope.networking.broadCasts.ObjectBroadCast;
 import nl.fontys.scope.networking.broadCasts.PlayerBroadCast;
 import nl.fontys.scope.networking.requests.GameCreateRequest;
 import nl.fontys.scope.networking.requests.GameStartedCheckRequest;
@@ -25,10 +21,7 @@ import nl.fontys.scope.networking.responses.GameStartedCheckResponse;
 import nl.fontys.scope.networking.responses.GameStartedResponse;
 import nl.fontys.scope.networking.responses.GetGamesResponse;
 import nl.fontys.scope.networking.responses.JoinedResponse;
-
 import nl.fontys.scope.networking.serverobjects.ServerGame;
-import nl.fontys.scope.object.GameObject;
-import nl.fontys.scope.object.GameObjectType;
 
 public class ScopeServer  extends  Listener implements Disposable {
     private Server server;

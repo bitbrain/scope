@@ -21,7 +21,6 @@ import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.core.World;
 import nl.fontys.scope.graphics.FX;
-import nl.fontys.scope.graphics.LightingManager;
 import nl.fontys.scope.graphics.SharedEnvironmentCubemap;
 import nl.fontys.scope.i18n.Bundle;
 import nl.fontys.scope.i18n.Messages;

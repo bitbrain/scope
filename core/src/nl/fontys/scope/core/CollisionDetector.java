@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.collision.BoundingBox;
 
 import net.engio.mbassy.listener.Handler;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +12,6 @@ import nl.fontys.scope.event.EventType;
 import nl.fontys.scope.event.Events;
 import nl.fontys.scope.graphics.ModelInstanceService;
 import nl.fontys.scope.object.GameObject;
-import nl.fontys.scope.object.GameObjectType;
 
 public class CollisionDetector {
 

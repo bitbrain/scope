@@ -1,44 +1,30 @@
 package nl.fontys.scope.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.controllers.Controllers;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-import aurelienribon.tweenengine.TweenEquations;
 import nl.fontys.scope.Config;
 import nl.fontys.scope.ScopeGame;
 import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.assets.Assets;
-import nl.fontys.scope.controls.KeyboardMenuSupport;
-import nl.fontys.scope.controls.XboxMenuControllerSupport;
-import nl.fontys.scope.core.Player;
-import nl.fontys.scope.core.PlayerManager;
-import nl.fontys.scope.core.World;
-import nl.fontys.scope.core.controller.AIController;
 import nl.fontys.scope.core.controller.CameraRotatingController;
 import nl.fontys.scope.core.controller.LightingController;
 import nl.fontys.scope.core.controller.RotationController;
-import nl.fontys.scope.graphics.ShaderManager;
 import nl.fontys.scope.i18n.Bundle;
 import nl.fontys.scope.i18n.Messages;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.ui.ButtonMenu;
 import nl.fontys.scope.ui.ExitHandler;
 import nl.fontys.scope.ui.Styles;
-import nl.fontys.scope.ui.Tooltip;
-import nl.fontys.scope.util.Colors;
 
 public class MenuScreen extends AbstractScreen implements ExitHandler {
 

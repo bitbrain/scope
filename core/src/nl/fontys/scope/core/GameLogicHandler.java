@@ -6,10 +6,8 @@ import com.badlogic.gdx.utils.Disposable;
 import net.engio.mbassy.listener.Handler;
 
 import nl.fontys.scope.Config;
-import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.event.EventType;
 import nl.fontys.scope.event.Events;
-import nl.fontys.scope.graphics.ParticleManager;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.object.GameObjectFactory;
 import nl.fontys.scope.object.GameObjectType;

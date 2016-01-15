@@ -1,7 +1,5 @@
 package nl.fontys.scope.screens;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -9,16 +7,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-import java.net.Inet4Address;
-import java.net.InetAddress;
-
 import nl.fontys.scope.Config;
 import nl.fontys.scope.ScopeGame;
-import nl.fontys.scope.core.World;
 import nl.fontys.scope.core.controller.CameraRotatingController;
 import nl.fontys.scope.i18n.Bundle;
 import nl.fontys.scope.i18n.Messages;
-import nl.fontys.scope.networking.ScopeClient;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.ui.ButtonMenu;
 import nl.fontys.scope.ui.ExitHandler;

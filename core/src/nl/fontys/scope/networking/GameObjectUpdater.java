@@ -2,7 +2,6 @@ package nl.fontys.scope.networking;
 
 import nl.fontys.scope.core.World;
 import nl.fontys.scope.object.GameObject;
-import nl.fontys.scope.object.GameObjectType;
 
 public class GameObjectUpdater {
 

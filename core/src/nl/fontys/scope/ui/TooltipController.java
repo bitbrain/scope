@@ -2,17 +2,14 @@ package nl.fontys.scope.ui;
 
 import net.engio.mbassy.listener.Handler;
 
-import aurelienribon.tweenengine.Tween;
 import nl.fontys.scope.Config;
 import nl.fontys.scope.core.Player;
 import nl.fontys.scope.core.PlayerManager;
 import nl.fontys.scope.event.EventType;
 import nl.fontys.scope.event.Events;
-import nl.fontys.scope.graphics.ShaderManager;
 import nl.fontys.scope.i18n.Bundle;
 import nl.fontys.scope.i18n.Messages;
 import nl.fontys.scope.object.GameObject;
-import nl.fontys.scope.tweens.ZoomerShaderTween;
 
 public class TooltipController {
 

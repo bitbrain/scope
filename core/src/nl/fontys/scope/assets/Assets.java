@@ -1,7 +1,5 @@
 package nl.fontys.scope.assets;
 
-import com.badlogic.gdx.graphics.Texture;
-
 /**
  * Contains asset definitions
  */

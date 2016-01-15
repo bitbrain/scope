@@ -14,8 +14,6 @@ import com.badlogic.gdx.utils.Pool;
 import java.util.ArrayList;
 import java.util.List;
 
-import nl.fontys.scope.Config;
-
 /**Singleton class which manages the particle effects.
  * It's a utility class to ease particle batches management and particle effects update. 
  * @author inferno*/

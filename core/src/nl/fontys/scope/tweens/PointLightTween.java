@@ -1,8 +1,6 @@
 package nl.fontys.scope.tweens;
 
 import com.badlogic.gdx.graphics.g3d.environment.PointLight;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 import aurelienribon.tweenengine.TweenAccessor;
 

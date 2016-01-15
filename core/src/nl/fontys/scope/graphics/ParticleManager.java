@@ -1,12 +1,10 @@
 package nl.fontys.scope.graphics;
 
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.particles.ParticleController;
 import com.badlogic.gdx.graphics.g3d.particles.ParticleEffect;
 import com.badlogic.gdx.graphics.g3d.particles.ParticleSorter;
-import com.badlogic.gdx.graphics.g3d.particles.ParticleSystem;
 import com.badlogic.gdx.graphics.g3d.particles.batches.BillboardParticleBatch;
 import com.badlogic.gdx.graphics.g3d.particles.batches.PointSpriteParticleBatch;
 import com.badlogic.gdx.graphics.g3d.particles.emitters.Emitter;

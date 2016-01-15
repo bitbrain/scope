@@ -5,15 +5,12 @@ import com.badlogic.gdx.math.Vector3;
 import java.security.SecureRandom;
 import java.util.UUID;
 
-import aurelienribon.tweenengine.Tween;
-import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
 import nl.fontys.scope.Config;
 import nl.fontys.scope.core.controller.EnergyController;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.object.GameObjectFactory;
 import nl.fontys.scope.object.GameObjectType;
-import nl.fontys.scope.tweens.ColorTween;
 import nl.fontys.scope.util.Colors;
 
 public class Arena {

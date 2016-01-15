@@ -3,8 +3,6 @@ package nl.fontys.scope.networking.serverobjects;
 import com.esotericsoftware.kryonet.Connection;
 
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.UUID;
 
 public class ServerGame {
 

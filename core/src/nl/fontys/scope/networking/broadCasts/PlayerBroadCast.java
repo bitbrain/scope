@@ -1,7 +1,6 @@
 package nl.fontys.scope.networking.broadCasts;
 
 import nl.fontys.scope.core.Player;
-import nl.fontys.scope.object.GameObject;
 
 public class PlayerBroadCast extends BroadcastRequest {
 

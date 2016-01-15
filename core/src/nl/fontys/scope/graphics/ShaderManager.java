@@ -2,7 +2,6 @@ package nl.fontys.scope.graphics;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.bitfire.postprocessing.PostProcessor;
 import com.bitfire.postprocessing.effects.Bloom;
@@ -11,8 +10,6 @@ import com.bitfire.postprocessing.effects.Vignette;
 import com.bitfire.postprocessing.effects.Zoomer;
 import com.bitfire.postprocessing.filters.RadialBlur;
 import com.bitfire.utils.ShaderLoader;
-
-import nl.fontys.scope.Config;
 
 public final class ShaderManager {
 

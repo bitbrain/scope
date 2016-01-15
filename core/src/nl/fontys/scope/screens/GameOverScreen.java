@@ -6,8 +6,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 import nl.fontys.scope.ScopeGame;
-import nl.fontys.scope.controls.KeyboardMenuSupport;
-import nl.fontys.scope.controls.XboxMenuControllerSupport;
 import nl.fontys.scope.core.GameStats;
 import nl.fontys.scope.core.PlayerManager;
 import nl.fontys.scope.core.controller.CameraRotatingController;

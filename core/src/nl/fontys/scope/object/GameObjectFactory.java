@@ -6,7 +6,6 @@ import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.core.World;
 import nl.fontys.scope.core.controller.LightingController;
 import nl.fontys.scope.core.controller.ParticleEffectController;
-import nl.fontys.scope.core.controller.RotationController;
 import nl.fontys.scope.util.Colors;
 
 /**

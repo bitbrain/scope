@@ -1,15 +1,15 @@
 package nl.fontys.scope.networking;
 
 import com.badlogic.gdx.Gdx;
-import com.esotericsoftware.kryonet.*;
 import com.esotericsoftware.kryonet.Client;
+import com.esotericsoftware.kryonet.Connection;
+import com.esotericsoftware.kryonet.Listener;
 
 import net.engio.mbassy.listener.Handler;
 
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.HashMap;
-import java.util.Map;
 
 import nl.fontys.scope.core.Player;
 import nl.fontys.scope.core.World;
@@ -28,7 +28,6 @@ import nl.fontys.scope.networking.responses.GameStartedCheckResponse;
 import nl.fontys.scope.networking.responses.GameStartedResponse;
 import nl.fontys.scope.networking.responses.GetGamesResponse;
 import nl.fontys.scope.networking.responses.JoinedResponse;
-import nl.fontys.scope.networking.serverobjects.ServerGame;
 import nl.fontys.scope.object.GameObject;
 
 public class ScopeClient extends Listener implements GameObjectController{

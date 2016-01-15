@@ -1,7 +1,6 @@
 package nl.fontys.scope.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import net.engio.mbassy.listener.Handler;
@@ -9,7 +8,6 @@ import net.engio.mbassy.listener.Handler;
 import java.util.Iterator;
 
 import nl.fontys.scope.ScopeGame;
-import nl.fontys.scope.controls.ControllerManager;
 import nl.fontys.scope.controls.KeyboardIngameSupport;
 import nl.fontys.scope.controls.ShieldIngameControllerSupport;
 import nl.fontys.scope.controls.XBoxIngameControllerSupport;
@@ -25,9 +23,9 @@ import nl.fontys.scope.event.EventType;
 import nl.fontys.scope.event.Events;
 import nl.fontys.scope.ui.DebugWidget;
 import nl.fontys.scope.ui.ExitHandler;
+import nl.fontys.scope.ui.FocusBarWidget;
 import nl.fontys.scope.ui.GameProgressWidget;
 import nl.fontys.scope.ui.PlayerInfoWidget;
-import nl.fontys.scope.ui.FocusBarWidget;
 import nl.fontys.scope.ui.TooltipController;
 
 public class IngameScreen extends AbstractScreen implements ExitHandler {

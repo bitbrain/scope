@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.math.Vector3;
 import com.bitfire.postprocessing.effects.Zoomer;
-import com.badlogic.gdx.math.Vector3;
 
 import net.engio.mbassy.listener.Handler;
 
@@ -23,11 +22,10 @@ import aurelienribon.tweenengine.TweenManager;
 import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.audio.SoundManager;
 import nl.fontys.scope.core.PlayerManager;
-import nl.fontys.scope.core.controller.ParticleEffectController;
+import nl.fontys.scope.core.World;
 import nl.fontys.scope.event.EventType;
 import nl.fontys.scope.event.Events;
 import nl.fontys.scope.object.GameObject;
-import nl.fontys.scope.core.World;
 import nl.fontys.scope.tweens.ColorTween;
 import nl.fontys.scope.tweens.PointLightTween;
 import nl.fontys.scope.tweens.SpriteTween;

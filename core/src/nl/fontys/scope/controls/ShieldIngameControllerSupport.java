@@ -1,8 +1,5 @@
 package nl.fontys.scope.controls;
 
-import com.badlogic.gdx.controllers.Controller;
-import com.badlogic.gdx.controllers.mappings.Xbox;
-
 public class ShieldIngameControllerSupport extends ShieldControllerSupport {
 
     public ShieldIngameControllerSupport(Moveable moveable) {

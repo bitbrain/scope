@@ -1,12 +1,9 @@
 package nl.fontys.scope.graphics;
 
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 
-import nl.fontys.scope.assets.AssetManager;
-import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.object.GameObject;
 
 /**

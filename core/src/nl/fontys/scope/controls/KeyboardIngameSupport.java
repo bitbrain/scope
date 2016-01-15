@@ -2,7 +2,6 @@ package nl.fontys.scope.controls;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
 
 import nl.fontys.scope.core.Player;
 import nl.fontys.scope.core.PlayerManager;

@@ -1,8 +1,5 @@
 package nl.fontys.scope.core;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Vector3;
-
 import nl.fontys.scope.Config;
 import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.audio.SoundManager;

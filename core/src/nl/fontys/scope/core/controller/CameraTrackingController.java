@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 
-import nl.fontys.scope.graphics.ShaderManager;
 import nl.fontys.scope.object.GameObject;
 
 public class CameraTrackingController implements GameObjectController {

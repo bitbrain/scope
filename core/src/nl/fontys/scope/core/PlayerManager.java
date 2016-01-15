@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import nl.fontys.scope.object.GameObject;
-import nl.fontys.scope.object.GameObjectFactory;
 
 public class PlayerManager {
 
