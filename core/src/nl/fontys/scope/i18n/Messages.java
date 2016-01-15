@@ -25,4 +25,5 @@ public final class Messages {
     public static final String TOOLTIP_ENERGY_WARNING = "TOOLTIP_ENERGY_WARNING";
     public static final String TOOLTIP_POINTS_GAINED="TOOLTIP_POINTS_GAINED";
     public static final String TOOLTIP_POINTS_GAINED_OTHER="TOOLTIP_POINTS_GAINED_OTHER";
+    public static final String MENU_SINGLE_PLAYER = "MENU_SINGLE_PLAYER";
 }

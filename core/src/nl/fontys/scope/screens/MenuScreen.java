@@ -86,19 +86,10 @@ public class MenuScreen extends AbstractScreen implements ExitHandler {
         layout.center().add(logo).padBottom(20f);
         layout.row();
         menu = new ButtonMenu(tweenManager, Controllers.getControllers().size > 0);
-        menu.add("singleplayer", new ClickListener() {
+        menu.add(Bundle.general.get(Messages.MENU_SINGLE_PLAYER), new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                IngameScreen screen = new IngameScreen(game, new World(), new IngameScreen.IngameInitializer() {
-                    @Override
-                    public void initialize(IngameScreen screen) {
-                        PlayerManager playerManager = screen.getPlayerManager();
-                        Player player = playerManager.addPlayer();
-                        player.setAI(true);
-                        screen.world.addController(player.getShip(), new AIController(player));
-                    }
-                });
-                setScreen(screen);
+                setScreen(new SingleplayerScreen(game));
             }
         });
         menu.add(Bundle.general.get(Messages.MENU_NEW_GAME), new ClickListener() {
