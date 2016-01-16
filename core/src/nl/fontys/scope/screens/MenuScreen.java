@@ -37,8 +37,8 @@ public class MenuScreen extends AbstractScreen implements ExitHandler {
     @Override
     protected void onShow() {
         final int ENERGY_COUNT = 4;
-        final float MIN_DISTANCE = 55;
-        final float MAX_DISTANCE = 60;
+        final float MIN_DISTANCE = 34;
+        final float MAX_DISTANCE = 40;
         Vector3 tmp = new Vector3();
 
         for (int i = 0; i < ENERGY_COUNT; ++i) {
@@ -46,12 +46,12 @@ public class MenuScreen extends AbstractScreen implements ExitHandler {
             tmp.setLength((float) (MIN_DISTANCE + Math.random() * (MAX_DISTANCE - MIN_DISTANCE)));
             GameObject energy = factory.createEnergy(tmp.x, tmp.y, tmp.z);
             LightingController lightingController = new LightingController(world.getLightingManager());
-            lightingController.setStrength(925);
+            lightingController.setStrength(30);
             world.addController(energy, lightingController);
             world.addController(energy, new RotationController(15f));
         }
 
-        GameObject planet = factory.createPlanet(10f);
+        GameObject planet = factory.createPlanet(14f);
         world.addController(planet, new CameraRotatingController(100f, world.getCamera(), planet));
     }
 

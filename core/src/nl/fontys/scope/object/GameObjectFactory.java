@@ -53,7 +53,7 @@ public class GameObjectFactory {
     public GameObject createPlanet(float scale) {
         GameObject object = world.createGameObject();
         object.setType(GameObjectType.PLANET);
-        object.getColor().set(Colors.lighten(Colors.BACKGROUND, 2f));
+        object.getColor().set(0.6f, 0.2f, 0.5f, 1f);
         object.setScale(scale);
         return object;
     }

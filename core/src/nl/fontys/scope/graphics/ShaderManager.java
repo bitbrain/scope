@@ -29,6 +29,8 @@ public final class ShaderManager {
 
     private Bloom uiBloom;
 
+    private static boolean compiled;
+
     private ShaderManager() {
         ShaderLoader.BasePath = "postprocessing/shaders/";
         processor = new PostProcessor( true, true, isDesktop );
@@ -57,8 +59,13 @@ public final class ShaderManager {
         if (INSTANCE == null) {
             INSTANCE = new ShaderManager();
             configureBase();
+            compiled = true;
         }
         return INSTANCE;
+    }
+
+    public boolean isCompiled() {
+        return compiled;
     }
 
     public void begin() {

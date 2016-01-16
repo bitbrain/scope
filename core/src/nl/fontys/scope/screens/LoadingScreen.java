@@ -203,7 +203,7 @@ public class LoadingScreen implements Screen {
             if (debug) {
                 return new IngameScreen(game, new World(), true);
             } else {
-                return new MenuScreen(game);
+                return new CompilingShadersScreen(game);
             }
         }
 
