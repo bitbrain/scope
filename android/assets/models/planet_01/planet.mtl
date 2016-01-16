@@ -1,19 +1,12 @@
-# Blender MTL File: 'None'
+# Blender MTL File: 'planet.blend'
 # Material Count: 1
 
-newmtl Material.001
-Ns 37.254902
+newmtl Material
+Ns 0.000000
 Ka 1.000000 1.000000 1.000000
-Kd 1.000000 1.000000 1.000000
-Ks 0.000000 0.000000 0.000000
+Kd 0.029198 0.000720 0.077671
+Ks 1.000000 1.000000 1.000000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
-illum 1
-map_Bump texture.png
-map_Ka texture.png
-map_Kd texture.png
-map_Ke texture.png
-map_Ks texture.png
-map_Ns texture.png
-map_d texture.png
+illum 2
