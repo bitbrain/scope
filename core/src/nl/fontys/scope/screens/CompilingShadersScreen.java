@@ -1,69 +1,52 @@
 package nl.fontys.scope.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 
-import java.util.concurrent.Executors;
-
+import aurelienribon.tweenengine.BaseTween;
+import aurelienribon.tweenengine.TweenCallback;
+import aurelienribon.tweenengine.TweenEquations;
 import nl.fontys.scope.ScopeGame;
+import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.graphics.ShaderManager;
-import nl.fontys.scope.util.Colors;
+import nl.fontys.scope.graphics.SharedEnvironmentCubemap;
+import nl.fontys.scope.i18n.Bundle;
+import nl.fontys.scope.i18n.Messages;
+import nl.fontys.scope.ui.Styles;
 
-public class CompilingShadersScreen implements Screen {
-
-    private ScopeGame game;
+public class CompilingShadersScreen extends LoadingScreen {
 
     private ShaderManager shaderManager;
 
-
+    private boolean compiled, initialized;
 
     public CompilingShadersScreen(ScopeGame game) {
-        this.game = game;
-    }
-
-    @Override
-    public void show() {
-        Gdx.app.postRunnable(new Runnable() {
-            @Override
-            public void run() {
-                shaderManager = ShaderManager.getBaseInstance();
-            }
-        });
+        super(game);
     }
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(Colors.BACKGROUND.r, Colors.BACKGROUND.g, Colors.BACKGROUND.b, 1f);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        if (shaderManager != null && shaderManager.isCompiled()) {
-            game.setScreen(new MenuScreen(game));
+        if (!initialized) {
+            value.setValue(1f);
+            super.render(delta);
+            initialized = true;
+            shaderManager = ShaderManager.getBaseInstance();
+        } else {
+            super.render(delta);
+        }
+
+        if (!compiled && shaderManager != null && shaderManager.isCompiled()) {
+            compiled = true;
+            fx.fadeOut(FADE_TIME, TweenEquations.easeInCubic, new TweenCallback() {
+                @Override
+                public void onEvent(int type, BaseTween<?> source) {
+                    game.setScreen(new MenuScreen(game));
+                }
+            });
         }
     }
 
     @Override
-    public void resize(int width, int height) {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
-    @Override
-    public void dispose() {
-
+    protected String getLabelKey() {
+        return Bundle.general.get(Messages.COMPILING_SHADERS_INFO);
     }
 }

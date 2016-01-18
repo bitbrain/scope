@@ -3,6 +3,7 @@ package nl.fontys.scope.i18n;
 public final class Messages {
 
     public static final String LOADING_INFO = "LOADING_INFO";
+    public static final String COMPILING_SHADERS_INFO = "COMPILING_SHADERS_INFO";
     public static final String CREDITS = "CREDITS";
     public static final String CREDITS_ADDITION = "CREDITS_ADDITION";
     public static final String MENU_NEW_GAME = "MENU_NEW_GAME";

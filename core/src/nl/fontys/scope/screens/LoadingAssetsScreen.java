@@ -12,6 +12,7 @@ import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.graphics.SharedEnvironmentCubemap;
 import nl.fontys.scope.i18n.Bundle;
+import nl.fontys.scope.i18n.Messages;
 import nl.fontys.scope.tweens.ValueTween;
 import nl.fontys.scope.ui.Styles;
 
@@ -34,18 +35,11 @@ public class LoadingAssetsScreen extends LoadingScreen {
     @Override
     public void render(float delta) {
         if (AssetManager.isLoaded() && !loaded) {
-            loaded = true;
-            Tween.to(value, ValueTween.VALUE, FADE_TIME).target(1f).ease(TweenEquations.easeOutCubic).
-                    setCallbackTriggers(TweenCallback.COMPLETE)
-                    .setCallback(new TweenCallback() {
-                        @Override
-                        public void onEvent(int type, BaseTween<?> source) {
-                            Styles.init();
-                            SharedEnvironmentCubemap.setup(Assets.Textures.CUBEMAP_SPACE_1);
-                            game.setScreen(new CompilingShadersScreen(game));
-                        }
-                    }).start(tweenManager);
-            fx.fadeOut(FADE_TIME, TweenEquations.easeOutCubic);
+            Styles.init();
+            SharedEnvironmentCubemap.setup(Assets.Textures.CUBEMAP_SPACE_1);
+            value.setValue(1f);
+            super.render(delta);
+            game.setScreen(new CompilingShadersScreen(game));
         } else {
             if (AssetManager.isLoaded(Assets.Musics.MAIN_THEME.getPath())) {
                 Music music = AssetManager.getMusic(Assets.Musics.MAIN_THEME);
@@ -61,5 +55,10 @@ public class LoadingAssetsScreen extends LoadingScreen {
             AssetManager.update();
         }
         super.render(delta);
+    }
+
+    @Override
+    protected String getLabelKey() {
+        return Bundle.general.get(Messages.LOADING_INFO);
     }
 }

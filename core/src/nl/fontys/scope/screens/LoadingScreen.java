@@ -29,15 +29,15 @@ public abstract class LoadingScreen implements Screen {
 
     protected OrthographicCamera cam;
 
-    protected ShapeRenderer renderer;
+    private ShapeRenderer renderer;
 
     protected FX fx = FX.getInstance();
 
     protected TweenManager tweenManager;
 
-    protected BitmapFont font;
+    private BitmapFont font;
 
-    protected Label label, progress;
+    private Label label, progress;
 
     protected ValueProvider value = new ValueProvider();
 
@@ -122,7 +122,7 @@ public abstract class LoadingScreen implements Screen {
             Label.LabelStyle progressStyle = new Label.LabelStyle();
             progressStyle.fontColor = Colors.PRIMARY;
             progressStyle.font = font;
-            label = new Label(Bundle.general.get(Messages.LOADING_INFO), style);
+            label = new Label(getLabelKey(), style);
             progress = new Label("0%", progressStyle);
         }
         if (label != null) {
@@ -136,4 +136,6 @@ public abstract class LoadingScreen implements Screen {
         fx.render(batch, delta);
         batch.end();
     }
+
+    protected abstract String getLabelKey();
 }
