@@ -28,7 +28,7 @@ public class GameObjectFactory {
         ParticleEffectLogic c = new ParticleEffectLogic(Assets.ParticleEffects.POWER);
         final float X_OFFSET = -3.2f;
         c.setOffset(X_OFFSET, 0f, 0f);
-        LightingLogic lc = new LightingLogic(world.getLightingManager());
+        LightingLogic lc = new LightingLogic(world.getLightingManager(), Colors.SECONDARY);
         lc.setStrength(7);
         lc.setOffset(X_OFFSET, 0f, 0f);
         world.addLogic(object, c);
