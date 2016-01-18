@@ -6,6 +6,7 @@ import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.networking.ScopeClient;
 import nl.fontys.scope.networking.ScopeServer;
 import nl.fontys.scope.screens.AbstractScreen;
+import nl.fontys.scope.screens.LoadingAssetsScreen;
 import nl.fontys.scope.screens.LoadingScreen;
 import nl.fontys.scope.screens.ScreenHandler;
 
@@ -28,6 +29,10 @@ public class ScopeGame extends Game {
         return server;
     }
 
+    public String[] getArgs() {
+        return args;
+    }
+
     public ScopeClient getClient() {
         return client;
     }
@@ -39,7 +44,7 @@ public class ScopeGame extends Game {
     @Override
 	public void create() {
         ScreenHandler.setFull();
-        setScreen(new LoadingScreen(this, this.args));
+        setScreen(new LoadingAssetsScreen(this));
 	}
 
     @Override

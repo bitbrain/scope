@@ -2,7 +2,6 @@ package nl.fontys.scope.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -10,72 +9,51 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
-import aurelienribon.tweenengine.BaseTween;
-import aurelienribon.tweenengine.Tween;
-import aurelienribon.tweenengine.TweenCallback;
-import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
-import nl.fontys.scope.Config;
 import nl.fontys.scope.ScopeGame;
 import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.assets.Assets;
-import nl.fontys.scope.core.World;
 import nl.fontys.scope.graphics.FX;
-import nl.fontys.scope.graphics.SharedEnvironmentCubemap;
 import nl.fontys.scope.i18n.Bundle;
 import nl.fontys.scope.i18n.Messages;
-import nl.fontys.scope.tweens.ValueTween;
-import nl.fontys.scope.ui.Styles;
 import nl.fontys.scope.util.Colors;
 import nl.fontys.scope.util.ValueProvider;
 
-public class LoadingScreen implements Screen {
+public abstract class LoadingScreen implements Screen {
 
-    private final float FADE_TIME = 0.4f;
+    protected final float FADE_TIME = 0.4f;
 
-    private ScopeGame game;
+    protected ScopeGame game;
 
-    private SpriteBatch batch;
+    protected SpriteBatch batch;
 
-    private OrthographicCamera cam;
+    protected OrthographicCamera cam;
 
-    private ShapeRenderer renderer;
+    protected ShapeRenderer renderer;
 
-    private FX fx = FX.getInstance();
+    protected FX fx = FX.getInstance();
 
-    private TweenManager tweenManager;
+    protected TweenManager tweenManager;
 
-    private BitmapFont font;
+    protected BitmapFont font;
 
-    private Label label, progress;
+    protected Label label, progress;
 
-    private ContextProvider contextProvider;
+    protected ValueProvider value = new ValueProvider();
 
-    private ValueProvider value = new ValueProvider();
+    protected float target = 0;
 
-    private float target = 0;
-
-    private boolean loaded = false;
-
-    public LoadingScreen(ScopeGame game, String[] args) {
-        this(args);
+    public LoadingScreen(ScopeGame game) {
         this.game = game;
-    }
-
-    public LoadingScreen(String[] args) {
-        contextProvider = new ContextProvider(args);
     }
 
     @Override
     public void show() {
         tweenManager = new TweenManager();
-        AssetManager.init();
         this.batch = new SpriteBatch();
         cam = new OrthographicCamera();
         renderer = new ShapeRenderer();
         fx.init(tweenManager, null, cam);
-        fx.fadeIn(FADE_TIME, TweenEquations.easeInCubic);
-        Bundle.load();
     }
 
     @Override
@@ -83,35 +61,8 @@ public class LoadingScreen implements Screen {
         if (AssetManager.isLoaded(Assets.Fonts.OPENSANS_MEDIUM_32.getPath())) {
             font = AssetManager.getFont(Assets.Fonts.OPENSANS_MEDIUM_32);
         }
-        if (AssetManager.isLoaded(Assets.Musics.MAIN_THEME.getPath())) {
-            Music music = AssetManager.getMusic(Assets.Musics.MAIN_THEME);
-            if (!music.isPlaying()) {
-                music.setLooping(true);
-                music.play();
-            }
-        }
-        if (target < AssetManager.getProgress()) {
-            target = AssetManager.getProgress();
-            Tween.to(value, ValueTween.VALUE, FADE_TIME).target(target).ease(TweenEquations.easeOutCubic).start(tweenManager);
-        }
         tweenManager.update(delta);
         cam.update();
-        if (AssetManager.isLoaded() && !loaded) {
-            loaded = true;
-            Tween.to(value, ValueTween.VALUE, FADE_TIME).target(1f).ease(TweenEquations.easeOutCubic).
-                   setCallbackTriggers(TweenCallback.COMPLETE)
-                    .setCallback(new TweenCallback() {
-                        @Override
-                        public void onEvent(int type, BaseTween<?> source) {
-                            Styles.init();
-                            SharedEnvironmentCubemap.setup(Assets.Textures.CUBEMAP_SPACE_1);
-                            game.setScreen(contextProvider.getScreen());
-                        }
-                    }).start(tweenManager);
-            fx.fadeOut(FADE_TIME, TweenEquations.easeOutCubic);
-        } else {
-            AssetManager.update();
-        }
         Gdx.gl.glClearColor(Colors.BACKGROUND.r, Colors.BACKGROUND.g, Colors.BACKGROUND.b, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.setProjectionMatrix(cam.combined);
@@ -184,28 +135,5 @@ public class LoadingScreen implements Screen {
         }
         fx.render(batch, delta);
         batch.end();
-    }
-
-    private class ContextProvider {
-
-        private boolean debug;
-
-        public ContextProvider(String[] args) {
-            for (String arg : args) {
-                if (Config.FLAG_DEBUG.equals(arg)) {
-                    debug = true;
-                    break;
-                }
-            }
-        }
-
-        public Screen getScreen() {
-            if (debug) {
-                return new IngameScreen(game, new World(), true);
-            } else {
-                return new CompilingShadersScreen(game);
-            }
-        }
-
     }
 }
