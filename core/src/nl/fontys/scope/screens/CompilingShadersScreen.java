@@ -6,12 +6,9 @@ import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenEquations;
 import nl.fontys.scope.ScopeGame;
-import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.graphics.ShaderManager;
-import nl.fontys.scope.graphics.SharedEnvironmentCubemap;
 import nl.fontys.scope.i18n.Bundle;
 import nl.fontys.scope.i18n.Messages;
-import nl.fontys.scope.ui.Styles;
 
 public class CompilingShadersScreen extends LoadingScreen {
 
