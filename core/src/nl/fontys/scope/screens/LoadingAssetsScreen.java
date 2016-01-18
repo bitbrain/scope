@@ -35,8 +35,7 @@ public class LoadingAssetsScreen extends LoadingScreen {
     @Override
     public void render(float delta) {
         if (AssetManager.isLoaded() && !loaded) {
-            Styles.init();
-            SharedEnvironmentCubemap.setup(Assets.Textures.CUBEMAP_SPACE_1);
+            loaded = true;
             value.setValue(1f);
             super.render(delta);
             game.setScreen(new CompilingShadersScreen(game));
@@ -53,8 +52,8 @@ public class LoadingAssetsScreen extends LoadingScreen {
                 Tween.to(value, ValueTween.VALUE, FADE_TIME).target(target).ease(TweenEquations.easeOutCubic).start(tweenManager);
             }
             AssetManager.update();
+            super.render(delta);
         }
-        super.render(delta);
     }
 
     @Override
