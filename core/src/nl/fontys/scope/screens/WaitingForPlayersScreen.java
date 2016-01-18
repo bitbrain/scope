@@ -8,7 +8,7 @@ import net.engio.mbassy.listener.Handler;
 
 import nl.fontys.scope.ScopeGame;
 import nl.fontys.scope.core.World;
-import nl.fontys.scope.core.controller.CameraRotatingController;
+import nl.fontys.scope.core.logic.CameraRotatingLogic;
 import nl.fontys.scope.event.EventType;
 import nl.fontys.scope.event.Events;
 import nl.fontys.scope.networking.ScopeClient;
@@ -46,7 +46,7 @@ public class WaitingForPlayersScreen extends AbstractScreen implements ExitHandl
 
         events.register(this);
         GameObject planet = factory.createPlanet(30f);
-        world.addController(new CameraRotatingController(800f, world.getCamera(), planet));
+        world.addLogic(new CameraRotatingLogic(800f, world.getCamera(), planet));
     }
 
     @Override

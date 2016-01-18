@@ -1,4 +1,4 @@
-package nl.fontys.scope.core.controller;
+package nl.fontys.scope.core.logic;
 
 import com.badlogic.gdx.math.Vector3;
 
@@ -9,7 +9,7 @@ import nl.fontys.scope.Config;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.object.GameObjectType;
 
-public class EnergyController implements GameObjectController {
+public class EnergyLogic implements Logic {
 
     private Vector3 velocity = new Vector3();
 
@@ -17,7 +17,7 @@ public class EnergyController implements GameObjectController {
 
     private SecureRandom random = new SecureRandom(UUID.randomUUID().toString().getBytes());
 
-    public EnergyController() {
+    public EnergyLogic() {
         velocity.x = random.nextFloat() * Config.MAX_ENERGY_SPEED;
         velocity.y = random.nextFloat() * Config.MAX_ENERGY_SPEED;
         if (velocity.len() > Config.MAX_ENERGY_SPEED) {

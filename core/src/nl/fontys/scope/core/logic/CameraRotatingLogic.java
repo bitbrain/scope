@@ -1,11 +1,11 @@
-package nl.fontys.scope.core.controller;
+package nl.fontys.scope.core.logic;
 
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.math.Vector3;
 
 import nl.fontys.scope.object.GameObject;
 
-public class CameraRotatingController implements GameObjectController {
+public class CameraRotatingLogic implements Logic {
 
     private PerspectiveCamera cam;
 
@@ -15,7 +15,7 @@ public class CameraRotatingController implements GameObjectController {
 
     private float angle;
 
-    public CameraRotatingController(float radius, PerspectiveCamera cam, GameObject object) {
+    public CameraRotatingLogic(float radius, PerspectiveCamera cam, GameObject object) {
         this.cam = cam;
         this.target = object;
         this.radius = radius;

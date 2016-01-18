@@ -10,7 +10,7 @@ import nl.fontys.scope.ScopeGame;
 import nl.fontys.scope.core.Player;
 import nl.fontys.scope.core.PlayerManager;
 import nl.fontys.scope.core.World;
-import nl.fontys.scope.core.controller.AIController;
+import nl.fontys.scope.core.logic.AILogic;
 import nl.fontys.scope.i18n.Bundle;
 import nl.fontys.scope.i18n.Messages;
 import nl.fontys.scope.ui.ButtonMenu;
@@ -52,7 +52,7 @@ public class SingleplayerScreen extends AbstractScreen implements ExitHandler {
                         PlayerManager playerManager = screen.getPlayerManager();
                         Player player = playerManager.addPlayer();
                         player.setAI(true);
-                        screen.world.addController(player.getShip(), new AIController(player));
+                        screen.world.addLogic(player.getShip(), new AILogic(player));
                     }
                 });
                 setScreen(screen);

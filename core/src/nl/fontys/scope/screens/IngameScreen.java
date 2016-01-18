@@ -17,8 +17,8 @@ import nl.fontys.scope.core.GameStats;
 import nl.fontys.scope.core.Player;
 import nl.fontys.scope.core.PlayerManager;
 import nl.fontys.scope.core.World;
-import nl.fontys.scope.core.controller.CameraTrackingController;
-import nl.fontys.scope.core.controller.ShipController;
+import nl.fontys.scope.core.logic.CameraTrackingLogic;
+import nl.fontys.scope.core.logic.ShipLogic;
 import nl.fontys.scope.event.EventType;
 import nl.fontys.scope.event.Events;
 import nl.fontys.scope.ui.DebugWidget;
@@ -34,7 +34,7 @@ public class IngameScreen extends AbstractScreen implements ExitHandler {
         void initialize(IngameScreen screen);
     }
 
-    private CameraTrackingController camController;
+    private CameraTrackingLogic camController;
 
     private KeyboardIngameSupport keyboard;
 
@@ -69,10 +69,10 @@ public class IngameScreen extends AbstractScreen implements ExitHandler {
     protected void onShow() {
         events.register(this);
         playerManager = new PlayerManager(world);
-        ShipController controller = new ShipController();
-        world.addController(PlayerManager.getCurrent().getShip(), controller);
-        camController = new CameraTrackingController(world.getCamera());
-        world.addController(PlayerManager.getCurrent().getShip(), camController);
+        ShipLogic controller = new ShipLogic();
+        world.addLogic(PlayerManager.getCurrent().getShip(), controller);
+        camController = new CameraTrackingLogic(world.getCamera());
+        world.addLogic(PlayerManager.getCurrent().getShip(), camController);
         arena = new Arena(factory, 2);
         world.setRestrictor(arena.getRestrictor());
         logicHandler = new GameLogicHandler(world, factory, arena, playerManager);

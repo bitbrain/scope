@@ -1,4 +1,4 @@
-package nl.fontys.scope.core.controller;
+package nl.fontys.scope.core.logic;
 
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.math.Matrix4;
@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector3;
 
 import nl.fontys.scope.object.GameObject;
 
-public class CameraTrackingController implements GameObjectController {
+public class CameraTrackingLogic implements Logic {
 
     private static final float CAMERA_HEIGHT = 7f;
     private static final float CAMERA_DISTANCE = 12f;
@@ -19,7 +19,7 @@ public class CameraTrackingController implements GameObjectController {
 
     private Matrix4 m = new Matrix4();
 
-    public CameraTrackingController(PerspectiveCamera cam) {
+    public CameraTrackingLogic(PerspectiveCamera cam) {
         this.cam = cam;
     }
 

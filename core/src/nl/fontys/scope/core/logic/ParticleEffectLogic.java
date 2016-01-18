@@ -1,4 +1,4 @@
-package nl.fontys.scope.core.controller;
+package nl.fontys.scope.core.logic;
 
 import com.badlogic.gdx.graphics.g3d.particles.ParticleEffect;
 import com.badlogic.gdx.math.Matrix4;
@@ -8,7 +8,7 @@ import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.graphics.ParticleManager;
 import nl.fontys.scope.object.GameObject;
 
-public class ParticleEffectController extends DynamicGameObjectController {
+public class ParticleEffectLogic extends MoveableGameObjectLogic {
 
     private ParticleManager particleManager = ParticleManager.getInstance();
 
@@ -18,7 +18,7 @@ public class ParticleEffectController extends DynamicGameObjectController {
 
     private Matrix4 trans = new Matrix4();
 
-    public ParticleEffectController(Assets.ParticleEffects effect) {
+    public ParticleEffectLogic(Assets.ParticleEffects effect) {
         this.type = effect;
     }
 

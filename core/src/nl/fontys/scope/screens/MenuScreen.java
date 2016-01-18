@@ -16,9 +16,9 @@ import nl.fontys.scope.Config;
 import nl.fontys.scope.ScopeGame;
 import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.assets.Assets;
-import nl.fontys.scope.core.controller.CameraRotatingController;
-import nl.fontys.scope.core.controller.LightingController;
-import nl.fontys.scope.core.controller.RotationController;
+import nl.fontys.scope.core.logic.CameraRotatingLogic;
+import nl.fontys.scope.core.logic.LightingLogic;
+import nl.fontys.scope.core.logic.RotateAroundLogic;
 import nl.fontys.scope.i18n.Bundle;
 import nl.fontys.scope.i18n.Messages;
 import nl.fontys.scope.object.GameObject;
@@ -45,14 +45,14 @@ public class MenuScreen extends AbstractScreen implements ExitHandler {
             tmp.setToRandomDirection();
             tmp.setLength((float) (MIN_DISTANCE + Math.random() * (MAX_DISTANCE - MIN_DISTANCE)));
             GameObject energy = factory.createEnergy(tmp.x, tmp.y, tmp.z);
-            LightingController lightingController = new LightingController(world.getLightingManager());
+            LightingLogic lightingController = new LightingLogic(world.getLightingManager());
             lightingController.setStrength(30);
-            world.addController(energy, lightingController);
-            world.addController(energy, new RotationController(15f));
+            world.addLogic(energy, lightingController);
+            world.addLogic(energy, new RotateAroundLogic(15f));
         }
 
         GameObject planet = factory.createPlanet(14f);
-        world.addController(planet, new CameraRotatingController(100f, world.getCamera(), planet));
+        world.addLogic(planet, new CameraRotatingLogic(100f, world.getCamera(), planet));
     }
 
     @Override

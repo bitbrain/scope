@@ -1,4 +1,4 @@
-package nl.fontys.scope.core.controller;
+package nl.fontys.scope.core.logic;
 
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
@@ -10,7 +10,7 @@ import nl.fontys.scope.event.EventType;
 import nl.fontys.scope.event.Events;
 import nl.fontys.scope.object.GameObject;
 
-public abstract class DynamicGameObjectController implements GameObjectController {
+public abstract class MoveableGameObjectLogic implements Logic {
 
     private Events events = Events.getInstance();
 
@@ -20,7 +20,7 @@ public abstract class DynamicGameObjectController implements GameObjectControlle
 
     private Matrix4 m = new Matrix4();
 
-    public DynamicGameObjectController() {
+    public MoveableGameObjectLogic() {
         events.register(this);
     }
 

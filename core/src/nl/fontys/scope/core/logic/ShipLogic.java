@@ -1,4 +1,4 @@
-package nl.fontys.scope.core.controller;
+package nl.fontys.scope.core.logic;
 
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
@@ -8,7 +8,7 @@ import nl.fontys.scope.controls.Moveable;
 import nl.fontys.scope.core.PlayerManager;
 import nl.fontys.scope.object.GameObject;
 
-public class ShipController implements GameObjectController, Moveable {
+public class ShipLogic implements Logic, Moveable {
 
     private Vector3 accel = new Vector3(), v = new Vector3();
 

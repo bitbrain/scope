@@ -1,4 +1,4 @@
-package nl.fontys.scope.core.controller;
+package nl.fontys.scope.core.logic;
 
 import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.math.Vector3;
@@ -7,7 +7,7 @@ import nl.fontys.scope.graphics.LightingManager;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.util.Colors;
 
-public class LightingController extends DynamicGameObjectController {
+public class LightingLogic extends MoveableGameObjectLogic {
 
     private PointLight light;
 
@@ -15,7 +15,7 @@ public class LightingController extends DynamicGameObjectController {
 
     private int strength = 4;
 
-    public LightingController(LightingManager lightingManager) {
+    public LightingLogic(LightingManager lightingManager) {
         this.lightingManager = lightingManager;
     }
 

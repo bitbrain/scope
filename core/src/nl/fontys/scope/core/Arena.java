@@ -7,7 +7,7 @@ import java.util.UUID;
 
 import aurelienribon.tweenengine.TweenManager;
 import nl.fontys.scope.Config;
-import nl.fontys.scope.core.controller.EnergyController;
+import nl.fontys.scope.core.logic.EnergyLogic;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.object.GameObjectFactory;
 import nl.fontys.scope.object.GameObjectType;
@@ -58,7 +58,7 @@ public class Arena {
         tmp.rotate((float) (angle), 0f, 0f, 1f);
         GameObject energy = factory.createEnergy(tmp.x, tmp.y, tmp.z);
         energy.getColor().set(Colors.PRIMARY);
-        world.addController(energy, new EnergyController());
+        world.addLogic(energy, new EnergyLogic());
     }
 
     private void spawnPlayer(Player player) {

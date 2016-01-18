@@ -87,7 +87,7 @@ public abstract class AbstractScreen implements Screen {
         multiplexer = new InputMultiplexer();
         Gdx.input.setInputProcessor(multiplexer);
         soundManager.setPerspectiveCamera(world.getCamera());
-        world.addController(soundManager);
+        world.addLogic(soundManager);
         cam2D = new OrthographicCamera();
         onShow();
     }

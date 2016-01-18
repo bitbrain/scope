@@ -1,16 +1,16 @@
-package nl.fontys.scope.core.controller;
+package nl.fontys.scope.core.logic;
 
 import com.badlogic.gdx.math.Vector3;
 
 import nl.fontys.scope.object.GameObject;
 
-public class RotationController implements GameObjectController {
+public class RotateAroundLogic implements Logic {
 
     private float speed;
 
     private Vector3 angle = new Vector3();
 
-    public RotationController(float speed) {
+    public RotateAroundLogic(float speed) {
         this.speed = speed;
         angle.setToRandomDirection().setLength(speed);
 

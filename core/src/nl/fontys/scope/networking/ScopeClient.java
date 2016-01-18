@@ -13,7 +13,7 @@ import java.util.HashMap;
 
 import nl.fontys.scope.core.Player;
 import nl.fontys.scope.core.World;
-import nl.fontys.scope.core.controller.GameObjectController;
+import nl.fontys.scope.core.logic.Logic;
 import nl.fontys.scope.event.EventType;
 import nl.fontys.scope.event.Events;
 import nl.fontys.scope.networking.broadCasts.CollisionBroadCast;
@@ -30,7 +30,7 @@ import nl.fontys.scope.networking.responses.GetGamesResponse;
 import nl.fontys.scope.networking.responses.JoinedResponse;
 import nl.fontys.scope.object.GameObject;
 
-public class ScopeClient extends Listener implements GameObjectController{
+public class ScopeClient extends Listener implements Logic {
 
     private boolean connected;
     private boolean joined;
@@ -83,7 +83,7 @@ public class ScopeClient extends Listener implements GameObjectController{
 
         updater = new GameObjectUpdater(world);
 
-        world.addController(this);
+        world.addLogic(this);
 
         ScopeNetworkingHelper.registerClasses(client.getKryo());
 

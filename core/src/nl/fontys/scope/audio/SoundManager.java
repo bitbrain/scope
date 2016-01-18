@@ -14,12 +14,12 @@ import java.util.Map;
 import nl.fontys.scope.Config;
 import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.assets.Assets;
-import nl.fontys.scope.core.controller.GameObjectController;
+import nl.fontys.scope.core.logic.Logic;
 import nl.fontys.scope.event.EventType;
 import nl.fontys.scope.event.Events;
 import nl.fontys.scope.object.GameObject;
 
-public final class SoundManager implements GameObjectController {
+public final class SoundManager implements Logic {
 
     private class SoundData {
 

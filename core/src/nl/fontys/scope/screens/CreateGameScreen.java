@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import nl.fontys.scope.Config;
 import nl.fontys.scope.ScopeGame;
-import nl.fontys.scope.core.controller.CameraRotatingController;
+import nl.fontys.scope.core.logic.CameraRotatingLogic;
 import nl.fontys.scope.i18n.Bundle;
 import nl.fontys.scope.i18n.Messages;
 import nl.fontys.scope.object.GameObject;
@@ -31,7 +31,7 @@ public class CreateGameScreen extends AbstractScreen implements ExitHandler {
     @Override
     protected void onShow() {
         GameObject planet = factory.createPlanet(80f);
-        world.addController(new CameraRotatingController(500f, world.getCamera(), planet));
+        world.addLogic(new CameraRotatingLogic(500f, world.getCamera(), planet));
     }
 
     @Override

@@ -1,8 +1,8 @@
-package nl.fontys.scope.core.controller;
+package nl.fontys.scope.core.logic;
 
 import nl.fontys.scope.object.GameObject;
 
-public interface GameObjectController {
+public interface Logic {
 
     void update(GameObject object, float delta);
 

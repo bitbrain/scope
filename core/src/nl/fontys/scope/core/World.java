@@ -12,12 +12,11 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-import nl.fontys.scope.core.controller.GameObjectController;
+import nl.fontys.scope.core.logic.Logic;
 import nl.fontys.scope.event.EventType;
 import nl.fontys.scope.event.Events;
 import nl.fontys.scope.graphics.LightingManager;
 import nl.fontys.scope.graphics.ModelInstanceService;
-import nl.fontys.scope.graphics.ParticleManager;
 import nl.fontys.scope.graphics.RenderManager;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.util.Colors;
@@ -35,8 +34,6 @@ public class World {
 
     private LightingManager lightingManager;
 
-    private ParticleManager particleManager = ParticleManager.getInstance();
-
     Pool<nl.fontys.scope.object.GameObject> gameObjectPool = new Pool(256) {
         @Override
         protected nl.fontys.scope.object.GameObject newObject() {
@@ -48,9 +45,9 @@ public class World {
 
     Events events = Events.getInstance();
 
-    private Map<String, List<GameObjectController>> controllers = new HashMap<String, List<GameObjectController> >();
+    private Map<String, List<Logic>> logics = new HashMap<String, List<Logic> >();
 
-    private List<GameObjectController> globalControllers = new ArrayList<GameObjectController>();
+    private List<Logic> globalLogics = new ArrayList<Logic>();
 
     private ModelInstanceService modelInstanceService;
 
@@ -82,12 +79,12 @@ public class World {
         this.restrictor = restrictor;
     }
 
-    public void addController(nl.fontys.scope.object.GameObject gameObject, GameObjectController controller) {
+    public void addLogic(nl.fontys.scope.object.GameObject gameObject, Logic controller) {
         if (objects.containsKey(gameObject.getId())) {
-            if (!controllers.containsKey(gameObject.getId())) {
-                controllers.put(gameObject.getId(), new ArrayList<GameObjectController>());
+            if (!logics.containsKey(gameObject.getId())) {
+                logics.put(gameObject.getId(), new ArrayList<Logic>());
             }
-            controllers.get(gameObject.getId()).add(controller);
+            logics.get(gameObject.getId()).add(controller);
         }
     }
 
@@ -95,12 +92,12 @@ public class World {
         return objects.get(id);
     }
 
-    public void addController(GameObjectController controller) {
-        globalControllers.add(controller);
+    public void addLogic(Logic controller) {
+        globalLogics.add(controller);
     }
 
     public void dispose() {
-        controllers.clear();
+        logics.clear();
         collisionDetector.dispose();
     }
 
@@ -120,7 +117,7 @@ public class World {
 
     public void remove(nl.fontys.scope.object.GameObject gameObject) {
         if (objects.remove(gameObject.getId()) != null) {
-            controllers.remove(gameObject.getId());
+            logics.remove(gameObject.getId());
             events.fire(EventType.OBJECT_REMOVED, gameObject);
         }
     }
@@ -133,23 +130,23 @@ public class World {
         camera.update();
         renderManager.background(camera);
         for (GameObject object : objects.values()) {
-            // Local controllers
-            List<GameObjectController> c = controllers.get(object.getId());
-            if (c != null) {
-                for (GameObjectController cObject : c) {
-                    cObject.update(object, delta);
+            // Local logics
+            List<Logic> objectLogic = logics.get(object.getId());
+            if (objectLogic != null) {
+                for (Logic logic : objectLogic) {
+                    logic.update(object, delta);
                 }
             }
-            // Global controllers
-            for (GameObjectController globalController : globalControllers) {
-                globalController.update(object, delta);
+            // Global logics
+            for (Logic logic : globalLogics) {
+                logic.update(object, delta);
             }
             physics.apply(object, delta);
             for (GameObject other : objects.values()) {
                 if (!object.getId().equals(other.getId())) {
-                    if (c != null) {
-                        for (GameObjectController cObject : c) {
-                            cObject.update(object, other, delta);
+                    if (objectLogic != null) {
+                        for (Logic logic : objectLogic) {
+                            logic.update(object, other, delta);
                         }
                     }
                     collisionDetector.detect(object, other);

@@ -1,4 +1,4 @@
-package nl.fontys.scope.core.controller;
+package nl.fontys.scope.core.logic;
 
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
@@ -11,7 +11,7 @@ import nl.fontys.scope.event.Events;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.object.GameObjectType;
 
-public class AIController implements GameObjectController {
+public class AILogic implements Logic {
 
     private GameObject target;
 
@@ -25,7 +25,7 @@ public class AIController implements GameObjectController {
 
     private Events events  = Events.getInstance();
 
-    public AIController(Player player) {
+    public AILogic(Player player) {
         this.player = player;
         events.register(this);
     }

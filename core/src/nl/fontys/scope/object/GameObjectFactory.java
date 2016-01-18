@@ -4,8 +4,8 @@ import com.badlogic.gdx.math.Vector3;
 
 import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.core.World;
-import nl.fontys.scope.core.controller.LightingController;
-import nl.fontys.scope.core.controller.ParticleEffectController;
+import nl.fontys.scope.core.logic.LightingLogic;
+import nl.fontys.scope.core.logic.ParticleEffectLogic;
 import nl.fontys.scope.util.Colors;
 
 /**
@@ -25,14 +25,14 @@ public class GameObjectFactory {
         object.setCollisionScale(0f);
         object.setScale(1.65f);
         object.getColor().set(0.75f, 0.75f, 0.75f, 1f);
-        ParticleEffectController c = new ParticleEffectController(Assets.ParticleEffects.POWER);
+        ParticleEffectLogic c = new ParticleEffectLogic(Assets.ParticleEffects.POWER);
         final float X_OFFSET = -3.2f;
         c.setOffset(X_OFFSET, 0f, 0f);
-        LightingController lc = new LightingController(world.getLightingManager());
+        LightingLogic lc = new LightingLogic(world.getLightingManager());
         lc.setStrength(7);
         lc.setOffset(X_OFFSET, 0f, 0f);
-        world.addController(object, c);
-        world.addController(object, lc);
+        world.addLogic(object, c);
+        world.addLogic(object, lc);
         return object;
     }
 
@@ -62,7 +62,7 @@ public class GameObjectFactory {
         GameObject sphere = createPlanet(scale);
         sphere.setType(GameObjectType.SPHERE);
         sphere.setCollisionScale(0f);
-        world.addController(sphere, new ParticleEffectController(Assets.ParticleEffects.SPHERE));
+        world.addLogic(sphere, new ParticleEffectLogic(Assets.ParticleEffects.SPHERE));
         return sphere;
     }
 
@@ -74,7 +74,7 @@ public class GameObjectFactory {
         object.setCollisionScale(2f);
         object.setScale(2.5f);
         object.setPhysics(false);
-        world.addController(object, new ParticleEffectController(Assets.ParticleEffects.ENERGY));
+        world.addLogic(object, new ParticleEffectLogic(Assets.ParticleEffects.ENERGY));
         return object;
     }
 }
