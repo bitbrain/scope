@@ -84,13 +84,13 @@ public class MenuScreen extends AbstractScreen implements ExitHandler {
             public void clicked(InputEvent event, float x, float y) {
                 setScreen(new CreateGameScreen(game));
             }
-        });
+        }).setDisabled(!Config.NETWORKING_ENABLED);
         menu.add(Bundle.general.get(Messages.MENU_JOIN_GAME), new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 setScreen(new JoinGameScreen(game));
             }
-        });
+        }).setDisabled(!Config.NETWORKING_ENABLED);
         layout.add(menu).padBottom(30f).row();
         Label version = new Label("version " + Config.APP_VERSION, Styles.LABEL_VERSION);
         layout.row();
