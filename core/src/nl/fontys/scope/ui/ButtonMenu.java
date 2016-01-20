@@ -126,19 +126,11 @@ public class ButtonMenu extends Table {
     }
 
     public void checkNext() {
-        int nextCheck = currentCheckIndex + 1;
-        if (nextCheck >= buttons.size()) {
-            nextCheck = 0;
-        }
-        setChecked(nextCheck);
+        setChecked(getNextIndex());
     }
 
     public void checkPrevious() {
-        int previousCheck = currentCheckIndex - 1;
-        if (previousCheck < 0) {
-            previousCheck = buttons.size() - 1;
-        }
-        setChecked(previousCheck);
+        setChecked(getPreviusIndex());
     }
 
     public void clickChecked() {
@@ -160,11 +152,41 @@ public class ButtonMenu extends Table {
         }
     }
 
+    private boolean isValidCheck(int index) {
+        return index >= 0 && index < buttons.size() && !buttons.get(index).isDisabled();
+    }
+
     private void setChecked(int index) {
         for (int i = 0; i < buttons.size(); ++i) {
             Button button = buttons.get(i);
             button.setChecked(i == index);
         }
         currentCheckIndex = index;
+    }
+
+    private int getNextIndex() {
+        int index = currentCheckIndex;
+        boolean inc = false;
+        while (!inc || !isValidCheck(index)) {
+            inc = true;
+            index++;
+            if (index >= buttons.size()) {
+                index = 0;
+            }
+        }
+        return index;
+    }
+
+    private int getPreviusIndex() {
+        int index = currentCheckIndex;
+        boolean dec = false;
+        while (!dec || !isValidCheck(index)) {
+            dec = true;
+            index--;
+            if (index < 0) {
+                index = buttons.size() - 1;
+            }
+        }
+        return index;
     }
 }
