@@ -1,5 +1,7 @@
 package nl.fontys.scope.core;
 
+import com.badlogic.gdx.graphics.Color;
+
 import java.util.UUID;
 
 import nl.fontys.scope.Config;
@@ -28,16 +30,23 @@ public class Player {
 
     private boolean ai;
 
+    private Color color;
+
     Player(World world) {
         this.id = UUID.randomUUID().toString();
         focus = new FocusContainer();
         GameObjectFactory factory = new GameObjectFactory(world);
         this.ship = factory.createShip(0f, 0f, 0f);
         this.weapon = new Weapon(this.ship, world, focus);
+        color = Color.WHITE.cpy();
     }
 
     public boolean isAI() {
         return ai;
+    }
+
+    public Color getColor() {
+        return color;
     }
 
     public void setAI(boolean ai) {
