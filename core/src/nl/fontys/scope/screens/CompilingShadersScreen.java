@@ -1,7 +1,5 @@
 package nl.fontys.scope.screens;
 
-import com.badlogic.gdx.Gdx;
-
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenEquations;

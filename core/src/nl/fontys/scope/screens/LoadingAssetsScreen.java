@@ -1,20 +1,15 @@
 package nl.fontys.scope.screens;
 
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 
-import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
-import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenEquations;
 import nl.fontys.scope.ScopeGame;
 import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.assets.Assets;
-import nl.fontys.scope.graphics.SharedEnvironmentCubemap;
 import nl.fontys.scope.i18n.Bundle;
 import nl.fontys.scope.i18n.Messages;
 import nl.fontys.scope.tweens.ValueTween;
-import nl.fontys.scope.ui.Styles;
 
 public class LoadingAssetsScreen extends LoadingScreen {
 

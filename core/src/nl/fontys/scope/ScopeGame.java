@@ -7,7 +7,6 @@ import nl.fontys.scope.networking.ScopeClient;
 import nl.fontys.scope.networking.ScopeServer;
 import nl.fontys.scope.screens.AbstractScreen;
 import nl.fontys.scope.screens.LoadingAssetsScreen;
-import nl.fontys.scope.screens.LoadingScreen;
 import nl.fontys.scope.screens.ScreenHandler;
 
 public class ScopeGame extends Game {
