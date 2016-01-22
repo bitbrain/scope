@@ -89,6 +89,7 @@ project(":core") {
         compile "net.engio:mbassador:1.2.4"
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
     }
 }
 
