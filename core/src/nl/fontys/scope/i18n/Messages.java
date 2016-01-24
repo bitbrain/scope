@@ -27,4 +27,14 @@ public final class Messages {
     public static final String TOOLTIP_POINTS_GAINED="TOOLTIP_POINTS_GAINED";
     public static final String TOOLTIP_POINTS_GAINED_OTHER="TOOLTIP_POINTS_GAINED_OTHER";
     public static final String MENU_SINGLE_PLAYER = "MENU_SINGLE_PLAYER";
+
+    public static final String RANDOM_TEXT_01 = "RANDOM_TEXT_01";
+    public static final String RANDOM_TEXT_02 = "RANDOM_TEXT_02";
+    public static final String RANDOM_TEXT_03 = "RANDOM_TEXT_03";
+    public static final String RANDOM_TEXT_04 = "RANDOM_TEXT_04";
+    public static final String RANDOM_TEXT_05 = "RANDOM_TEXT_05";
+    public static final String RANDOM_TEXT_06 = "RANDOM_TEXT_06";
+    public static final String RANDOM_TEXT_07 = "RANDOM_TEXT_07";
+    public static final String RANDOM_TEXT_08 = "RANDOM_TEXT_08";
+    public static final String RANDOM_TEXT_09 = "RANDOM_TEXT_09";
 }
