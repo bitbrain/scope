@@ -15,6 +15,7 @@ import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.graphics.FX;
 import nl.fontys.scope.util.Colors;
+import nl.fontys.scope.util.RandomTextProvider;
 import nl.fontys.scope.util.ValueProvider;
 
 public abstract class LoadingScreen implements Screen {
@@ -41,6 +42,8 @@ public abstract class LoadingScreen implements Screen {
 
     protected float target = 0;
 
+    protected RandomTextProvider textProvider;
+
     public LoadingScreen(ScopeGame game) {
         this.game = game;
     }
@@ -51,6 +54,7 @@ public abstract class LoadingScreen implements Screen {
         this.batch = new SpriteBatch();
         cam = new OrthographicCamera();
         renderer = new ShapeRenderer();
+        textProvider = new RandomTextProvider();
         fx.init(tweenManager, null, cam);
     }
 
@@ -124,6 +128,9 @@ public abstract class LoadingScreen implements Screen {
             progress = new Label("0%", progressStyle);
         }
         if (label != null) {
+            if (Math.round(value.getValue() * 100f) % 19 == 0) {
+                label.setText(textProvider.getNextText() + "...");
+            }
             label.setPosition(Gdx.graphics.getWidth() / 2f - label.getPrefWidth() / 2f, Gdx.graphics.getHeight() / 2f - label.getPrefHeight() / 2f + label.getPrefHeight());
             label.draw(batch, 1f);
             progress.setText(Math.round(value.getValue() * 100f) + "%");

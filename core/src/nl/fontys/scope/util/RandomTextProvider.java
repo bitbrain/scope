@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import nl.fontys.scope.i18n.Bundle;
 import nl.fontys.scope.i18n.Messages;
 
 public class RandomTextProvider {
@@ -20,7 +21,7 @@ public class RandomTextProvider {
     }
 
     public String getNextText() {
-        return keys.get(getNextIndex());
+        return Bundle.general.get(keys.remove(getNextIndex()));
     }
 
     private int getNextIndex() {

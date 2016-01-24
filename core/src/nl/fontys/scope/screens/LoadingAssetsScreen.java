@@ -8,7 +8,6 @@ import nl.fontys.scope.ScopeGame;
 import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.i18n.Bundle;
-import nl.fontys.scope.i18n.Messages;
 import nl.fontys.scope.tweens.ValueTween;
 
 public class LoadingAssetsScreen extends LoadingScreen {
@@ -53,6 +52,6 @@ public class LoadingAssetsScreen extends LoadingScreen {
 
     @Override
     protected String getLabelKey() {
-        return Bundle.general.get(Messages.LOADING_INFO);
+        return textProvider.getNextText() + "...";
     }
 }
