@@ -21,7 +21,9 @@ public class RandomTextProvider {
     }
 
     public String getNextText() {
-        return Bundle.general.get(keys.remove(getNextIndex()));
+        int index = getNextIndex();
+        String key = keys.size() > 1 ? keys.remove(index) : keys.get(index);
+        return Bundle.general.get(key);
     }
 
     private int getNextIndex() {
