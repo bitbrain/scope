@@ -10,6 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import nl.fontys.scope.ScopeGame;
+import nl.fontys.scope.assets.AssetManager;
+import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.core.Player;
 import nl.fontys.scope.core.PlayerManager;
 import nl.fontys.scope.core.World;
@@ -19,6 +21,7 @@ import nl.fontys.scope.i18n.Bundle;
 import nl.fontys.scope.i18n.Messages;
 import nl.fontys.scope.ui.ButtonMenu;
 import nl.fontys.scope.ui.ExitHandler;
+import nl.fontys.scope.ui.ModelPreview;
 import nl.fontys.scope.ui.Styles;
 
 public class SingleplayerScreen extends AbstractScreen implements ExitHandler {
@@ -33,20 +36,26 @@ public class SingleplayerScreen extends AbstractScreen implements ExitHandler {
     private class PlayerTable extends Table {
 
         public PlayerTable() {
-            addPlayerRow();
-            addPlayerRow();
-            addPlayerRow();
-            addPlayerRow();
+            addPlayer(false);
+            addPlayer(true);
+            addPlayer(true);
+            addPlayer(true);
         }
 
-        private void addPlayerRow() {
-            Table row = new Table();
-            row.add(new TextButton("AI", Styles.BUTTON_MENU)).width(90f).height(90f).padRight(30f);
+        private void addPlayer(boolean ai) {
+            if (getChildren().size % 2 == 0) {
+                row();
+            }
+            Table cell = new Table();
+            ModelPreview preview = new ModelPreview(textureBacker, AssetManager.getModel(Assets.Models.CRUISER), 90f, 90f);
+            cell.add(preview).width(90f).height(90f).padRight(10f);
+            cell.add(new TextButton(ai ? "AI" : "YOU", Styles.BUTTON_MENU)).width(90f).height(90f).padRight(30f);
             TextField name = new TextField("Player" + (getChildren().size + 1), Styles.TEXTFIELD_FORM);
-            row.add(name).width(200f).height(90f).padRight(20f);
-            row.add(new TextButton("Difficulty", Styles.BUTTON_MENU)).height(90f).padRight(30f);
-            row.add(new TextButton("Color", Styles.BUTTON_MENU)).height(90f).padRight(30f);
-            add(row).padBottom(15f).row();
+            cell.add(name).width(200f).height(90f).padRight(20f);
+            add(cell).padBottom(45f);
+            if (getChildren().size % 2 != 0) {
+                padRight(65f);
+            }
         }
     }
 
