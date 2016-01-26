@@ -70,6 +70,7 @@ public class ModelPreview extends Actor {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+        ActorShadow.draw(batch, this);
         batch.draw(backer.getBackedTexture(handleId), getX(), getY(), getWidth(), getHeight());
     }
 

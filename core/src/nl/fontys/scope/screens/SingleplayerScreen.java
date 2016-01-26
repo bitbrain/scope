@@ -9,6 +9,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import nl.fontys.scope.ScopeGame;
 import nl.fontys.scope.assets.AssetManager;
 import nl.fontys.scope.assets.Assets;
@@ -33,6 +36,13 @@ public class SingleplayerScreen extends AbstractScreen implements ExitHandler {
         public Difficulty difficulty;
     }
 
+    private class PlayerData {
+        public String name;
+        public boolean ai;
+    }
+
+    private List<PlayerData> data = new ArrayList<PlayerData>();
+
     private class PlayerTable extends Table {
 
         public PlayerTable() {
@@ -43,6 +53,11 @@ public class SingleplayerScreen extends AbstractScreen implements ExitHandler {
         }
 
         private void addPlayer(boolean ai) {
+            final String name = "Player" + (getChildren().size + 1);
+            final PlayerData pd = new PlayerData();
+            pd.name = name;
+            pd.ai = ai;
+            data.add(pd);
             if (getChildren().size % 2 == 0) {
                 row();
             }
@@ -50,8 +65,9 @@ public class SingleplayerScreen extends AbstractScreen implements ExitHandler {
             ModelPreview preview = new ModelPreview(textureBacker, AssetManager.getModel(Assets.Models.CRUISER), 90f, 90f);
             cell.add(preview).width(90f).height(90f).padRight(10f);
             cell.add(new TextButton(ai ? "AI" : "YOU", Styles.BUTTON_MENU)).width(90f).height(90f).padRight(30f);
-            TextField name = new TextField("Player" + (getChildren().size + 1), Styles.TEXTFIELD_FORM);
-            cell.add(name).width(200f).height(90f).padRight(20f);
+            TextField textfield = new TextField(name, Styles.TEXTFIELD_FORM);
+            textfield.setDisabled(true);
+            cell.add(textfield).width(200f).height(90f).padRight(20f);
             add(cell).padBottom(45f);
             if (getChildren().size % 2 != 0) {
                 padRight(65f);
@@ -92,9 +108,13 @@ public class SingleplayerScreen extends AbstractScreen implements ExitHandler {
                     @Override
                     public void initialize(IngameScreen screen) {
                         PlayerManager playerManager = screen.getPlayerManager();
-                        Player player = playerManager.addPlayer();
-                        player.setAI(true);
-                        screen.world.addLogic(player.getShip(), new AILogic(player));
+                        for (PlayerData pd : data) {
+                            if (pd.ai) {
+                                Player player = playerManager.addPlayer();
+                                player.setAI(true);
+                                screen.world.addLogic(player.getShip(), new AILogic(player));
+                            }
+                        }
                     }
                 });
                 setScreen(screen);

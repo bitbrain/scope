@@ -78,6 +78,8 @@ public final class Styles {
         TEXTFIELD_FORM.messageFontColor = Colors.lighten(Colors.PRIMARY, 0.5f);
         TEXTFIELD_FORM.background = createDrawable(Assets.Textures.TEXTFIELD, Colors.trans(Colors.UI, 0.7f));
         TEXTFIELD_FORM.focusedBackground = createDrawable(Assets.Textures.TEXTFIELD, Colors.UI);
+        TEXTFIELD_FORM.disabledBackground = createDrawable(Assets.Textures.TEXTFIELD, Colors.trans(Colors.UI, 0.7f));
+        TEXTFIELD_FORM.disabledFontColor = Colors.lighten(Colors.PRIMARY, 0.5f);
         TEXTFIELD_FORM.cursor = new SpriteDrawable(new Sprite(GraphicsFactory.createTexture(3, 16, Colors.SECONDARY)));
     }
 }
