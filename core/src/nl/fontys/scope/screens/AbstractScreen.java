@@ -17,6 +17,8 @@ import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
 import nl.fontys.scope.Config;
 import nl.fontys.scope.ScopeGame;
+import nl.fontys.scope.assets.AssetManager;
+import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.audio.SoundManager;
 import nl.fontys.scope.controls.ControllerManager;
 import nl.fontys.scope.controls.KeyboardMenuSupport;
@@ -26,9 +28,11 @@ import nl.fontys.scope.event.Events;
 import nl.fontys.scope.graphics.FX;
 import nl.fontys.scope.graphics.ParticleManager;
 import nl.fontys.scope.graphics.ShaderManager;
+import nl.fontys.scope.graphics.TextureBacker;
 import nl.fontys.scope.object.GameObjectFactory;
 import nl.fontys.scope.ui.ButtonMenu;
 import nl.fontys.scope.ui.ExitHandler;
+import nl.fontys.scope.ui.ModelPreview;
 import nl.fontys.scope.ui.Tooltip;
 
 public abstract class AbstractScreen implements Screen {
@@ -76,10 +80,13 @@ public abstract class AbstractScreen implements Screen {
 
     private boolean closing;
 
+    protected TextureBacker textureBacker;
+
     protected float fadeInTime = 0.4f, fadeOutTime = 0.4f;
 
     @Override
     public final void show() {
+        textureBacker = new TextureBacker();
         controllerManager = new ControllerManager();
         tweenManager = new TweenManager();
         baseShaderManager = ShaderManager.getBaseInstance();
@@ -101,6 +108,7 @@ public abstract class AbstractScreen implements Screen {
         Gdx.gl.glClearColor(0.02f, 0f, 0.05f, 1f);
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT | (Gdx.graphics.getBufferFormat().coverageSampling ? GL20.GL_COVERAGE_BUFFER_BIT_NV : 0));
+        textureBacker.render(stage.getBatch(), 1f);
         fx.begin();
         cam2D.update();
         if (Config.HIGH_QUALITY) {
@@ -110,7 +118,7 @@ public abstract class AbstractScreen implements Screen {
         }
         // Draw special effects (fading etc.)
         stage.getBatch().begin();
-            fx.render(stage.getBatch(), delta);
+        fx.render(stage.getBatch(), delta);
         stage.getBatch().end();
         fx.end();
     }
@@ -159,7 +167,6 @@ public abstract class AbstractScreen implements Screen {
             tooltip.init(stage, cam2D, tweenManager);
             fx.init(tweenManager, world, cam2D);
             onCreateStage(stage);
-
             keyboard = new KeyboardMenuSupport(getMenu(), getExitHandler());
             controllerManager.registerSupport(new XboxMenuControllerSupport(getMenu(), getExitHandler()));
             fx.fadeIn(fadeInTime, TweenEquations.easeInCubic);
