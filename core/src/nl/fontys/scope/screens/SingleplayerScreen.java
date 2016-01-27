@@ -19,7 +19,6 @@ import nl.fontys.scope.core.Player;
 import nl.fontys.scope.core.PlayerManager;
 import nl.fontys.scope.core.World;
 import nl.fontys.scope.core.logic.AILogic;
-import nl.fontys.scope.core.logic.ai.Difficulty;
 import nl.fontys.scope.i18n.Bundle;
 import nl.fontys.scope.i18n.Messages;
 import nl.fontys.scope.ui.ButtonMenu;
@@ -33,7 +32,6 @@ public class SingleplayerScreen extends AbstractScreen implements ExitHandler {
 
     private class AIConfig {
         public Color color;
-        public Difficulty difficulty;
     }
 
     private class PlayerData {

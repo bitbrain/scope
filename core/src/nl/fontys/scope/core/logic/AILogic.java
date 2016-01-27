@@ -17,7 +17,6 @@ public class AILogic implements Logic {
 
     @Override
     public void update(GameObject object, float delta) {
-
     }
 
     @Override
