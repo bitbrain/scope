@@ -14,7 +14,7 @@ public final class GameObjectUtil {
     public static void moveToTarget(GameObject thisObject, GameObject targetObject, float delta) {
         v.set(targetObject.getPosition()).sub(thisObject.getPosition());
         v.nor();
-        thisObject.getVelocity().add(v.scl(5.7f * delta));
+        thisObject.getVelocity().add(v.scl(95f * delta));
         v.set(thisObject.getVelocity());
         v.nor();
         mat.set(v.x, v.y, v.z, v.len());

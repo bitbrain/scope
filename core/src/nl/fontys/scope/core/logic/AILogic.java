@@ -72,11 +72,11 @@ public class AILogic implements Logic {
         Selector sRight = new Selector();
         selector.addChild(sRight);
         // Layer 3 (left)
-        sLeft.addChild(new ShootTask());
         sLeft.addChild(new AimEnemyTask());
+        sLeft.addChild(new ShootTask());
         // Layer 3 (right)
-        sRight.addChild(new AimEnergyTask());
         sRight.addChild(new AimSphereTask());
+        sRight.addChild(new AimEnergyTask());
         return new BehaviorTree<AIState>(selector, new AIState());
     }
 

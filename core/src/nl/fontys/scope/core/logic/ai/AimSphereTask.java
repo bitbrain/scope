@@ -11,6 +11,7 @@ public class AimSphereTask extends AITask {
         Player player = state.player;
         if (player.getFocusProgress() > 0.9f) {
             GameObjectUtil.moveToTarget(player.getShip(), state.sphere, state.delta);
+            return Status.SUCCEEDED;
         }
         return Status.FAILED;
     }
