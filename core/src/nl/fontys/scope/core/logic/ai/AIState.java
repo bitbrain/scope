@@ -5,7 +5,10 @@ import nl.fontys.scope.object.GameObject;
 
 public class AIState {
 
-    public GameObject otherObject;
+    public GameObject closestEnergy;
+    public GameObject sphere;
+    public GameObject closestEnemy;
+    public GameObject lastEnemyAttackedBy;
     public Player player;
     public float delta;
 }

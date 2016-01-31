@@ -110,7 +110,7 @@ public class SingleplayerScreen extends AbstractScreen implements ExitHandler {
                             if (pd.ai) {
                                 Player player = playerManager.addPlayer();
                                 player.setAI(true);
-                                screen.world.addLogic(player.getShip(), new AILogic(player));
+                                screen.world.addLogic(player.getShip(), new AILogic(player, screen.world));
                             }
                         }
                     }

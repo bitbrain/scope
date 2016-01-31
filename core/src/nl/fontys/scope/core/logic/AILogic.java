@@ -3,15 +3,21 @@ package nl.fontys.scope.core.logic;
 import com.badlogic.gdx.ai.btree.BehaviorTree;
 import com.badlogic.gdx.ai.btree.branch.Selector;
 import com.badlogic.gdx.ai.btree.branch.Sequence;
+import com.badlogic.gdx.math.Vector3;
+
+import net.engio.mbassy.listener.Handler;
 
 import nl.fontys.scope.core.Player;
+import nl.fontys.scope.core.World;
 import nl.fontys.scope.core.logic.ai.AIState;
 import nl.fontys.scope.core.logic.ai.AimEnemyTask;
 import nl.fontys.scope.core.logic.ai.AimEnergyTask;
 import nl.fontys.scope.core.logic.ai.AimSphereTask;
 import nl.fontys.scope.core.logic.ai.ShootTask;
+import nl.fontys.scope.event.EventType;
 import nl.fontys.scope.event.Events;
 import nl.fontys.scope.object.GameObject;
+import nl.fontys.scope.object.GameObjectType;
 
 public class AILogic implements Logic {
 
@@ -21,8 +27,13 @@ public class AILogic implements Logic {
 
     private BehaviorTree<AIState> tree;
 
-    public AILogic(Player player) {
+    private Vector3 v = new Vector3();
+
+    private World world;
+
+    public AILogic(Player player, World world) {
         this.player = player;
+        this.world = world;
         events.register(this);
         tree = buildBehaviorTree();
         tree.getObject().player = player;
@@ -36,7 +47,18 @@ public class AILogic implements Logic {
 
     @Override
     public void update(GameObject object, GameObject other, float delta) {
-        tree.getObject().otherObject = other;
+        AIState state = tree.getObject();
+        if (GameObjectType.SPHERE.equals(other.getType())) {
+            state.sphere = other;
+        } else if (GameObjectType.ENERGY.equals(other.getType())) {
+            if (state.closestEnergy == null || distanceTo(other) < distanceTo(state.closestEnergy)) {
+                state.closestEnergy = other;
+            }
+        } else if (GameObjectType.SHIP.equals(other.getType())) {
+            if (state.closestEnemy == null || distanceTo(other) < distanceTo(state.closestEnemy)) {
+                state.closestEnemy = other;
+            }
+        }
     }
 
     private BehaviorTree<AIState> buildBehaviorTree() {
@@ -55,5 +77,32 @@ public class AILogic implements Logic {
         sRight.addChild(new AimEnergyTask());
         sRight.addChild(new AimSphereTask());
         return new BehaviorTree<AIState>(selector, new AIState());
+    }
+
+    private float distanceTo(GameObject object) {
+        GameObject self = player.getShip();
+        v.set(object.getPosition());
+        return v.sub(self.getPosition()).len();
+    }
+
+    @Handler
+    public void onEvent(Events.GdxEvent event) {
+        AIState state = tree.getObject();
+        if (event.isTypeOf(EventType.ON_SHOT)) {
+            GameObject source = world.getObjectById((String)event.getSecondaryParam(1));
+            GameObject target = (GameObject) event.getSecondaryParam(0);
+            if (source != null && target.equals(player.getShip())) {
+                state.lastEnemyAttackedBy = source;
+            }
+        } else if (event.isTypeOf(EventType.OBJECT_REMOVED)) {
+            GameObject object = (GameObject) event.getPrimaryParam();
+            if (object.equals(state.closestEnemy)) {
+                state.closestEnemy = null;
+            } else if (object.equals(state.closestEnergy)) {
+                state.closestEnergy = null;
+            } else if (object.equals(state.lastEnemyAttackedBy)) {
+                state.lastEnemyAttackedBy = null;
+            }
+        }
     }
 }
