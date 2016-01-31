@@ -10,10 +10,16 @@ public class AimEnemyTask extends AITask {
     @Override
     public Status execute() {
         AIState state = getObject();
-        if (state.closestEnemy != null) {
+        if (state.lastEnemyAttackedBy != null) {
+            final float DISTANCE = GameObjectUtil.distanceTo(state.player.getShip(), state.lastEnemyAttackedBy);
+            if (DISTANCE > MIN_AGGRO_RADIUS * 2f && DISTANCE < MAX_AGGRO_RADIUS * 2f) {
+                GameObjectUtil.moveToTarget(state.player.getShip(), state.lastEnemyAttackedBy, state.delta
+                return Status.SUCCEEDED;
+            }
+        } else if (state.closestEnemy != null) {
             final float DISTANCE = GameObjectUtil.distanceTo(state.player.getShip(), state.closestEnemy);
             if (DISTANCE > MIN_AGGRO_RADIUS && DISTANCE < MAX_AGGRO_RADIUS) {
-                GameObjectUtil.moveToTarget(state.player.getShip(), state.closestEnemy);
+                GameObjectUtil.moveToTarget(state.player.getShip(), state.closestEnemy, state.delta);
                 return Status.SUCCEEDED;
             }
         }

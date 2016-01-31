@@ -11,10 +11,10 @@ public final class GameObjectUtil {
 
     private static Vector3 v = new Vector3();
 
-    public static void moveToTarget(GameObject thisObject, GameObject targetObject) {
+    public static void moveToTarget(GameObject thisObject, GameObject targetObject, float delta) {
         v.set(targetObject.getPosition()).sub(thisObject.getPosition());
         v.nor();
-        thisObject.getVelocity().add(v.scl(1.7f));
+        thisObject.getVelocity().add(v.scl(5.7f * delta));
         v.set(thisObject.getVelocity());
         v.nor();
         mat.set(v.x, v.y, v.z, v.len());
