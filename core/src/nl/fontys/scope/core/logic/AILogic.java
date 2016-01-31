@@ -18,6 +18,7 @@ import nl.fontys.scope.event.EventType;
 import nl.fontys.scope.event.Events;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.object.GameObjectType;
+import nl.fontys.scope.util.GameObjectUtil;
 
 public class AILogic implements Logic {
 
@@ -51,11 +52,11 @@ public class AILogic implements Logic {
         if (GameObjectType.SPHERE.equals(other.getType())) {
             state.sphere = other;
         } else if (GameObjectType.ENERGY.equals(other.getType())) {
-            if (state.closestEnergy == null || distanceTo(other) < distanceTo(state.closestEnergy)) {
+            if (state.closestEnergy == null || GameObjectUtil.distanceTo(player.getShip(), other) < GameObjectUtil.distanceTo(player.getShip(), state.closestEnergy)) {
                 state.closestEnergy = other;
             }
         } else if (GameObjectType.SHIP.equals(other.getType())) {
-            if (state.closestEnemy == null || distanceTo(other) < distanceTo(state.closestEnemy)) {
+            if (state.closestEnemy == null || GameObjectUtil.distanceTo(player.getShip(), other) < GameObjectUtil.distanceTo(player.getShip(), state.closestEnemy)) {
                 state.closestEnemy = other;
             }
         }
@@ -79,11 +80,7 @@ public class AILogic implements Logic {
         return new BehaviorTree<AIState>(selector, new AIState());
     }
 
-    private float distanceTo(GameObject object) {
-        GameObject self = player.getShip();
-        v.set(object.getPosition());
-        return v.sub(self.getPosition()).len();
-    }
+
 
     @Handler
     public void onEvent(Events.GdxEvent event) {
