@@ -15,6 +15,10 @@ public final class GameObjectUtil {
         v.set(targetObject.getPosition()).sub(thisObject.getPosition());
         v.nor();
         thisObject.getVelocity().add(v.scl(95f * delta));
+        rotateTo(thisObject, targetObject);
+    }
+
+    public static void rotateTo(GameObject thisObject, GameObject targetObject) {
         v.set(thisObject.getVelocity());
         v.nor();
         mat.set(v.x, v.y, v.z, v.len());
