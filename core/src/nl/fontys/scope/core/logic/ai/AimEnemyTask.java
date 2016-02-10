@@ -4,8 +4,8 @@ import nl.fontys.scope.util.GameObjectUtil;
 
 public class AimEnemyTask extends AITask {
 
-    private static final float MIN_AGGRO_RADIUS = 40f;
-    private static final float MAX_AGGRO_RADIUS = 80f;
+    private static final float MIN_AGGRO_RADIUS = 70f;
+    private static final float MAX_AGGRO_RADIUS = 180f;
 
     @Override
     public Status execute() {
@@ -15,11 +15,17 @@ public class AimEnemyTask extends AITask {
             if (DISTANCE > MIN_AGGRO_RADIUS * 2f && DISTANCE < MAX_AGGRO_RADIUS * 2f) {
                 GameObjectUtil.moveToTarget(state.player.getShip(), state.lastEnemyAttackedBy, state.delta);
                 return Status.SUCCEEDED;
+            } else if (DISTANCE < MIN_AGGRO_RADIUS) {
+                GameObjectUtil.rotateTo(state.player.getShip(), state.lastEnemyAttackedBy);
+                return Status.SUCCEEDED;
             }
         } else if (state.closestEnemy != null) {
             final float DISTANCE = GameObjectUtil.distanceTo(state.player.getShip(), state.closestEnemy);
             if (DISTANCE > MIN_AGGRO_RADIUS && DISTANCE < MAX_AGGRO_RADIUS) {
                 GameObjectUtil.moveToTarget(state.player.getShip(), state.closestEnemy, state.delta);
+                return Status.SUCCEEDED;
+            } else if (DISTANCE < MIN_AGGRO_RADIUS) {
+                GameObjectUtil.rotateTo(state.player.getShip(), state.lastEnemyAttackedBy);
                 return Status.SUCCEEDED;
             }
         }
