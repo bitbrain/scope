@@ -19,7 +19,8 @@ public final class GameObjectUtil {
     }
 
     public static void rotateTo(GameObject thisObject, GameObject targetObject) {
-        v.set(thisObject.getVelocity());
+        v.set(targetObject.getPosition());
+        v.set(v.sub(thisObject.getPosition()));
         v.nor();
         mat.set(v.x, v.y, v.z, v.len());
         thisObject.getOrientation().setFromMatrix(mat);
