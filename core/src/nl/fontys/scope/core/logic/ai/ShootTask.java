@@ -4,6 +4,12 @@ public class ShootTask extends AITask {
 
     @Override
     public Status execute() {
-        return super.execute();
+        AIState state = getObject();
+        if (state.player.getWeapon().canShoot()) {
+            state.player.getWeapon().shoot();
+            return Status.SUCCEEDED;
+        } else {
+            return Status.FAILED;
+        }
     }
 }
