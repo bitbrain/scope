@@ -45,6 +45,10 @@ public class Weapon {
         }
     }
 
+    public boolean canShoot() {
+        return focus.hasFocus();
+    }
+
     private boolean checkShooting() {
         if ((System.currentTimeMillis() - this.timestamp) >= interval) {
             this.timestamp = System.currentTimeMillis();
