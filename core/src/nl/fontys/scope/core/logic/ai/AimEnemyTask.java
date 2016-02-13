@@ -25,7 +25,7 @@ public class AimEnemyTask extends AITask {
                 GameObjectUtil.moveToTarget(state.player.getShip(), state.closestEnemy, state.delta);
                 return Status.SUCCEEDED;
             } else if (DISTANCE < MIN_AGGRO_RADIUS) {
-                GameObjectUtil.rotateTo(state.player.getShip(), state.lastEnemyAttackedBy);
+                GameObjectUtil.rotateTo(state.player.getShip(), state.closestEnemy);
                 return Status.SUCCEEDED;
             }
         }
