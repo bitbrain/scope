@@ -21,6 +21,7 @@ public class ServerLauncher {
         server.start();
         while (server.isRunning()) {
             try {
+                System.out.print("> ");
                 String command = reader.readLine();
                 if (command != null && !command.trim().isEmpty()) {
                     server.command(command);

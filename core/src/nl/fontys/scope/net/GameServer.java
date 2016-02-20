@@ -14,8 +14,11 @@ public class GameServer {
 
     private GameInstanceManager instanceManager;
 
+    private ConnectionManager connectionManager;
+
     public GameServer() {
         instanceManager = new GameInstanceManager();
+        connectionManager = new ConnectionManager();
     }
 
     /**
@@ -23,19 +26,24 @@ public class GameServer {
      */
     public void start() {
         LOGGER.info("Starting game server..");
-        // TODO
-        running.set(true);
-        LOGGER.info("Started!");
+        try {
+            connectionManager.start();
+            running.set(true);
+            LOGGER.info("Started!");
+        } catch (GameServerException e) {
+            LOGGER.warning("Could not start connection manager: " + e.getMessage());
+        }
     }
 
     /**
      * Passes a simple command to the server
      */
     public void command(String command) {
-        LOGGER.info("Passing command: '" + command + "'");
         // TODO
         if (command.equals("stop")) {
             stop();
+        } else {
+            LOGGER.warning("Command '" + command + "' not recognized.");
         }
     }
 
@@ -44,8 +52,8 @@ public class GameServer {
      */
     public void stop() {
         LOGGER.info("Stopping game server..");
-        // TODO
         running.set(false);
+        connectionManager.dispose();
         LOGGER.info("Stopped!");
     }
 
