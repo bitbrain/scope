@@ -12,6 +12,12 @@ public class GameServer {
 
     private AtomicBoolean running = new AtomicBoolean(false);
 
+    private GameInstanceManager instanceManager;
+
+    public GameServer() {
+        instanceManager = new GameInstanceManager();
+    }
+
     /**
      * Starts the server (initialization)
      */
