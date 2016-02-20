@@ -3,6 +3,9 @@ package nl.fontys.scope.net;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Logger;
 
+import nl.fontys.scope.net.commands.StopCommand;
+import nl.fontys.scope.util.CommandHandler;
+
 /**
  * Game server class (standalone) which handles all the network logic
  */
@@ -16,9 +19,13 @@ public class GameServer {
 
     private ConnectionManager connectionManager;
 
+    private CommandHandler commandHandler;
+
     public GameServer() {
         instanceManager = new GameInstanceManager();
         connectionManager = new ConnectionManager();
+        commandHandler = new CommandHandler();
+        commandHandler.register("stop", new StopCommand(this));
     }
 
     /**
@@ -39,12 +46,7 @@ public class GameServer {
      * Passes a simple command to the server
      */
     public void command(String command) {
-        // TODO
-        if (command.equals("stop")) {
-            stop();
-        } else {
-            LOGGER.warning("Command '" + command + "' not recognized.");
-        }
+       commandHandler.handle(command);
     }
 
     /**
