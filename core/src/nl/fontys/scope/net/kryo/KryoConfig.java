@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.esotericsoftware.kryo.Kryo;
 
 import nl.fontys.scope.core.Player;
-import nl.fontys.scope.net.GameInstance;
+import nl.fontys.scope.net.server.GameInstance;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.object.GameObjectType;
 
