@@ -1,4 +1,4 @@
-package nl.fontys.scope.net;
+package nl.fontys.scope.net.server;
 
 import com.badlogic.gdx.utils.Disposable;
 import com.esotericsoftware.kryonet.Connection;
@@ -46,7 +46,7 @@ public class ConnectionManager implements Disposable {
         KryoConfig.configure(server.getKryo());
     }
 
-    public void start() throws GameServerException {
+    public void start() throws nl.fontys.scope.net.server.GameServerException {
         server.start();
         try {
             server.bind(KryoConfig.TCP_PORT, KryoConfig.UDP_PORT);

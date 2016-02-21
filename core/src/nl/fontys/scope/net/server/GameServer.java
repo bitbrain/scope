@@ -1,4 +1,4 @@
-package nl.fontys.scope.net;
+package nl.fontys.scope.net.server;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Logger;

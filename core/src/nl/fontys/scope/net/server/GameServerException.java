@@ -1,4 +1,4 @@
-package nl.fontys.scope.net;
+package nl.fontys.scope.net.server;
 
 public class GameServerException extends Exception {
 

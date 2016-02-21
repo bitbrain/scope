@@ -1,4 +1,4 @@
-package nl.fontys.scope.net;
+package nl.fontys.scope.net.server;
 
 import java.util.HashMap;
 import java.util.Map;
