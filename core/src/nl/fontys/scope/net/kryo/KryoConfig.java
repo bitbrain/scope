@@ -8,6 +8,7 @@ import com.esotericsoftware.kryo.Kryo;
 import nl.fontys.scope.core.Player;
 import nl.fontys.scope.net.client.Requests;
 import nl.fontys.scope.net.server.GameInstance;
+import nl.fontys.scope.net.server.Responses;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.object.GameObjectType;
 
@@ -36,5 +37,15 @@ public class KryoConfig {
         kryo.register(Requests.JoinGame.class);
         kryo.register(Requests.CreateGame.class);
         kryo.register(Requests.WinGame.class);
+        kryo.register(Requests.AddObject.class);
+        kryo.register(Requests.RemoveObject.class);
+        kryo.register(Requests.UpdateObject.class);
+        kryo.register(Requests.LeaveGame.class);
+        kryo.register(Requests.UpdatePlayer.class);
+
+        // Responses
+        kryo.register(Responses.GameCreated.class);
+        kryo.register(Responses.GameOver.class);
+        kryo.register(Responses.GameReady.class);
     }
 }

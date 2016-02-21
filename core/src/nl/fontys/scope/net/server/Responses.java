@@ -19,8 +19,15 @@ public class Responses {
 
     public static class GameOver extends Response {
 
-        public GameOver(String gameId) {
+        private String winnerId;
+
+        public GameOver(String gameId, String winnerId) {
             super(gameId);
+            this.winnerId = winnerId;
+        }
+
+        public String getWinnerId() {
+            return winnerId;
         }
     }
 
