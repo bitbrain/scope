@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.esotericsoftware.kryo.Kryo;
 
 import nl.fontys.scope.core.Player;
+import nl.fontys.scope.net.client.Requests;
 import nl.fontys.scope.net.server.GameInstance;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.object.GameObjectType;
@@ -30,5 +31,10 @@ public class KryoConfig {
         kryo.register(GameObjectType.class);
         kryo.register(Vector3.class);
         kryo.register(Quaternion.class);
+
+        // Requests
+        kryo.register(Requests.JoinGame.class);
+        kryo.register(Requests.CreateGame.class);
+        kryo.register(Requests.WinGame.class);
     }
 }
