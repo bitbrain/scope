@@ -45,6 +45,7 @@ public class GameObjectFactory {
 
     public GameObject createShip(float x, float y, float z) {
         GameObject reference = mutator.getReference();
+        reference.setPosition(x, y, z);
         reference.setType(GameObjectType.SHIP);
         reference.setCollisionScale(0f);
         reference.setScale(1.65f);
@@ -102,7 +103,6 @@ public class GameObjectFactory {
         reference.setCollisionScale(2f);
         reference.setScale(2.5f);
         reference.setPhysics(false);
-
         GameObject object = world.createGameObject(mutator);
         world.addLogic(object, new ParticleEffectLogic(Assets.ParticleEffects.ENERGY));
         return object;
