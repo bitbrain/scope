@@ -15,13 +15,16 @@ public class ConnectionManager implements Disposable {
 
         private RequestRouter router;
 
-        public ConnectionListener() {
+        private GameInstanceManager gameInstanceManager;
+
+        public ConnectionListener(GameInstanceManager gameInstanceManager) {
             router = new RequestRouter();
+            this.gameInstanceManager = gameInstanceManager;
         }
 
         @Override
         public void received(Connection connection, Object object) {
-            router.route(connection, object, ConnectionManager.this);
+            router.route(connection, object, ConnectionManager.this, gameInstanceManager);
         }
 
         @Override
@@ -45,9 +48,9 @@ public class ConnectionManager implements Disposable {
 
     private Server server;
 
-    public ConnectionManager() {
+    public ConnectionManager(GameInstanceManager gameInstanceManager) {
         this.server = new Server();
-        this.server.addListener(new ConnectionListener());
+        this.server.addListener(new ConnectionListener(gameInstanceManager));
         KryoConfig.configure(server.getKryo());
     }
 

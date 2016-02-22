@@ -5,6 +5,8 @@ import com.esotericsoftware.kryonet.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
+import nl.fontys.scope.net.handlers.RequestHandler;
+
 /**
  * Created by miguel on 23.02.16.
  */
@@ -20,10 +22,10 @@ public class RequestRouter {
         handlers.put(c, handler);
     }
 
-    public void route(Connection connection, Object object, ConnectionManager manager) {
+    public void route(Connection connection, Object object, ConnectionManager manager, GameInstanceManager gameInstanceManager) {
         Class<?> key = object.getClass();
         if (handlers.containsKey(key)) {
-            handlers.get(key).handle(connection, object, manager);
+            handlers.get(key).handle(connection, object, manager, gameInstanceManager);
         }
     }
 }
