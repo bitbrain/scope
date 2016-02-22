@@ -13,10 +13,15 @@ public class ConnectionManager implements Disposable {
 
     private class ConnectionListener extends Listener {
 
+        private RequestRouter router;
+
+        public ConnectionListener() {
+            router = new RequestRouter();
+        }
+
         @Override
         public void received(Connection connection, Object object) {
-            System.out.println("received " + object);
-            super.received(connection, object);
+            router.route(connection, object, ConnectionManager.this);
         }
 
         @Override
