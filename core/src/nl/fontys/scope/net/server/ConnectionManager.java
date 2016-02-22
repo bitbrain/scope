@@ -7,6 +7,8 @@ import com.esotericsoftware.kryonet.Server;
 
 import java.io.IOException;
 
+import nl.fontys.scope.net.client.Requests;
+import nl.fontys.scope.net.handlers.CreateGameHandler;
 import nl.fontys.scope.net.kryo.KryoConfig;
 
 public class ConnectionManager implements Disposable {
@@ -20,6 +22,7 @@ public class ConnectionManager implements Disposable {
         public ConnectionListener(GameInstanceManager gameInstanceManager) {
             router = new RequestRouter();
             this.gameInstanceManager = gameInstanceManager;
+            setupHandlers();
         }
 
         @Override
@@ -43,6 +46,10 @@ public class ConnectionManager implements Disposable {
         public void disconnected(Connection connection) {
             System.out.println("Disconnected!");
             super.disconnected(connection);
+        }
+
+        private void setupHandlers() {
+            router.registerHandler(Requests.CreateGame.class, new CreateGameHandler());
         }
     }
 

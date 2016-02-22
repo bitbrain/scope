@@ -11,12 +11,12 @@ public class GameInstanceManager {
         instances = new HashMap<String, GameInstance>();
     }
 
-    public void create(String name) throws GameServerException {
+    public GameInstance create(String name) throws GameServerException {
         validateName(name);
         if (!instances.containsKey(name)) {
             GameInstance instance = new GameInstance(name);
-            instance.init();
             instances.put(name, instance);
+            return instance;
         } else {
             throw new GameServerException("Could not create game '" + name + "'. Game already exists!");
         }

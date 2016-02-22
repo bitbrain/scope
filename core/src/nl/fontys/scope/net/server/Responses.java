@@ -8,8 +8,15 @@ public class Responses {
     // list of all responses
     public static class GameCreated extends Response {
 
-        public GameCreated(String gameId) {
+        private String clientId;
+
+        public GameCreated(String gameId, String clientId) {
             super(gameId);
+            this.clientId = clientId;
+        }
+
+        public String getClientId() {
+            return clientId;
         }
     }
 
