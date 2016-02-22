@@ -36,14 +36,14 @@ public class GameObject implements Pool.Poolable, Serializable {
     private boolean physics;
 
     public void set(GameObject object) {
-        this.position = object.position;
-        this.lastPosition = object.lastPosition;
-        this.orientation = object.orientation;
-        this.velocity = object.velocity;
+        this.position = object.position.cpy();
+        this.lastPosition = object.lastPosition.cpy();
+        this.orientation = object.orientation.cpy();
+        this.velocity = object.velocity.cpy();
         this.scale = object.scale;
         this.id = object.id;
         this.type = object.type;
-        this.color = object.color;
+        this.color = object.color.cpy();
         this.physics = object.physics;
         this.collisionScale = object.collisionScale;
         this.externalId = object.externalId;

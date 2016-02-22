@@ -20,6 +20,7 @@ import nl.fontys.scope.graphics.ModelInstanceService;
 import nl.fontys.scope.graphics.RenderManager;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.util.Colors;
+import nl.fontys.scope.util.Mutator;
 
 /**
  * World which provides game object management
@@ -107,9 +108,15 @@ public class World {
     }
 
     public nl.fontys.scope.object.GameObject createGameObject() {
+        return createGameObject(null);
+    }
+
+    public GameObject createGameObject(Mutator<GameObject> mutator) {
         nl.fontys.scope.object.GameObject object = gameObjectPool.obtain();
         object.reset();
-
+        if (mutator != null) {
+            mutator.mutate(object);
+        }
         objects.put(object.getId(), object);
         events.fire(EventType.OBJECT_CREATED, object);
         return object;

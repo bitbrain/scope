@@ -1,5 +1,6 @@
 package nl.fontys.scope.object;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 
 import nl.fontys.scope.assets.Assets;
@@ -7,11 +8,34 @@ import nl.fontys.scope.core.World;
 import nl.fontys.scope.core.logic.LightingLogic;
 import nl.fontys.scope.core.logic.ParticleEffectLogic;
 import nl.fontys.scope.util.Colors;
+import nl.fontys.scope.util.Mutator;
 
 /**
  * Creates game objects
  */
 public class GameObjectFactory {
+
+    private class GameObjectMutator implements Mutator<GameObject> {
+
+        private GameObject reference;
+
+        public GameObjectMutator() {
+            reference = new GameObject();
+            reference.reset();
+        }
+
+        public GameObject getReference() {
+            return reference;
+        }
+
+        @Override
+        public void mutate(GameObject target) {
+            target.set(reference);
+            reference.reset();
+        }
+    }
+
+    private GameObjectMutator mutator = new GameObjectMutator();
 
     private World world;
 
@@ -20,11 +44,12 @@ public class GameObjectFactory {
     }
 
     public GameObject createShip(float x, float y, float z) {
-        GameObject object = world.createGameObject();
-        object.setType(GameObjectType.SHIP);
-        object.setCollisionScale(0f);
-        object.setScale(1.65f);
-        object.getColor().set(0.75f, 0.75f, 0.75f, 1f);
+        GameObject reference = mutator.getReference();
+        reference.setType(GameObjectType.SHIP);
+        reference.setCollisionScale(0f);
+        reference.setScale(1.65f);
+        reference.getColor().set(0.75f, 0.75f, 0.75f, 1f);
+        GameObject object = world.createGameObject(mutator);
         ParticleEffectLogic c = new ParticleEffectLogic(Assets.ParticleEffects.POWER);
         final float X_OFFSET = -3.2f;
         c.setOffset(X_OFFSET, 0f, 0f);
@@ -37,43 +62,48 @@ public class GameObjectFactory {
     }
 
     public GameObject createShot(GameObject ship) {
-        GameObject object = world.createGameObject();
+        GameObject reference = mutator.getReference();
         Vector3 pos = new Vector3(ship.getPosition()).add(new Vector3(20f, 0f, 0f).mul(ship.getOrientation()));
-        object.setExternalId(ship.getId());
-        object.setPosition(pos.x, pos.y, pos.z);
-        object.setVelocity(new Vector3(250f, 0f, 0f).mul(ship.getOrientation()));
-        object.setOrientation(ship.getOrientation().x, ship.getOrientation().y, ship.getOrientation().z, ship.getOrientation().w);
-        object.setScale(14f);
-        object.setType(GameObjectType.SHOT);
-        object.getColor().set(Colors.SECONDARY);
-        object.setPhysics(false);
-        return object;
+        reference.setExternalId(ship.getId());
+        reference.setPosition(pos.x, pos.y, pos.z);
+        reference.setVelocity(new Vector3(250f, 0f, 0f).mul(ship.getOrientation()));
+        reference.setOrientation(ship.getOrientation().x, ship.getOrientation().y, ship.getOrientation().z, ship.getOrientation().w);
+        reference.setScale(14f);
+        reference.setType(GameObjectType.SHOT);
+        reference.getColor().set(Colors.SECONDARY);
+        reference.setPhysics(false);
+        return world.createGameObject(mutator);
     }
 
     public GameObject createPlanet(float scale) {
-        GameObject object = world.createGameObject();
-        object.setType(GameObjectType.PLANET);
-        object.getColor().set(0.6f, 0.2f, 0.5f, 1f);
-        object.setScale(scale);
-        return object;
+        GameObject reference = mutator.getReference();
+        reference.setType(GameObjectType.PLANET);
+        reference.getColor().set(0.6f, 0.2f, 0.5f, 1f);
+        reference.setScale(scale);
+        return world.createGameObject(mutator);
     }
 
     public GameObject createSphere(float scale) {
-        GameObject sphere = createPlanet(scale);
-        sphere.setType(GameObjectType.SPHERE);
-        sphere.setCollisionScale(0f);
-        world.addLogic(sphere, new ParticleEffectLogic(Assets.ParticleEffects.SPHERE));
-        return sphere;
+        GameObject reference = mutator.getReference();
+        reference.setType(GameObjectType.SPHERE);
+        reference.getColor().set(0.6f, 0.2f, 0.5f, 1f);
+        reference.setScale(scale);
+        reference.setCollisionScale(0f);
+        GameObject object = world.createGameObject(mutator);
+        world.addLogic(object, new ParticleEffectLogic(Assets.ParticleEffects.SPHERE));
+        return object;
     }
 
     public GameObject createEnergy(float x, float y, float z) {
-        GameObject object = world.createGameObject();
-        object.getColor().set(Colors.PRIMARY);
-        object.setType(GameObjectType.ENERGY);
-        object.setPosition(x, y, z);
-        object.setCollisionScale(2f);
-        object.setScale(2.5f);
-        object.setPhysics(false);
+        GameObject reference = mutator.getReference();
+        reference.getColor().set(Colors.PRIMARY);
+        reference.setType(GameObjectType.ENERGY);
+        reference.setPosition(x, y, z);
+        reference.setCollisionScale(2f);
+        reference.setScale(2.5f);
+        reference.setPhysics(false);
+
+        GameObject object = world.createGameObject(mutator);
         world.addLogic(object, new ParticleEffectLogic(Assets.ParticleEffects.ENERGY));
         return object;
     }
