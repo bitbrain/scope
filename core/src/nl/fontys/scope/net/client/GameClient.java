@@ -10,8 +10,10 @@ import net.engio.mbassy.listener.Handler;
 import java.io.IOException;
 
 import nl.fontys.scope.core.PlayerManager;
+import nl.fontys.scope.event.EventType;
 import nl.fontys.scope.event.Events;
 import nl.fontys.scope.net.kryo.KryoConfig;
+import nl.fontys.scope.object.GameObject;
 
 public class GameClient extends Listener implements Disposable {
 
@@ -57,6 +59,7 @@ public class GameClient extends Listener implements Disposable {
 
     @Override
     public void dispose() {
+        events.unregister(this);
         this.client.close();
     }
 
@@ -67,6 +70,22 @@ public class GameClient extends Listener implements Disposable {
 
     @Handler
     public void onEvent(Events.GdxEvent event) {
-        // TODO
+        if (client.isConnected()) {
+            if (event.isTypeOf(EventType.OBJECT_CREATED)) {
+                GameObject object = (GameObject) event.getPrimaryParam();
+                if (object.getClientId().equals(clientId)) {
+                    client.sendTCP(new Requests.AddObject(gameId, clientId, object));
+                }
+            } else if (event.isTypeOf(EventType.OBJECT_REMOVED)) {
+                GameObject object = (GameObject) event.getPrimaryParam();
+                if (object.getClientId().equals(clientId)) {
+                    client.sendTCP(new Requests.RemoveObject(gameId, clientId, object.getId());
+                }
+            } else if (event.isTypeOf(EventType.GAME_OVER)) {
+                if (PlayerManager.getCurrent().getGameProgress() == 1f) {
+                    client.sendTCP(new Requests.WinGame(gameId, clientId));
+                }
+            }
+        }
     }
 }
