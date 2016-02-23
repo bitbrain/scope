@@ -19,11 +19,15 @@ public class GameInstance {
         this.connections = new HashMap<String, Connection>();
     }
 
-    public String addPlayer(Connection connection) throws GameServerException {
+    public void addClient(String id, Connection connection) throws GameServerException {
+        if (id == null || id.trim().isEmpty()) {
+            throw new GameServerException("Invalid game client id!");
+        }
+        if (connections.containsKey(id)) {
+            throw new GameServerException("Client already connected!");
+        }
         if (connection.isConnected()) {
-            String playerId = UUID.randomUUID().toString();
-            connections.put(playerId, connection);
-            return playerId;
+            connections.put(id, connection);
         } else {
             throw new GameServerException("Could not create player. Not connected!");
         }
@@ -34,6 +38,22 @@ public class GameInstance {
         for (Connection connection : connections.values()) {
             if (connection.isConnected()) {
                 connection.close();
+            }
+        }
+    }
+
+    public void sendToAllTCP(Object object) {
+        for (Connection connection : connections.values()) {
+            if (connection.isConnected()) {
+                connection.sendTCP(object);
+            }
+        }
+    }
+
+    public void sendToAllUDP(Object object) {
+        for (Connection connection : connections.values()) {
+            if (connection.isConnected()) {
+                connection.sendUDP(object);
             }
         }
     }

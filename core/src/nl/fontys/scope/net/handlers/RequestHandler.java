@@ -7,5 +7,5 @@ import nl.fontys.scope.net.server.GameInstanceManager;
 
 public interface RequestHandler {
 
-    void handle(Connection connection, Object object, ConnectionManager connectionManager, GameInstanceManager gameInstanceManager);
+    void handle(Connection connection, Object object, GameInstanceManager gameInstanceManager);
 }

@@ -9,15 +9,15 @@ public class Requests {
 
     public static class CreateGame extends Request {
 
-        public CreateGame(String gameId) {
-            super(gameId, "");
+        public CreateGame(String gameId, String clientId) {
+            super(gameId, clientId);
         }
     }
 
     public static class JoinGame extends Request {
 
-        public JoinGame(String gameId) {
-            super(gameId, "");
+        public JoinGame(String gameId, String clientId) {
+            super(gameId, clientId);
         }
     }
 

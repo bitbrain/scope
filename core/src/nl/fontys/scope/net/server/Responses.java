@@ -41,27 +41,31 @@ public class Responses {
         }
     }
 
-    public static class PlayerJoined extends Response {
-
-        private Player player;
-
-        public PlayerJoined(String gameId, Player player) {
-            super(gameId);
-            this.player = player;
-        }
-
-        public Player getPlayer() {
-            return player;
-        }
-    }
-
-    public static class PlayerLeft extends Response {
+    public static class ClientJoined extends Response {
 
         private String clientId;
 
-        public PlayerLeft(String gameId, String clientId) {
+        public ClientJoined(String gameId, String clientId) {
             super(gameId);
             this.clientId = clientId;
+        }
+
+        public String getClientId() {
+            return clientId;
+        }
+    }
+
+    public static class ClientLeft extends Response {
+
+        private String clientId;
+
+        public ClientLeft(String gameId, String clientId) {
+            super(gameId);
+            this.clientId = clientId;
+        }
+
+        public String getClientId() {
+            return clientId;
         }
     }
 
@@ -128,24 +132,24 @@ public class Responses {
         }
     }
 
-    public static class PlayerUpdated extends Response {
-
-        private Player player;
+    public static class ClientUpdated extends Response {
 
         private String clientId;
 
-        public PlayerUpdated(String gameId, String clientId, Player player) {
-            super(gameId);
-            this.player = player;
-            this.clientId = clientId;
-        }
+        private int points;
 
-        public Player getPlayer() {
-            return player;
+        public ClientUpdated(String gameId, String clientId, int points) {
+            super(gameId);
+            this.clientId = clientId;
+            this.points = points;
         }
 
         public String getClientId() {
             return clientId;
+        }
+
+        public int getPoints() {
+            return points;
         }
     }
 

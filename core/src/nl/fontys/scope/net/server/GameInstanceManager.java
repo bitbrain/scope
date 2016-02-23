@@ -22,6 +22,14 @@ public class GameInstanceManager {
         }
     }
 
+    public GameInstance get(String name) throws GameServerException {
+        if (instances.containsKey(name)) {
+            return instances.get(name);
+        } else {
+            throw new GameServerException("Could not resolve game '" + name + "' because it does not exist.");
+        }
+    }
+
     public void close(String name) throws GameServerException {
         validateName(name);
         if (instances.containsKey(name)) {

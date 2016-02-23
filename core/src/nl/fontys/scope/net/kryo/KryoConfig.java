@@ -47,8 +47,8 @@ public class KryoConfig {
         kryo.register(Responses.GameCreated.class);
         kryo.register(Responses.GameOver.class);
         kryo.register(Responses.GameReady.class);
-        kryo.register(Responses.PlayerJoined.class);
-        kryo.register(Responses.PlayerLeft.class);
+        kryo.register(Responses.ClientJoined.class);
+        kryo.register(Responses.ClientLeft.class);
         kryo.register(Responses.PlayerUpdated.class);
         kryo.register(Responses.GameObjectAdded.class);
         kryo.register(Responses.GameObjectRemoved.class);
