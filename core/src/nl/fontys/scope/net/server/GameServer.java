@@ -23,7 +23,7 @@ public class GameServer {
 
     public GameServer() {
         instanceManager = new GameInstanceManager();
-        connectionManager = new ConnectionManager();
+        connectionManager = new ConnectionManager(instanceManager);
         commandHandler = new CommandHandler();
         commandHandler.register("stop", new StopCommand(this));
     }
