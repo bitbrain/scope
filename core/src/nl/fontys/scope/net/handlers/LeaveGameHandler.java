@@ -16,6 +16,7 @@ public class LeaveGameHandler implements RequestHandler {
         String clientId = ((Requests.LeaveGame)object).getClientId();
         try {
             GameInstance instance = gameInstanceManager.get(gameId);
+            instance.validateClientId(clientId);
             instance.removeClient(clientId);
             instance.sendToAllTCP(new Responses.ClientLeft(gameId, clientId));
             if (instance.getClientSize() < 1) {

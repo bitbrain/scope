@@ -17,6 +17,7 @@ public class UpdatePlayer implements RequestHandler {
         String clientId = ((Requests.UpdateObject)object).getClientId();
         try {
             GameInstance instance = gameInstanceManager.get(gameId);
+            instance.validateClientId(clientId);
             instance.sendToAllTCP(new Responses.ClientUpdated(gameId, clientId, 0), clientId);
         } catch (GameServerException e) {
             e.printStackTrace();

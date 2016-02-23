@@ -18,6 +18,9 @@ public class JoinGameHandler implements RequestHandler {
             GameInstance instance = gameInstanceManager.get(gameId);
             instance.addClient(gameId, connection);
             instance.sendToAllTCP(new Responses.ClientJoined(gameId, clientId));
+            if (instance.isGameFull()) {
+                instance.sendToAllTCP(new Responses.GameReady(gameId));
+            }
         } catch (GameServerException e) {
             e.printStackTrace();
             connection.close();

@@ -18,6 +18,7 @@ public class UpdateObjectHandler implements RequestHandler {
         GameObject gameObject = ((Requests.UpdateObject)object).getGameObject();
         try {
             GameInstance instance = gameInstanceManager.get(gameId);
+            instance.validateClientId(clientId);
             instance.sendToAllUDP(new Responses.GameObjectUpdated(gameId, clientId, gameObject), clientId);
         } catch (GameServerException e) {
             e.printStackTrace();

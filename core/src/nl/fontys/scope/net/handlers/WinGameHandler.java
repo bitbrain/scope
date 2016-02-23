@@ -16,6 +16,7 @@ public class WinGameHandler implements RequestHandler {
         String clientId = ((Requests.WinGame)object).getClientId();
         try {
             GameInstance instance = gameInstanceManager.get(gameId);
+            instance.validateClientId(clientId);
             instance.sendToAllTCP(new Responses.GameOver(gameId, clientId));
         } catch (GameServerException e) {
             e.printStackTrace();

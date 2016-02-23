@@ -18,6 +18,7 @@ public class AddObjectHandler implements RequestHandler {
         GameObject gameObject = ((Requests.AddObject)object).getGameObject();
         try {
             GameInstance instance = gameInstanceManager.get(gameId);
+            instance.validateClientId(clientId);
             instance.sendToAllTCP(new Responses.GameObjectAdded(gameId, clientId, gameObject), clientId);
         } catch (GameServerException e) {
             e.printStackTrace();

@@ -18,6 +18,7 @@ public class RemoveObjectHandler implements RequestHandler {
         String gameObjectId = ((Requests.RemoveObject)object).getGameObjectId();
         try {
             GameInstance instance = gameInstanceManager.get(gameId);
+            instance.validateClientId(clientId);
             instance.sendToAllTCP(new Responses.GameObjectRemoved(gameId, clientId, gameObjectId), clientId);
         } catch (GameServerException e) {
             e.printStackTrace();
