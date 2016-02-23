@@ -79,7 +79,7 @@ public class GameClient extends Listener implements Disposable {
             } else if (event.isTypeOf(EventType.OBJECT_REMOVED)) {
                 GameObject object = (GameObject) event.getPrimaryParam();
                 if (object.getClientId().equals(clientId)) {
-                    client.sendTCP(new Requests.RemoveObject(gameId, clientId, object.getId());
+                    client.sendTCP(new Requests.RemoveObject(gameId, clientId, object.getId()));
                 }
             } else if (event.isTypeOf(EventType.GAME_OVER)) {
                 if (PlayerManager.getCurrent().getGameProgress() == 1f) {
