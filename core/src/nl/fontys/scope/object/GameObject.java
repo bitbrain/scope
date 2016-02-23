@@ -35,6 +35,8 @@ public class GameObject implements Pool.Poolable, Serializable {
 
     private boolean physics;
 
+    private String clientId;
+
     public void set(GameObject object) {
         this.position = object.position.cpy();
         this.lastPosition = object.lastPosition.cpy();
@@ -47,6 +49,15 @@ public class GameObject implements Pool.Poolable, Serializable {
         this.physics = object.physics;
         this.collisionScale = object.collisionScale;
         this.externalId = object.externalId;
+        this.clientId = object.clientId;
+    }
+
+    public String getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
     }
 
     public float getScale() {
@@ -149,6 +160,7 @@ public class GameObject implements Pool.Poolable, Serializable {
         collisionScale = 0f;
         id = UUID.randomUUID().toString();
         externalId = "";
+        clientId = "";
     }
 
     @Override

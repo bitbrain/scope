@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 
 import nl.fontys.scope.assets.Assets;
+import nl.fontys.scope.core.PlayerManager;
 import nl.fontys.scope.core.World;
 import nl.fontys.scope.core.logic.LightingLogic;
 import nl.fontys.scope.core.logic.ParticleEffectLogic;
@@ -50,6 +51,7 @@ public class GameObjectFactory {
         reference.setCollisionScale(0f);
         reference.setScale(1.65f);
         reference.getColor().set(0.75f, 0.75f, 0.75f, 1f);
+        reference.setClientId(PlayerManager.getCurrent().getId());
         GameObject object = world.createGameObject(mutator);
         ParticleEffectLogic c = new ParticleEffectLogic(Assets.ParticleEffects.POWER);
         final float X_OFFSET = -3.2f;
@@ -73,6 +75,7 @@ public class GameObjectFactory {
         reference.setType(GameObjectType.SHOT);
         reference.getColor().set(Colors.SECONDARY);
         reference.setPhysics(false);
+        reference.setClientId(PlayerManager.getCurrent().getId());
         return world.createGameObject(mutator);
     }
 
@@ -81,6 +84,7 @@ public class GameObjectFactory {
         reference.setType(GameObjectType.PLANET);
         reference.getColor().set(0.6f, 0.2f, 0.5f, 1f);
         reference.setScale(scale);
+        reference.setClientId(PlayerManager.getCurrent().getId());
         return world.createGameObject(mutator);
     }
 
@@ -90,6 +94,7 @@ public class GameObjectFactory {
         reference.getColor().set(0.6f, 0.2f, 0.5f, 1f);
         reference.setScale(scale);
         reference.setCollisionScale(0f);
+        reference.setClientId(PlayerManager.getCurrent().getId());
         GameObject object = world.createGameObject(mutator);
         world.addLogic(object, new ParticleEffectLogic(Assets.ParticleEffects.SPHERE));
         return object;
@@ -103,6 +108,7 @@ public class GameObjectFactory {
         reference.setCollisionScale(2f);
         reference.setScale(2.5f);
         reference.setPhysics(false);
+        reference.setClientId(PlayerManager.getCurrent().getId());
         GameObject object = world.createGameObject(mutator);
         world.addLogic(object, new ParticleEffectLogic(Assets.ParticleEffects.ENERGY));
         return object;
