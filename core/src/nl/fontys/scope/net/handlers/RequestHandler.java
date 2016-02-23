@@ -8,4 +8,6 @@ import nl.fontys.scope.net.server.GameInstanceManager;
 public interface RequestHandler {
 
     void handle(Connection connection, Object object, GameInstanceManager gameInstanceManager);
+
+    Class<?> getType();
 }

@@ -18,14 +18,14 @@ public class RequestRouter {
         handlers = new HashMap<Class<?>, RequestHandler>();
     }
 
-    public void registerHandler(Class<?> c, RequestHandler handler) {
-        handlers.put(c, handler);
+    public void registerHandler(RequestHandler handler) {
+        handlers.put(handler.getType(), handler);
     }
 
-    public void route(Connection connection, Object object, ConnectionManager manager, GameInstanceManager gameInstanceManager) {
+    public void route(Connection connection, Object object, GameInstanceManager gameInstanceManager) {
         Class<?> key = object.getClass();
         if (handlers.containsKey(key)) {
-            handlers.get(key).handle(connection, object, manager, gameInstanceManager);
+            handlers.get(key).handle(connection, object, gameInstanceManager);
         }
     }
 }

@@ -92,18 +92,18 @@ public class Responses {
 
     public static class GameObjectRemoved extends Response {
 
-        private GameObject object;
+        private String objectId;
 
         private String clientId;
 
-        public GameObjectRemoved(String gameId, String clientId, GameObject object) {
+        public GameObjectRemoved(String gameId, String clientId, String objectId) {
             super(gameId);
             this.clientId = clientId;
-            this.object = object;
+            this.objectId = objectId;
         }
 
-        public GameObject getGameObject() {
-            return object;
+        public String getGameObjectId() {
+            return objectId;
         }
 
         public String getClientId() {

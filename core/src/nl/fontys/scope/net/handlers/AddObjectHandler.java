@@ -7,17 +7,18 @@ import nl.fontys.scope.net.server.GameInstance;
 import nl.fontys.scope.net.server.GameInstanceManager;
 import nl.fontys.scope.net.server.GameServerException;
 import nl.fontys.scope.net.server.Responses;
+import nl.fontys.scope.object.GameObject;
 
-public class JoinGameHandler implements RequestHandler {
+public class AddObjectHandler implements RequestHandler {
 
     @Override
     public void handle(Connection connection, Object object, GameInstanceManager gameInstanceManager) {
-        String gameId = ((Requests.JoinGame)object).getGameId();
-        String clientId = ((Requests.JoinGame)object).getClientId();
+        String gameId = ((Requests.AddObject)object).getGameId();
+        String clientId = ((Requests.AddObject)object).getClientId();
+        GameObject gameObject = ((Requests.AddObject)object).getGameObject();
         try {
             GameInstance instance = gameInstanceManager.get(gameId);
-            instance.addClient(gameId, connection);
-            instance.sendToAllTCP(new Responses.ClientJoined(gameId, clientId));
+            instance.sendToAllTCP(new Responses.GameObjectAdded(gameId, clientId, gameObject), clientId);
         } catch (GameServerException e) {
             e.printStackTrace();
             connection.close();
@@ -26,6 +27,6 @@ public class JoinGameHandler implements RequestHandler {
 
     @Override
     public Class<?> getType() {
-        return Requests.JoinGame.class;
+        return Requests.AddObject.class;
     }
 }

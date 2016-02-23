@@ -79,15 +79,8 @@ public class Requests {
 
     public static class UpdatePlayer extends Request {
 
-        private Player player;
-
-        public UpdatePlayer(String gameId, String clientId, Player player) {
+        public UpdatePlayer(String gameId, String clientId) {
             super(gameId, clientId);
-            this.player = player;
-        }
-
-        public Player getPlayer() {
-            return player;
         }
     }
 
