@@ -1,8 +1,9 @@
-package nl.fontys.scope.net.handlers;
+package nl.fontys.scope.net.handlers.requests;
 
 import com.esotericsoftware.kryonet.Connection;
 
 import nl.fontys.scope.net.client.Requests;
+import nl.fontys.scope.net.handlers.AbstractGameInstanceHandler;
 import nl.fontys.scope.net.server.GameInstance;
 import nl.fontys.scope.net.server.GameInstanceManager;
 import nl.fontys.scope.net.server.GameServerException;

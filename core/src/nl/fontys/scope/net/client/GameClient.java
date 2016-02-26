@@ -10,9 +10,14 @@ import net.engio.mbassy.listener.Handler;
 import java.io.IOException;
 
 import nl.fontys.scope.core.PlayerManager;
+import nl.fontys.scope.core.World;
 import nl.fontys.scope.event.EventType;
 import nl.fontys.scope.event.Events;
+import nl.fontys.scope.net.handlers.responses.ObjectAddedHandler;
+import nl.fontys.scope.net.handlers.responses.ObjectRemovedHandler;
+import nl.fontys.scope.net.handlers.responses.ObjectUpdatedHandler;
 import nl.fontys.scope.net.kryo.KryoConfig;
+import nl.fontys.scope.net.server.Router;
 import nl.fontys.scope.object.GameObject;
 
 public class GameClient extends Listener implements Disposable {
@@ -25,15 +30,19 @@ public class GameClient extends Listener implements Disposable {
 
     private String clientId;
 
-    public GameClient(Events events, String gameId) {
+    private Router router;
+
+    public GameClient(Events events, String gameId, World world) {
         this.events = events;
         this.gameId = gameId;
         this.clientId = PlayerManager.getCurrent().getId();
         this.events.register(this);
         this.client = new Client();
+        this.router = new Router();
         this.client.addListener(this);
         this.client.start();
         KryoConfig.configure(client.getKryo());
+        setupHandlers( world);
     }
 
     public void connect(boolean createNewGame) {
@@ -65,7 +74,7 @@ public class GameClient extends Listener implements Disposable {
 
     @Override
     public void received(Connection connection, Object object) {
-        // TODO
+        router.route(connection, object);
     }
 
     @Handler
@@ -87,5 +96,11 @@ public class GameClient extends Listener implements Disposable {
                 }
             }
         }
+    }
+
+    private void setupHandlers(World world) {
+        router.registerHandler(new ObjectAddedHandler(this, world));
+        router.registerHandler(new ObjectRemovedHandler(this, world));
+        router.registerHandler(new ObjectUpdatedHandler(this, world));
     }
 }

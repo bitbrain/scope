@@ -7,13 +7,13 @@ import com.esotericsoftware.kryonet.Server;
 
 import java.io.IOException;
 
-import nl.fontys.scope.net.handlers.AddObjectHandler;
-import nl.fontys.scope.net.handlers.CreateGameHandler;
-import nl.fontys.scope.net.handlers.JoinGameHandler;
-import nl.fontys.scope.net.handlers.LeaveGameHandler;
-import nl.fontys.scope.net.handlers.RemoveObjectHandler;
-import nl.fontys.scope.net.handlers.UpdateObjectHandler;
-import nl.fontys.scope.net.handlers.WinGameHandler;
+import nl.fontys.scope.net.handlers.requests.AddObjectHandler;
+import nl.fontys.scope.net.handlers.requests.CreateGameHandler;
+import nl.fontys.scope.net.handlers.requests.JoinGameHandler;
+import nl.fontys.scope.net.handlers.requests.LeaveGameHandler;
+import nl.fontys.scope.net.handlers.requests.RemoveObjectHandler;
+import nl.fontys.scope.net.handlers.requests.UpdateObjectHandler;
+import nl.fontys.scope.net.handlers.requests.WinGameHandler;
 import nl.fontys.scope.net.kryo.KryoConfig;
 
 public class ConnectionManager implements Disposable {

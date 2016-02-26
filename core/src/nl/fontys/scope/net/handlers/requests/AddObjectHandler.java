@@ -1,27 +1,30 @@
-package nl.fontys.scope.net.handlers;
+package nl.fontys.scope.net.handlers.requests;
 
 import com.esotericsoftware.kryonet.Connection;
 
 import nl.fontys.scope.net.client.Requests;
+import nl.fontys.scope.net.handlers.AbstractGameInstanceHandler;
 import nl.fontys.scope.net.server.GameInstance;
 import nl.fontys.scope.net.server.GameInstanceManager;
 import nl.fontys.scope.net.server.GameServerException;
 import nl.fontys.scope.net.server.Responses;
+import nl.fontys.scope.object.GameObject;
 
-public class UpdatePlayerHandler extends AbstractGameInstanceHandler {
+public class AddObjectHandler extends AbstractGameInstanceHandler {
 
-    public UpdatePlayerHandler(GameInstanceManager gameInstanceManager) {
+    public AddObjectHandler(GameInstanceManager gameInstanceManager) {
         super(gameInstanceManager);
     }
 
     @Override
     public void handle(Connection connection, Object object) {
-        String gameId = ((Requests.UpdateObject)object).getGameId();
-        String clientId = ((Requests.UpdateObject)object).getClientId();
+        String gameId = ((Requests.AddObject)object).getGameId();
+        String clientId = ((Requests.AddObject)object).getClientId();
+        GameObject gameObject = ((Requests.AddObject)object).getGameObject();
         try {
             GameInstance instance = gameInstanceManager.get(gameId);
             instance.validateClientId(clientId);
-            instance.sendToAllTCP(new Responses.ClientUpdated(gameId, clientId, 0), clientId);
+            instance.sendToAllTCP(new Responses.GameObjectAdded(gameId, clientId, gameObject), clientId);
         } catch (GameServerException e) {
             e.printStackTrace();
             connection.close();
@@ -30,6 +33,6 @@ public class UpdatePlayerHandler extends AbstractGameInstanceHandler {
 
     @Override
     public Class<?> getType() {
-        return Requests.UpdateObject.class;
+        return Requests.AddObject.class;
     }
 }

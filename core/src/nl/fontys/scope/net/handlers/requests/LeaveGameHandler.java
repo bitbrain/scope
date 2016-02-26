@@ -1,4 +1,4 @@
-package nl.fontys.scope.net.handlers;
+package nl.fontys.scope.net.handlers.requests;
 
 import com.esotericsoftware.kryonet.Connection;
 
@@ -8,21 +8,25 @@ import nl.fontys.scope.net.server.GameInstanceManager;
 import nl.fontys.scope.net.server.GameServerException;
 import nl.fontys.scope.net.server.Responses;
 
-public class RemoveObjectHandler extends AbstractGameInstanceHandler {
+public class LeaveGameHandler extends nl.fontys.scope.net.handlers.AbstractGameInstanceHandler {
 
-    public RemoveObjectHandler(GameInstanceManager gameInstanceManager) {
+    public LeaveGameHandler(GameInstanceManager gameInstanceManager) {
         super(gameInstanceManager);
     }
 
     @Override
     public void handle(Connection connection, Object object) {
-        String gameId = ((Requests.RemoveObject)object).getGameId();
-        String clientId = ((Requests.RemoveObject)object).getClientId();
-        String gameObjectId = ((Requests.RemoveObject)object).getGameObjectId();
+        String gameId = ((Requests.LeaveGame)object).getGameId();
+        String clientId = ((Requests.LeaveGame)object).getClientId();
         try {
             GameInstance instance = gameInstanceManager.get(gameId);
             instance.validateClientId(clientId);
-            instance.sendToAllTCP(new Responses.GameObjectRemoved(gameId, clientId, gameObjectId), clientId);
+            instance.removeClient(clientId);
+            instance.sendToAllTCP(new Responses.ClientLeft(gameId, clientId));
+            if (instance.getClientSize() < 1) {
+                instance.sendToAllTCP(new Responses.GameOver(gameId, ""));
+                gameInstanceManager.close(gameId);
+            }
         } catch (GameServerException e) {
             e.printStackTrace();
             connection.close();
@@ -31,6 +35,6 @@ public class RemoveObjectHandler extends AbstractGameInstanceHandler {
 
     @Override
     public Class<?> getType() {
-        return Requests.RemoveObject.class;
+        return Requests.LeaveGame.class;
     }
 }
