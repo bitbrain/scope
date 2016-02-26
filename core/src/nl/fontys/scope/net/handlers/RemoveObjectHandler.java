@@ -7,12 +7,15 @@ import nl.fontys.scope.net.server.GameInstance;
 import nl.fontys.scope.net.server.GameInstanceManager;
 import nl.fontys.scope.net.server.GameServerException;
 import nl.fontys.scope.net.server.Responses;
-import nl.fontys.scope.object.GameObject;
 
-public class RemoveObjectHandler implements RequestHandler {
+public class RemoveObjectHandler extends AbstractGameInstanceHandler {
+
+    public RemoveObjectHandler(GameInstanceManager gameInstanceManager) {
+        super(gameInstanceManager);
+    }
 
     @Override
-    public void handle(Connection connection, Object object, GameInstanceManager gameInstanceManager) {
+    public void handle(Connection connection, Object object) {
         String gameId = ((Requests.RemoveObject)object).getGameId();
         String clientId = ((Requests.RemoveObject)object).getClientId();
         String gameObjectId = ((Requests.RemoveObject)object).getGameObjectId();

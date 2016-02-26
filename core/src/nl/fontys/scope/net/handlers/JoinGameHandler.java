@@ -8,10 +8,14 @@ import nl.fontys.scope.net.server.GameInstanceManager;
 import nl.fontys.scope.net.server.GameServerException;
 import nl.fontys.scope.net.server.Responses;
 
-public class JoinGameHandler implements RequestHandler {
+public class JoinGameHandler extends AbstractGameInstanceHandler {
+
+    public JoinGameHandler(GameInstanceManager gameInstanceManager) {
+        super(gameInstanceManager);
+    }
 
     @Override
-    public void handle(Connection connection, Object object, GameInstanceManager gameInstanceManager) {
+    public void handle(Connection connection, Object object) {
         String gameId = ((Requests.JoinGame)object).getGameId();
         String clientId = ((Requests.JoinGame)object).getClientId();
         try {

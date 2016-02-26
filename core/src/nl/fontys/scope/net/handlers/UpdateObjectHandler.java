@@ -9,10 +9,14 @@ import nl.fontys.scope.net.server.GameServerException;
 import nl.fontys.scope.net.server.Responses;
 import nl.fontys.scope.object.GameObject;
 
-public class UpdateObjectHandler implements RequestHandler {
+public class UpdateObjectHandler extends AbstractGameInstanceHandler {
+
+    public UpdateObjectHandler(GameInstanceManager gameInstanceManager) {
+        super(gameInstanceManager);
+    }
 
     @Override
-    public void handle(Connection connection, Object object, GameInstanceManager gameInstanceManager) {
+    public void handle(Connection connection, Object object) {
         String gameId = ((Requests.UpdateObject)object).getGameId();
         String clientId = ((Requests.UpdateObject)object).getClientId();
         GameObject gameObject = ((Requests.UpdateObject)object).getGameObject();
