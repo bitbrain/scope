@@ -11,7 +11,7 @@ public class PlayerManager {
 
     private HashMap<String, Player> players = new HashMap<String, Player>();
 
-    private HashMap<GameObject, Player> shipToPlayers = new HashMap<GameObject, Player>();
+    private HashMap<String, Player> shipToPlayers = new HashMap<String, Player>();
 
     private World world;
     
@@ -33,18 +33,26 @@ public class PlayerManager {
     }
 
     public Player getPlayerByShip(GameObject ship) {
-        return shipToPlayers.get(ship);
+        return shipToPlayers.get(ship.getId());
     }
 
     public Player addPlayer() {
         return addPlayer(null, null);
     }
 
+    public void removePlayer(String playerId) {
+        if (players.containsKey(playerId)) {
+            world.remove(players.get(playerId).getShip());
+            players.remove(playerId);
+            shipToPlayers.remove(playerId);
+        }
+    }
+
     public Player addPlayer(String clientId, String shipId) {
         Player player = new Player(world, clientId, shipId);
         players.put(player.getId(), player);
         player.setNumber(players.size());
-        shipToPlayers.put(player.getShip(), player);
+        shipToPlayers.put(player.getShip().getId(), player);
         return player;
     }
 }
