@@ -18,13 +18,13 @@ public class Weapon {
 
     private GameObjectFactory factory;
 
-    private GameObject ship;
+    private String shipId;
 
     private float munition;
 
-    public Weapon(GameObject ship, World world, FocusContainer focus) {
+    public Weapon(String shipId, World world, FocusContainer focus) {
         this.world = world;
-        this.ship = ship;
+        this.shipId = shipId;
         this.focus = focus;
         this.factory = new GameObjectFactory(world);
         this.timestamp = System.currentTimeMillis();
@@ -35,7 +35,8 @@ public class Weapon {
     }
 
     public void shoot() {
-        if (focus.hasFocus() && checkShooting()) {
+        GameObject ship = world.getObjectById(shipId);
+        if (ship != null && focus.hasFocus() && checkShooting()) {
             GameObject shot = factory.createShot(ship);
             SoundManager.getInstance().play(shot, Assets.Sounds.LASER, false);
             if (++munition >= Config.MUNITION_GAP) {

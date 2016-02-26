@@ -14,7 +14,7 @@ public class Player {
 
     private FocusContainer focus;
 
-    private GameObject ship;
+    private String shipId;
 
     private String id;
 
@@ -32,12 +32,15 @@ public class Player {
 
     private Color color;
 
-    Player(World world) {
-        this.id = UUID.randomUUID().toString();
+    private World world;
+
+    Player(World world, String clientId, String shipId) {
+        this.id = clientId != null ? clientId : UUID.randomUUID().toString();
         focus = new FocusContainer();
+        this.world = world;
         GameObjectFactory factory = new GameObjectFactory(world);
-        this.ship = factory.createShip(0f, 0f, 0f);
-        this.weapon = new Weapon(this.ship, world, focus);
+        this.shipId = shipId != null ? shipId : factory.createShip(0f, 0f, 0f).getId();
+        this.weapon = new Weapon(shipId, world, focus);
         color = Color.WHITE.cpy();
     }
 
@@ -123,7 +126,7 @@ public class Player {
     }
 
     public GameObject getShip() {
-        return ship;
+        return world.getObjectById(shipId);
     }
 
 

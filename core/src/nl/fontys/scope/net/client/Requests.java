@@ -16,8 +16,15 @@ public class Requests {
 
     public static class JoinGame extends Request {
 
-        public JoinGame(String gameId, String clientId) {
+        private String gameObjectId;
+
+        public JoinGame(String gameId, String clientId, String gameObjectId) {
             super(gameId, clientId);
+            this.gameObjectId = gameObjectId;
+        }
+
+        public String getGameObjectId() {
+            return gameObjectId;
         }
     }
 

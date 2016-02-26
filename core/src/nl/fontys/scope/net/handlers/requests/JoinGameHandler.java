@@ -17,12 +17,14 @@ public class JoinGameHandler extends AbstractGameInstanceHandler {
 
     @Override
     public void handle(Connection connection, Object object) {
-        String gameId = ((Requests.JoinGame)object).getGameId();
-        String clientId = ((Requests.JoinGame)object).getClientId();
+        Requests.JoinGame join = (Requests.JoinGame)object;
+        String gameId = join.getGameId();
+        String clientId = join.getClientId();
+        String gameObjectId = join.getGameObjectId();
         try {
             GameInstance instance = gameInstanceManager.get(gameId);
             instance.addClient(gameId, connection);
-            instance.sendToAllTCP(new Responses.ClientJoined(gameId, clientId));
+            instance.sendToAllTCP(new Responses.ClientJoined(gameId, clientId, gameObjectId));
             if (instance.isGameFull()) {
                 instance.sendToAllTCP(new Responses.GameReady(gameId));
             }

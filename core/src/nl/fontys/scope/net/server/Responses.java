@@ -45,13 +45,20 @@ public class Responses {
 
         private String clientId;
 
-        public ClientJoined(String gameId, String clientId) {
+        private String gameObjectId;
+
+        public ClientJoined(String gameId, String clientId, String gameObjectId) {
             super(gameId);
             this.clientId = clientId;
+            this.gameObjectId = gameObjectId;
         }
 
         public String getClientId() {
             return clientId;
+        }
+
+        public String getGameObjectId() {
+            return gameObjectId;
         }
     }
 
