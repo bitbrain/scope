@@ -140,7 +140,7 @@ public class World {
         for (GameObject object : objects.values()) {
             // Local logics
             List<Logic> objectLogic = logics.get(object.getId());
-            if (objectLogic != null) {
+            if (objectLogic != null && PlayerManager.isLocalObject(object)) {
                 for (Logic logic : objectLogic) {
                     logic.update(object, delta);
                 }
@@ -149,7 +149,10 @@ public class World {
             for (Logic logic : globalLogics) {
                 logic.update(object, delta);
             }
-            physics.apply(object, delta);
+
+            if (PlayerManager.isLocalObject(object)) {
+                physics.apply(object, delta);
+            }
             for (GameObject other : objects.values()) {
                 if (!object.getId().equals(other.getId())) {
                     if (objectLogic != null) {
@@ -160,7 +163,7 @@ public class World {
                     collisionDetector.detect(object, other);
                 }
             }
-            if (restrictor != null) {
+            if (restrictor != null && PlayerManager.isLocalObject(object)) {
                 restrictor.restrict(this, object);
             }
             renderManager.render(object, camera);

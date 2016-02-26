@@ -28,6 +28,10 @@ public class PlayerManager {
         return current;
     }
 
+    public static boolean isLocalObject(GameObject object) {
+        return current.getId().equals(object.getClientId());
+    }
+
     public Player getPlayerByShip(GameObject ship) {
         return shipToPlayers.get(ship);
     }
