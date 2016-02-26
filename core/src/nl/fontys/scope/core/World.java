@@ -124,6 +124,7 @@ public class World {
 
     public void remove(nl.fontys.scope.object.GameObject gameObject) {
         if (objects.remove(gameObject.getId()) != null) {
+            gameObjectPool.free(gameObject);
             logics.remove(gameObject.getId());
             events.fire(EventType.OBJECT_REMOVED, gameObject);
         }
