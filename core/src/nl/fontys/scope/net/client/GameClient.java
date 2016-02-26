@@ -13,6 +13,7 @@ import nl.fontys.scope.core.PlayerManager;
 import nl.fontys.scope.core.World;
 import nl.fontys.scope.event.EventType;
 import nl.fontys.scope.event.Events;
+import nl.fontys.scope.net.handlers.responses.ClientJoinedHandler;
 import nl.fontys.scope.net.handlers.responses.ObjectAddedHandler;
 import nl.fontys.scope.net.handlers.responses.ObjectRemovedHandler;
 import nl.fontys.scope.net.handlers.responses.ObjectUpdatedHandler;
@@ -32,7 +33,7 @@ public class GameClient extends Listener implements Disposable {
 
     private Router router;
 
-    public GameClient(Events events, String gameId, World world) {
+    public GameClient(Events events, String gameId, World world, PlayerManager playerManager) {
         this.events = events;
         this.gameId = gameId;
         this.clientId = PlayerManager.getCurrent().getId();
@@ -42,7 +43,7 @@ public class GameClient extends Listener implements Disposable {
         this.client.addListener(this);
         this.client.start();
         KryoConfig.configure(client.getKryo());
-        setupHandlers( world);
+        setupHandlers(world, playerManager);
     }
 
     public void connect(boolean createNewGame) {
@@ -52,7 +53,7 @@ public class GameClient extends Listener implements Disposable {
             if (createNewGame) {
                 this.client.sendTCP(new Requests.CreateGame(gameId, clientId));
             } else {
-                this.client.sendTCP(new Requests.JoinGame(gameId, clientId));
+                this.client.sendTCP(new Requests.JoinGame(gameId, clientId, PlayerManager.getCurrent().getShip().getId()));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -98,9 +99,10 @@ public class GameClient extends Listener implements Disposable {
         }
     }
 
-    private void setupHandlers(World world) {
+    private void setupHandlers(World world, PlayerManager playerManager) {
         router.registerHandler(new ObjectAddedHandler(this, world));
         router.registerHandler(new ObjectRemovedHandler(this, world));
         router.registerHandler(new ObjectUpdatedHandler(this, world));
+        router.registerHandler(new ClientJoinedHandler(this, world, playerManager));
     }
 }
