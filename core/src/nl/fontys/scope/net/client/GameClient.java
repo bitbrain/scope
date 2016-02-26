@@ -9,6 +9,7 @@ import net.engio.mbassy.listener.Handler;
 
 import java.io.IOException;
 
+import nl.fontys.scope.Config;
 import nl.fontys.scope.core.PlayerManager;
 import nl.fontys.scope.core.World;
 import nl.fontys.scope.event.EventType;
@@ -49,7 +50,7 @@ public class GameClient extends Listener implements Disposable {
     public void connect(boolean createNewGame) {
         this.client.start();
         try {
-            this.client.connect(5000, "localhost", KryoConfig.TCP_PORT, KryoConfig.UDP_PORT);
+            this.client.connect(Config.SERVER_TIMEOUT_MS, Config.SERVER_IP, Config.SERVER_TCP_PORT, Config.SERVER_UDP_PORT);
             if (createNewGame) {
                 this.client.sendTCP(new Requests.CreateGame(gameId, clientId));
             } else {

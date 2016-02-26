@@ -14,10 +14,6 @@ import nl.fontys.scope.object.GameObjectType;
 
 public class KryoConfig {
 
-    public static final int TCP_PORT = 54555;
-
-    public static final int UDP_PORT = 54777;
-
     public static void configure(Kryo kryo) {
         // Core classes
         kryo.register(java.util.HashMap.class);

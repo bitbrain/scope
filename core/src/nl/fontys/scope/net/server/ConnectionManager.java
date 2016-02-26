@@ -7,6 +7,7 @@ import com.esotericsoftware.kryonet.Server;
 
 import java.io.IOException;
 
+import nl.fontys.scope.Config;
 import nl.fontys.scope.net.handlers.requests.AddObjectHandler;
 import nl.fontys.scope.net.handlers.requests.CreateGameHandler;
 import nl.fontys.scope.net.handlers.requests.JoinGameHandler;
@@ -75,7 +76,7 @@ public class ConnectionManager implements Disposable {
     public void start() throws nl.fontys.scope.net.server.GameServerException {
         server.start();
         try {
-        server.bind(KryoConfig.TCP_PORT, KryoConfig.UDP_PORT);
+        server.bind(Config.SERVER_TCP_PORT, Config.SERVER_UDP_PORT);
         } catch (IOException e) {
             throw new GameServerException("Could not start connection manager: " + e.getMessage());
         }
