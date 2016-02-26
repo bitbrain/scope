@@ -16,6 +16,7 @@ import nl.fontys.scope.event.EventType;
 import nl.fontys.scope.event.Events;
 import nl.fontys.scope.net.handlers.responses.ClientJoinedHandler;
 import nl.fontys.scope.net.handlers.responses.ClientLeftHandler;
+import nl.fontys.scope.net.handlers.responses.ClientUpdatedHandler;
 import nl.fontys.scope.net.handlers.responses.ObjectAddedHandler;
 import nl.fontys.scope.net.handlers.responses.ObjectRemovedHandler;
 import nl.fontys.scope.net.handlers.responses.ObjectUpdatedHandler;
@@ -107,5 +108,6 @@ public class GameClient extends Listener implements Disposable {
         router.registerHandler(new ObjectUpdatedHandler(this, world));
         router.registerHandler(new ClientJoinedHandler(this, world, playerManager));
         router.registerHandler(new ClientLeftHandler(this, world, playerManager));
+        router.registerHandler(new ClientUpdatedHandler(this, world, playerManager));
     }
 }

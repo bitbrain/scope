@@ -55,4 +55,8 @@ public class PlayerManager {
         shipToPlayers.put(player.getShip().getId(), player);
         return player;
     }
+
+    public Player  getPlayerById(String playerId) {
+        return players.get(playerId);
+    }
 }
