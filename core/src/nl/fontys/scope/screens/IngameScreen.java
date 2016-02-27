@@ -79,7 +79,7 @@ public class IngameScreen extends AbstractScreen implements ExitHandler {
             initializer.initialize(this);
         }
         world.addLogic(PlayerManager.getCurrent().getShip(), camController);
-        System.out.println(PlayerManager.getCurrent().getShip().getClientId() + " --- " + PlayerManager.getCurrent().getId());
+        world.addLogic(PlayerManager.getCurrent().getShip(), controller);
         arena.setup(playerManager, world, tweenManager);
     }
 
