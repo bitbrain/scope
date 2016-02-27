@@ -13,9 +13,12 @@ public class GameInstance {
 
     private Map<String, Connection> connections;
 
+    private Map<Connection, String> clients;
+
     public GameInstance(String name) {
         this.name = name;
         this.connections = new HashMap<String, Connection>();
+        this.clients = new HashMap<Connection, String>();
     }
 
     public void validateClientId(String id) throws GameServerException {
@@ -36,9 +39,14 @@ public class GameInstance {
         }
         if (connection.isConnected()) {
             connections.put(id, connection);
+            clients.put(connection, id);
         } else {
             throw new GameServerException("Could not create player. Not connected!");
         }
+    }
+
+    public String getClientByConnection(Connection connection) {
+        return clients.get(connection);
     }
 
     public void removeClient(String id) throws GameServerException {
@@ -48,6 +56,7 @@ public class GameInstance {
         if (!connections.containsKey(id)) {
             throw new GameServerException("Invalid game client id!");
         }
+        clients.remove(connections.get(id));
         if (connections.get(id).isConnected()) {
             connections.get(id).close();
         }
@@ -62,7 +71,7 @@ public class GameInstance {
         }
     }
 
-    public void sendToAllTCP(Object object, String ... exclusions) {
+    public void sendToAllTCP(Object object, String... exclusions) {
         for (Map.Entry<String, Connection> entry : connections.entrySet()) {
             String clientId = entry.getKey();
             Connection connection = entry.getValue();

@@ -43,7 +43,6 @@ public class ConnectionManager implements Disposable {
 
         @Override
         public void connected(Connection connection) {
-            System.out.println("Connected!");
             super.connected(connection);
         }
 
@@ -66,10 +65,14 @@ public class ConnectionManager implements Disposable {
 
     private Server server;
 
-    public ConnectionManager(GameInstanceManager gameInstanceManager) {
-        this.server = new Server();
+    public ConnectionManager(Server server, GameInstanceManager gameInstanceManager) {
+        this.server = server;
         this.server.addListener(new ConnectionListener(gameInstanceManager));
         KryoConfig.configure(server.getKryo());
+    }
+
+    public Server getServer() {
+        return server;
     }
 
     public void start() throws nl.fontys.scope.net.server.GameServerException {

@@ -1,5 +1,7 @@
 package nl.fontys.scope.net.server;
 
+import com.esotericsoftware.kryonet.Server;
+
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Logger;
 
@@ -23,8 +25,9 @@ public class GameServer {
     private CommandHandler commandHandler;
 
     public GameServer() {
-        instanceManager = new GameInstanceManager();
-        connectionManager = new ConnectionManager(instanceManager);
+        Server server = new Server();
+        instanceManager = new GameInstanceManager(server);
+        connectionManager = new ConnectionManager(server, instanceManager);
         commandHandler = new CommandHandler();
         commandHandler.register("stop", new StopCommand(this));
         commandHandler.register("games", new OpenGamesCommand(instanceManager));

@@ -1,15 +1,45 @@
 package nl.fontys.scope.net.server;
 
+import com.esotericsoftware.kryonet.Connection;
+import com.esotericsoftware.kryonet.Listener;
+import com.esotericsoftware.kryonet.Server;
+
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class GameInstanceManager {
 
     private Map<String, GameInstance> instances;
 
-    public GameInstanceManager() {
+    private class ServerListener extends Listener {
+
+        @Override
+        public void disconnected(Connection connection) {
+            List<GameInstance> emptyInstances = new ArrayList<GameInstance>();
+            for (GameInstance instance : instances.values()) {
+                String clientId = instance.getClientByConnection(connection);
+                try {
+                    instance.removeClient(clientId);
+                    if (instance.getCurrentClientSize() <= 1) {
+                        emptyInstances.add(instance);
+                    }
+                } catch (GameServerException e) {
+                    e.printStackTrace();
+                }
+            }
+            for (GameInstance emptyInstance : emptyInstances) {
+                emptyInstance.close();
+                instances.remove(emptyInstance.getName());
+            }
+        }
+    }
+
+    public GameInstanceManager(Server server) {
         instances = new HashMap<String, GameInstance>();
+        server.addListener(new ServerListener());
     }
 
     public GameInstance create(String name) throws GameServerException {
