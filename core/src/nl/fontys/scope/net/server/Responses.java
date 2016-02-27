@@ -1,5 +1,7 @@
 package nl.fontys.scope.net.server;
 
+import java.io.Serializable;
+
 import nl.fontys.scope.core.Player;
 import nl.fontys.scope.object.GameObject;
 
@@ -9,6 +11,10 @@ public class Responses {
     public static class GameCreated extends Response {
 
         private String clientId;
+
+        public GameCreated() {
+            // noOp
+        }
 
         public GameCreated(String gameId, String clientId) {
             super(gameId);
@@ -22,6 +28,10 @@ public class Responses {
 
     public static class GameReady extends Response {
 
+        public GameReady() {
+            // noOp
+        }
+
         public GameReady(String gameId) {
             super(gameId);
         }
@@ -30,6 +40,10 @@ public class Responses {
     public static class GameOver extends Response {
 
         private String winnerId;
+
+        public GameOver() {
+            // noOp
+        }
 
         public GameOver(String gameId, String winnerId) {
             super(gameId);
@@ -46,6 +60,10 @@ public class Responses {
         private String clientId;
 
         private String gameObjectId;
+
+        public ClientJoined() {
+            // noOp
+        }
 
         public ClientJoined(String gameId, String clientId, String gameObjectId) {
             super(gameId);
@@ -66,6 +84,10 @@ public class Responses {
 
         private String clientId;
 
+        public ClientLeft() {
+            // noOp
+        }
+
         public ClientLeft(String gameId, String clientId) {
             super(gameId);
             this.clientId = clientId;
@@ -81,6 +103,10 @@ public class Responses {
         private GameObject object;
 
         private String clientId;
+
+        public GameObjectAdded() {
+            // noOp
+        }
 
         public GameObjectAdded(String gameId, String clientId, GameObject object) {
             super(gameId);
@@ -103,6 +129,10 @@ public class Responses {
 
         private String clientId;
 
+        public GameObjectRemoved() {
+            // noOp
+        }
+
         public GameObjectRemoved(String gameId, String clientId, String objectId) {
             super(gameId);
             this.clientId = clientId;
@@ -123,6 +153,10 @@ public class Responses {
         private GameObject object;
 
         private String clientId;
+
+        public GameObjectUpdated() {
+            // noOp
+        }
 
         public GameObjectUpdated(String gameId, String clientId, GameObject object) {
             super(gameId);
@@ -145,6 +179,10 @@ public class Responses {
 
         private int points;
 
+        public ClientUpdated() {
+            // noOp
+        }
+
         public ClientUpdated(String gameId, String clientId, int points) {
             super(gameId);
             this.clientId = clientId;
@@ -161,9 +199,13 @@ public class Responses {
     }
 
     // private classes
-    private static class Response {
+    private static class Response implements Serializable {
 
         private String gameId;
+
+        public Response() {
+            // noOp
+        }
 
         public Response(String gameId) {
             this.gameId = gameId;
