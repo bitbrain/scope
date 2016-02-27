@@ -1,5 +1,6 @@
 package nl.fontys.scope.net.server;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,6 +21,10 @@ public class GameInstanceManager {
         } else {
             throw new GameServerException("Could not create game '" + name + "'. Game already exists!");
         }
+    }
+
+    public Collection<GameInstance> getCurrentInstances() {
+        return instances.values();
     }
 
     public GameInstance get(String name) throws GameServerException {

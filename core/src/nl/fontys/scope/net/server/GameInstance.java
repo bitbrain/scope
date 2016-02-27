@@ -4,9 +4,6 @@ import com.esotericsoftware.kryonet.Connection;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
-
-import nl.fontys.scope.core.Player;
 
 public class GameInstance {
 
@@ -89,12 +86,16 @@ public class GameInstance {
         return name;
     }
 
-    public int getClientSize() {
+    public int getCurrentClientSize() {
         return connections.size();
     }
 
+    public int getMaxClientSize() {
+        return MAX_CLIENT_SIZE;
+    }
+
     public boolean isGameFull() {
-        return getClientSize() == MAX_CLIENT_SIZE;
+        return getCurrentClientSize() == MAX_CLIENT_SIZE;
     }
 
     private boolean isNotExcluded(String clientId, String[] exclusions) {

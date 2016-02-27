@@ -38,7 +38,6 @@ public class ConnectionManager implements Disposable {
 
         @Override
         public void idle(Connection connection) {
-            System.out.println("Idle..");
             super.idle(connection);
         }
 

@@ -3,6 +3,7 @@ package nl.fontys.scope.net.server;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Logger;
 
+import nl.fontys.scope.net.commands.OpenGamesCommand;
 import nl.fontys.scope.net.commands.StopCommand;
 import nl.fontys.scope.util.CommandHandler;
 
@@ -26,6 +27,7 @@ public class GameServer {
         connectionManager = new ConnectionManager(instanceManager);
         commandHandler = new CommandHandler();
         commandHandler.register("stop", new StopCommand(this));
+        commandHandler.register("games", new OpenGamesCommand(instanceManager));
     }
 
     /**
