@@ -8,6 +8,7 @@ import nl.fontys.scope.ScopeGame;
 import nl.fontys.scope.core.World;
 import nl.fontys.scope.core.logic.CameraRotatingLogic;
 import nl.fontys.scope.event.Events;
+import nl.fontys.scope.net.client.GameClient;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.ui.ExitHandler;
 import nl.fontys.scope.ui.Styles;
@@ -20,6 +21,8 @@ public class WaitingForPlayersScreen extends AbstractScreen implements ExitHandl
 
     private Events events = Events.getInstance();
 
+    private GameClient client;
+
     public WaitingForPlayersScreen(ScopeGame game, String gameName) {
         super(game);
         this.gameName = gameName;
@@ -27,17 +30,17 @@ public class WaitingForPlayersScreen extends AbstractScreen implements ExitHandl
 
     @Override
     protected void onShow() {
-
         World world = new World();
         ingameScreen = new IngameScreen(game, world, false);
+        client = new GameClient(events, gameName, world, ingameScreen.getPlayerManager());
         events.register(this);
         GameObject planet = factory.createPlanet(30f);
         world.addLogic(new CameraRotatingLogic(800f, world.getCamera(), planet));
+        client.connect(true);
     }
 
     @Override
     protected void onUpdate(float delta) {
-
     }
 
     @Override

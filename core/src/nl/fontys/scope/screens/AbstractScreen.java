@@ -23,6 +23,8 @@ import nl.fontys.scope.audio.SoundManager;
 import nl.fontys.scope.controls.ControllerManager;
 import nl.fontys.scope.controls.KeyboardMenuSupport;
 import nl.fontys.scope.controls.XboxMenuControllerSupport;
+import nl.fontys.scope.core.Player;
+import nl.fontys.scope.core.PlayerManager;
 import nl.fontys.scope.core.World;
 import nl.fontys.scope.event.Events;
 import nl.fontys.scope.graphics.FX;
@@ -82,6 +84,8 @@ public abstract class AbstractScreen implements Screen {
 
     protected TextureBacker textureBacker;
 
+    protected PlayerManager playerManager;
+
     protected float fadeInTime = 0.4f, fadeOutTime = 0.4f;
 
     @Override
@@ -95,6 +99,7 @@ public abstract class AbstractScreen implements Screen {
         Gdx.input.setInputProcessor(multiplexer);
         soundManager.setPerspectiveCamera(world.getCamera());
         world.addLogic(soundManager);
+        playerManager = providePlayerManager(world);
         cam2D = new OrthographicCamera();
         onShow();
     }
@@ -230,5 +235,9 @@ public abstract class AbstractScreen implements Screen {
 
     protected ExitHandler getExitHandler() {
         return null;
+    }
+
+    protected PlayerManager providePlayerManager(World world) {
+        return new PlayerManager(world, false);
     }
 }

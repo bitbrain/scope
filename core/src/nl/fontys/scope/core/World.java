@@ -90,7 +90,11 @@ public class World {
     }
 
     public GameObject getObjectById(String id) {
-        return objects.get(id);
+        if (id != null) {
+            return objects.get(id);
+        } else {
+            return null;
+        }
     }
 
     public void addLogic(Logic controller) {

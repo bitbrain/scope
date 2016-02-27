@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 
 import nl.fontys.scope.assets.Assets;
+import nl.fontys.scope.core.Player;
 import nl.fontys.scope.core.PlayerManager;
 import nl.fontys.scope.core.World;
 import nl.fontys.scope.core.logic.LightingLogic;
@@ -45,13 +46,21 @@ public class GameObjectFactory {
     }
 
     public GameObject createShip(float x, float y, float z) {
+        return createShip(x, y, z, null);
+    }
+
+    public GameObject createShip(float x, float y, float z, Player owner) {
         GameObject reference = mutator.getReference();
         reference.setPosition(x, y, z);
         reference.setType(GameObjectType.SHIP);
         reference.setCollisionScale(0f);
         reference.setScale(1.65f);
         reference.getColor().set(0.75f, 0.75f, 0.75f, 1f);
-        reference.setClientId(PlayerManager.getCurrent().getId());
+        if (owner == null && PlayerManager.getCurrent() != null) {
+            reference.setClientId(PlayerManager.getCurrent().getId());
+        } else if (owner != null) {
+            reference.setClientId(owner.getId());
+        }
         GameObject object = world.createGameObject(mutator);
         ParticleEffectLogic c = new ParticleEffectLogic(Assets.ParticleEffects.POWER);
         final float X_OFFSET = -3.2f;

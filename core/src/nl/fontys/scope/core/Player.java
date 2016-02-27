@@ -39,7 +39,7 @@ public class Player {
         focus = new FocusContainer();
         this.world = world;
         GameObjectFactory factory = new GameObjectFactory(world);
-        this.shipId = shipId != null ? shipId : factory.createShip(0f, 0f, 0f).getId();
+        this.shipId = shipId != null ? shipId : factory.createShip(0f, 0f, 0f, this).getId();
         this.weapon = new Weapon(shipId, world, focus);
         color = Color.WHITE.cpy();
     }

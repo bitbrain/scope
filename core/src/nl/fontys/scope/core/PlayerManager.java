@@ -15,9 +15,9 @@ public class PlayerManager {
 
     private World world;
     
-    public PlayerManager(World world) {
+    public PlayerManager(World world, boolean shipAvailable) {
         this.world = world;
-        this.current = addPlayer();
+        this.current = addPlayer(null, shipAvailable ? null : "");
     }
 
     public Collection<Player> getPlayers() {
@@ -52,7 +52,7 @@ public class PlayerManager {
         Player player = new Player(world, clientId, shipId);
         players.put(player.getId(), player);
         player.setNumber(players.size());
-        shipToPlayers.put(player.getShip().getId(), player);
+        shipToPlayers.put(player.getShip() != null ? player.getShip().getId() : shipId, player);
         return player;
     }
 
