@@ -22,9 +22,11 @@ public class GameInstanceManager {
             for (GameInstance instance : instances.values()) {
                 String clientId = instance.getClientByConnection(connection);
                 try {
-                    instance.removeClient(clientId);
-                    if (instance.getCurrentClientSize() <= 1) {
-                        emptyInstances.add(instance);
+                    if (clientId != null) {
+                        instance.removeClient(clientId);
+                        if (instance.getCurrentClientSize() <= 1) {
+                            emptyInstances.add(instance);
+                        }
                     }
                 } catch (GameServerException e) {
                     e.printStackTrace();

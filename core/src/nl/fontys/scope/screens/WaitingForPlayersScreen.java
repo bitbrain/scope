@@ -1,8 +1,10 @@
 package nl.fontys.scope.screens;
 
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import nl.fontys.scope.ScopeGame;
 import nl.fontys.scope.core.World;
@@ -11,6 +13,7 @@ import nl.fontys.scope.event.Events;
 import nl.fontys.scope.net.client.GameClient;
 import nl.fontys.scope.net.server.Responses;
 import nl.fontys.scope.object.GameObject;
+import nl.fontys.scope.ui.ButtonMenu;
 import nl.fontys.scope.ui.ExitHandler;
 import nl.fontys.scope.ui.Styles;
 
@@ -52,9 +55,16 @@ public class WaitingForPlayersScreen extends AbstractScreen implements ExitHandl
         Table layout = new Table();
         layout.setFillParent(true);
 
-
-        layout.add(caption);
-        System.out.println(caption + "...");
+        layout.add(caption).row();
+        ButtonMenu menu = new ButtonMenu(tweenManager);
+        menu.add("Abort", new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                client.leaveCurrentGame();
+                setScreen(new MenuScreen(game));
+            }
+        });
+        layout.add(menu).padTop(60);
         stage.addActor(layout);
     }
 
