@@ -12,13 +12,27 @@ public class Responses {
 
         private String clientId;
 
+        private int currentClients;
+
+        private int maxClients;
+
         public GameCreated() {
             // noOp
         }
 
-        public GameCreated(String gameId, String clientId) {
+        public GameCreated(String gameId, String clientId, int currentClients, int maxClients) {
             super(gameId);
             this.clientId = clientId;
+            this.currentClients = currentClients;
+            this.maxClients = maxClients;
+        }
+
+        public int getCurrentClients() {
+            return currentClients;
+        }
+
+        public int getMaxClients() {
+            return maxClients;
         }
 
         public String getClientId() {

@@ -8,6 +8,8 @@ import com.esotericsoftware.kryonet.Listener;
 import net.engio.mbassy.listener.Handler;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 import nl.fontys.scope.Config;
 import nl.fontys.scope.core.PlayerManager;
@@ -24,10 +26,24 @@ import nl.fontys.scope.net.handlers.responses.ObjectAddedHandler;
 import nl.fontys.scope.net.handlers.responses.ObjectRemovedHandler;
 import nl.fontys.scope.net.handlers.responses.ObjectUpdatedHandler;
 import nl.fontys.scope.net.kryo.KryoConfig;
+import nl.fontys.scope.net.server.Responses;
 import nl.fontys.scope.net.server.Router;
 import nl.fontys.scope.object.GameObject;
 
 public class GameClient extends Listener implements Disposable {
+
+    public interface GameClientListener {
+
+        void onGameCreated(Responses.GameCreated created);
+
+        void onClientJoined(Responses.ClientJoined joined);
+
+        void onClientLeft(Responses.ClientLeft left);
+
+        void onGameReady(Responses.GameReady ready);
+
+        void onGameAborted();
+    }
 
     private Events events;
 
@@ -39,7 +55,10 @@ public class GameClient extends Listener implements Disposable {
 
     private Router router;
 
+    private Set<GameClientListener> listeners;
+
     public GameClient(Events events, String gameId, World world, PlayerManager playerManager) {
+        this.listeners = new HashSet<GameClientListener>();
         this.events = events;
         this.gameId = gameId;
         this.clientId = PlayerManager.getCurrent().getId();
@@ -50,6 +69,14 @@ public class GameClient extends Listener implements Disposable {
         this.client.start();
         KryoConfig.configure(client.getKryo());
         setupHandlers(world, playerManager);
+    }
+
+    public void addListener(GameClientListener listener) {
+        this.listeners.add(listener);
+    }
+
+    public void removeListener(GameClientListener listener) {
+        this.listeners.remove(listener);
     }
 
     public void connect(boolean createNewGame) {
@@ -82,6 +109,23 @@ public class GameClient extends Listener implements Disposable {
     @Override
     public void received(Connection connection, Object object) {
         router.route(connection, object);
+        if (object instanceof Responses.GameCreated) {
+            for (GameClientListener l : listeners) {
+                l.onGameCreated((Responses.GameCreated) object);
+            }
+        } else if (object instanceof Responses.ClientJoined) {
+            for (GameClientListener l : listeners) {
+                l.onClientJoined((Responses.ClientJoined) object);
+            }
+        } else if (object instanceof Responses.ClientLeft) {
+            for (GameClientListener l : listeners) {
+                l.onClientLeft((Responses.ClientLeft) object);
+            }
+        } else if (object instanceof Responses.GameReady) {
+            for (GameClientListener l : listeners) {
+                l.onGameReady((Responses.GameReady) object);
+            }
+        }
     }
 
     @Handler

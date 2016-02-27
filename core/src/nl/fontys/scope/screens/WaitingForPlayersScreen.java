@@ -9,11 +9,12 @@ import nl.fontys.scope.core.World;
 import nl.fontys.scope.core.logic.CameraRotatingLogic;
 import nl.fontys.scope.event.Events;
 import nl.fontys.scope.net.client.GameClient;
+import nl.fontys.scope.net.server.Responses;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.ui.ExitHandler;
 import nl.fontys.scope.ui.Styles;
 
-public class WaitingForPlayersScreen extends AbstractScreen implements ExitHandler {
+public class WaitingForPlayersScreen extends AbstractScreen implements ExitHandler, GameClient.GameClientListener {
 
     private IngameScreen ingameScreen;
 
@@ -22,6 +23,8 @@ public class WaitingForPlayersScreen extends AbstractScreen implements ExitHandl
     private Events events = Events.getInstance();
 
     private GameClient client;
+
+    private Label caption;
 
     public WaitingForPlayersScreen(ScopeGame game, String gameName) {
         super(game);
@@ -33,6 +36,7 @@ public class WaitingForPlayersScreen extends AbstractScreen implements ExitHandl
         World world = new World();
         ingameScreen = new IngameScreen(game, world, false);
         client = new GameClient(events, gameName, world, ingameScreen.getPlayerManager());
+        client.addListener(this);
         events.register(this);
         GameObject planet = factory.createPlanet(30f);
         world.addLogic(new CameraRotatingLogic(800f, world.getCamera(), planet));
@@ -48,14 +52,41 @@ public class WaitingForPlayersScreen extends AbstractScreen implements ExitHandl
         Table layout = new Table();
         layout.setFillParent(true);
 
-        Label caption = new Label("Waiting for Players", Styles.LABEL_CAPTION);
 
         layout.add(caption);
+        System.out.println(caption + "...");
         stage.addActor(layout);
     }
 
     @Override
     public void exit() {
         setScreen(new MenuScreen(game));
+    }
+
+    @Override
+    public void onGameCreated(Responses.GameCreated created) {
+        if (caption == null) {
+            caption = new Label("Waiting for players", Styles.LABEL_CAPTION);
+        }
+        caption.setText("Waiting for players (" + created.getCurrentClients() + "/" + created.getMaxClients() + ")");
+    }
+
+    @Override
+    public void onClientJoined(Responses.ClientJoined joined) {
+    }
+
+    @Override
+    public void onClientLeft(Responses.ClientLeft left) {
+
+    }
+
+    @Override
+    public void onGameReady(Responses.GameReady ready) {
+
+    }
+
+    @Override
+    public void onGameAborted() {
+
     }
 }

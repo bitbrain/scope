@@ -22,7 +22,7 @@ public class CreateGameHandler extends AbstractGameInstanceHandler {
         try {
             GameInstance instance = gameInstanceManager.create(gameId);
             instance.addClient(clientId, connection);
-            connection.sendTCP(new Responses.GameCreated(gameId, clientId));
+            connection.sendTCP(new Responses.GameCreated(gameId, clientId, instance.getCurrentClientSize(), instance.getMaxClientSize()));
         } catch (GameServerException e) {
             e.printStackTrace();
             connection.close();
