@@ -10,6 +10,8 @@ import net.engio.mbassy.listener.Handler;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import nl.fontys.scope.Config;
 import nl.fontys.scope.core.PlayerManager;
@@ -57,7 +59,10 @@ public class GameClient extends Listener implements Disposable {
 
     private Set<GameClientHandler> listeners;
 
+    private ExecutorService executorService;
+
     public GameClient(Events events, String gameId, World world, PlayerManager playerManager) {
+        executorService = Executors.newSingleThreadExecutor();
         this.listeners = new HashSet<GameClientHandler>();
         this.events = events;
         this.gameId = gameId;
@@ -79,18 +84,23 @@ public class GameClient extends Listener implements Disposable {
         this.listeners.remove(listener);
     }
 
-    public void connect(boolean createNewGame) {
-        this.client.start();
-        try {
-            this.client.connect(Config.SERVER_TIMEOUT_MS, Config.SERVER_IP, Config.SERVER_TCP_PORT, Config.SERVER_UDP_PORT);
-            if (createNewGame) {
-                this.client.sendTCP(new Requests.CreateGame(gameId, clientId));
-            } else {
-                this.client.sendTCP(new Requests.JoinGame(gameId, clientId, PlayerManager.getCurrent().getShip().getId()));
+    public void connect(final boolean createNewGame) {
+        executorService.submit(new Runnable() {
+            @Override
+            public void run() {
+                GameClient.this.client.start();
+                try {
+                    GameClient.this.client.connect(Config.SERVER_TIMEOUT_MS, Config.SERVER_IP, Config.SERVER_TCP_PORT, Config.SERVER_UDP_PORT);
+                    if (createNewGame) {
+                        GameClient.this.client.sendTCP(new Requests.CreateGame(gameId, clientId));
+                    } else {
+                        GameClient.this.client.sendTCP(new Requests.JoinGame(gameId, clientId, PlayerManager.getCurrent().getShip().getId()));
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        });
     }
 
     public void leaveCurrentGame() {
@@ -103,6 +113,7 @@ public class GameClient extends Listener implements Disposable {
     @Override
     public void dispose() {
         events.unregister(this);
+        executorService.shutdown();
         this.client.close();
     }
 
