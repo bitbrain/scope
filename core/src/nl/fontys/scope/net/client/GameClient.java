@@ -32,7 +32,7 @@ import nl.fontys.scope.object.GameObject;
 
 public class GameClient extends Listener implements Disposable {
 
-    public class GameClientHandler {
+    public static class GameClientHandler {
 
         public void onGameCreated(Responses.GameCreated created) { }
 
@@ -43,8 +43,6 @@ public class GameClient extends Listener implements Disposable {
         public void onClientLeft(Responses.ClientLeft left) {}
 
         public void onGameReady(Responses.GameReady ready) {}
-
-        public void onGameAborted() {}
     }
 
     private Events events;
@@ -126,6 +124,10 @@ public class GameClient extends Listener implements Disposable {
         } else if (object instanceof Responses.GameReady) {
             for (GameClientHandler l : listeners) {
                 l.onGameReady((Responses.GameReady) object);
+            }
+        } else if (object instanceof Responses.GameClosed) {
+            for (GameClientHandler l : listeners) {
+                l.onGameClosed((Responses.GameClosed) object);
             }
         }
     }

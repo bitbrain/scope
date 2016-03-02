@@ -84,38 +84,64 @@ public class Responses {
 
         private String clientId;
 
+        private int currentClients;
+
+        private int maxClients;
+
         private String gameObjectId;
 
         public ClientJoined() {
             // noOp
         }
 
-        public ClientJoined(String gameId, String clientId, String gameObjectId) {
+        public ClientJoined(String gameId, String clientId, int currentClients, int maxClients, String gameObjectId) {
             super(gameId);
             this.clientId = clientId;
+            this.currentClients = currentClients;
+            this.maxClients = maxClients;
             this.gameObjectId = gameObjectId;
+        }
+
+        public int getCurrentClients() {
+            return currentClients;
+        }
+
+        public int getMaxClients() {
+            return maxClients;
         }
 
         public String getClientId() {
             return clientId;
         }
 
-        public String getGameObjectId() {
-            return gameObjectId;
-        }
+        public String getGameObjectId() { return gameObjectId; }
     }
 
     public static class ClientLeft extends Response {
 
         private String clientId;
 
+        private int currentClients;
+
+        private int maxClients;
+
         public ClientLeft() {
             // noOp
         }
 
-        public ClientLeft(String gameId, String clientId) {
+        public ClientLeft(String gameId, String clientId, int currentClients, int maxClients) {
             super(gameId);
             this.clientId = clientId;
+            this.currentClients = currentClients;
+            this.maxClients = maxClients;
+        }
+
+        public int getCurrentClients() {
+            return currentClients;
+        }
+
+        public int getMaxClients() {
+            return maxClients;
         }
 
         public String getClientId() {

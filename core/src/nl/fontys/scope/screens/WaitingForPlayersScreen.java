@@ -17,7 +17,7 @@ import nl.fontys.scope.ui.ButtonMenu;
 import nl.fontys.scope.ui.ExitHandler;
 import nl.fontys.scope.ui.Styles;
 
-public class WaitingForPlayersScreen extends AbstractScreen implements ExitHandler, GameClient.GameClientHandler {
+public class WaitingForPlayersScreen extends AbstractScreen implements ExitHandler {
 
     private IngameScreen ingameScreen;
 
@@ -29,6 +29,8 @@ public class WaitingForPlayersScreen extends AbstractScreen implements ExitHandl
 
     private Label caption;
 
+    private GameClient.GameClientHandler handler;
+
     public WaitingForPlayersScreen(ScopeGame game, String gameName) {
         super(game);
         this.gameName = gameName;
@@ -39,7 +41,38 @@ public class WaitingForPlayersScreen extends AbstractScreen implements ExitHandl
         World world = new World();
         ingameScreen = new IngameScreen(game, world, false);
         client = new GameClient(events, gameName, world, ingameScreen.getPlayerManager());
-        client.addHandler(this);
+        handler = new GameClient.GameClientHandler() {
+            @Override
+            public void onClientJoined(Responses.ClientJoined joined) {
+                if (caption == null) {
+                    caption = new Label("Waiting for players", Styles.LABEL_CAPTION);
+                }
+                caption.setText("Waiting for players (" + joined.getCurrentClients() + "/" + joined.getMaxClients() + ")");
+            }
+
+            @Override
+            public void onClientLeft(Responses.ClientLeft left) {
+                if (caption == null) {
+                    caption = new Label("Waiting for players", Styles.LABEL_CAPTION);
+                }
+                caption.setText("Waiting for players (" + left.getCurrentClients() + "/" + left.getMaxClients() + ")");
+            }
+
+            @Override
+            public void onGameClosed(Responses.GameClosed closed) {
+                super.onGameClosed(closed);
+                exit();
+            }
+
+            @Override
+            public void onGameCreated(Responses.GameCreated created) {
+                if (caption == null) {
+                    caption = new Label("Waiting for players", Styles.LABEL_CAPTION);
+                }
+                caption.setText("Waiting for players (" + created.getCurrentClients() + "/" + created.getMaxClients() + ")");
+            }
+        };
+        client.addHandler(handler);
         events.register(this);
         GameObject planet = factory.createPlanet(30f);
         world.addLogic(new CameraRotatingLogic(800f, world.getCamera(), planet));
@@ -70,33 +103,8 @@ public class WaitingForPlayersScreen extends AbstractScreen implements ExitHandl
 
     @Override
     public void exit() {
+        client.leaveCurrentGame();
+        client.removeHandler(handler);
         setScreen(new MenuScreen(game));
-    }
-
-    @Override
-    public void onGameCreated(Responses.GameCreated created) {
-        if (caption == null) {
-            caption = new Label("Waiting for players", Styles.LABEL_CAPTION);
-        }
-        caption.setText("Waiting for players (" + created.getCurrentClients() + "/" + created.getMaxClients() + ")");
-    }
-
-    @Override
-    public void onClientJoined(Responses.ClientJoined joined) {
-    }
-
-    @Override
-    public void onClientLeft(Responses.ClientLeft left) {
-
-    }
-
-    @Override
-    public void onGameReady(Responses.GameReady ready) {
-
-    }
-
-    @Override
-    public void onGameAborted() {
-
     }
 }

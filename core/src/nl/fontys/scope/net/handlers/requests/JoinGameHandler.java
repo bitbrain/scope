@@ -24,7 +24,7 @@ public class JoinGameHandler extends AbstractGameInstanceHandler {
         try {
             GameInstance instance = gameInstanceManager.get(gameId);
             instance.addClient(gameId, connection);
-            instance.sendToAllTCP(new Responses.ClientJoined(gameId, clientId, gameObjectId));
+            instance.sendToAllTCP(new Responses.ClientJoined(gameId, clientId, instance.getCurrentClientSize(), instance.getMaxClientSize(), gameObjectId));
             if (instance.isGameFull()) {
                 instance.sendToAllTCP(new Responses.GameReady(gameId));
             }
