@@ -32,17 +32,19 @@ import nl.fontys.scope.object.GameObject;
 
 public class GameClient extends Listener implements Disposable {
 
-    public interface GameClientListener {
+    public class GameClientHandler {
 
-        void onGameCreated(Responses.GameCreated created);
+        public void onGameCreated(Responses.GameCreated created) { }
 
-        void onClientJoined(Responses.ClientJoined joined);
+        public void onGameClosed(Responses.GameClosed closed) {}
 
-        void onClientLeft(Responses.ClientLeft left);
+        public void onClientJoined(Responses.ClientJoined joined) {}
 
-        void onGameReady(Responses.GameReady ready);
+        public void onClientLeft(Responses.ClientLeft left) {}
 
-        void onGameAborted();
+        public void onGameReady(Responses.GameReady ready) {}
+
+        public void onGameAborted() {}
     }
 
     private Events events;
@@ -55,10 +57,10 @@ public class GameClient extends Listener implements Disposable {
 
     private Router router;
 
-    private Set<GameClientListener> listeners;
+    private Set<GameClientHandler> listeners;
 
     public GameClient(Events events, String gameId, World world, PlayerManager playerManager) {
-        this.listeners = new HashSet<GameClientListener>();
+        this.listeners = new HashSet<GameClientHandler>();
         this.events = events;
         this.gameId = gameId;
         this.clientId = PlayerManager.getCurrent().getId();
@@ -71,11 +73,11 @@ public class GameClient extends Listener implements Disposable {
         setupHandlers(world, playerManager);
     }
 
-    public void addListener(GameClientListener listener) {
+    public void addHandler(GameClientHandler listener) {
         this.listeners.add(listener);
     }
 
-    public void removeListener(GameClientListener listener) {
+    public void removeHandler(GameClientHandler listener) {
         this.listeners.remove(listener);
     }
 
@@ -110,19 +112,19 @@ public class GameClient extends Listener implements Disposable {
     public void received(Connection connection, Object object) {
         router.route(connection, object);
         if (object instanceof Responses.GameCreated) {
-            for (GameClientListener l : listeners) {
+            for (GameClientHandler l : listeners) {
                 l.onGameCreated((Responses.GameCreated) object);
             }
         } else if (object instanceof Responses.ClientJoined) {
-            for (GameClientListener l : listeners) {
+            for (GameClientHandler l : listeners) {
                 l.onClientJoined((Responses.ClientJoined) object);
             }
         } else if (object instanceof Responses.ClientLeft) {
-            for (GameClientListener l : listeners) {
+            for (GameClientHandler l : listeners) {
                 l.onClientLeft((Responses.ClientLeft) object);
             }
         } else if (object instanceof Responses.GameReady) {
-            for (GameClientListener l : listeners) {
+            for (GameClientHandler l : listeners) {
                 l.onGameReady((Responses.GameReady) object);
             }
         }

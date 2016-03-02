@@ -40,6 +40,17 @@ public class Responses {
         }
     }
 
+    public static class GameClosed extends Response {
+
+        public GameClosed() {
+            // noOp
+        }
+
+        public GameClosed(String gameId) {
+            super(gameId);
+        }
+    }
+
     public static class GameReady extends Response {
 
         public GameReady() {

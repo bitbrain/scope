@@ -49,5 +49,6 @@ public class KryoConfig {
         kryo.register(Responses.GameObjectAdded.class);
         kryo.register(Responses.GameObjectRemoved.class);
         kryo.register(Responses.GameObjectUpdated.class);
+        kryo.register(Responses.GameClosed.class);
     }
 }

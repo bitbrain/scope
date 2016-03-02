@@ -66,9 +66,11 @@ public class GameInstance {
     public void close() {
         for (Connection connection : connections.values()) {
             if (connection.isConnected()) {
+                connection.sendTCP(new Responses.GameClosed(name));
                 connection.close();
             }
         }
+        connections.clear();
     }
 
     public void sendToAllTCP(Object object, String... exclusions) {

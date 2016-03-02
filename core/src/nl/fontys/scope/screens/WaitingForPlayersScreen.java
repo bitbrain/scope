@@ -17,7 +17,7 @@ import nl.fontys.scope.ui.ButtonMenu;
 import nl.fontys.scope.ui.ExitHandler;
 import nl.fontys.scope.ui.Styles;
 
-public class WaitingForPlayersScreen extends AbstractScreen implements ExitHandler, GameClient.GameClientListener {
+public class WaitingForPlayersScreen extends AbstractScreen implements ExitHandler, GameClient.GameClientHandler {
 
     private IngameScreen ingameScreen;
 
@@ -39,7 +39,7 @@ public class WaitingForPlayersScreen extends AbstractScreen implements ExitHandl
         World world = new World();
         ingameScreen = new IngameScreen(game, world, false);
         client = new GameClient(events, gameName, world, ingameScreen.getPlayerManager());
-        client.addListener(this);
+        client.addHandler(this);
         events.register(this);
         GameObject planet = factory.createPlanet(30f);
         world.addLogic(new CameraRotatingLogic(800f, world.getCamera(), planet));
