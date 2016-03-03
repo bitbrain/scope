@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector3;
 
 import java.security.SecureRandom;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 import aurelienribon.tweenengine.TweenManager;
 import nl.fontys.scope.Config;
@@ -15,6 +16,7 @@ import nl.fontys.scope.util.Colors;
 
 public class Arena {
 
+    private static final Logger LOGGER = Logger.getLogger(Arena.class.getName());
     private Vector3 tmp = new Vector3();
 
     public static interface ArenaBoundRestrictor {
@@ -63,8 +65,12 @@ public class Arena {
 
     private void spawnPlayer(Player player) {
         GameObject ship = player.getShip();
-        Vector3 point = spawnManager.fetchAvailableSpawnPoint();
-        ship.setPosition(point.x, point.y, point.z);
+        if (ship != null) {
+            Vector3 point = spawnManager.fetchAvailableSpawnPoint();
+            ship.setPosition(point.x, point.y, point.z);
+        } else {
+            LOGGER.info("Could not spawn player with id='" +  player.getId() + "': no ship available");
+        }
     }
 
     public class SpawnManager {
