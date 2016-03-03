@@ -72,6 +72,11 @@ public class WaitingForPlayersScreen extends AbstractScreen implements ExitHandl
             }
 
             @Override
+            public void onGameReady(Responses.GameReady ready) {
+                setScreen(ingameScreen);
+            }
+
+            @Override
             public void onConnectionFailed() {
                 WaitingForPlayersScreen.this.exit();
             }

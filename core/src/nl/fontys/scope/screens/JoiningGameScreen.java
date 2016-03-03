@@ -48,7 +48,7 @@ public class JoiningGameScreen extends AbstractScreen implements ExitHandler {
 
             @Override
             public void onGameReady(Responses.GameReady ready) {
-                System.out.println("Game ready!");
+                setScreen(ingameScreen);
             }
 
             @Override
