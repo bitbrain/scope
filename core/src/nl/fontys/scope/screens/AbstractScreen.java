@@ -17,13 +17,10 @@ import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
 import nl.fontys.scope.Config;
 import nl.fontys.scope.ScopeGame;
-import nl.fontys.scope.assets.AssetManager;
-import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.audio.SoundManager;
 import nl.fontys.scope.controls.ControllerManager;
 import nl.fontys.scope.controls.KeyboardMenuSupport;
 import nl.fontys.scope.controls.XboxMenuControllerSupport;
-import nl.fontys.scope.core.Player;
 import nl.fontys.scope.core.PlayerManager;
 import nl.fontys.scope.core.World;
 import nl.fontys.scope.event.Events;
@@ -34,7 +31,6 @@ import nl.fontys.scope.graphics.TextureBacker;
 import nl.fontys.scope.object.GameObjectFactory;
 import nl.fontys.scope.ui.ButtonMenu;
 import nl.fontys.scope.ui.ExitHandler;
-import nl.fontys.scope.ui.ModelPreview;
 import nl.fontys.scope.ui.Tooltip;
 
 public abstract class AbstractScreen implements Screen {
@@ -68,6 +64,7 @@ public abstract class AbstractScreen implements Screen {
     public AbstractScreen(ScopeGame game, World world) {
         this.game = game;
         this.world = world;
+        playerManager = providePlayerManager(world);
     }
 
     public AbstractScreen(ScopeGame game) {
@@ -99,7 +96,6 @@ public abstract class AbstractScreen implements Screen {
         Gdx.input.setInputProcessor(multiplexer);
         soundManager.setPerspectiveCamera(world.getCamera());
         world.addLogic(soundManager);
-        playerManager = providePlayerManager(world);
         cam2D = new OrthographicCamera();
         onShow();
     }
