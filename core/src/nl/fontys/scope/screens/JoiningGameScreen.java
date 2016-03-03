@@ -34,7 +34,14 @@ public class JoiningGameScreen extends AbstractScreen implements ExitHandler {
     @Override
     protected void onShow() {
         World world = new World();
-        this.ingameScreen = new IngameScreen(game, world, false);
+        this.ingameScreen = new IngameScreen(game, world, false) {
+            @Override
+            protected void onShow() {
+                super.onShow();
+                // Register again the client here
+                client.setEvents(Events.getInstance());
+            }
+        };
         events.register(this);
         GameObject planet = factory.createPlanet(30f);
         world.addLogic(new CameraRotatingLogic(800f, world.getCamera(), planet));

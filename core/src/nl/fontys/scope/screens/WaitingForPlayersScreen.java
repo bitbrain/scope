@@ -39,7 +39,14 @@ public class WaitingForPlayersScreen extends AbstractScreen implements ExitHandl
     @Override
     protected void onShow() {
         World world = new World();
-        ingameScreen = new IngameScreen(game, world, false);
+        ingameScreen = new IngameScreen(game, world, false) {
+            @Override
+            protected void onShow() {
+                super.onShow();
+                // Register again the client here
+                client.setEvents(Events.getInstance());
+            }
+        };
         client = new GameClient(events, gameName, world, ingameScreen.getPlayerManager());
         handler = new GameClient.GameClientHandler() {
             @Override

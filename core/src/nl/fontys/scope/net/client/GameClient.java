@@ -154,6 +154,14 @@ public class GameClient extends Listener implements Disposable {
         setupHandlers(world, playerManager);
     }
 
+    public void setEvents(Events events) {
+        if (this.events != null) {
+            this.events.unregister(this);
+        }
+        this.events = events;
+        this.events.register(this);
+    }
+
     public void addHandler(GameClientHandler listener) {
         this.listeners.add(listener);
     }
