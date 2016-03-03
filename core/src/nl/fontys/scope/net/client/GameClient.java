@@ -1,5 +1,6 @@
 package nl.fontys.scope.net.client;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Disposable;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
@@ -45,7 +46,84 @@ public class GameClient extends Listener implements Disposable {
         public void onClientLeft(Responses.ClientLeft left) {}
 
         public void onGameReady(Responses.GameReady ready) {}
+
+        public void onConnectionFailed() {}
     }
+
+    /* Resolves concurrency and executes everything in the main render thread */
+    private GameClientHandler libGdxHandler = new GameClientHandler() {
+        @Override
+        public void onConnectionFailed() {
+            Gdx.app.postRunnable(new Runnable() {
+                @Override
+                public void run() {
+                    for (GameClientHandler handler : listeners) {
+                        handler.onConnectionFailed();
+                    }
+                }
+            });
+        }
+
+        @Override
+        public void onClientJoined(final Responses.ClientJoined joined) {
+            Gdx.app.postRunnable(new Runnable() {
+                @Override
+                public void run() {
+                    for (GameClientHandler handler : listeners) {
+                        handler.onClientJoined(joined);
+                    }
+                }
+            });
+        }
+
+        @Override
+        public void onClientLeft(final Responses.ClientLeft left) {
+            Gdx.app.postRunnable(new Runnable() {
+                @Override
+                public void run() {
+                    for (GameClientHandler handler : listeners) {
+                        handler.onClientLeft(left);
+                    }
+                }
+            });
+        }
+
+        @Override
+        public void onGameClosed(final Responses.GameClosed closed) {
+            Gdx.app.postRunnable(new Runnable() {
+                @Override
+                public void run() {
+                    for (GameClientHandler handler : listeners) {
+                        handler.onGameClosed(closed);
+                    }
+                }
+            });
+        }
+
+        @Override
+        public void onGameCreated(final Responses.GameCreated created) {
+            Gdx.app.postRunnable(new Runnable() {
+                @Override
+                public void run() {
+                    for (GameClientHandler handler : listeners) {
+                        handler.onGameCreated(created);
+                    }
+                }
+            });
+        }
+
+        @Override
+        public void onGameReady(final Responses.GameReady ready) {
+            Gdx.app.postRunnable(new Runnable() {
+                @Override
+                public void run() {
+                    for (GameClientHandler handler : listeners) {
+                        handler.onGameReady(ready);
+                    }
+                }
+            });
+        }
+    };
 
     private Events events;
 
@@ -97,7 +175,7 @@ public class GameClient extends Listener implements Disposable {
                         GameClient.this.client.sendTCP(new Requests.JoinGame(gameId, clientId, PlayerManager.getCurrent().getShip().getId()));
                     }
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    libGdxHandler.onConnectionFailed();
                 }
             }
         });
@@ -121,25 +199,15 @@ public class GameClient extends Listener implements Disposable {
     public void received(Connection connection, Object object) {
         router.route(connection, object);
         if (object instanceof Responses.GameCreated) {
-            for (GameClientHandler l : listeners) {
-                l.onGameCreated((Responses.GameCreated) object);
-            }
+            libGdxHandler.onGameCreated((Responses.GameCreated) object);
         } else if (object instanceof Responses.ClientJoined) {
-            for (GameClientHandler l : listeners) {
-                l.onClientJoined((Responses.ClientJoined) object);
-            }
+            libGdxHandler.onClientJoined((Responses.ClientJoined) object);
         } else if (object instanceof Responses.ClientLeft) {
-            for (GameClientHandler l : listeners) {
-                l.onClientLeft((Responses.ClientLeft) object);
-            }
+            libGdxHandler.onClientLeft((Responses.ClientLeft) object);
         } else if (object instanceof Responses.GameReady) {
-            for (GameClientHandler l : listeners) {
-                l.onGameReady((Responses.GameReady) object);
-            }
+            libGdxHandler.onGameReady((Responses.GameReady) object);
         } else if (object instanceof Responses.GameClosed) {
-            for (GameClientHandler l : listeners) {
-                l.onGameClosed((Responses.GameClosed) object);
-            }
+            libGdxHandler.onGameClosed((Responses.GameClosed) object);
         }
     }
 

@@ -60,6 +60,11 @@ public class JoiningGameScreen extends AbstractScreen implements ExitHandler {
             public void onClientJoined(Responses.ClientJoined joined) {
                 System.out.println("Client joined");
             }
+
+            @Override
+            public void onConnectionFailed() {
+                exit();
+            }
         });
         client.connect(false);
     }

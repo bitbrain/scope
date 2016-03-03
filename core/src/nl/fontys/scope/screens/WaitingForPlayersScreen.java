@@ -60,8 +60,7 @@ public class WaitingForPlayersScreen extends AbstractScreen implements ExitHandl
 
             @Override
             public void onGameClosed(Responses.GameClosed closed) {
-                super.onGameClosed(closed);
-                exit();
+                WaitingForPlayersScreen.this.exit();
             }
 
             @Override
@@ -70,6 +69,11 @@ public class WaitingForPlayersScreen extends AbstractScreen implements ExitHandl
                     caption = new Label("Waiting for players", Styles.LABEL_CAPTION);
                 }
                 caption.setText("Waiting for players (" + created.getCurrentClients() + "/" + created.getMaxClients() + ")");
+            }
+
+            @Override
+            public void onConnectionFailed() {
+                WaitingForPlayersScreen.this.exit();
             }
         };
         client.addHandler(handler);
