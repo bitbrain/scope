@@ -86,8 +86,6 @@ public class JoiningGameScreen extends AbstractScreen implements ExitHandler {
         Table layout = new Table();
         layout.setFillParent(true);
         Label caption = new Label("Joining game '" + gameName + "'", Styles.LABEL_CAPTION);
-        World world = new World();
-        ingameScreen = new IngameScreen(game, world, false);
         layout.add(caption);
         stage.addActor(layout);
     }
