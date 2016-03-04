@@ -18,13 +18,13 @@ public class JoiningGameScreen extends AbstractScreen implements ExitHandler {
 
     private IngameScreen ingameScreen;
 
-    private Thread keepAliveThread;
-
     private Events events = Events.getInstance();
 
     private String gameName;
 
     private GameClient client;
+
+    private GameClient.GameClientHandler handler;
 
     public JoiningGameScreen(ScopeGame game, String name) {
         super(game);
@@ -46,7 +46,7 @@ public class JoiningGameScreen extends AbstractScreen implements ExitHandler {
         GameObject planet = factory.createPlanet(30f);
         world.addLogic(new CameraRotatingLogic(800f, world.getCamera(), planet));
         client = new GameClient(events, gameName, world, ingameScreen.getPlayerManager());
-        client.addHandler(new GameClient.GameClientHandler() {
+        handler = new GameClient.GameClientHandler() {
             @Override
             public void onGameClosed(Responses.GameClosed closed) {
                 System.out.println("Game closed..");
@@ -72,7 +72,7 @@ public class JoiningGameScreen extends AbstractScreen implements ExitHandler {
             public void onConnectionFailed() {
                 exit();
             }
-        });
+        };
         client.connect(false);
     }
 
@@ -94,12 +94,17 @@ public class JoiningGameScreen extends AbstractScreen implements ExitHandler {
 
     @Override
     public void exit() {
-        client.leaveCurrentGame();
         setScreen(new MenuScreen(game));
     }
 
     @Override
     protected ExitHandler getExitHandler() {
         return this;
+    }
+
+    @Override
+    protected void onDispose() {
+        client.leaveCurrentGame();
+        client.removeHandler(handler);
     }
 }

@@ -198,6 +198,7 @@ public abstract class AbstractScreen implements Screen {
         world.dispose();
         events.clear();
         ParticleManager.getInstance().clear();
+        onDispose();
     }
 
     public void setScreen(final Screen screen) {
@@ -215,6 +216,7 @@ public abstract class AbstractScreen implements Screen {
     protected abstract void onShow();
     protected abstract void onUpdate(float delta);
     protected abstract void onCreateStage(Stage stage);
+    protected void onDispose() { }
 
     private void updateFrameBuffer(int width, int height) {
         if (uiBuffer == null) {

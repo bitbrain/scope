@@ -119,8 +119,12 @@ public class WaitingForPlayersScreen extends AbstractScreen implements ExitHandl
 
     @Override
     public void exit() {
+        setScreen(new MenuScreen(game));
+    }
+
+    @Override
+    protected void onDispose() {
         client.leaveCurrentGame();
         client.removeHandler(handler);
-        setScreen(new MenuScreen(game));
     }
 }
