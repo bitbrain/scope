@@ -10,6 +10,10 @@ public class AimEnemyTask extends AITask {
     @Override
     public Status execute() {
         AIState state = getObject();
+        // Only aim for enemies when player can shoot
+        if (!state.player.getWeapon().canShoot()) {
+            return Status.FAILED;
+        }
         if (state.lastEnemyAttackedBy != null) {
             final float DISTANCE = GameObjectUtil.distanceTo(state.player.getShip(), state.lastEnemyAttackedBy);
             if (DISTANCE > MIN_AGGRO_RADIUS * 2f && DISTANCE < MAX_AGGRO_RADIUS * 2f) {

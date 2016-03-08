@@ -12,6 +12,7 @@ import nl.fontys.scope.event.EventType;
 import nl.fontys.scope.event.Events;
 import nl.fontys.scope.graphics.ModelInstanceService;
 import nl.fontys.scope.object.GameObject;
+import nl.fontys.scope.object.GameObjectType;
 
 public class CollisionDetector {
 
@@ -41,6 +42,10 @@ public class CollisionDetector {
     }
 
     public void detect(GameObject objectA, GameObject objectB) {
+        // Do not calculate bounding boxes for none objects
+        if (objectA.getType().equals(GameObjectType.NONE) || objectB.getType().equals(GameObjectType.NONE)) {
+            return;
+        }
         BoundingBox boxA = getBoundingBox(objectA);
         BoundingBox boxB = getBoundingBox(objectB);
         if (boxA.contains(boxB)) {
