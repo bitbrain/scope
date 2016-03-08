@@ -144,7 +144,7 @@ public class World {
         for (GameObject object : objects.values()) {
             // Local logics
             List<Logic> objectLogic = logics.get(object.getId());
-            if (objectLogic != null && PlayerManager.isLocalObject(object)) {
+            if (objectLogic != null) {
                 for (Logic logic : objectLogic) {
                     logic.update(object, delta);
                 }
@@ -154,9 +154,8 @@ public class World {
                 logic.update(object, delta);
             }
 
-            if (PlayerManager.isLocalObject(object)) {
-                physics.apply(object, delta);
-            }
+            physics.apply(object, delta);
+
             for (GameObject other : objects.values()) {
                 if (!object.getId().equals(other.getId())) {
                     if (objectLogic != null) {
@@ -167,7 +166,7 @@ public class World {
                     collisionDetector.detect(object, other);
                 }
             }
-            if (restrictor != null && PlayerManager.isLocalObject(object)) {
+            if (restrictor != null) {
                 restrictor.restrict(this, object);
             }
             renderManager.render(object, camera);

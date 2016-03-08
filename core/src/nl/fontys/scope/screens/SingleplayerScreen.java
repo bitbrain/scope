@@ -116,7 +116,6 @@ public class SingleplayerScreen extends AbstractScreen implements ExitHandler {
                     }
                 });
                 setScreen(screen);
-
             }
         });
         layout.add(menu).padTop(30f).row();
