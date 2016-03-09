@@ -20,6 +20,7 @@ import nl.fontys.scope.graphics.ModelInstanceService;
 import nl.fontys.scope.graphics.RenderManager;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.util.Colors;
+import nl.fontys.scope.util.Mutator;
 
 /**
  * World which provides game object management
@@ -89,7 +90,11 @@ public class World {
     }
 
     public GameObject getObjectById(String id) {
-        return objects.get(id);
+        if (id != null) {
+            return objects.get(id);
+        } else {
+            return null;
+        }
     }
 
     public void addLogic(Logic controller) {
@@ -107,9 +112,15 @@ public class World {
     }
 
     public nl.fontys.scope.object.GameObject createGameObject() {
+        return createGameObject(null);
+    }
+
+    public GameObject createGameObject(Mutator<GameObject> mutator) {
         nl.fontys.scope.object.GameObject object = gameObjectPool.obtain();
         object.reset();
-
+        if (mutator != null) {
+            mutator.mutate(object);
+        }
         objects.put(object.getId(), object);
         events.fire(EventType.OBJECT_CREATED, object);
         return object;
@@ -117,6 +128,7 @@ public class World {
 
     public void remove(nl.fontys.scope.object.GameObject gameObject) {
         if (objects.remove(gameObject.getId()) != null) {
+            gameObjectPool.free(gameObject);
             logics.remove(gameObject.getId());
             events.fire(EventType.OBJECT_REMOVED, gameObject);
         }
@@ -141,7 +153,9 @@ public class World {
             for (Logic logic : globalLogics) {
                 logic.update(object, delta);
             }
+
             physics.apply(object, delta);
+
             for (GameObject other : objects.values()) {
                 if (!object.getId().equals(other.getId())) {
                     if (objectLogic != null) {

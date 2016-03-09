@@ -17,12 +17,11 @@ import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
 import nl.fontys.scope.Config;
 import nl.fontys.scope.ScopeGame;
-import nl.fontys.scope.assets.AssetManager;
-import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.audio.SoundManager;
 import nl.fontys.scope.controls.ControllerManager;
 import nl.fontys.scope.controls.KeyboardMenuSupport;
 import nl.fontys.scope.controls.XboxMenuControllerSupport;
+import nl.fontys.scope.core.PlayerManager;
 import nl.fontys.scope.core.World;
 import nl.fontys.scope.event.Events;
 import nl.fontys.scope.graphics.FX;
@@ -32,7 +31,6 @@ import nl.fontys.scope.graphics.TextureBacker;
 import nl.fontys.scope.object.GameObjectFactory;
 import nl.fontys.scope.ui.ButtonMenu;
 import nl.fontys.scope.ui.ExitHandler;
-import nl.fontys.scope.ui.ModelPreview;
 import nl.fontys.scope.ui.Tooltip;
 
 public abstract class AbstractScreen implements Screen {
@@ -66,6 +64,7 @@ public abstract class AbstractScreen implements Screen {
     public AbstractScreen(ScopeGame game, World world) {
         this.game = game;
         this.world = world;
+        playerManager = providePlayerManager(world);
     }
 
     public AbstractScreen(ScopeGame game) {
@@ -81,6 +80,8 @@ public abstract class AbstractScreen implements Screen {
     private boolean closing;
 
     protected TextureBacker textureBacker;
+
+    protected PlayerManager playerManager;
 
     protected float fadeInTime = 0.4f, fadeOutTime = 0.4f;
 
@@ -197,6 +198,7 @@ public abstract class AbstractScreen implements Screen {
         world.dispose();
         events.clear();
         ParticleManager.getInstance().clear();
+        onDispose();
     }
 
     public void setScreen(final Screen screen) {
@@ -214,6 +216,7 @@ public abstract class AbstractScreen implements Screen {
     protected abstract void onShow();
     protected abstract void onUpdate(float delta);
     protected abstract void onCreateStage(Stage stage);
+    protected void onDispose() { }
 
     private void updateFrameBuffer(int width, int height) {
         if (uiBuffer == null) {
@@ -230,5 +233,9 @@ public abstract class AbstractScreen implements Screen {
 
     protected ExitHandler getExitHandler() {
         return null;
+    }
+
+    protected PlayerManager providePlayerManager(World world) {
+        return new PlayerManager(world, false);
     }
 }

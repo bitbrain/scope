@@ -6,7 +6,7 @@ public class Config {
     public static final String APP_NAME = "scope";
 
     // Version of the application
-    public static final String APP_VERSION = "0.7.16";
+    public static final String APP_VERSION = "0.9.3";
 
     // console string of the debug statement
     public static final String FLAG_DEBUG = "-debug";
@@ -24,9 +24,6 @@ public class Config {
 
     // Maximum energy speed
     public static final float MAX_ENERGY_SPEED = 28f;
-
-    // Maximum ship speed
-    public static final float MAX_SHIP_SPEED = 2.4f;
 
     // Default energy count
     public static final int ENERGY_COUNT = 25;
@@ -72,4 +69,16 @@ public class Config {
 
     // High quality rendering
     public static final boolean HIGH_QUALITY = true;
+
+    // The IP the game client should connect to
+    public static final String SERVER_IP = "127.0.0.1";
+
+    // Timeout for server connection in miliseconds
+    public static final int SERVER_TIMEOUT_MS = 5000;
+
+    // UDP port of the server
+    public static final int SERVER_UDP_PORT = 54555;
+
+    // TCP port of the server
+    public static final int SERVER_TCP_PORT = 54777;
 }

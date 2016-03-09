@@ -88,12 +88,14 @@ public class PlayerInfoWidget extends Actor {
         }
         FocusData focusData = animationData.get(player);
         GameObject ship = player.getShip();
-        final float SIZE = 75f + 5000f / (float) vecTemp3D.set(ship.getPosition()).sub(camera.position.x, camera.position.y, camera.position.z).scl(0.225f).len2();
-        Vector2 cameraPos2D = mapToCamera(ship);
-        if (!camera.frustum.pointInFrustum(ship.getPosition()) && bindToScreen(cameraPos2D, 80f)) {
-            drawPlayerDirection(player, batch, focusData, SIZE, cameraPos2D);
-        } else if (camera.frustum.pointInFrustum(ship.getPosition())) {
-            drawPlayerInformation(player, batch, focusData, SIZE, cameraPos2D);
+        if (ship != null) {
+            final float SIZE = 75f + 5000f / (float) vecTemp3D.set(ship.getPosition()).sub(camera.position.x, camera.position.y, camera.position.z).scl(0.225f).len2();
+            Vector2 cameraPos2D = mapToCamera(ship);
+            if (!camera.frustum.pointInFrustum(ship.getPosition()) && bindToScreen(cameraPos2D, 80f)) {
+                drawPlayerDirection(player, batch, focusData, SIZE, cameraPos2D);
+            } else if (camera.frustum.pointInFrustum(ship.getPosition())) {
+                drawPlayerInformation(player, batch, focusData, SIZE, cameraPos2D);
+            }
         }
     }
 

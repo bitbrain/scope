@@ -48,8 +48,6 @@ public class IngameScreen extends AbstractScreen implements ExitHandler {
 
     private TooltipController tooltipController;
 
-    private PlayerManager playerManager;
-
     // Todo: synchronize stats over the network
     private GameStats stats = new GameStats();
 
@@ -68,11 +66,8 @@ public class IngameScreen extends AbstractScreen implements ExitHandler {
     @Override
     protected void onShow() {
         events.register(this);
-        playerManager = new PlayerManager(world);
         ShipLogic controller = new ShipLogic();
-        world.addLogic(PlayerManager.getCurrent().getShip(), controller);
         camController = new CameraTrackingLogic(world.getCamera());
-        world.addLogic(PlayerManager.getCurrent().getShip(), camController);
         arena = new Arena(factory, 2);
         world.setRestrictor(arena.getRestrictor());
         logicHandler = new GameLogicHandler(world, factory, arena, playerManager);
@@ -83,6 +78,8 @@ public class IngameScreen extends AbstractScreen implements ExitHandler {
         if (initializer != null) {
             initializer.initialize(this);
         }
+        world.addLogic(PlayerManager.getCurrent().getShip(), camController);
+        world.addLogic(PlayerManager.getCurrent().getShip(), controller);
         arena.setup(playerManager, world, tweenManager);
     }
 
@@ -138,5 +135,10 @@ public class IngameScreen extends AbstractScreen implements ExitHandler {
     @Override
     public void exit() {
         setScreen(new MenuScreen(game));
+    }
+
+    @Override
+    protected PlayerManager providePlayerManager(World world) {
+        return new PlayerManager(world, true);
     }
 }

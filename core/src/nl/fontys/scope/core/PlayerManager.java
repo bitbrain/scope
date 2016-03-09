@@ -11,13 +11,13 @@ public class PlayerManager {
 
     private HashMap<String, Player> players = new HashMap<String, Player>();
 
-    private HashMap<GameObject, Player> shipToPlayers = new HashMap<GameObject, Player>();
+    private HashMap<String, Player> shipToPlayers = new HashMap<String, Player>();
 
     private World world;
     
-    public PlayerManager(World world) {
+    public PlayerManager(World world, boolean shipAvailable) {
         this.world = world;
-        this.current = addPlayer();
+        this.current = addPlayer(null, shipAvailable ? null : "");
     }
 
     public Collection<Player> getPlayers() {
@@ -28,15 +28,35 @@ public class PlayerManager {
         return current;
     }
 
+    public static boolean isLocalObject(GameObject object) {
+        return current.getId().equals(object.getClientId());
+    }
+
     public Player getPlayerByShip(GameObject ship) {
-        return shipToPlayers.get(ship);
+        return shipToPlayers.get(ship.getId());
     }
 
     public Player addPlayer() {
-        Player player = new Player(world);
+        return addPlayer(null, null);
+    }
+
+    public void removePlayer(String playerId) {
+        if (players.containsKey(playerId)) {
+            world.remove(players.get(playerId).getShip());
+            players.remove(playerId);
+            shipToPlayers.remove(playerId);
+        }
+    }
+
+    public Player addPlayer(String clientId, String shipId) {
+        Player player = new Player(world, clientId, shipId);
         players.put(player.getId(), player);
         player.setNumber(players.size());
-        shipToPlayers.put(player.getShip(), player);
+        shipToPlayers.put(player.getShip() != null ? player.getShip().getId() : shipId, player);
         return player;
+    }
+
+    public Player  getPlayerById(String playerId) {
+        return players.get(playerId);
     }
 }

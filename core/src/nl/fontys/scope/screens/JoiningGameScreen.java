@@ -4,14 +4,12 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
-import net.engio.mbassy.listener.Handler;
-
 import nl.fontys.scope.ScopeGame;
 import nl.fontys.scope.core.World;
 import nl.fontys.scope.core.logic.CameraRotatingLogic;
-import nl.fontys.scope.event.EventType;
 import nl.fontys.scope.event.Events;
-import nl.fontys.scope.networking.ScopeClient;
+import nl.fontys.scope.net.client.GameClient;
+import nl.fontys.scope.net.server.Responses;
 import nl.fontys.scope.object.GameObject;
 import nl.fontys.scope.ui.ExitHandler;
 import nl.fontys.scope.ui.Styles;
@@ -20,11 +18,13 @@ public class JoiningGameScreen extends AbstractScreen implements ExitHandler {
 
     private IngameScreen ingameScreen;
 
-    private Thread keepAliveThread;
-
     private Events events = Events.getInstance();
 
     private String gameName;
+
+    private GameClient client;
+
+    private GameClient.GameClientHandler handler;
 
     public JoiningGameScreen(ScopeGame game, String name) {
         super(game);
@@ -34,10 +34,46 @@ public class JoiningGameScreen extends AbstractScreen implements ExitHandler {
     @Override
     protected void onShow() {
         World world = new World();
-        this.ingameScreen = new IngameScreen(game, world, false);
+        this.ingameScreen = new IngameScreen(game, world, false) {
+            @Override
+            protected void onShow() {
+                super.onShow();
+                // Register again the client here
+                client.setEvents(Events.getInstance());
+            }
+        };
         events.register(this);
         GameObject planet = factory.createPlanet(30f);
         world.addLogic(new CameraRotatingLogic(800f, world.getCamera(), planet));
+        client = new GameClient(events, gameName, world, ingameScreen.getPlayerManager());
+        handler = new GameClient.GameClientHandler() {
+            @Override
+            public void onGameClosed(Responses.GameClosed closed) {
+                System.out.println("Game closed..");
+                exit();
+            }
+
+            @Override
+            public void onGameReady(Responses.GameReady ready) {
+                setScreen(ingameScreen);
+            }
+
+            @Override
+            public void onClientLeft(Responses.ClientLeft left) {
+                System.out.println("Client left..");
+            }
+
+            @Override
+            public void onClientJoined(Responses.ClientJoined joined) {
+                System.out.println("Client joined");
+            }
+
+            @Override
+            public void onConnectionFailed() {
+                exit();
+            }
+        };
+        client.connect(false);
     }
 
     @Override
@@ -49,41 +85,9 @@ public class JoiningGameScreen extends AbstractScreen implements ExitHandler {
     protected void onCreateStage(Stage stage) {
         Table layout = new Table();
         layout.setFillParent(true);
-
         Label caption = new Label("Joining game '" + gameName + "'", Styles.LABEL_CAPTION);
-
-        World world = new World();
-        ingameScreen = new IngameScreen(game, world, false);
-        game.setClient(new ScopeClient(world));
-        game.getClient().connectToServer(game.getClient().findServer(), 54555, 54777);
-        long gameID = game.getClient().searchGame(gameName);
-        game.getClient().joinGame(gameID);
-
         layout.add(caption);
         stage.addActor(layout);
-
-        keepAliveThread = new Thread() {
-            public void run() {
-                do {
-                    game.getClient().isStarted();
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                } while (!game.getClient().isStarted());
-            }
-        };
-        keepAliveThread.start();
-    }
-
-    @Handler
-    public void onEvent(Events.GdxEvent event) {
-        if (event.isTypeOf(EventType.GAME_START)) {
-            keepAliveThread.stop();
-            game.getClient().setStarted(true);
-            setScreen(ingameScreen);
-        }
     }
 
     @Override
@@ -94,5 +98,11 @@ public class JoiningGameScreen extends AbstractScreen implements ExitHandler {
     @Override
     protected ExitHandler getExitHandler() {
         return this;
+    }
+
+    @Override
+    protected void onDispose() {
+        client.leaveCurrentGame();
+        client.removeHandler(handler);
     }
 }
