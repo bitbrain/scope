@@ -6,15 +6,15 @@ public class Config {
     public static final String APP_NAME = "scope";
 
     // Version of the application
-    public static final String APP_VERSION = "0.7.16";
+    public static final String APP_VERSION = "0.9.3";
 
     // console string of the debug statement
     public static final String FLAG_DEBUG = "-debug";
 
-    public static final boolean NETWORKING_ENABLED = true;
+    public static final boolean NETWORKING_ENABLED = false;
 
     // Set to false if game should start not in fullscreen mode
-    public static final boolean AUTO_FULLSCREEN = false;
+    public static final boolean AUTO_FULLSCREEN = true;
 
     // Maximum distance for panning
     public static final float MAX_PAN_DISTANCE = 50f;

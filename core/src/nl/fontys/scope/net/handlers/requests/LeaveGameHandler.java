@@ -23,7 +23,7 @@ public class LeaveGameHandler extends nl.fontys.scope.net.handlers.AbstractGameI
             instance.validateClientId(clientId);
             instance.removeClient(clientId);
             instance.sendToAllTCP(new Responses.ClientLeft(gameId, clientId, instance.getCurrentClientSize(), instance.getMaxClientSize()));
-            if (instance.getCurrentClientSize() < 1) {
+            if (instance.getCurrentClientSize() <= 1) {
                 instance.sendToAllTCP(new Responses.GameOver(gameId, ""));
                 gameInstanceManager.close(gameId);
             }
