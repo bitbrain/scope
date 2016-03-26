@@ -83,7 +83,9 @@ public class WaitingForPlayersScreen extends AbstractScreen implements ExitHandl
 
             @Override
             public void onConnectionFailed() {
-                WaitingForPlayersScreen.this.exit();
+                MenuScreen screen = new MenuScreen(game);
+                screen.getTooltipQueue().add(Messages.ERROR_SERVER_NOT_REACHABLE, Styles.LABEL_ERROR);
+                WaitingForPlayersScreen.this.setScreen(screen);
             }
         };
         client.addHandler(handler);

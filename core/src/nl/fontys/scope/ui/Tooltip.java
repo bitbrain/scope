@@ -38,13 +38,15 @@ public class Tooltip {
 
     private TweenManager tweenManager;
 
+    private boolean idle;
+
     static {
         Tween.registerAccessor(Actor.class, new ActorTween());
     }
 
     private Tooltip() {
-        setTweenEquation(TweenEquations.easeOutCubic);
-        duration = 2.5f;
+        setTweenEquation(TweenEquations.easeInExpo);
+        duration = 3.5f;
         scale = 1.0f;
     }
 
@@ -56,8 +58,16 @@ public class Tooltip {
         create(0f, style, text);
     }
 
+    public void create(Label.LabelStyle style, String text, Color color) {
+        create(0f, style, text, color);
+    }
+
     public void create(float verticaOffset, Label.LabelStyle style, String text) {
-        Label tooltip = createInternally(0f, 0f, style, text, Color.WHITE);
+        create(verticaOffset, style, text, Color.WHITE);
+    }
+
+    public void create(float verticaOffset, Label.LabelStyle style, String text, Color color) {
+        Label tooltip = createInternally(0f, 0f, style, text, color);
         final float x = Gdx.graphics.getWidth() / 2f - tooltip.getPrefWidth() / 2f;
         final float y = Gdx.graphics.getHeight() / 2f - tooltip.getPrefHeight() / 2f + verticaOffset;
         tooltip.setPosition(x, y);
@@ -95,16 +105,22 @@ public class Tooltip {
         this.stage = stage;
         this.camera = camera;
         this.tweenManager = tweenManager;
+        this.idle = true;
+    }
+
+    public boolean isIdle() {
+        return idle;
     }
 
     private Label createInternally(float x, float y, Label.LabelStyle style, String text, Color color) {
         final Label tooltip = new Label(text, style) {
             @Override
             public void draw(Batch batch, float parentAlpha) {
-                ActorShadow.draw(batch, this);
+                ActorShadow.draw(batch, this, 5);
                 super.draw(batch, parentAlpha);
             }
         };
+        idle = false;
         tooltip.setZIndex(100);
         tooltip.setTouchable(Touchable.disabled);
         tooltip.setColor(color.cpy());
@@ -115,6 +131,7 @@ public class Tooltip {
                 .setCallback(new TweenCallback() {
                     @Override
                     public void onEvent(int type, BaseTween<?> source) {
+                        idle = tooltips.isEmpty();
                         stage.getActors().removeValue(tooltip, true);
                     }
                 }).ease(equation).start(tweenManager);
