@@ -7,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 import nl.fontys.scope.ScopeGame;
 import nl.fontys.scope.core.GameStats;
-import nl.fontys.scope.core.PlayerManager;
 import nl.fontys.scope.core.logic.CameraRotatingLogic;
 import nl.fontys.scope.i18n.Bundle;
 import nl.fontys.scope.i18n.Messages;
@@ -50,7 +49,7 @@ public class GameOverScreen extends AbstractScreen implements ExitHandler {
     }
 
     private String getCaptionLabelText() {
-        if (PlayerManager.getCurrent().equals(stats.winner)) {
+        if (stats.current.equals(stats.winner)) {
             return Bundle.general.get(Messages.WIN);
         } else {
             return Bundle.general.get(Messages.LOSS);

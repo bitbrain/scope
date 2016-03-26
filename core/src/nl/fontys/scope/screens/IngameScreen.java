@@ -123,6 +123,7 @@ public class IngameScreen extends AbstractScreen implements ExitHandler {
     public void onEvent(Events.GdxEvent event) {
         if (event.isTypeOf(EventType.GAME_OVER)) {
             stats.winner = (Player) event.getPrimaryParam();
+            stats.current = PlayerManager.getCurrent();
             setScreen(new GameOverScreen(game, stats));
         }
     }
