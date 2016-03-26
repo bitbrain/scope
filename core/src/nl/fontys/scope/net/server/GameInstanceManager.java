@@ -72,7 +72,7 @@ public class GameInstanceManager {
         if (instances.containsKey(name)) {
             GameInstance instance = instances.get(name);
             instance.close();
-            instances.remove(instance);
+            instances.remove(name);
         } else {
             throw new GameServerException("Could not close game '" + name + "' because it does not exist!");
         }
