@@ -1,43 +1,43 @@
 package nl.fontys.scope.i18n;
 
-public final class Messages {
+public interface Messages {
 
-    public static final String COMPILING_SHADERS_INFO = "COMPILING_SHADERS_INFO";
-    public static final String CREDITS = "CREDITS";
-    public static final String CREDITS_ADDITION = "CREDITS_ADDITION";
-    public static final String MENU_NEW_GAME = "MENU_NEW_GAME";
-    public static final String MENU_JOIN_GAME = "MENU_JOIN_GAME";
+    String COMPILING_SHADERS_INFO = "COMPILING_SHADERS_INFO";
+    String CREDITS = "CREDITS";
+    String CREDITS_ADDITION = "CREDITS_ADDITION";
+    String MENU_NEW_GAME = "MENU_NEW_GAME";
+    String MENU_JOIN_GAME = "MENU_JOIN_GAME";
 
-    public static final String GAME_NAME = "GAME_NAME";
-    public static final String GAME_NAME_HINT = "GAME_NAME_HINT";
-    public static final String GAME_CREATE = "GAME_CREATE";
+    String GAME_NAME = "GAME_NAME";
+    String GAME_NAME_HINT = "GAME_NAME_HINT";
+    String GAME_CREATE = "GAME_CREATE";
 
-    public static final String GAME_NAME_INVALID = "GAME_NAME_INVALID";
-    public static final String GAME_JOIN = "GAME_JOIN";
+    String GAME_NAME_INVALID = "GAME_NAME_INVALID";
+    String GAME_JOIN = "GAME_JOIN";
 
-    public static final String PLAYER = "PLAYER";
-    public static final String FOCUS = "FOCUS";
-    public static final String WIN = "WIN";
-    public static final String LOSS = "LOSS";
+    String PLAYER = "PLAYER";
+    String FOCUS = "FOCUS";
+    String WIN = "WIN";
+    String LOSS = "LOSS";
 
-    public static final String TOOLTIP_DESTROYED = "TOOLTIP_DESTROYED";
-    public static final String TOOLTIP_DESTROYED_OTHER = "TOOLTIP_DESTROYED_OTHER";
-    public static final String TOOLTIP_ENERGY_WARNING = "TOOLTIP_ENERGY_WARNING";
-    public static final String TOOLTIP_POINTS_GAINED="TOOLTIP_POINTS_GAINED";
-    public static final String TOOLTIP_POINTS_GAINED_OTHER="TOOLTIP_POINTS_GAINED_OTHER";
-    public static final String MENU_SINGLE_PLAYER = "MENU_SINGLE_PLAYER";
+    String TOOLTIP_DESTROYED = "TOOLTIP_DESTROYED";
+    String TOOLTIP_DESTROYED_OTHER = "TOOLTIP_DESTROYED_OTHER";
+    String TOOLTIP_ENERGY_WARNING = "TOOLTIP_ENERGY_WARNING";
+    String TOOLTIP_POINTS_GAINED="TOOLTIP_POINTS_GAINED";
+    String TOOLTIP_POINTS_GAINED_OTHER="TOOLTIP_POINTS_GAINED_OTHER";
+    String MENU_SINGLE_PLAYER = "MENU_SINGLE_PLAYER";
 
-    public static final String RANDOM_TEXT_01 = "RANDOM_TEXT_01";
-    public static final String RANDOM_TEXT_02 = "RANDOM_TEXT_02";
-    public static final String RANDOM_TEXT_03 = "RANDOM_TEXT_03";
-    public static final String RANDOM_TEXT_04 = "RANDOM_TEXT_04";
-    public static final String RANDOM_TEXT_05 = "RANDOM_TEXT_05";
-    public static final String RANDOM_TEXT_06 = "RANDOM_TEXT_06";
-    public static final String RANDOM_TEXT_07 = "RANDOM_TEXT_07";
-    public static final String RANDOM_TEXT_08 = "RANDOM_TEXT_08";
-    public static final String RANDOM_TEXT_09 = "RANDOM_TEXT_09";
+    String RANDOM_TEXT_01 = "RANDOM_TEXT_01";
+    String RANDOM_TEXT_02 = "RANDOM_TEXT_02";
+    String RANDOM_TEXT_03 = "RANDOM_TEXT_03";
+    String RANDOM_TEXT_04 = "RANDOM_TEXT_04";
+    String RANDOM_TEXT_05 = "RANDOM_TEXT_05";
+    String RANDOM_TEXT_06 = "RANDOM_TEXT_06";
+    String RANDOM_TEXT_07 = "RANDOM_TEXT_07";
+    String RANDOM_TEXT_08 = "RANDOM_TEXT_08";
+    String RANDOM_TEXT_09 = "RANDOM_TEXT_09";
 
-    public static final String ABORT = "ABORT";
-    public static final String WAITING_FOR_OTHER_PLAYERS = "WAITING_FOR_OTHER_PLAYERS";
-    public static final String JOINING_GAME = "JOINING_GAME";
+    String ABORT = "ABORT";
+    String WAITING_FOR_OTHER_PLAYERS = "WAITING_FOR_OTHER_PLAYERS";
+    String JOINING_GAME = "JOINING_GAME";
 }
