@@ -16,6 +16,8 @@ import nl.fontys.scope.core.World;
 import nl.fontys.scope.core.logic.CameraRotatingLogic;
 import nl.fontys.scope.event.Events;
 import nl.fontys.scope.graphics.GraphicsFactory;
+import nl.fontys.scope.i18n.Bundle;
+import nl.fontys.scope.i18n.Messages;
 import nl.fontys.scope.net.client.GameClient;
 import nl.fontys.scope.net.server.Responses;
 import nl.fontys.scope.object.GameObject;
@@ -96,7 +98,7 @@ public class JoiningGameScreen extends AbstractScreen implements ExitHandler {
     protected void onCreateStage(Stage stage) {
         Table layout = new Table();
         layout.setFillParent(true);
-        Label caption = new Label("Joining game '" + gameName + "'", Styles.LABEL_CAPTION);
+        Label caption = new Label(Bundle.general.format(Messages.JOINING_GAME, gameName), Styles.LABEL_CAPTION);
         Tween
           .to(caption, ActorTween.ALPHA, 0.8f)
           .target(0.7f)
@@ -105,7 +107,7 @@ public class JoiningGameScreen extends AbstractScreen implements ExitHandler {
           .start(tweenManager);
         Image image = new Image(new Sprite(GraphicsFactory.createNinePatch(Assets.Textures.FOCUS, 15).getTexture()));
         image.setOrigin(image.getWidth() / 2f, image.getHeight() / 2f);
-        image.setColor(Colors.UI);
+        image.setColor(Colors.PRIMARY);
         Tween
            .to(image, ActorTween.ROTATION, 0.8f)
            .target(-360f)
@@ -122,7 +124,7 @@ public class JoiningGameScreen extends AbstractScreen implements ExitHandler {
         layout.add(caption);
         layout.row();
         ButtonMenu menu = new ButtonMenu(tweenManager);
-        menu.add("Abort", new ClickListener() {
+        menu.add(Bundle.general.get(Messages.ABORT), new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 client.leaveCurrentGame();

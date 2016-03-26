@@ -36,4 +36,8 @@ public final class Messages {
     public static final String RANDOM_TEXT_07 = "RANDOM_TEXT_07";
     public static final String RANDOM_TEXT_08 = "RANDOM_TEXT_08";
     public static final String RANDOM_TEXT_09 = "RANDOM_TEXT_09";
+
+    public static final String ABORT = "ABORT";
+    public static final String WAITING_FOR_OTHER_PLAYERS = "WAITING_FOR_OTHER_PLAYERS";
+    public static final String JOINING_GAME = "JOINING_GAME";
 }
