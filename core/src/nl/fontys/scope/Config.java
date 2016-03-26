@@ -11,10 +11,10 @@ public interface Config {
     // console string of the debug statement
     String FLAG_DEBUG = "-debug";
 
-    boolean NETWORKING_ENABLED = false;
+    boolean NETWORKING_ENABLED = true;
 
     // Set to false if game should start not in fullscreen mode
-    boolean AUTO_FULLSCREEN = true;
+    boolean AUTO_FULLSCREEN = false;
 
     // Maximum distance for panning
     float MAX_PAN_DISTANCE = 50f;
