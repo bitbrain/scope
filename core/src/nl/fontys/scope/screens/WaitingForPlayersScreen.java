@@ -1,21 +1,29 @@
 package nl.fontys.scope.screens;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenEquations;
 import nl.fontys.scope.ScopeGame;
+import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.core.World;
 import nl.fontys.scope.core.logic.CameraRotatingLogic;
 import nl.fontys.scope.event.Events;
+import nl.fontys.scope.graphics.GraphicsFactory;
 import nl.fontys.scope.net.client.GameClient;
 import nl.fontys.scope.net.server.Responses;
 import nl.fontys.scope.object.GameObject;
+import nl.fontys.scope.tweens.ActorTween;
 import nl.fontys.scope.ui.ButtonMenu;
 import nl.fontys.scope.ui.ExitHandler;
 import nl.fontys.scope.ui.Styles;
+import nl.fontys.scope.util.Colors;
 
 public class WaitingForPlayersScreen extends AbstractScreen implements ExitHandler {
 
@@ -51,18 +59,10 @@ public class WaitingForPlayersScreen extends AbstractScreen implements ExitHandl
         handler = new GameClient.GameClientHandler() {
             @Override
             public void onClientJoined(Responses.ClientJoined joined) {
-                if (caption == null) {
-                    caption = new Label("Waiting for players", Styles.LABEL_CAPTION);
-                }
-                caption.setText("Waiting for players (" + joined.getCurrentClients() + "/" + joined.getMaxClients() + ")");
             }
 
             @Override
             public void onClientLeft(Responses.ClientLeft left) {
-                if (caption == null) {
-                    caption = new Label("Waiting for players", Styles.LABEL_CAPTION);
-                }
-                caption.setText("Waiting for players (" + left.getCurrentClients() + "/" + left.getMaxClients() + ")");
             }
 
             @Override
@@ -72,10 +72,6 @@ public class WaitingForPlayersScreen extends AbstractScreen implements ExitHandl
 
             @Override
             public void onGameCreated(Responses.GameCreated created) {
-                if (caption == null) {
-                    caption = new Label("Waiting for players", Styles.LABEL_CAPTION);
-                }
-                caption.setText("Waiting for players (" + created.getCurrentClients() + "/" + created.getMaxClients() + ")");
             }
 
             @Override
@@ -103,8 +99,31 @@ public class WaitingForPlayersScreen extends AbstractScreen implements ExitHandl
     protected void onCreateStage(Stage stage) {
         Table layout = new Table();
         layout.setFillParent(true);
-
-        layout.add(caption).row();
+        Label caption = new Label("Waiting for other players (0/0)", Styles.LABEL_CAPTION);
+        Tween
+           .to(caption, ActorTween.ALPHA, 0.8f)
+           .target(0.7f)
+           .ease(TweenEquations.easeInCubic)
+           .repeatYoyo(Tween.INFINITY, 0f)
+           .start(tweenManager);
+        Image image = new Image(new Sprite(GraphicsFactory.createNinePatch(Assets.Textures.FOCUS, 15).getTexture()));
+        image.setOrigin(image.getWidth() / 2f, image.getHeight() / 2f);
+        image.setColor(Colors.UI);
+        Tween
+           .to(image, ActorTween.ROTATION, 0.8f)
+           .target(-360f)
+           .ease(TweenEquations.easeOutCubic)
+           .repeat(Tween.INFINITY, 0f)
+           .start(tweenManager);
+        Tween
+           .to(image, ActorTween.ALPHA, 0.8f)
+           .target(0.4f)
+           .ease(TweenEquations.easeInCubic)
+           .repeatYoyo(Tween.INFINITY, 0f)
+           .start(tweenManager);
+        layout.center().add(image).row();
+        layout.add(caption);
+        layout.row();
         ButtonMenu menu = new ButtonMenu(tweenManager);
         menu.add("Abort", new ClickListener() {
             @Override
