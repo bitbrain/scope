@@ -37,8 +37,6 @@ public class WaitingForPlayersScreen extends AbstractScreen implements ExitHandl
 
     private GameClient client;
 
-    private Label caption;
-
     private GameClient.GameClientHandler handler;
 
     public WaitingForPlayersScreen(ScopeGame game, String gameName) {
@@ -57,42 +55,9 @@ public class WaitingForPlayersScreen extends AbstractScreen implements ExitHandl
                 client.setEvents(Events.getInstance());
             }
         };
-        client = new GameClient(events, gameName, world, ingameScreen.getPlayerManager());
-        handler = new GameClient.GameClientHandler() {
-            @Override
-            public void onClientJoined(Responses.ClientJoined joined) {
-            }
-
-            @Override
-            public void onClientLeft(Responses.ClientLeft left) {
-            }
-
-            @Override
-            public void onGameClosed(Responses.GameClosed closed) {
-                WaitingForPlayersScreen.this.exit();
-            }
-
-            @Override
-            public void onGameCreated(Responses.GameCreated created) {
-            }
-
-            @Override
-            public void onGameReady(Responses.GameReady ready) {
-                setScreen(ingameScreen);
-            }
-
-            @Override
-            public void onConnectionFailed() {
-                MenuScreen screen = new MenuScreen(game);
-                screen.getTooltipQueue().add(Messages.ERROR_SERVER_NOT_REACHABLE, Styles.LABEL_ERROR);
-                WaitingForPlayersScreen.this.setScreen(screen);
-            }
-        };
-        client.addHandler(handler);
         events.register(this);
         GameObject planet = factory.createPlanet(30f);
         world.addLogic(new CameraRotatingLogic(800f, world.getCamera(), planet));
-        client.connect(true);
     }
 
     @Override
@@ -138,6 +103,7 @@ public class WaitingForPlayersScreen extends AbstractScreen implements ExitHandl
         });
         layout.add(menu).padTop(60);
         stage.addActor(layout);
+        setupConnection();
     }
 
     @Override
@@ -149,5 +115,41 @@ public class WaitingForPlayersScreen extends AbstractScreen implements ExitHandl
     protected void onDispose() {
         client.leaveCurrentGame();
         client.removeHandler(handler);
+    }
+
+    private void setupConnection() {
+        client = new GameClient(events, gameName, world, ingameScreen.getPlayerManager());
+        handler = new GameClient.GameClientHandler() {
+            @Override
+            public void onClientJoined(Responses.ClientJoined joined) {
+            }
+
+            @Override
+            public void onClientLeft(Responses.ClientLeft left) {
+            }
+
+            @Override
+            public void onGameClosed(Responses.GameClosed closed) {
+                WaitingForPlayersScreen.this.exit();
+            }
+
+            @Override
+            public void onGameCreated(Responses.GameCreated created) {
+            }
+
+            @Override
+            public void onGameReady(Responses.GameReady ready) {
+                setScreen(ingameScreen);
+            }
+
+            @Override
+            public void onConnectionFailed() {
+                MenuScreen screen = new MenuScreen(game);
+                screen.getTooltipQueue().add(Messages.ERROR_SERVER_NOT_REACHABLE, Styles.LABEL_ERROR);
+                WaitingForPlayersScreen.this.setScreen(screen);
+            }
+        };
+        client.addHandler(handler);
+        client.connect(true);
     }
 }
