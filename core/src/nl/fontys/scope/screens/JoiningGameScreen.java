@@ -83,7 +83,9 @@ public class JoiningGameScreen extends AbstractScreen implements ExitHandler {
 
             @Override
             public void onConnectionFailed() {
-                exit();
+                MenuScreen screen = new MenuScreen(game);
+                screen.getTooltipQueue().add(Messages.ERROR_SERVER_NOT_REACHABLE, Styles.LABEL_ERROR);
+                JoiningGameScreen.this.setScreen(screen);
             }
         };
         client.connect(false);
