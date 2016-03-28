@@ -9,16 +9,24 @@ import nl.fontys.scope.Config;
 
 public class GameInstance {
 
+    public enum GameState {
+        WAITING_FOR_PLAYERS,
+        RUNNING
+    }
+
     private String name;
 
     private Map<String, Connection> connections;
 
     private Map<Connection, String> clients;
 
+    private GameState state;
+
     public GameInstance(String name) {
         this.name = name;
         this.connections = new HashMap<String, Connection>();
         this.clients = new HashMap<Connection, String>();
+        this.state = GameState.WAITING_FOR_PLAYERS;
     }
 
     public void validateClientId(String id) throws GameServerException {
@@ -47,6 +55,14 @@ public class GameInstance {
 
     public String getClientByConnection(Connection connection) {
         return clients.get(connection);
+    }
+
+    public GameState getGameState() {
+        return state;
+    }
+
+    public void setGameState(GameState state) {
+        this.state = state;
     }
 
     public void removeClient(String id) throws GameServerException {
