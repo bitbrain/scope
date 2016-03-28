@@ -32,6 +32,10 @@ public class PlayerManager {
         return current.getId().equals(object.getClientId());
     }
 
+    public static boolean isCurrentPlayer(String id) {
+        return current != null && current.getId().equals(id);
+    }
+
     public Player getPlayerByShip(GameObject ship) {
         return shipToPlayers.get(ship.getId());
     }

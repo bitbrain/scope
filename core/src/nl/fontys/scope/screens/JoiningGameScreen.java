@@ -12,6 +12,7 @@ import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenEquations;
 import nl.fontys.scope.ScopeGame;
 import nl.fontys.scope.assets.Assets;
+import nl.fontys.scope.core.PlayerManager;
 import nl.fontys.scope.core.World;
 import nl.fontys.scope.core.logic.CameraRotatingLogic;
 import nl.fontys.scope.event.Events;
@@ -38,6 +39,8 @@ public class JoiningGameScreen extends AbstractScreen implements ExitHandler {
     private GameClient client;
 
     private GameClient.GameClientHandler handler;
+
+    private boolean joined;
 
     public JoiningGameScreen(ScopeGame game, String name) {
         super(game);
@@ -73,12 +76,21 @@ public class JoiningGameScreen extends AbstractScreen implements ExitHandler {
 
             @Override
             public void onClientLeft(Responses.ClientLeft left) {
+                if (joined) {
+                    Bundle.general.format(Messages.WAITING_FOR_OTHER_PLAYERS, left.getCurrentClients(), left.getMaxClients());
+                }
                 System.out.println("Client left..");
             }
 
             @Override
             public void onClientJoined(Responses.ClientJoined joined) {
-                System.out.println("Client joined");
+                if (ingameScreen.getPlayerManager().isCurrentPlayer(joined.getClientId())) {
+                    JoiningGameScreen.this.joined = true;
+                }
+                if (JoiningGameScreen.this.joined) {
+                    Bundle.general.format(Messages.WAITING_FOR_OTHER_PLAYERS, joined.getCurrentClients(), joined.getMaxClients());
+                }
+                System.out.println("Client joined: " + joined.getClientId());
             }
 
             @Override
