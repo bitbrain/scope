@@ -84,4 +84,7 @@ public interface Config {
 
     // TCP port of the server
     int SERVER_TCP_PORT = 54777;
+
+    // The maximum client size for a single game
+    int MAX_CLIENT_SIZE = 2;
 }

@@ -5,9 +5,9 @@ import com.esotericsoftware.kryonet.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GameInstance {
+import nl.fontys.scope.Config;
 
-    private static final int MAX_CLIENT_SIZE = 2;
+public class GameInstance {
 
     private String name;
 
@@ -102,11 +102,11 @@ public class GameInstance {
     }
 
     public int getMaxClientSize() {
-        return MAX_CLIENT_SIZE;
+        return Config.MAX_CLIENT_SIZE;
     }
 
     public boolean isGameFull() {
-        return getCurrentClientSize() == MAX_CLIENT_SIZE;
+        return getCurrentClientSize() == Config.MAX_CLIENT_SIZE;
     }
 
     private boolean isNotExcluded(String clientId, String[] exclusions) {

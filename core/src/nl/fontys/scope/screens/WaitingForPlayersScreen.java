@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenEquations;
+import nl.fontys.scope.Config;
 import nl.fontys.scope.ScopeGame;
 import nl.fontys.scope.assets.Assets;
 import nl.fontys.scope.core.World;
@@ -38,6 +39,8 @@ public class WaitingForPlayersScreen extends AbstractScreen implements ExitHandl
     private GameClient client;
 
     private GameClient.GameClientHandler handler;
+
+    private Label caption;
 
     public WaitingForPlayersScreen(ScopeGame game, String gameName) {
         super(game);
@@ -68,7 +71,7 @@ public class WaitingForPlayersScreen extends AbstractScreen implements ExitHandl
     protected void onCreateStage(Stage stage) {
         Table layout = new Table();
         layout.setFillParent(true);
-        Label caption = new Label(Bundle.general.get(Messages.WAITING_FOR_OTHER_PLAYERS), Styles.LABEL_CAPTION);
+        caption = new Label(Bundle.general.format(Messages.WAITING_FOR_OTHER_PLAYERS, 1, Config.MAX_CLIENT_SIZE), Styles.LABEL_CAPTION);
         Tween
            .to(caption, ActorTween.ALPHA, 0.8f)
            .target(0.7f)
@@ -122,10 +125,14 @@ public class WaitingForPlayersScreen extends AbstractScreen implements ExitHandl
         handler = new GameClient.GameClientHandler() {
             @Override
             public void onClientJoined(Responses.ClientJoined joined) {
+                String msg = Bundle.general.format(Messages.WAITING_FOR_OTHER_PLAYERS, joined.getCurrentClients(), joined.getMaxClients());
+                caption.setText(msg);
             }
 
             @Override
             public void onClientLeft(Responses.ClientLeft left) {
+                String msg = Bundle.general.format(Messages.WAITING_FOR_OTHER_PLAYERS, left.getCurrentClients(), left.getMaxClients());
+                caption.setText(msg);
             }
 
             @Override
@@ -135,6 +142,8 @@ public class WaitingForPlayersScreen extends AbstractScreen implements ExitHandl
 
             @Override
             public void onGameCreated(Responses.GameCreated created) {
+                String msg = Bundle.general.format(Messages.WAITING_FOR_OTHER_PLAYERS, created.getCurrentClients(), created.getMaxClients());
+                caption.setText(msg);
             }
 
             @Override
