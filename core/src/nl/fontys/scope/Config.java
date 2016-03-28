@@ -16,6 +16,9 @@ public interface Config {
     // Set to false if game should start not in fullscreen mode
     boolean AUTO_FULLSCREEN = false;
 
+    // Set to false to disable audio
+    boolean MUSIC_ENABLED = false;
+
     // Maximum distance for panning
     float MAX_PAN_DISTANCE = 50f;
 
