@@ -42,6 +42,8 @@ public class WaitingForPlayersScreen extends AbstractScreen implements ExitHandl
 
     private Label caption;
 
+    private boolean ready;
+
     public WaitingForPlayersScreen(ScopeGame game, String gameName) {
         super(game);
         this.gameName = gameName;
@@ -116,7 +118,9 @@ public class WaitingForPlayersScreen extends AbstractScreen implements ExitHandl
 
     @Override
     protected void onDispose() {
-        client.leaveCurrentGame();
+        if (!this.ready) {
+            client.leaveCurrentGame();
+        }
         client.removeHandler(handler);
     }
 
@@ -148,6 +152,7 @@ public class WaitingForPlayersScreen extends AbstractScreen implements ExitHandl
 
             @Override
             public void onGameReady(Responses.GameReady ready) {
+                WaitingForPlayersScreen.this.ready = true;
                 setScreen(ingameScreen);
             }
 

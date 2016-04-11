@@ -42,6 +42,8 @@ public class JoiningGameScreen extends AbstractScreen implements ExitHandler {
 
     private boolean joined;
 
+    private boolean ready;
+
     public JoiningGameScreen(ScopeGame game, String name) {
         super(game);
         this.gameName = name;
@@ -71,6 +73,7 @@ public class JoiningGameScreen extends AbstractScreen implements ExitHandler {
 
             @Override
             public void onGameReady(Responses.GameReady ready) {
+                JoiningGameScreen.this.ready = true;
                 setScreen(ingameScreen);
             }
 
@@ -161,7 +164,9 @@ public class JoiningGameScreen extends AbstractScreen implements ExitHandler {
 
     @Override
     protected void onDispose() {
-        client.leaveCurrentGame();
+        if (!ready) {
+            client.leaveCurrentGame();
+        }
         client.removeHandler(handler);
     }
 }
