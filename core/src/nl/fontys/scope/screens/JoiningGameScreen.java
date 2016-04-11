@@ -43,6 +43,7 @@ public class JoiningGameScreen extends AbstractScreen implements ExitHandler {
     private boolean joined;
 
     private boolean ready;
+    private Label caption;
 
     public JoiningGameScreen(ScopeGame game, String name) {
         super(game);
@@ -80,7 +81,7 @@ public class JoiningGameScreen extends AbstractScreen implements ExitHandler {
             @Override
             public void onClientLeft(Responses.ClientLeft left) {
                 if (joined) {
-                    Bundle.general.format(Messages.WAITING_FOR_OTHER_PLAYERS, left.getCurrentClients(), left.getMaxClients());
+                    caption.setText(Bundle.general.format(Messages.WAITING_FOR_OTHER_PLAYERS, left.getCurrentClients(), left.getMaxClients()));
                 }
                 System.out.println("Client left..");
             }
@@ -91,7 +92,7 @@ public class JoiningGameScreen extends AbstractScreen implements ExitHandler {
                     JoiningGameScreen.this.joined = true;
                 }
                 if (JoiningGameScreen.this.joined) {
-                    Bundle.general.format(Messages.WAITING_FOR_OTHER_PLAYERS, joined.getCurrentClients(), joined.getMaxClients());
+                    caption.setText(Bundle.general.format(Messages.WAITING_FOR_OTHER_PLAYERS, joined.getCurrentClients(), joined.getMaxClients()));
                 }
                 System.out.println("Client joined: " + joined.getClientId());
             }
@@ -103,6 +104,7 @@ public class JoiningGameScreen extends AbstractScreen implements ExitHandler {
                 JoiningGameScreen.this.setScreen(screen);
             }
         };
+        client.addHandler(handler);
         client.connect(false);
     }
 
@@ -115,7 +117,7 @@ public class JoiningGameScreen extends AbstractScreen implements ExitHandler {
     protected void onCreateStage(Stage stage) {
         Table layout = new Table();
         layout.setFillParent(true);
-        Label caption = new Label(Bundle.general.format(Messages.JOINING_GAME, gameName), Styles.LABEL_CAPTION);
+        caption = new Label(Bundle.general.format(Messages.JOINING_GAME, gameName), Styles.LABEL_CAPTION);
         Tween
           .to(caption, ActorTween.ALPHA, 0.8f)
           .target(0.7f)
