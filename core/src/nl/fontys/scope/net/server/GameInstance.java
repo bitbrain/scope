@@ -5,9 +5,14 @@ import com.esotericsoftware.kryonet.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
+import nl.fontys.scope.Config;
+
 public class GameInstance {
 
-    private static final int MAX_CLIENT_SIZE = 2;
+    public enum GameState {
+        WAITING_FOR_PLAYERS,
+        RUNNING
+    }
 
     private String name;
 
@@ -15,10 +20,13 @@ public class GameInstance {
 
     private Map<Connection, String> clients;
 
+    private GameState state;
+
     public GameInstance(String name) {
         this.name = name;
         this.connections = new HashMap<String, Connection>();
         this.clients = new HashMap<Connection, String>();
+        this.state = GameState.WAITING_FOR_PLAYERS;
     }
 
     public void validateClientId(String id) throws GameServerException {
@@ -47,6 +55,14 @@ public class GameInstance {
 
     public String getClientByConnection(Connection connection) {
         return clients.get(connection);
+    }
+
+    public GameState getGameState() {
+        return state;
+    }
+
+    public void setGameState(GameState state) {
+        this.state = state;
     }
 
     public void removeClient(String id) throws GameServerException {
@@ -102,11 +118,11 @@ public class GameInstance {
     }
 
     public int getMaxClientSize() {
-        return MAX_CLIENT_SIZE;
+        return Config.MAX_CLIENT_SIZE;
     }
 
     public boolean isGameFull() {
-        return getCurrentClientSize() == MAX_CLIENT_SIZE;
+        return getCurrentClientSize() == Config.MAX_CLIENT_SIZE;
     }
 
     private boolean isNotExcluded(String clientId, String[] exclusions) {

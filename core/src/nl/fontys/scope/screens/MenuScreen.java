@@ -59,7 +59,7 @@ public class MenuScreen extends AbstractScreen implements ExitHandler {
     @Override
     protected void onUpdate(float delta) {
         Music music = AssetManager.getMusic(Assets.Musics.MAIN_THEME);
-        if (!music.isPlaying()) {
+        if (!music.isPlaying() && Config.MUSIC_ENABLED) {
             music.setLooping(true);
             music.play();
         }

@@ -21,6 +21,7 @@ public final class Styles {
     public static final Label.LabelStyle LABEL_VERSION = new Label.LabelStyle();
     public static final Label.LabelStyle LABEL_CAPTION = new Label.LabelStyle();
     public static final Label.LabelStyle LABEL_DESCRIPTION = new Label.LabelStyle();
+    public static final Label.LabelStyle LABEL_ERROR = new Label.LabelStyle();
     public static final Label.LabelStyle LABEL_VALIDATION = new Label.LabelStyle();
     public static final Label.LabelStyle LABEL_PLAYER_NAME = new Label.LabelStyle();
     public static final Label.LabelStyle LABEL_FOCUS = new Label.LabelStyle();
@@ -54,6 +55,9 @@ public final class Styles {
 
         LABEL_PLAYER_NAME.font = AssetManager.getFont(Assets.Fonts.OPENSANS_SMALL_16);
         LABEL_PLAYER_NAME.fontColor = Colors.UI.cpy();
+
+        LABEL_ERROR.font = AssetManager.getFont(Assets.Fonts.OPENSANS_MEDIUM_32);
+        LABEL_ERROR.fontColor = Color.RED.cpy();
 
         LABEL_FOCUS.font = AssetManager.getFont(Assets.Fonts.OPENSANS_MEDIUM_32);
         LABEL_FOCUS.fontColor = Colors.PRIMARY.cpy();

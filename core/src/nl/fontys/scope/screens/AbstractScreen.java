@@ -32,6 +32,7 @@ import nl.fontys.scope.object.GameObjectFactory;
 import nl.fontys.scope.ui.ButtonMenu;
 import nl.fontys.scope.ui.ExitHandler;
 import nl.fontys.scope.ui.Tooltip;
+import nl.fontys.scope.ui.TooltipQueue;
 
 public abstract class AbstractScreen implements Screen {
 
@@ -64,6 +65,7 @@ public abstract class AbstractScreen implements Screen {
     public AbstractScreen(ScopeGame game, World world) {
         this.game = game;
         this.world = world;
+        this.tooltipQueue = new TooltipQueue();
         playerManager = providePlayerManager(world);
     }
 
@@ -84,6 +86,8 @@ public abstract class AbstractScreen implements Screen {
     protected PlayerManager playerManager;
 
     protected float fadeInTime = 0.4f, fadeOutTime = 0.4f;
+
+    private TooltipQueue tooltipQueue;
 
     @Override
     public final void show() {
@@ -106,6 +110,7 @@ public abstract class AbstractScreen implements Screen {
         keyboard.update(delta);
         controllerManager.update(delta);
         tweenManager.update(delta);
+        tooltipQueue.act();
         Gdx.gl.glClearColor(0.02f, 0f, 0.05f, 1f);
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT | (Gdx.graphics.getBufferFormat().coverageSampling ? GL20.GL_COVERAGE_BUFFER_BIT_NV : 0));
@@ -122,6 +127,10 @@ public abstract class AbstractScreen implements Screen {
         fx.render(stage.getBatch(), delta);
         stage.getBatch().end();
         fx.end();
+    }
+
+    public TooltipQueue getTooltipQueue() {
+        return tooltipQueue;
     }
 
     private void renderHighQuality(float delta) {

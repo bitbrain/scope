@@ -14,11 +14,17 @@ public final class ActorShadow {
     private static NinePatch shadowPatch;
 
     public static void draw(Batch batch, Actor actor) {
+        draw(batch, actor, 1);
+    }
+
+    public static void draw(Batch batch, Actor actor, int strength) {
         if (shadowPatch == null) {
             shadowPatch = GraphicsFactory.createNinePatch(Assets.Textures.SHADOW, 60);
             shadowPatch.setColor(Colors.lighten(Colors.BACKGROUND, 0.7f));
         }
         shadowPatch.getColor().a = 0.8f * actor.getColor().a;
-        shadowPatch.draw(batch, actor.getX() - Config.UI_SHADOW_MARGIN, actor.getY() - Config.UI_SHADOW_MARGIN, actor.getWidth() + Config.UI_SHADOW_MARGIN * 2f, actor.getHeight() + Config.UI_SHADOW_MARGIN * 2f);
+        for (int i = 0; i < strength; ++i) {
+            shadowPatch.draw(batch, actor.getX() - Config.UI_SHADOW_MARGIN, actor.getY() - Config.UI_SHADOW_MARGIN, actor.getWidth() + Config.UI_SHADOW_MARGIN * 2f, actor.getHeight() + Config.UI_SHADOW_MARGIN * 2f);
+        }
     }
 }

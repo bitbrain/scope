@@ -12,6 +12,7 @@ import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenEquations;
 import nl.fontys.scope.ScopeGame;
 import nl.fontys.scope.assets.Assets;
+import nl.fontys.scope.core.PlayerManager;
 import nl.fontys.scope.core.World;
 import nl.fontys.scope.core.logic.CameraRotatingLogic;
 import nl.fontys.scope.event.Events;
@@ -38,6 +39,11 @@ public class JoiningGameScreen extends AbstractScreen implements ExitHandler {
     private GameClient client;
 
     private GameClient.GameClientHandler handler;
+
+    private boolean joined;
+
+    private boolean ready;
+    private Label caption;
 
     public JoiningGameScreen(ScopeGame game, String name) {
         super(game);
@@ -68,24 +74,37 @@ public class JoiningGameScreen extends AbstractScreen implements ExitHandler {
 
             @Override
             public void onGameReady(Responses.GameReady ready) {
+                JoiningGameScreen.this.ready = true;
                 setScreen(ingameScreen);
             }
 
             @Override
             public void onClientLeft(Responses.ClientLeft left) {
+                if (joined) {
+                    caption.setText(Bundle.general.format(Messages.WAITING_FOR_OTHER_PLAYERS, left.getCurrentClients(), left.getMaxClients()));
+                }
                 System.out.println("Client left..");
             }
 
             @Override
             public void onClientJoined(Responses.ClientJoined joined) {
-                System.out.println("Client joined");
+                if (ingameScreen.getPlayerManager().isCurrentPlayer(joined.getClientId())) {
+                    JoiningGameScreen.this.joined = true;
+                }
+                if (JoiningGameScreen.this.joined) {
+                    caption.setText(Bundle.general.format(Messages.WAITING_FOR_OTHER_PLAYERS, joined.getCurrentClients(), joined.getMaxClients()));
+                }
+                System.out.println("Client joined: " + joined.getClientId());
             }
 
             @Override
             public void onConnectionFailed() {
-                exit();
+                MenuScreen screen = new MenuScreen(game);
+                screen.getTooltipQueue().add(Messages.ERROR_SERVER_NOT_REACHABLE, Styles.LABEL_ERROR);
+                JoiningGameScreen.this.setScreen(screen);
             }
         };
+        client.addHandler(handler);
         client.connect(false);
     }
 
@@ -98,7 +117,7 @@ public class JoiningGameScreen extends AbstractScreen implements ExitHandler {
     protected void onCreateStage(Stage stage) {
         Table layout = new Table();
         layout.setFillParent(true);
-        Label caption = new Label(Bundle.general.format(Messages.JOINING_GAME, gameName), Styles.LABEL_CAPTION);
+        caption = new Label(Bundle.general.format(Messages.JOINING_GAME, gameName), Styles.LABEL_CAPTION);
         Tween
           .to(caption, ActorTween.ALPHA, 0.8f)
           .target(0.7f)
@@ -147,7 +166,9 @@ public class JoiningGameScreen extends AbstractScreen implements ExitHandler {
 
     @Override
     protected void onDispose() {
-        client.leaveCurrentGame();
+        if (!ready) {
+            client.leaveCurrentGame();
+        }
         client.removeHandler(handler);
     }
 }

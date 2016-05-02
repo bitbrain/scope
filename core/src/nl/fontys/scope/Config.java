@@ -11,10 +11,13 @@ public interface Config {
     // console string of the debug statement
     String FLAG_DEBUG = "-debug";
 
-    boolean NETWORKING_ENABLED = false;
+    boolean NETWORKING_ENABLED = true;
 
     // Set to false if game should start not in fullscreen mode
-    boolean AUTO_FULLSCREEN = true;
+    boolean AUTO_FULLSCREEN = false;
+
+    // Set to false to disable audio
+    boolean MUSIC_ENABLED = false;
 
     // Maximum distance for panning
     float MAX_PAN_DISTANCE = 50f;
@@ -81,4 +84,7 @@ public interface Config {
 
     // TCP port of the server
     int SERVER_TCP_PORT = 54777;
+
+    // The maximum client size for a single game
+    int MAX_CLIENT_SIZE = 4;
 }
